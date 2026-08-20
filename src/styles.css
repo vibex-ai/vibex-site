@@ -183,14 +183,14 @@ h3 {
 
 .brand-mark {
   display: flex;
-  width: 25px;
-  height: 26px;
+  width: 23px;
+  height: 24px;
   align-items: flex-end;
 }
 
 .brand-mark img {
-  width: 25px;
-  height: 25px;
+  width: 23px;
+  height: 23px;
 }
 
 .desktop-nav {

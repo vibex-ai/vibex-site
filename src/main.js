@@ -65,19 +65,15 @@ document.querySelector("#app").innerHTML = `
       </nav>
 
       <div class="nav-actions">
+        <a class="github-link" href="${githubUrl}" target="_blank" rel="noreferrer">
+          <i data-lucide="github"></i>
+          <span>GitHub</span>
+        </a>
         <div class="language-switcher" role="group" aria-label="Language" data-language-switcher>
           <i data-lucide="globe-2"></i>
           <button type="button" data-language="en">EN</button>
           <button type="button" data-language="zh">中文</button>
         </div>
-        <a class="github-link" href="${githubUrl}" target="_blank" rel="noreferrer">
-          <i data-lucide="github"></i>
-          <span>GitHub</span>
-        </a>
-        <a class="button button-small button-light" href="${githubUrl}/releases" target="_blank" rel="noreferrer">
-          Get Vibex
-          <i data-lucide="arrow-up-right"></i>
-        </a>
       </div>
 
       <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-button>

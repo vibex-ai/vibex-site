@@ -199,6 +199,7 @@ h3 {
   gap: 30px;
   color: var(--muted-strong);
   font-size: 14px;
+  transform: translateX(48px);
 }
 
 .desktop-nav a,

@@ -223,51 +223,107 @@ h3 {
 .language-switcher {
   position: relative;
   display: inline-flex;
+  z-index: 20;
+}
+
+.language-trigger {
+  display: inline-flex;
   min-height: 32px;
   align-items: center;
-  padding: 3px 7px;
+  gap: 7px;
+  padding: 0 10px;
   border: 1px solid var(--line);
   border-radius: 4px;
   background: #101210;
-}
-
-.language-switcher select {
-  appearance: none;
-  min-width: 40px;
-  height: 25px;
-  padding: 0 14px 0 2px;
-  border: 0;
-  border-radius: 2px;
-  background: transparent;
   color: var(--muted-strong);
   cursor: pointer;
-  font-family: "Lilex", monospace;
-  font-size: 10px;
+  font-family: inherit;
+  font-size: 12px;
   line-height: 1;
-  outline: none;
+  white-space: nowrap;
 }
 
-.language-switcher::after {
-  position: absolute;
-  top: 50%;
-  right: 8px;
-  width: 0;
-  height: 0;
-  border-inline: 3px solid transparent;
-  border-top: 4px solid var(--muted);
-  content: "";
-  pointer-events: none;
-  transform: translateY(-25%);
+.language-trigger:hover,
+.language-switcher.is-open .language-trigger {
+  border-color: var(--line-strong);
+  color: var(--text);
 }
 
-.language-switcher select:focus-visible {
+.language-trigger svg {
+  width: 13px;
+  height: 13px;
+  color: var(--muted);
+  transition: transform 160ms ease;
+}
+
+.language-switcher.is-open .language-trigger svg {
+  transform: rotate(180deg);
+}
+
+.language-trigger:focus-visible,
+.language-menu button:focus-visible {
   outline: 1px solid var(--lime);
   outline-offset: 2px;
 }
 
-.language-switcher option {
-  background: #101210;
+.language-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  width: 116px;
+  gap: 2px;
+  padding: 7px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #0d0f0e;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-5px);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.language-switcher.is-open .language-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.language-menu button {
+  display: flex;
+  min-height: 35px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--muted-strong);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  text-align: left;
+}
+
+.language-menu button:hover {
+  background: #151816;
   color: var(--text);
+}
+
+.language-menu button.is-selected {
+  color: var(--lime);
+}
+
+.language-menu button svg {
+  width: 15px;
+  height: 15px;
+  opacity: 0;
+}
+
+.language-menu button.is-selected svg {
+  opacity: 1;
 }
 
 .github-link {
@@ -1857,6 +1913,16 @@ h3 {
 
   .mobile-language .language-switcher {
     min-height: 34px;
+  }
+
+  .mobile-language .language-menu {
+    top: auto;
+    bottom: calc(100% + 8px);
+    transform: translateY(5px);
+  }
+
+  .mobile-language .language-switcher.is-open .language-menu {
+    transform: translateY(0);
   }
 
   .hero {

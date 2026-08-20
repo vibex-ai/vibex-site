@@ -69,12 +69,22 @@ document.querySelector("#app").innerHTML = `
           <i data-lucide="github"></i>
           <span>GitHub</span>
         </a>
-        <label class="language-switcher" data-language-switcher>
-          <select data-language-select aria-label="Language">
-            <option value="en">EN</option>
-            <option value="zh">中文</option>
-          </select>
-        </label>
+        <div class="language-switcher" data-language-switcher>
+          <button class="language-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" data-language-trigger>
+            <span data-language-current>English</span>
+            <i data-lucide="chevron-down"></i>
+          </button>
+          <div class="language-menu" role="listbox">
+            <button type="button" role="option" data-language="en">
+              <span data-language-name="en">English</span>
+              <i data-language-check data-lucide="check"></i>
+            </button>
+            <button type="button" role="option" data-language="zh">
+              <span data-language-name="zh">简体中文</span>
+              <i data-language-check data-lucide="check"></i>
+            </button>
+          </div>
+        </div>
       </div>
 
       <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-button>
@@ -91,12 +101,22 @@ document.querySelector("#app").innerHTML = `
       <a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub <i data-lucide="arrow-up-right"></i></a>
       <div class="mobile-language">
         <span>Language</span>
-        <label class="language-switcher" data-language-switcher>
-          <select data-language-select aria-label="Language">
-            <option value="en">EN</option>
-            <option value="zh">中文</option>
-          </select>
-        </label>
+        <div class="language-switcher" data-language-switcher>
+          <button class="language-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" data-language-trigger>
+            <span data-language-current>English</span>
+            <i data-lucide="chevron-down"></i>
+          </button>
+          <div class="language-menu" role="listbox">
+            <button type="button" role="option" data-language="en">
+              <span data-language-name="en">English</span>
+              <i data-language-check data-lucide="check"></i>
+            </button>
+            <button type="button" role="option" data-language="zh">
+              <span data-language-name="zh">简体中文</span>
+              <i data-language-check data-lucide="check"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -616,14 +636,21 @@ function applyLanguage(language, { persist = true } = {}) {
   menuButton?.setAttribute("aria-label", translate(currentLanguage, menuOpen ? "nav.close" : "nav.open"));
   document.querySelectorAll("[data-language-switcher]").forEach((switcher) => {
     switcher.setAttribute("aria-label", translate(currentLanguage, "language.label"));
+    const trigger = switcher.querySelector("[data-language-trigger]");
+    const currentLabel = translate(currentLanguage, currentLanguage === "zh" ? "language.name.chinese" : "language.name.english");
+    trigger?.querySelector("[data-language-current]")?.replaceChildren(document.createTextNode(currentLabel));
+    trigger?.setAttribute("aria-label", translate(currentLanguage, "language.label"));
+    switcher.querySelectorAll("[data-language]").forEach((option) => {
+      const language = option.dataset.language;
+      const selected = language === currentLanguage;
+      const label = translate(currentLanguage, language === "zh" ? "language.name.chinese" : "language.name.english");
+      option.classList.toggle("is-selected", selected);
+      option.setAttribute("aria-selected", String(selected));
+      option.setAttribute("aria-label", label);
+      option.querySelector("[data-language-name]")?.replaceChildren(document.createTextNode(label));
+    });
   });
   setBindingText(".mobile-language > span", "language.label");
-  document.querySelectorAll("[data-language-select]").forEach((select) => {
-    select.value = currentLanguage;
-    const label = translate(currentLanguage, "language.label");
-    select.setAttribute("title", label);
-    select.setAttribute("aria-label", label);
-  });
 
   const activeView = document.querySelector("[data-view].is-active")?.dataset.view ?? "agent";
   updateShowcaseCopy(activeView, false);
@@ -751,8 +778,35 @@ copyButton.addEventListener("click", async () => {
 document.querySelector("[data-year]").textContent = new Date().getFullYear();
 toast.dataset.toastKey = "copied";
 
-document.querySelectorAll("[data-language-select]").forEach((select) => {
-  select.addEventListener("change", () => applyLanguage(select.value));
+const languageSwitchers = [...document.querySelectorAll("[data-language-switcher]")];
+const closeLanguageMenus = () => {
+  languageSwitchers.forEach((switcher) => {
+    switcher.classList.remove("is-open");
+    switcher.querySelector("[data-language-trigger]")?.setAttribute("aria-expanded", "false");
+  });
+};
+
+languageSwitchers.forEach((switcher) => {
+  const trigger = switcher.querySelector("[data-language-trigger]");
+  trigger?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const open = !switcher.classList.contains("is-open");
+    closeLanguageMenus();
+    switcher.classList.toggle("is-open", open);
+    trigger.setAttribute("aria-expanded", String(open));
+  });
+
+  switcher.querySelectorAll("[data-language]").forEach((option) => {
+    option.addEventListener("click", () => {
+      applyLanguage(option.dataset.language);
+      closeLanguageMenus();
+    });
+  });
+});
+
+document.addEventListener("click", closeLanguageMenus);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeLanguageMenus();
 });
 
 applyLanguage(currentLanguage, { persist: false });

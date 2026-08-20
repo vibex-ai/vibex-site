@@ -221,44 +221,61 @@ h3 {
 }
 
 .language-switcher {
+  position: relative;
   display: inline-flex;
   min-height: 32px;
   align-items: center;
-  gap: 2px;
-  padding: 3px;
+  gap: 4px;
+  padding: 3px 8px 3px 7px;
   border: 1px solid var(--line);
   border-radius: 4px;
   background: #101210;
 }
 
 .language-switcher > svg {
-  margin-inline: 5px 3px;
+  flex: 0 0 auto;
   color: var(--muted);
   font-size: 14px;
 }
 
-.language-switcher button {
-  min-width: 31px;
+.language-switcher select {
+  appearance: none;
+  min-width: 42px;
   height: 25px;
-  padding: 0 6px;
+  padding: 0 16px 0 2px;
   border: 0;
   border-radius: 2px;
-  background: transparent;
-  color: var(--muted);
+  background: var(--lime);
+  color: var(--ink);
   cursor: pointer;
   font-family: "Lilex", monospace;
   font-size: 10px;
+  font-weight: 600;
   line-height: 1;
-  transition: background-color 150ms ease, color 150ms ease;
+  outline: none;
 }
 
-.language-switcher button:hover {
+.language-switcher::after {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 0;
+  height: 0;
+  border-inline: 3px solid transparent;
+  border-top: 4px solid var(--ink);
+  content: "";
+  pointer-events: none;
+  transform: translateY(-25%);
+}
+
+.language-switcher select:focus-visible {
+  outline: 1px solid var(--lime);
+  outline-offset: 2px;
+}
+
+.language-switcher option {
+  background: #101210;
   color: var(--text);
-}
-
-.language-switcher button[aria-pressed="true"] {
-  background: var(--lime);
-  color: var(--ink);
 }
 
 .github-link {

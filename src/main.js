@@ -69,11 +69,13 @@ document.querySelector("#app").innerHTML = `
           <i data-lucide="github"></i>
           <span>GitHub</span>
         </a>
-        <div class="language-switcher" role="group" aria-label="Language" data-language-switcher>
+        <label class="language-switcher" data-language-switcher>
           <i data-lucide="globe-2"></i>
-          <button type="button" data-language="en">EN</button>
-          <button type="button" data-language="zh">中文</button>
-        </div>
+          <select data-language-select aria-label="Language">
+            <option value="en">EN</option>
+            <option value="zh">中文</option>
+          </select>
+        </label>
       </div>
 
       <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-button>
@@ -90,10 +92,12 @@ document.querySelector("#app").innerHTML = `
       <a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub <i data-lucide="arrow-up-right"></i></a>
       <div class="mobile-language">
         <span><i data-lucide="globe-2"></i> Language</span>
-        <div class="language-switcher" role="group" aria-label="Language" data-language-switcher>
-          <button type="button" data-language="en">EN</button>
-          <button type="button" data-language="zh">中文</button>
-        </div>
+        <label class="language-switcher" data-language-switcher>
+          <select data-language-select aria-label="Language">
+            <option value="en">EN</option>
+            <option value="zh">中文</option>
+          </select>
+        </label>
       </div>
     </div>
   </header>
@@ -615,12 +619,11 @@ function applyLanguage(language, { persist = true } = {}) {
     switcher.setAttribute("aria-label", translate(currentLanguage, "language.label"));
   });
   setBindingText(".mobile-language > span", "language.label");
-  document.querySelectorAll("[data-language]").forEach((button) => {
-    const selected = button.dataset.language === currentLanguage;
-    button.setAttribute("aria-pressed", String(selected));
-    const label = translate(currentLanguage, button.dataset.language === "zh" ? "language.chinese" : "language.english");
-    button.setAttribute("title", label);
-    button.setAttribute("aria-label", label);
+  document.querySelectorAll("[data-language-select]").forEach((select) => {
+    select.value = currentLanguage;
+    const label = translate(currentLanguage, "language.label");
+    select.setAttribute("title", label);
+    select.setAttribute("aria-label", label);
   });
 
   const activeView = document.querySelector("[data-view].is-active")?.dataset.view ?? "agent";
@@ -749,8 +752,8 @@ copyButton.addEventListener("click", async () => {
 document.querySelector("[data-year]").textContent = new Date().getFullYear();
 toast.dataset.toastKey = "copied";
 
-document.querySelectorAll("[data-language]").forEach((button) => {
-  button.addEventListener("click", () => applyLanguage(button.dataset.language));
+document.querySelectorAll("[data-language-select]").forEach((select) => {
+  select.addEventListener("change", () => applyLanguage(select.value));
 });
 
 applyLanguage(currentLanguage, { persist: false });

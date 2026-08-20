@@ -468,6 +468,14 @@ h3 {
   padding: 24px 32px;
 }
 
+.hero-download-lede {
+  max-width: 320px;
+  margin: 0 0 18px;
+  color: var(--muted-strong);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .eyebrow,
 .section-kicker {
   display: flex;
@@ -519,6 +527,13 @@ h3 {
   gap: 12px;
 }
 
+.hero-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .hero-actions .button-primary {
   border-color: var(--paper);
   background: var(--paper);
@@ -538,6 +553,23 @@ h3 {
 
 .hero-download-options:hover {
   color: var(--text);
+}
+
+.hero-github {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--muted-strong);
+}
+
+.hero-github:hover {
+  border-color: #596057;
+  background: #171c18;
+  color: var(--text);
+}
+
+.hero-github svg {
+  width: 16px;
+  height: 16px;
 }
 
 .hero-actions .button-primary svg:first-child {

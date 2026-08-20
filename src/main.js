@@ -135,12 +135,21 @@ document.querySelector("#app").innerHTML = `
           </div>
 
           <div class="hero-side reveal">
+            <p class="hero-download-lede" data-hero-download-lede>
+              Download Vibex and bring your agents into one local-first workbench.
+            </p>
             <div class="hero-actions">
-              <a class="button button-primary" href="${githubUrl}/releases/latest" target="_blank" rel="noreferrer">
-                <i data-lucide="download"></i>
-                <span data-hero-download>Download for Linux</span>
-                <i data-lucide="arrow-right"></i>
-              </a>
+              <div class="hero-buttons">
+                <a class="button button-primary" href="${githubUrl}/releases/latest" target="_blank" rel="noreferrer">
+                  <i data-lucide="download"></i>
+                  <span data-hero-download>Download for Linux</span>
+                  <i data-lucide="arrow-right"></i>
+                </a>
+                <a class="button hero-github" href="${githubUrl}" target="_blank" rel="noreferrer">
+                  <i data-lucide="github"></i>
+                  <span data-hero-github>View on GitHub</span>
+                </a>
+              </div>
               <a class="hero-download-options" href="${githubUrl}/releases" target="_blank" rel="noreferrer" data-hero-download-options>
                 All download options
               </a>
@@ -664,7 +673,9 @@ function applyLanguage(language, { persist = true } = {}) {
     });
   });
   setBindingText(".mobile-language > span", "language.label");
+  setBindingText("[data-hero-download-lede]", "hero.downloadLead");
   setBindingText("[data-hero-download]", "hero.download");
+  setBindingText("[data-hero-github]", "hero.github");
   setBindingText("[data-hero-download-options]", "hero.downloadOptions");
   setBindingText("[data-hero-supports]", "hero.supports");
   setBindingText("[data-hero-more-agents]", "hero.moreAgents");

@@ -70,7 +70,6 @@ document.querySelector("#app").innerHTML = `
           <span>GitHub</span>
         </a>
         <label class="language-switcher" data-language-switcher>
-          <i data-lucide="globe-2"></i>
           <select data-language-select aria-label="Language">
             <option value="en">EN</option>
             <option value="zh">中文</option>
@@ -91,7 +90,7 @@ document.querySelector("#app").innerHTML = `
       <a href="#faq">FAQ</a>
       <a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub <i data-lucide="arrow-up-right"></i></a>
       <div class="mobile-language">
-        <span><i data-lucide="globe-2"></i> Language</span>
+        <span>Language</span>
         <label class="language-switcher" data-language-switcher>
           <select data-language-select aria-label="Language">
             <option value="en">EN</option>

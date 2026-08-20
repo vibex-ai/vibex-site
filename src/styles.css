@@ -225,32 +225,24 @@ h3 {
   display: inline-flex;
   min-height: 32px;
   align-items: center;
-  gap: 4px;
-  padding: 3px 8px 3px 7px;
+  padding: 3px 7px;
   border: 1px solid var(--line);
   border-radius: 4px;
   background: #101210;
 }
 
-.language-switcher > svg {
-  flex: 0 0 auto;
-  color: var(--muted);
-  font-size: 14px;
-}
-
 .language-switcher select {
   appearance: none;
-  min-width: 42px;
+  min-width: 40px;
   height: 25px;
-  padding: 0 16px 0 2px;
+  padding: 0 14px 0 2px;
   border: 0;
   border-radius: 2px;
-  background: var(--lime);
-  color: var(--ink);
+  background: transparent;
+  color: var(--muted-strong);
   cursor: pointer;
   font-family: "Lilex", monospace;
   font-size: 10px;
-  font-weight: 600;
   line-height: 1;
   outline: none;
 }
@@ -262,7 +254,7 @@ h3 {
   width: 0;
   height: 0;
   border-inline: 3px solid transparent;
-  border-top: 4px solid var(--ink);
+  border-top: 4px solid var(--muted);
   content: "";
   pointer-events: none;
   transform: translateY(-25%);

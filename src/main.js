@@ -10,6 +10,7 @@ import {
   Code2,
   Copy,
   Cpu,
+  Download,
   FileCode2,
   FileDiff,
   GitBranch,
@@ -133,16 +134,29 @@ document.querySelector("#app").innerHTML = `
             </p>
           </div>
 
-          <div class="hero-actions reveal">
-            <a class="button button-primary" href="${githubUrl}/releases" target="_blank" rel="noreferrer">
-              Get Vibex
-              <i data-lucide="arrow-right"></i>
-            </a>
-            <a class="text-link" href="${githubUrl}" target="_blank" rel="noreferrer">
-              <i data-lucide="github"></i>
-              View source
-              <i data-lucide="arrow-up-right"></i>
-            </a>
+          <div class="hero-side reveal">
+            <div class="hero-actions">
+              <a class="button button-primary" href="${githubUrl}/releases/latest" target="_blank" rel="noreferrer">
+                <i data-lucide="download"></i>
+                <span data-hero-download>Download for Linux</span>
+                <i data-lucide="arrow-right"></i>
+              </a>
+              <a class="hero-download-options" href="${githubUrl}/releases" target="_blank" rel="noreferrer" data-hero-download-options>
+                All download options
+              </a>
+            </div>
+            <div class="agent-support" aria-label="Supported agents">
+              <span class="agent-support-label" data-hero-supports>Supports</span>
+              <div class="agent-list">
+                <span class="agent-logo" title="Claude Code"><img src="/assets/agents/claude.svg" alt="Claude Code" /></span>
+                <span class="agent-logo agent-logo-mono" title="OpenAI Codex"><img src="/assets/agents/openai.svg" alt="OpenAI Codex" /></span>
+                <span class="agent-logo" title="Gemini CLI"><img src="/assets/agents/gemini.svg" alt="Gemini CLI" /></span>
+                <span class="agent-logo agent-logo-mono" title="GitHub Copilot"><img src="/assets/agents/copilot.svg" alt="GitHub Copilot" /></span>
+                <span class="agent-logo" title="OpenCode"><img src="/assets/agents/opencode.svg" alt="OpenCode" /></span>
+                <span class="agent-logo" title="Qwen Code"><img src="/assets/agents/qwen.svg" alt="Qwen Code" /></span>
+                <span class="agent-more" data-hero-more-agents>+28 more</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -435,6 +449,7 @@ createIcons({
     Code2,
     Copy,
     Cpu,
+    Download,
     FileCode2,
     FileDiff,
     GitBranch,
@@ -470,7 +485,6 @@ const textBindings = [
   [".desktop-nav a:nth-child(3)", "nav.remote"],
   [".desktop-nav a:nth-child(4)", "nav.faq"],
   [".nav-actions .button-light", "nav.get"],
-  [".hero-actions .button-primary", "nav.get"],
   [".final-actions .button-primary", "nav.get"],
   [".mobile-nav a:nth-child(1)", "nav.product"],
   [".mobile-nav a:nth-child(2)", "nav.how"],
@@ -478,7 +492,6 @@ const textBindings = [
   [".mobile-nav a:nth-child(4)", "nav.faq"],
   [".hero .eyebrow", "hero.eyebrow"],
   [".hero-lede", "hero.lede"],
-  [".hero-actions .text-link", "hero.source"],
   [".hero-meta div:nth-child(2)", "hero.meta.local"],
   [".hero-meta div:nth-child(3)", "hero.meta.devices"],
   [".stage-status", "stage.ready"],
@@ -651,6 +664,10 @@ function applyLanguage(language, { persist = true } = {}) {
     });
   });
   setBindingText(".mobile-language > span", "language.label");
+  setBindingText("[data-hero-download]", "hero.download");
+  setBindingText("[data-hero-download-options]", "hero.downloadOptions");
+  setBindingText("[data-hero-supports]", "hero.supports");
+  setBindingText("[data-hero-more-agents]", "hero.moreAgents");
 
   const activeView = document.querySelector("[data-view].is-active")?.dataset.view ?? "agent";
   updateShowcaseCopy(activeView, false);

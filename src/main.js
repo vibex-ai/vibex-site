@@ -165,7 +165,7 @@ document.querySelector("#app").innerHTML = `
       <div class="hero-inner">
         <div class="hero-layout">
           <div class="hero-copy reveal">
-            <h1>A native workbench<br />for code and agents.</h1>
+            <h1>A native workbench<br />for code and agents</h1>
             <p class="hero-lede">
               Run AI agents beside your files, terminal, Git, and previews while your machine stays in charge.
             </p>
@@ -196,11 +196,13 @@ document.querySelector("#app").innerHTML = `
               <div class="agent-list">
                 <span class="agent-logo" title="Claude Code"><img src="/assets/agents/claude.svg" alt="Claude Code" /></span>
                 <span class="agent-logo agent-logo-mono" title="OpenAI Codex"><img src="/assets/agents/openai.svg" alt="OpenAI Codex" /></span>
-                <span class="agent-logo" title="Gemini CLI"><img src="/assets/agents/gemini.svg" alt="Gemini CLI" /></span>
+                <span class="agent-logo" title="Antigravity"><img src="/assets/agents/antigravity.svg" alt="Antigravity" /></span>
                 <span class="agent-logo agent-logo-mono" title="GitHub Copilot"><img src="/assets/agents/copilot.svg" alt="GitHub Copilot" /></span>
                 <span class="agent-logo" title="OpenCode"><img src="/assets/agents/opencode.svg" alt="OpenCode" /></span>
-                <span class="agent-logo" title="Qwen Code"><img src="/assets/agents/qwen.svg" alt="Qwen Code" /></span>
-                <span class="agent-more" data-hero-more-agents>+28 more</span>
+                <span class="agent-logo agent-logo-mono" title="Pi"><img src="/assets/agents/pi.svg" alt="Pi" /></span>
+                <span class="agent-logo agent-logo-mono" title="Grok"><img src="/assets/agents/grok.svg" alt="Grok" /></span>
+                <span class="agent-logo" title="DeepSeek Harness"><img src="/assets/agents/deepseek-harness.svg" alt="DeepSeek Harness" /></span>
+                <span class="agent-more" data-hero-more-agents>+16 built-in · more customizable</span>
               </div>
             </div>
           </div>

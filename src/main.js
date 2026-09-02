@@ -207,6 +207,7 @@ document.querySelector("#app").innerHTML = `
         </div>
 
         <div class="desktop-showcase reveal" data-desktop-showcase>
+          <div class="showcase-glow" aria-hidden="true"></div>
           <div class="desktop-showcase-tabs" role="tablist" aria-label="Vibex desktop workbench" data-desktop-tablist>
             <button class="desktop-showcase-tab is-active" type="button" role="tab" aria-selected="true" data-desktop-view="agent"><i data-lucide="message-square"></i><span data-desktop-tab="agent">Agent workbench</span></button>
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="preview"><i data-lucide="code-2"></i><span data-desktop-tab="preview">Preview</span></button>
@@ -465,6 +466,7 @@ document.querySelector("#app").innerHTML = `
 
     <section class="final-cta">
       <div class="final-grid" aria-hidden="true"></div>
+      <div class="final-glow" aria-hidden="true"></div>
       <div class="section-shell final-inner reveal">
         <img src="/assets/vibex-mark.svg" alt="" />
         <h2>Build at the speed of thought.<br /><span>Keep your hands on the wheel.</span></h2>

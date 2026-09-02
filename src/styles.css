@@ -177,8 +177,8 @@ h3 {
   display: inline-flex;
   align-items: baseline;
   width: max-content;
-  gap: 1px;
-  font-size: 20px;
+  gap: 2px;
+  font-size: 25px;
   font-weight: 600;
   line-height: 1;
 }
@@ -3243,12 +3243,17 @@ h3 {
   }
 
   .wordmark {
-    font-size: 18px;
+    font-size: 22px;
   }
 
   .brand-mark {
-    width: 28px;
-    height: 28px;
+    width: 21px;
+    height: 22px;
+  }
+
+  .brand-mark img {
+    width: 21px;
+    height: 21px;
   }
 
   .hero {

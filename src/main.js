@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
+  Battery,
   Brain,
   Bot,
   Braces,
@@ -61,6 +62,7 @@ import {
   Settings,
   ShieldCheck,
   ShieldAlert,
+  Signal,
   Smartphone,
   Square,
   Sparkles,
@@ -70,9 +72,11 @@ import {
   Terminal,
   TriangleAlert,
   UserRound,
+  Wifi,
   Workflow,
   X,
   Zap,
+  Mic,
   createIcons,
 } from "lucide";
 import "./styles.css";
@@ -366,10 +370,55 @@ document.querySelector("#app").innerHTML = `
       <div class="remote-grid-pattern" aria-hidden="true"></div>
       <div class="section-shell remote-shell">
         <div class="phone-scene reveal">
-          <div class="phone-shadow"></div>
           <div class="phone-frame">
-            <div class="phone-speaker"></div>
-            <img src="/assets/mobile-session.png" alt="Vibex Remote session list on a mobile device" />
+            <span class="phone-speaker" aria-hidden="true"></span>
+            <div class="phone-screen">
+              <div class="phone-statusbar" aria-hidden="true">
+                <span class="phone-statusbar-time" data-phone-time>9:41</span>
+                <span class="phone-statusbar-icons"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery"></i></span>
+              </div>
+              <div class="phone-statusbar-spacer" aria-hidden="true"></div>
+
+              <div class="phone-app" data-phone-app>
+                <header class="phone-chat-header">
+                  <span class="phone-chat-avatar"><i data-lucide="sparkles"></i></span>
+                  <div class="phone-chat-peer">
+                    <strong data-phone-agent>Vibex · Codex</strong>
+                    <span class="phone-chat-presence" data-phone-presence><i data-lucide="loader-circle"></i><em data-phone-presence-text>Refactoring workbench.rs</em></span>
+                  </div>
+                  <button class="phone-chat-more" type="button" tabindex="-1" aria-hidden="true"><i data-lucide="ellipsis"></i></button>
+                </header>
+
+                <div class="phone-timeline">
+                  <div class="phone-bubble phone-bubble-user">
+                    <p data-phone-user>Bump the test coverage for the session store before the release build.</p>
+                    <time data-phone-user-time>09:38</time>
+                  </div>
+
+                  <div class="phone-tool-card" data-phone-tool>
+                    <div class="phone-tool-head"><i data-lucide="square-terminal"></i><code data-phone-tool-cmd>cargo test -p vibex store</code></div>
+                    <div class="phone-tool-lines"><span data-phone-tool-line1>running 12 tests</span><span data-phone-tool-line2>test session_store::persists_timeline ... ok</span></div>
+                  </div>
+
+                  <div class="phone-bubble phone-bubble-agent">
+                    <p data-phone-agent-text>Done — added 4 tests around timeline persistence. Coverage for the session store is now 91%.</p>
+                    <time data-phone-agent-time>09:41</time>
+                  </div>
+
+                  <div class="phone-actions">
+                    <span class="phone-chip"><i data-lucide="file-diff"></i><span data-phone-chip-diff>3 files changed</span></span>
+                    <span class="phone-chip phone-chip-accent"><i data-lucide="check"></i><span data-phone-chip-approve>Approve push</span></span>
+                  </div>
+                </div>
+
+                <div class="phone-composer" aria-hidden="true">
+                  <span data-phone-composer>Reply…</span>
+                  <i data-lucide="mic"></i>
+                </div>
+
+                <div class="phone-home-indicator" aria-hidden="true"></div>
+              </div>
+            </div>
           </div>
           <div class="remote-chip chip-direct"><i data-lucide="radio"></i><span>Direct route</span><small>12 ms</small></div>
           <div class="remote-chip chip-secure"><i data-lucide="shield-check"></i><span>Encrypted</span><small>End to end</small></div>
@@ -509,6 +558,7 @@ createIcons({
     Activity,
     AtSign,
     ArrowLeft,
+    Battery,
     Brain,
     Bot,
     Braces,
@@ -566,6 +616,7 @@ createIcons({
     Settings,
     ShieldCheck,
     ShieldAlert,
+    Signal,
     Smartphone,
     Square,
     Sparkles,
@@ -575,9 +626,11 @@ createIcons({
     Terminal,
     TriangleAlert,
     UserRound,
+    Wifi,
     Workflow,
     X,
     Zap,
+    Mic,
   },
 });
 
@@ -631,6 +684,13 @@ const textBindings = [
   [".remote-chip.chip-direct span", "remote.direct"],
   [".remote-chip.chip-secure span", "remote.encrypted"],
   [".remote-chip.chip-secure small", "remote.endToEnd"],
+  ["[data-phone-agent]", "remote.phone.agent"],
+  ["[data-phone-presence-text]", "remote.phone.presence"],
+  ["[data-phone-user]", "remote.phone.user"],
+  ["[data-phone-agent-text]", "remote.phone.agentText"],
+  ["[data-phone-chip-diff]", "remote.phone.chipDiff"],
+  ["[data-phone-chip-approve]", "remote.phone.chipApprove"],
+  ["[data-phone-composer]", "remote.phone.composer"],
   [".remote-copy .section-kicker", "remote.kicker"],
   [".remote-copy > p", "remote.copy"],
   [".remote-points > div:nth-child(1) strong", "remote.pair.title"],
@@ -700,7 +760,7 @@ const attrBindings = [
   [".architecture-diagram", "aria-label", "architecture.diagram.label"],
   ["[data-copy-command]", "title", "open.copyCommands"],
   ["[data-copy-command]", "aria-label", "open.copyCommands"],
-  [".phone-frame img", "alt", "remote.imageAlt"],
+  [".phone-frame", "aria-label", "remote.aria"],
 ];
 
 function setOwnText(selector, value) {
@@ -939,6 +999,15 @@ copyButton.addEventListener("click", async () => {
 
 document.querySelector("[data-year]").textContent = new Date().getFullYear();
 toast.dataset.toastKey = "copied";
+
+const phoneClock = document.querySelector("[data-phone-time]");
+function updatePhoneClock() {
+  if (!phoneClock) return;
+  const now = new Date();
+  phoneClock.textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
+}
+updatePhoneClock();
+window.setInterval(updatePhoneClock, 30_000);
 
 const languageSwitchers = [...document.querySelectorAll("[data-language-switcher]")];
 const closeLanguageMenus = () => {

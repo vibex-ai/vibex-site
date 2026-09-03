@@ -91,6 +91,12 @@ import {
   X,
   Zap,
   Mic,
+  ChartPie,
+  LayoutDashboard,
+  HardDrive,
+  Inbox,
+  Import as ImportIcon,
+  RotateCw,
   createIcons,
 } from "lucide";
 import "./styles.css";
@@ -242,7 +248,7 @@ document.querySelector("#app").innerHTML = `
                     <button class="vx-icon-btn is-disabled" type="button" aria-label="Go back" disabled><i data-lucide="arrow-left"></i></button>
                     <button class="vx-icon-btn is-disabled" type="button" aria-label="Go forward" disabled><i data-lucide="arrow-right"></i></button>
                   </div>
-                  <div class="vx-titlebar-main">
+                  <div class="vx-titlebar-main" data-desktop-title-main>
                     <span class="vx-session-title">Refactor agent session timeline</span>
                     <button class="vx-icon-btn is-sm" type="button" aria-label="Session actions"><i data-lucide="ellipsis"></i></button>
                   </div>
@@ -259,13 +265,13 @@ document.querySelector("#app").innerHTML = `
                 <div class="vx-body" data-desktop-shell>
                   <aside class="vx-sidebar">
                     <div class="vx-sidebar-actions">
-                      <button class="vx-side-btn" type="button" data-desktop-action="new-session"><i data-lucide="plus"></i><span>New chat</span></button>
-                      <button class="vx-side-btn" type="button" data-desktop-action="management"><i data-lucide="settings"></i><span>Config Center</span></button>
-                      <button class="vx-side-btn" type="button" data-desktop-action="usage"><i data-lucide="activity"></i><span>Usage Statistics</span></button>
+                      <button class="vx-side-btn" type="button" data-desktop-action="new-session"><i data-lucide="plus"></i><span data-i18n="showcase.desktop.newChat">New chat</span></button>
+                      <button class="vx-side-btn" type="button" data-desktop-action="management" data-desktop-side="management"><i data-lucide="settings"></i><span data-i18n="showcase.desktop.management">Config Center</span></button>
+                      <button class="vx-side-btn" type="button" data-desktop-action="usage" data-desktop-side="usage"><i data-lucide="activity"></i><span data-i18n="showcase.desktop.usage">Usage Statistics</span></button>
                     </div>
                     <div class="vx-sidebar-divider"></div>
                     <div class="vx-projects-head">
-                      <span>Projects</span>
+                      <span data-i18n="showcase.desktop.projects">Projects</span>
                       <div class="vx-projects-tools">
                         <button class="vx-icon-btn is-xs" type="button" aria-label="More"><i data-lucide="ellipsis"></i></button>
                         <button class="vx-icon-btn is-xs" type="button" aria-label="Collapse all sessions"><i data-lucide="chevrons-right-left"></i></button>
@@ -359,12 +365,12 @@ document.querySelector("#app").innerHTML = `
                           <div class="vx-composer-foot">
                             <div class="vx-composer-left">
                               <button class="vx-icon-btn is-md" type="button" aria-label="Add attachments"><i data-lucide="plus"></i></button>
-                              <button class="vx-chip" type="button"><i class="is-effort" data-lucide="brain"></i><span>Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
-                              <button class="vx-chip" type="button"><i class="is-mode" data-lucide="shield-alert"></i><span>Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-effort" data-lucide="brain"></i><span data-i18n="showcase.desktop.chip.standard">Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-mode" data-lucide="shield-alert"></i><span data-i18n="showcase.desktop.chip.guarded">Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                             </div>
                             <div class="vx-composer-right">
                               <button class="vx-token-btn" type="button" aria-label="Token usage"><span class="vx-token-ring"></span></button>
-                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai.svg" alt="" /><span>codex · gpt-5.1-codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai.svg" alt="" /><span data-i18n="showcase.desktop.chip.runtime">codex · gpt-5.1-codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                               <button class="vx-send-btn" type="button" data-desktop-action="send" aria-label="Send message"><i data-lucide="arrow-up"></i></button>
                             </div>
                           </div>
@@ -375,11 +381,11 @@ document.querySelector("#app").innerHTML = `
                     <section class="vx-panel" data-desktop-panel="home">
                       <div class="vx-home">
                         <div class="vx-home-mark">
-                          <img src="/assets/vibex-mark.svg" alt="" />
+                          <img src="/assets/vibex-mark-tight.svg" alt="" />
                           <span>ibex</span>
                         </div>
-                        <h1>Start something new</h1>
-                        <p class="vx-home-sub">Create a fresh session from a project directory or a temporary workspace</p>
+                        <h1 data-i18n="showcase.desktop.home.slogan">Start something new</h1>
+                        <p class="vx-home-sub" data-i18n="showcase.desktop.home.description">Create a fresh session from a project directory or a temporary workspace</p>
                         <div class="vx-home-capsule">
                           <div class="vx-home-agents">
                             <button class="vx-agent-tab is-active" type="button"><img src="/assets/agents/openai.svg" alt="" /><span>Codex</span></button>
@@ -393,15 +399,15 @@ document.querySelector("#app").innerHTML = `
                           <div class="vx-home-foot">
                             <div class="vx-composer-left">
                               <button class="vx-icon-btn is-md" type="button" aria-label="Add attachments"><i data-lucide="plus"></i></button>
-                              <button class="vx-chip" type="button"><i class="is-effort" data-lucide="brain"></i><span>Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
-                              <button class="vx-chip" type="button"><i class="is-mode" data-lucide="shield-alert"></i><span>Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-effort" data-lucide="brain"></i><span data-i18n="showcase.desktop.chip.standard">Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-mode" data-lucide="shield-alert"></i><span data-i18n="showcase.desktop.chip.guarded">Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                             </div>
                             <button class="vx-send-btn is-lg" type="button" aria-label="Create session"><i data-lucide="arrow-up"></i></button>
                           </div>
                         </div>
                         <div class="vx-home-wsrow">
                           <button class="vx-home-dir" type="button"><i data-lucide="folder"></i><span>vibex</span><i data-lucide="chevron-down"></i></button>
-                          <button class="vx-home-loc" type="button">Local</button>
+                          <button class="vx-home-loc" type="button" data-i18n="showcase.desktop.home.local">Local</button>
                           <button class="vx-home-dir" type="button"><i data-lucide="git-branch"></i><span>main</span></button>
                         </div>
                       </div>
@@ -409,42 +415,60 @@ document.querySelector("#app").innerHTML = `
 
                     <section class="vx-panel" data-desktop-panel="management">
                       <div class="vx-mgmt">
-                        <div class="vx-mgmt-header"><i data-lucide="settings-2"></i><strong>Config Center</strong></div>
+                        <div class="vx-mgmt-header"><i data-lucide="settings-2"></i><strong data-i18n="showcase.desktop.mgmt.title">Config Center</strong></div>
                         <div class="vx-mgmt-side">
                           <div class="vx-mgmt-nav">
-                            <button class="is-active" type="button" data-mgmt-tab="agents"><i data-lucide="bot"></i><span>Agent</span></button>
-                            <button type="button" data-mgmt-tab="mcp"><i data-lucide="network"></i><span>MCP</span></button>
-                            <button type="button" data-mgmt-tab="skills"><i data-lucide="book-open"></i><span>Skills</span></button>
+                            <button class="is-active" type="button" data-mgmt-tab="agents"><i data-lucide="bot"></i><span data-i18n="showcase.desktop.mgmt.tabAgents">Agent</span></button>
+                            <button type="button" data-mgmt-tab="mcp"><i data-lucide="network"></i><span data-i18n="showcase.desktop.mgmt.tabMcp">MCP</span></button>
+                            <button type="button" data-mgmt-tab="skills"><i data-lucide="book-open"></i><span data-i18n="showcase.desktop.mgmt.tabSkills">Skills</span></button>
                           </div>
-                          <div class="vx-mgmt-search"><i data-lucide="search"></i><span>Search Agent</span></div>
-                          <div class="vx-mgmt-agents">
-                            <button class="vx-mgmt-agent is-selected" type="button" data-mgmt-agent="codex">
-                              <span class="vx-mgmt-agent-top">
-                                <span class="vx-mgmt-glyph"><img src="/assets/agents/openai.svg" alt="" /></span>
-                                <span class="vx-mgmt-agent-name">Codex</span>
-                                <span class="vx-mgmt-switch is-on"><span></span></span>
-                              </span>
-                              <small>3 configurations</small>
-                            </button>
-                            <button class="vx-mgmt-agent" type="button" data-mgmt-agent="claude">
-                              <span class="vx-mgmt-agent-top">
-                                <span class="vx-mgmt-glyph"><img src="/assets/agents/claude.svg" alt="" /></span>
-                                <span class="vx-mgmt-agent-name">Claude Code</span>
-                                <span class="vx-mgmt-switch is-on"><span></span></span>
-                              </span>
-                              <small>2 configurations</small>
-                            </button>
-                            <button class="vx-mgmt-agent" type="button" data-mgmt-agent="gemini">
-                              <span class="vx-mgmt-agent-top">
-                                <span class="vx-mgmt-glyph"><img src="/assets/agents/gemini.svg" alt="" /></span>
-                                <span class="vx-mgmt-agent-name">Gemini CLI</span>
-                                <span class="vx-mgmt-switch"><span></span></span>
-                              </span>
-                              <small>Not checked</small>
-                            </button>
-                            <div class="vx-mgmt-add">
-                              <span class="vx-mgmt-add-plus"><i data-lucide="plus"></i></span>
-                              <span>Add custom ACP Agent</span>
+                          <div class="vx-mgmt-sidebody" data-mgmt-sidebar="agents">
+                            <div class="vx-mgmt-search"><i data-lucide="search"></i><span data-i18n="showcase.desktop.mgmt.searchAgents">Search Agent</span></div>
+                            <div class="vx-mgmt-agents">
+                              <button class="vx-mgmt-agent is-selected" type="button" data-mgmt-agent="codex">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/openai.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Codex</span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
+                                </span>
+                                <small>3 configurations</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="claude">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/claude.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Claude Code</span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
+                                </span>
+                                <small>2 configurations</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="gemini">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/gemini.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Gemini CLI</span>
+                                  <span class="vx-mgmt-switch"><span></span></span>
+                                </span>
+                                <small>Not checked</small>
+                              </button>
+                              <div class="vx-mgmt-add">
+                                <span class="vx-mgmt-add-plus"><i data-lucide="plus"></i></span>
+                                <span>Add custom ACP Agent</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="vx-mgmt-sidebody" data-mgmt-sidebar="mcp" hidden>
+                            <button class="vx-mgmt-import" type="button"><i data-lucide="import"></i><span data-i18n="showcase.desktop.mgmt.importMcp">Import Existing MCP</span></button>
+                            <div class="vx-mgmt-search"><i data-lucide="search"></i><span data-i18n="showcase.desktop.mgmt.searchMcp">Search MCP</span></div>
+                            <div class="vx-mgmt-resources">
+                              <div class="vx-mgmt-reshead"><span data-i18n="showcase.desktop.mgmt.mcpResources">MCP RESOURCES</span><span class="vx-mgmt-rescount">3</span></div>
+                              <div class="vx-mgmt-emptycard"><strong data-i18n="showcase.desktop.mgmt.noMcp">No MCP servers</strong><small data-i18n="showcase.desktop.mgmt.noMcpDesc">Import or add an MCP server.</small></div>
+                            </div>
+                          </div>
+                          <div class="vx-mgmt-sidebody" data-mgmt-sidebar="skills" hidden>
+                            <button class="vx-mgmt-import" type="button"><i data-lucide="import"></i><span data-i18n="showcase.desktop.mgmt.importSkills">Import Existing Skills</span></button>
+                            <div class="vx-mgmt-search"><i data-lucide="search"></i><span data-i18n="showcase.desktop.mgmt.searchSkills">Search Skills</span></div>
+                            <div class="vx-mgmt-resources">
+                              <div class="vx-mgmt-reshead"><span data-i18n="showcase.desktop.mgmt.skillsTitle">SKILLS</span><span class="vx-mgmt-rescount">0</span></div>
+                              <div class="vx-mgmt-emptycard"><strong data-i18n="showcase.desktop.mgmt.noSkills">No Skills</strong><small data-i18n="showcase.desktop.mgmt.noSkillsDesc">Import or add a reusable Skill.</small></div>
                             </div>
                           </div>
                         </div>
@@ -454,36 +478,36 @@ document.querySelector("#app").innerHTML = `
                             <div class="vx-mgmt-headrow">
                               <span class="vx-mgmt-glyph is-lg" data-mgmt-logo><img src="/assets/agents/openai.svg" alt="" /></span>
                               <div><strong data-mgmt-name>Codex</strong><small data-mgmt-desc>gpt-5.1-codex · Vibex-managed runtime</small></div>
-                              <span class="vx-mgmt-pill">Available</span>
+                              <span class="vx-mgmt-pill" data-i18n="showcase.desktop.mgmt.available">Available</span>
                             </div>
                             <div class="vx-mgmt-card">
                               <div class="vx-mgmt-cardhead">
                                 <span class="vx-mgmt-iconbox"><i data-lucide="bot"></i></span>
-                                <div><strong>Agent installation</strong><small>Vibex-managed runtime</small></div>
+                                <div><strong data-i18n="showcase.desktop.mgmt.installation">Agent installation</strong><small>Vibex-managed runtime</small></div>
                                 <span class="vx-mgmt-ver">v0.4.2</span>
                               </div>
                               <div class="vx-mgmt-actions">
-                                <button class="vx-mgmt-btn" type="button"><i data-lucide="search"></i>Check for updates</button>
-                                <button class="vx-mgmt-btn is-danger" type="button"><i data-lucide="trash-2"></i>Uninstall</button>
+                                <button class="vx-mgmt-btn" type="button"><i data-lucide="search"></i><span data-i18n="showcase.desktop.mgmt.checkUpdates">Check for updates</span></button>
+                                <button class="vx-mgmt-btn is-danger" type="button"><i data-lucide="trash-2"></i><span data-i18n="showcase.desktop.mgmt.uninstall">Uninstall</span></button>
                               </div>
                             </div>
                             <div class="vx-mgmt-card">
                               <div class="vx-mgmt-cardhead">
                                 <span class="vx-mgmt-iconbox"><i data-lucide="shield-alert"></i></span>
-                                <div><strong>Native credentials</strong><small>Sign in with authentication methods reported by this Agent.</small></div>
+                                <div><strong data-i18n="showcase.desktop.mgmt.nativeCredentials">Native credentials</strong><small data-i18n="showcase.desktop.mgmt.nativeCredentialsDesc">Sign in with authentication methods reported by this Agent.</small></div>
                               </div>
-                              <div class="vx-mgmt-status">Signed in · codex</div>
+                              <div class="vx-mgmt-status" data-i18n="showcase.desktop.mgmt.signedIn">Signed in · codex</div>
                             </div>
                             <div class="vx-mgmt-card">
                               <div class="vx-mgmt-cardhead">
                                 <span class="vx-mgmt-iconbox"><i data-lucide="database"></i></span>
-                                <div><strong>Model provider configuration</strong><small>Configure credentials and models for external model services.</small></div>
+                                <div><strong data-i18n="showcase.desktop.mgmt.providerConfig">Model provider configuration</strong><small>Configure credentials and models for external model services.</small></div>
                                 <span class="vx-mgmt-count">3 configurations</span>
                               </div>
                               <div class="vx-mgmt-provider is-selected">
                                 <span class="vx-mgmt-grip"><i data-lucide="grip-vertical"></i></span>
                                 <span class="vx-mgmt-profile-glyph"><img src="/assets/agents/openai.svg" alt="" /></span>
-                                <div class="vx-mgmt-profile-name"><strong>OpenAI<span class="vx-mgmt-pill is-default">Default</span></strong><small>api.openai.com · 4 models</small></div>
+                                <div class="vx-mgmt-profile-name"><strong>OpenAI<span class="vx-mgmt-pill is-default" data-i18n="showcase.desktop.mgmt.default">Default</span></strong><small>api.openai.com · 4 models</small></div>
                                 <span class="vx-mgmt-profile-actions"><i data-lucide="pencil"></i><i data-lucide="copy"></i><i data-lucide="activity"></i></span>
                               </div>
                               <div class="vx-mgmt-provider">
@@ -499,16 +523,145 @@ document.querySelector("#app").innerHTML = `
                                 <span class="vx-mgmt-profile-actions"><i data-lucide="pencil"></i><i data-lucide="copy"></i><i data-lucide="activity"></i></span>
                               </div>
                               <div class="vx-mgmt-actions">
-                                <button class="vx-mgmt-btn" type="button"><img class="vx-img-icon" src="/assets/icons/import.svg" alt="" />Import existing config</button>
-                                <button class="vx-mgmt-btn is-primary" type="button"><i data-lucide="plus"></i>Add config</button>
+                                <button class="vx-mgmt-btn" type="button"><img class="vx-img-icon" src="/assets/icons/import.svg" alt="" /><span data-i18n="showcase.desktop.mgmt.importConfig">Import existing config</span></button>
+                                <button class="vx-mgmt-btn is-primary" type="button"><i data-lucide="plus"></i><span data-i18n="showcase.desktop.mgmt.addConfig">Add config</span></button>
                               </div>
                             </div>
                           </div>
                           <div class="vx-mgmt-pane" data-mgmt-pane="mcp" hidden>
-                            <div class="vx-mgmt-empty"><strong>No MCP servers connected</strong><small>Add or import an MCP server to extend this Agent with external tools.</small><button class="vx-mgmt-btn is-primary" type="button"><img class="vx-img-icon" src="/assets/icons/import.svg" alt="" />Import Existing MCP</button></div>
+                            <div class="vx-mgmt-empty">
+                              <div class="vx-mgmt-emptybox"><strong data-i18n="showcase.desktop.mgmt.noMcpSelection">No MCP server selected</strong><small data-i18n="showcase.desktop.mgmt.noMcpSelectionDesc">Select or import a server to manage Agent enablement.</small></div>
+                            </div>
                           </div>
                           <div class="vx-mgmt-pane" data-mgmt-pane="skills" hidden>
-                            <div class="vx-mgmt-empty"><strong>No skills installed</strong><small>Import existing Skills to make them available to this Agent.</small><button class="vx-mgmt-btn is-primary" type="button"><img class="vx-img-icon" src="/assets/icons/import.svg" alt="" />Import Existing Skills</button></div>
+                            <div class="vx-mgmt-empty">
+                              <div class="vx-mgmt-emptybox"><strong data-i18n="showcase.desktop.mgmt.noSkillSelection">No Skill selected</strong><small data-i18n="showcase.desktop.mgmt.noSkillSelectionDesc">Select or import a Skill to manage Agent enablement.</small></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="vx-panel" data-desktop-panel="usage">
+                      <div class="vx-usage">
+                        <div class="vx-usage-header">
+                          <i data-lucide="activity"></i>
+                          <strong data-i18n="showcase.desktop.usage">Usage Statistics</strong>
+                          <span class="vx-usage-spacer"></span>
+                          <button class="vx-icon-btn is-sm" type="button" aria-label="Refresh"><i data-lucide="rotate-cw"></i></button>
+                        </div>
+                        <div class="vx-usage-toolbar">
+                          <div class="vx-usage-range">
+                            <button type="button" data-i18n="showcase.desktop.usage.today">Today</button>
+                            <button type="button" data-i18n="showcase.desktop.usage.days7">7 days</button>
+                            <button class="is-active" type="button" data-i18n="showcase.desktop.usage.days30">30 days</button>
+                            <button type="button" data-i18n="showcase.desktop.usage.all">All</button>
+                          </div>
+                          <span class="vx-usage-spacer"></span>
+                          <button class="vx-usage-filter" type="button"><i data-lucide="bot"></i><span data-i18n="showcase.desktop.usage.agent">Agent</span><i data-lucide="chevron-down"></i></button>
+                          <button class="vx-usage-filter" type="button"><i data-lucide="database"></i><span data-i18n="showcase.desktop.usage.provider">Model provider</span><i data-lucide="chevron-down"></i></button>
+                          <button class="vx-usage-filter" type="button"><i data-lucide="sparkles"></i><span data-i18n="showcase.desktop.usage.model">Model</span><i data-lucide="chevron-down"></i></button>
+                          <button class="vx-usage-filter" type="button"><i data-lucide="folder"></i><span data-i18n="showcase.desktop.usage.project">Project</span><i data-lucide="chevron-down"></i></button>
+                          <button class="vx-usage-filter" type="button"><i data-lucide="message-square"></i><span data-i18n="showcase.desktop.usage.session">Session</span><i data-lucide="chevron-down"></i></button>
+                        </div>
+                        <div class="vx-usage-scroll">
+                          <div class="vx-usage-summary">
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="cpu"></i><span data-i18n="showcase.desktop.usage.totalTokens">Total tokens</span></span><strong>18.42M</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="inbox"></i><span data-i18n="showcase.desktop.usage.turns">Turns</span></span><strong>1,284</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="arrow-down"></i><span data-i18n="showcase.desktop.usage.input">Input</span></span><strong>12.96M</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="arrow-up"></i><span data-i18n="showcase.desktop.usage.output">Output</span></span><strong>2.31M</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="hard-drive"></i><span data-i18n="showcase.desktop.usage.cachedRead">Cached read</span></span><strong>3.15M</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="chart-pie"></i><span data-i18n="showcase.desktop.usage.cacheHitRate">Cache hit rate</span></span><strong>62%</strong></div>
+                          </div>
+                          <div class="vx-usage-trend">
+                            <div class="vx-usage-trendhead">
+                              <strong data-i18n="showcase.desktop.usage.trend">Usage trend</strong>
+                              <div class="vx-usage-seg" data-usage-seg>
+                                <button class="is-active" type="button" data-usage-view="bars"><i data-lucide="chart-pie"></i><span data-i18n="showcase.desktop.usage.trendTab">Trend</span></button>
+                                <button type="button" data-usage-view="heatmap"><i data-lucide="layout-dashboard"></i><span data-i18n="showcase.desktop.usage.heatmap">Heatmap</span></button>
+                                <button type="button" data-usage-view="models"><i data-lucide="chart-pie"></i><span data-i18n="showcase.desktop.usage.models">Models</span></button>
+                              </div>
+                            </div>
+                            <div class="vx-usage-chart" data-usage-page="bars">
+                              <svg viewBox="0 0 640 176" preserveAspectRatio="none" aria-hidden="true">
+                                <line x1="48" y1="12" x2="640" y2="12" class="vx-chart-grid" />
+                                <line x1="48" y1="56" x2="640" y2="56" class="vx-chart-grid" />
+                                <line x1="48" y1="100" x2="640" y2="100" class="vx-chart-grid" />
+                                <line x1="48" y1="144" x2="640" y2="144" class="vx-chart-grid" />
+                                <g class="vx-chart-bars">
+                                  <g><rect x="62" y="76" width="16" height="68" fill="#00c950" /><rect x="62" y="52" width="16" height="24" fill="#00a63e" /><rect x="62" y="40" width="16" height="12" fill="#008236" /></g>
+                                  <g><rect x="100" y="92" width="16" height="52" fill="#00c950" /><rect x="100" y="70" width="16" height="22" fill="#00a63e" /><rect x="100" y="58" width="16" height="12" fill="#008236" /></g>
+                                  <g><rect x="138" y="60" width="16" height="84" fill="#00c950" /><rect x="138" y="34" width="16" height="26" fill="#00a63e" /><rect x="138" y="22" width="16" height="12" fill="#008236" /></g>
+                                  <g><rect x="176" y="104" width="16" height="40" fill="#00c950" /><rect x="176" y="86" width="16" height="18" fill="#00a63e" /><rect x="176" y="78" width="16" height="8" fill="#008236" /></g>
+                                  <g><rect x="214" y="48" width="16" height="96" fill="#00c950" /><rect x="214" y="22" width="16" height="26" fill="#00a63e" /><rect x="214" y="12" width="16" height="10" fill="#008236" /></g>
+                                  <g><rect x="252" y="84" width="16" height="60" fill="#00c950" /><rect x="252" y="62" width="16" height="22" fill="#00a63e" /><rect x="252" y="52" width="16" height="10" fill="#008236" /></g>
+                                  <g><rect x="290" y="68" width="16" height="76" fill="#00c950" /><rect x="290" y="44" width="16" height="24" fill="#00a63e" /><rect x="290" y="32" width="16" height="12" fill="#008236" /></g>
+                                  <g><rect x="328" y="96" width="16" height="48" fill="#00c950" /><rect x="328" y="76" width="16" height="20" fill="#00a63e" /><rect x="328" y="66" width="16" height="10" fill="#008236" /></g>
+                                  <g><rect x="366" y="56" width="16" height="88" fill="#00c950" /><rect x="366" y="30" width="16" height="26" fill="#00a63e" /><rect x="366" y="18" width="16" height="12" fill="#008236" /></g>
+                                  <g><rect x="404" y="88" width="16" height="56" fill="#00c950" /><rect x="404" y="66" width="16" height="22" fill="#00a63e" /><rect x="404" y="56" width="16" height="10" fill="#008236" /></g>
+                                  <g><rect x="442" y="72" width="16" height="72" fill="#00c950" /><rect x="442" y="48" width="16" height="24" fill="#00a63e" /><rect x="442" y="38" width="16" height="10" fill="#008236" /></g>
+                                  <g><rect x="480" y="100" width="16" height="44" fill="#00c950" /><rect x="480" y="82" width="16" height="18" fill="#00a63e" /><rect x="480" y="74" width="16" height="8" fill="#008236" /></g>
+                                  <g><rect x="518" y="64" width="16" height="80" fill="#00c950" /><rect x="518" y="40" width="16" height="24" fill="#00a63e" /><rect x="518" y="28" width="16" height="12" fill="#008236" /></g>
+                                  <g><rect x="556" y="80" width="16" height="64" fill="#00c950" /><rect x="556" y="58" width="16" height="22" fill="#00a63e" /><rect x="556" y="48" width="16" height="10" fill="#008236" /></g>
+                                  <g><rect x="594" y="52" width="16" height="92" fill="#00c950" /><rect x="594" y="28" width="16" height="24" fill="#00a63e" /><rect x="594" y="16" width="16" height="12" fill="#008236" /></g>
+                                </g>
+                                <g class="vx-chart-axis">
+                                  <text x="42" y="16" text-anchor="end">40k</text>
+                                  <text x="42" y="60" text-anchor="end">30k</text>
+                                  <text x="42" y="104" text-anchor="end">20k</text>
+                                  <text x="42" y="148" text-anchor="end">10k</text>
+                                </g>
+                              </svg>
+                              <div class="vx-usage-legend">
+                                <button class="is-active" type="button"><span class="vx-usage-dot" style="background:#00c950"></span><span data-i18n="showcase.desktop.usage.total">Total</span></button>
+                                <button class="is-active" type="button"><span class="vx-usage-dot" style="background:#00a63e"></span><span data-i18n="showcase.desktop.usage.input">Input</span></button>
+                                <button class="is-active" type="button"><span class="vx-usage-dot" style="background:#008236"></span><span data-i18n="showcase.desktop.usage.output">Output</span></button>
+                                <button class="is-active" type="button"><span class="vx-usage-dot" style="background:#016630"></span><span data-i18n="showcase.desktop.usage.cache">Cache</span></button>
+                              </div>
+                            </div>
+                            <div class="vx-usage-heatmap" data-usage-page="heatmap" hidden>
+                              <div class="vx-usage-heatgrid">
+                                <span style="--h:0.15"></span><span style="--h:0.3"></span><span style="--h:0.55"></span><span style="--h:0.2"></span><span style="--h:0.7"></span><span style="--h:0.45"></span><span style="--h:0.85"></span>
+                                <span style="--h:0.35"></span><span style="--h:0.6"></span><span style="--h:0.25"></span><span style="--h:0.9"></span><span style="--h:0.5"></span><span style="--h:0.15"></span><span style="--h:0.65"></span>
+                                <span style="--h:0.75"></span><span style="--h:0.4"></span><span style="--h:0.95"></span><span style="--h:0.3"></span><span style="--h:0.55"></span><span style="--h:0.8"></span><span style="--h:0.2"></span>
+                                <span style="--h:0.5"></span><span style="--h:0.85"></span><span style="--h:0.35"></span><span style="--h:0.6"></span><span style="--h:0.25"></span><span style="--h:0.7"></span><span style="--h:0.45"></span>
+                                <span style="--h:0.9"></span><span style="--h:0.2"></span><span style="--h:0.65"></span><span style="--h:0.4"></span><span style="--h:0.8"></span><span style="--h:0.3"></span><span style="--h:0.55"></span>
+                              </div>
+                            </div>
+                            <div class="vx-usage-models" data-usage-page="models" hidden>
+                              <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5.1-codex</span><div class="vx-usage-modelbar"><span style="width:82%"></span></div><b>10,482</b></div>
+                              <div class="vx-usage-modelrow"><span class="vx-usage-modelname">claude-sonnet-4.5</span><div class="vx-usage-modelbar"><span style="width:58%"></span></div><b>7,415</b></div>
+                              <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gemini-2.5-pro</span><div class="vx-usage-modelbar"><span style="width:34%"></span></div><b>4,330</b></div>
+                              <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5.1</span><div class="vx-usage-modelbar"><span style="width:18%"></span></div><b>2,296</b></div>
+                            </div>
+                          </div>
+                          <div class="vx-usage-dims">
+                            <div class="vx-usage-dimtabs">
+                              <button class="is-active" type="button" data-i18n="showcase.desktop.usage.time">Time</button>
+                              <button type="button" data-i18n="showcase.desktop.usage.agent">Agent</button>
+                              <button type="button" data-i18n="showcase.desktop.usage.project">Project</button>
+                              <button type="button" data-i18n="showcase.desktop.usage.provider">Model provider</button>
+                              <button type="button" data-i18n="showcase.desktop.usage.model">Model</button>
+                            </div>
+                            <div class="vx-usage-table">
+                              <div class="vx-usage-tr is-head">
+                                <span class="is-dim" data-i18n="showcase.desktop.usage.time">Time</span>
+                                <span class="is-num" data-i18n="showcase.desktop.usage.requests">Requests</span>
+                                <span class="is-num" data-i18n="showcase.desktop.usage.total">Total</span>
+                                <span class="is-num" data-i18n="showcase.desktop.usage.input">Input</span>
+                                <span class="is-num" data-i18n="showcase.desktop.usage.output">Output</span>
+                                <span class="is-num" data-i18n="showcase.desktop.usage.cache">Cache</span>
+                                <span class="is-num" data-i18n="showcase.desktop.usage.hitRate">Hit rate</span>
+                                <span class="is-num" data-i18n="showcase.desktop.usage.lastActivity">Last activity</span>
+                                <span class="is-num" data-i18n="showcase.desktop.usage.coverage">Coverage</span>
+                              </div>
+                              <div class="vx-usage-tr"><span class="is-dim">Aug 5</span><span class="is-num">128</span><span class="is-num">1.24M</span><span class="is-num">0.88M</span><span class="is-num">0.16M</span><span class="is-num">0.20M</span><span class="is-num">61%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
+                              <div class="vx-usage-tr"><span class="is-dim">Aug 6</span><span class="is-num">96</span><span class="is-num">0.98M</span><span class="is-num">0.71M</span><span class="is-num">0.12M</span><span class="is-num">0.15M</span><span class="is-num">58%</span><span class="is-num">5h ago</span><span class="is-num">Reported</span></div>
+                              <div class="vx-usage-tr"><span class="is-dim">Aug 7</span><span class="is-num">154</span><span class="is-num">1.62M</span><span class="is-num">1.12M</span><span class="is-num">0.21M</span><span class="is-num">0.29M</span><span class="is-num">64%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
+                              <div class="vx-usage-tr"><span class="is-dim">Aug 8</span><span class="is-num">72</span><span class="is-num">0.74M</span><span class="is-num">0.52M</span><span class="is-num">0.09M</span><span class="is-num">0.13M</span><span class="is-num">63%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
+                              <div class="vx-usage-tr"><span class="is-dim">Aug 9</span><span class="is-num">183</span><span class="is-num">1.85M</span><span class="is-num">1.31M</span><span class="is-num">0.24M</span><span class="is-num">0.30M</span><span class="is-num">66%</span><span class="is-num">8h ago</span><span class="is-num">Reported</span></div>
+                              <div class="vx-usage-tr"><span class="is-dim">Aug 10</span><span class="is-num">141</span><span class="is-num">1.41M</span><span class="is-num">0.97M</span><span class="is-num">0.19M</span><span class="is-num">0.25M</span><span class="is-num">62%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1031,6 +1184,12 @@ createIcons({
     X,
     Zap,
     Mic,
+    ChartPie,
+    LayoutDashboard,
+    HardDrive,
+    Inbox,
+    ImportIcon,
+    RotateCw,
   },
 });
 
@@ -1205,6 +1364,12 @@ function applyLanguage(language, { persist = true } = {}) {
   attrBindings.forEach(([selector, attribute, key]) => {
     document.querySelectorAll(selector).forEach((element) => element.setAttribute(attribute, translate(currentLanguage, key)));
   });
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    element.textContent = translate(currentLanguage, element.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-text]").forEach((element) => {
+    element.textContent = translate(currentLanguage, element.dataset.i18nText);
+  });
 
   const menuOpen = menuButton?.getAttribute("aria-expanded") === "true";
   menuButton?.setAttribute("aria-label", translate(currentLanguage, menuOpen ? "nav.close" : "nav.open"));
@@ -1234,6 +1399,10 @@ function applyLanguage(language, { persist = true } = {}) {
 
   const activeDesktopView = desktopShowcase?.querySelector("[data-desktop-view].is-active")?.dataset.desktopView;
   if (activeDesktopView) setDesktopView(activeDesktopView, { restore: true });
+  // setDesktopView only refreshes the caption, so re-sync the titlebar for
+  // the new-session home, which has no view tab of its own.
+  const homePanelActive = desktopShowcase?.querySelector('[data-desktop-panel="home"]')?.classList.contains("is-active") ?? false;
+  if (homePanelActive) syncSessionTitle(false);
   const activeDesktopRail = desktopShowcase?.querySelector("[data-rail-mode]:not([hidden])")?.dataset.railMode;
   if (activeDesktopRail) setDesktopRail(activeDesktopRail);
 
@@ -1278,7 +1447,7 @@ if (desktopViewport && desktopCanvas) {
   new ResizeObserver(resizeDesktopShowcase).observe(desktopViewport);
 }
 
-const DESKTOP_VIEWS = ["agent", "files", "management"];
+const DESKTOP_VIEWS = ["agent", "files", "management", "usage"];
 const RAIL_LABEL_KEYS = {
   files: "showcase.desktop.railFiles",
   git: "showcase.desktop.railGit",
@@ -1287,6 +1456,7 @@ const VIEW_LABEL_KEYS = {
   agent: "showcase.desktop.agent",
   files: "showcase.desktop.files",
   management: "showcase.desktop.management",
+  usage: "showcase.desktop.usage",
 };
 const MANAGEMENT_AGENT_KEYS = {
   codex: { logo: "/assets/agents/openai.svg", name: "Codex", desc: "gpt-5.1-codex · Vibex-managed runtime" },
@@ -1331,6 +1501,11 @@ function setMgmtTab(tabKey) {
   desktopShowcase.querySelectorAll("[data-mgmt-pane]").forEach((pane) => {
     pane.hidden = pane.dataset.mgmtPane !== tab;
   });
+  // Each section carries its own context sidebar in the app (Agent list /
+  // MCP resources / Skills), so swap the sidebar together with the pane.
+  desktopShowcase.querySelectorAll("[data-mgmt-sidebar]").forEach((sidebar) => {
+    sidebar.hidden = sidebar.dataset.mgmtSidebar !== tab;
+  });
 }
 
 function selectMgmtAgent(agentKey) {
@@ -1357,21 +1532,35 @@ function setDesktopView(viewKey, { restore = false } = {}) {
   });
   // "Agent workbench" and "Files & Git" share the timeline; the new-session
   // home opens only through the "New chat" action.
-  const panelView = view === "management" ? "management" : "agent";
-  desktopShowcase.querySelectorAll("[data-desktop-panel]").forEach((panel) => {
-    panel.classList.toggle("is-active", panel.dataset.desktopPanel === panelView);
+  const panelView = view === "management" ? "management" : view === "usage" ? "usage" : "agent";
+  setActivePanel(panelView);
+  // The real app swaps the whole center surface for Config Center / Usage
+  // Statistics: no preview dock, no right rail, no activity bar. The new-
+  // session home does the same.
+  const fullpage = panelView !== "agent";
+  syncSessionTitle(panelView === "agent");
+  desktopShowcase.querySelectorAll("[data-desktop-side]").forEach((button) => {
+    button.classList.toggle("is-selected", button.dataset.desktopSide === view);
   });
   if (!restore) {
     setDesktopRail(view === "files" ? "git" : "files");
-    // The real app swaps the whole center surface for Config Center and
-    // closes the preview dock / right rail around it.
     const shell = desktopShowcase.querySelector("[data-desktop-shell]");
-    shell?.classList.toggle("is-preview-hidden", view === "management");
-    if (view === "management") shell?.classList.add("is-rail-collapsed");
-    setPreviewOpen(view !== "management");
+    shell?.classList.toggle("is-fullpage", fullpage);
+    setPreviewOpen(!fullpage);
   }
   const caption = desktopShowcase.querySelector("[data-desktop-caption]");
   if (caption) caption.textContent = translate(currentLanguage, VIEW_LABEL_KEYS[view]);
+}
+
+function setActivePanel(panelKey) {
+  if (!desktopShowcase) return;
+  desktopShowcase.querySelectorAll("[data-desktop-panel]").forEach((panel) => {
+    panel.classList.toggle("is-active", panel.dataset.desktopPanel === panelKey);
+  });
+}
+
+function syncSessionTitle(visible) {
+  desktopShowcase?.querySelector("[data-desktop-title-main]")?.classList.toggle("is-title-hidden", !visible);
 }
 
 desktopShowcase?.querySelectorAll("[data-desktop-view]").forEach((tab) => {
@@ -1391,8 +1580,15 @@ desktopShowcase?.querySelectorAll("[data-runtime-choice]").forEach((choice) => {
 
 desktopShowcase?.querySelectorAll("[data-desktop-rail]").forEach((tab) => {
   tab.addEventListener("click", () => {
-    desktopShowcase.querySelector("[data-desktop-shell]")?.classList.remove("is-rail-collapsed");
-    setDesktopRail(tab.dataset.desktopRail);
+    const shell = desktopShowcase.querySelector("[data-desktop-shell]");
+    const alreadyActive = tab.classList.contains("is-active");
+    if (alreadyActive) {
+      // Toggling the active rail button collapses the panel, like the app.
+      shell?.classList.add("is-rail-collapsed");
+    } else {
+      shell?.classList.remove("is-rail-collapsed");
+      setDesktopRail(tab.dataset.desktopRail);
+    }
     markShowcaseInteraction();
   });
 });
@@ -1410,6 +1606,24 @@ desktopShowcase?.querySelectorAll("[data-mgmt-tab]").forEach((button) => {
     markShowcaseInteraction();
   });
 });
+
+desktopShowcase?.querySelectorAll("[data-usage-seg] [data-usage-view], .vx-usage-range [data-usage-view]").forEach((button) => {
+  button.addEventListener("click", () => {
+    setUsageView(button.dataset.usageView);
+    markShowcaseInteraction();
+  });
+});
+
+function setUsageView(viewKey) {
+  if (!desktopShowcase) return;
+  const view = ["bars", "heatmap", "models"].includes(viewKey) ? viewKey : "bars";
+  desktopShowcase.querySelectorAll("[data-usage-seg] [data-usage-view]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.usageView === view);
+  });
+  desktopShowcase.querySelectorAll("[data-usage-page]").forEach((page) => {
+    page.hidden = page.dataset.usagePage !== view;
+  });
+}
 
 desktopShowcase?.querySelectorAll("[data-mgmt-agent]").forEach((row) => {
   row.addEventListener("click", () => {
@@ -1433,29 +1647,39 @@ desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
       setDesktopView("management");
       return;
     }
-    if (kind === "agent" || kind === "usage") {
+    if (kind === "usage") {
+      setDesktopView("usage");
+      return;
+    }
+    if (kind === "agent") {
       setDesktopView("agent");
       desktopShowcase.querySelectorAll(".vx-session-row").forEach((row) => row.classList.toggle("is-selected", row === action));
       return;
     }
     if (kind === "new-session") {
       desktopShowcase.querySelectorAll("[data-desktop-view]").forEach((tab) => {
-        tab.classList.toggle("is-active", tab.dataset.desktopView === "agent");
-        tab.setAttribute("aria-selected", String(tab.dataset.desktopView === "agent"));
+        const active = tab.dataset.desktopView === "agent";
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", String(active));
       });
-      desktopShowcase.querySelectorAll("[data-desktop-panel]").forEach((panel) => {
-        panel.classList.toggle("is-active", panel.dataset.desktopPanel === "home");
-      });
+      setActivePanel("home");
+      // The new-session home owns the whole surface: no preview dock, no
+      // right rail, no activity bar.
       const shell = desktopShowcase.querySelector("[data-desktop-shell]");
-      shell?.classList.remove("is-preview-hidden", "is-rail-collapsed");
-      setPreviewOpen(true);
+      shell?.classList.add("is-fullpage");
+      setPreviewOpen(false);
+      syncSessionTitle(false);
+      desktopShowcase.querySelectorAll("[data-desktop-side]").forEach((button) => {
+        button.classList.remove("is-selected");
+      });
       const caption = desktopShowcase.querySelector("[data-desktop-caption]");
       if (caption) caption.textContent = translate(currentLanguage, "showcase.desktop.agent");
       return;
     }
     if (kind === "preview-open") {
       const shell = desktopShowcase.querySelector("[data-desktop-shell]");
-      shell?.classList.remove("is-preview-hidden", "is-rail-collapsed");
+      shell?.classList.remove("is-fullpage");
+      shell?.classList.remove("is-rail-collapsed");
       setPreviewOpen(true);
       return;
     }
@@ -1466,7 +1690,7 @@ desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
     if (kind === "terminal") {
       const preview = desktopShowcase.querySelector("[data-desktop-preview]");
       const open = preview?.classList.contains("is-hidden") ?? false;
-      desktopShowcase.querySelector("[data-desktop-shell]")?.classList.remove("is-preview-hidden");
+      desktopShowcase.querySelector("[data-desktop-shell]")?.classList.remove("is-fullpage");
       setPreviewOpen(open);
       return;
     }

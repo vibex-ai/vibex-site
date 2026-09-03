@@ -894,6 +894,8 @@ h3 {
   flex: none;
   align-items: stretch;
   background: var(--vx-bg);
+  /* The real app draws a hairline between the title bar and the page. */
+  border-bottom: 1px solid var(--vx-border-soft);
 }
 
 .vx-titlebar-side {
@@ -913,6 +915,12 @@ h3 {
   align-items: center;
   gap: 6px;
   padding: 0 8px;
+}
+
+/* Session titles only exist on the agent workbench; Config Center, Usage
+   Statistics and the new-session home render the bare surface. */
+.vx-titlebar-main.is-title-hidden {
+  visibility: hidden;
 }
 
 .vx-session-title {
@@ -988,21 +996,15 @@ h3 {
   grid-template-columns: 0px minmax(0, 1fr) auto 0px 40px;
 }
 
-/* Config Center replaces the whole center surface: hide the preview dock */
-.vx-body.is-preview-hidden {
-  grid-template-columns: 280px minmax(0, 1fr) 0px 320px 40px;
+/* Config Center / Usage Statistics replace the whole center surface: the
+   preview dock, right rail, and activity bar all fold away (app.rs keeps the
+   preview dock and rail only while a session is open). */
+.vx-body.is-fullpage {
+  grid-template-columns: 280px minmax(0, 1fr) 0px 0px 0px;
 }
 
-.vx-body.is-sidebar-collapsed.is-preview-hidden {
-  grid-template-columns: 0px minmax(0, 1fr) 0px 320px 40px;
-}
-
-.vx-body.is-preview-hidden.is-rail-collapsed {
-  grid-template-columns: 280px minmax(0, 1fr) 0px 0px 40px;
-}
-
-.vx-body.is-sidebar-collapsed.is-preview-hidden.is-rail-collapsed {
-  grid-template-columns: 0px minmax(0, 1fr) 0px 0px 40px;
+.vx-body.is-sidebar-collapsed.is-fullpage {
+  grid-template-columns: 0px minmax(0, 1fr) 0px 0px 0px;
 }
 
 /* --- Session sidebar ------------------------------------------------------ */
@@ -1043,6 +1045,11 @@ h3 {
 
 .vx-side-btn:hover {
   background: var(--vx-muted);
+  color: var(--vx-fg);
+}
+
+.vx-side-btn.is-selected {
+  background: var(--vx-selected);
   color: var(--vx-fg);
 }
 
@@ -1722,7 +1729,7 @@ h3 {
   align-items: center;
   gap: 6px;
   padding: 0 9px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 0;
   border-radius: 7px;
   background: transparent;
   color: #c8c8ce;
@@ -1736,7 +1743,7 @@ h3 {
 }
 
 .vx-chip.is-active {
-  border-color: rgba(228, 228, 231, 0.3);
+  background: rgba(255, 255, 255, 0.07);
   color: var(--vx-fg);
 }
 
@@ -1835,20 +1842,25 @@ h3 {
 
 .vx-home-mark {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 14px;
 }
 
+/* Mirrors the app wordmark: a 46×45 mark raised 6px so its baseline lines up
+   with the "ibex" text, which stays at 42px semibold. */
 .vx-home-mark img {
   width: 46px;
   height: 45px;
+  transform: translateY(-6px);
 }
 
 .vx-home-mark span {
+  display: block;
   color: var(--vx-fg);
   font-size: 42px;
   font-weight: 600;
   letter-spacing: -0.02em;
+  line-height: 1;
 }
 
 .vx-home h1 {
@@ -2523,20 +2535,31 @@ h3 {
 
 .vx-mgmt-empty {
   display: flex;
+  min-height: 0;
   flex-direction: column;
-  gap: 6px;
-  align-items: flex-start;
-  margin-top: 40px;
-  padding: 0 8px;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 0;
 }
 
-.vx-mgmt-empty strong {
+/* The detail pane's empty state sits flush at the top of the content area. */
+.vx-mgmt-emptybox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--vx-border);
+  border-radius: 8px;
+}
+
+.vx-mgmt-emptybox strong {
   color: var(--vx-fg);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
 }
 
-.vx-mgmt-empty small {
+.vx-mgmt-emptybox small {
   color: var(--vx-muted-fg);
   font-size: 12px;
 }
@@ -2545,9 +2568,532 @@ h3 {
   margin-top: 10px;
 }
 
+.vx-mgmt-sidebody {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.vx-mgmt-sidebody[hidden] {
+  display: none;
+}
+
+.vx-mgmt-import {
+  display: flex;
+  height: 32px;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #d4d4d8;
+  cursor: pointer;
+  font-size: 12.5px;
+}
+
+.vx-mgmt-import:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.vx-mgmt-import svg {
+  width: 14px;
+  height: 14px;
+  color: var(--vx-muted-fg);
+}
+
+.vx-mgmt-resources {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  overflow: auto;
+}
+
+.vx-mgmt-reshead {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 4px;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.vx-mgmt-rescount {
+  display: inline-flex;
+  min-width: 18px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  background: rgba(39, 39, 42, 0.45);
+  font-size: 10.5px;
+}
+
+.vx-mgmt-emptycard {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(9, 9, 11, 0.6);
+}
+
+.vx-mgmt-emptycard strong {
+  color: var(--vx-fg);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.vx-mgmt-emptycard small {
+  color: var(--vx-muted-fg);
+  font-size: 11.5px;
+}
+
 .vx-img-icon {
   width: 15px;
   height: 15px;
+}
+
+/* --- Usage statistics ------------------------------------------------------ */
+
+.vx-usage {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--vx-bg);
+}
+
+.vx-usage-header {
+  display: flex;
+  height: 48px;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--vx-border-soft);
+}
+
+.vx-usage-header svg {
+  width: 16px;
+  height: 16px;
+  color: var(--vx-muted-fg);
+}
+
+.vx-usage-header strong {
+  color: var(--vx-fg);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.vx-usage-spacer {
+  flex: 1;
+}
+
+.vx-usage-toolbar {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+}
+
+.vx-usage-range {
+  display: flex;
+  height: 32px;
+  align-items: center;
+  gap: 2px;
+  margin-right: 4px;
+  padding: 0 3px;
+  border: 1px solid var(--vx-border-soft);
+  border-radius: 8px;
+  background: rgba(39, 39, 42, 0.2);
+}
+
+.vx-usage-range button {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vx-usage-range button:hover {
+  color: var(--vx-fg);
+}
+
+.vx-usage-range button.is-active {
+  background: var(--vx-selected);
+  color: var(--vx-fg);
+}
+
+.vx-usage-filter {
+  display: inline-flex;
+  height: 32px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.vx-usage-filter:hover {
+  color: var(--vx-fg);
+}
+
+.vx-usage-filter svg {
+  width: 13px;
+  height: 13px;
+}
+
+.vx-usage-filter svg:last-child {
+  width: 11px;
+  height: 11px;
+}
+
+.vx-usage-scroll {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+  padding: 4px 16px 16px;
+}
+
+.vx-usage-summary {
+  display: grid;
+  flex: none;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.vx-usage-metric {
+  display: flex;
+  height: 72px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 8px;
+  background: var(--vx-card);
+}
+
+.vx-usage-mlabel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.vx-usage-mlabel svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  color: rgba(228, 228, 231, 0.82);
+}
+
+.vx-usage-metric strong {
+  overflow: hidden;
+  color: var(--vx-fg);
+  font-size: 16px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-usage-trend {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--vx-border-soft);
+  border-bottom: 1px solid var(--vx-border-soft);
+}
+
+.vx-usage-trendhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.vx-usage-trendhead > strong {
+  color: var(--vx-fg);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vx-usage-seg {
+  display: flex;
+  height: 28px;
+  align-items: center;
+  gap: 2px;
+  padding: 0 3px;
+  border: 1px solid var(--vx-border-soft);
+  border-radius: 7px;
+  background: rgba(39, 39, 42, 0.2);
+}
+
+.vx-usage-seg button {
+  display: flex;
+  height: 21px;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.vx-usage-seg button:hover {
+  color: var(--vx-fg);
+}
+
+.vx-usage-seg button.is-active {
+  background: var(--vx-selected);
+  color: var(--vx-fg);
+}
+
+.vx-usage-seg button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.vx-usage-chart svg {
+  display: block;
+  width: 100%;
+  height: 176px;
+}
+
+.vx-chart-grid {
+  stroke: rgba(255, 255, 255, 0.07);
+  stroke-width: 1;
+}
+
+.vx-chart-axis text {
+  fill: var(--vx-muted-fg);
+  font-family: var(--vx-mono);
+  font-size: 9px;
+}
+
+.vx-usage-legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.vx-usage-legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 7px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.vx-usage-legend button.is-active {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--vx-fg);
+}
+
+.vx-usage-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.vx-usage-heatmap {
+  min-height: 176px;
+}
+
+.vx-usage-heatgrid {
+  display: grid;
+  grid-template-columns: repeat(7, 12px);
+  gap: 3px;
+  align-content: center;
+  justify-content: center;
+}
+
+.vx-usage-heatgrid span {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: color-mix(in oklab, #00c950 calc(var(--h) * 100%), rgba(255, 255, 255, 0.05));
+}
+
+.vx-usage-models {
+  display: flex;
+  min-height: 176px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.vx-usage-modelrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vx-usage-modelname {
+  width: 150px;
+  flex: none;
+  overflow: hidden;
+  color: rgba(250, 250, 250, 0.8);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-usage-modelbar {
+  display: flex;
+  flex: 1;
+  height: 14px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vx-usage-modelbar span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: #00c950;
+}
+
+.vx-usage-modelrow b {
+  width: 56px;
+  flex: none;
+  color: var(--vx-fg);
+  font-family: var(--vx-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-align: right;
+}
+
+.vx-usage-dims {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vx-usage-dimtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.vx-usage-dimtabs button {
+  display: inline-flex;
+  height: 30px;
+  align-items: center;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vx-usage-dimtabs button:hover {
+  color: var(--vx-fg);
+}
+
+.vx-usage-dimtabs button.is-active {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--vx-fg);
+}
+
+.vx-usage-table {
+  display: flex;
+  flex-direction: column;
+  min-width: 900px;
+}
+
+.vx-usage-tr {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.vx-usage-tr.is-head {
+  height: 34px;
+  min-height: 34px;
+  border-bottom: 1px solid var(--vx-border-soft);
+  background: rgba(39, 39, 42, 0.28);
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.vx-usage-tr:not(.is-head):nth-child(odd) {
+  background: rgba(39, 39, 42, 0.16);
+}
+
+.vx-usage-tr > span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-usage-tr > span.is-num {
+  flex: 0 0 88px;
+  color: rgba(250, 250, 250, 0.86);
+  font-family: var(--vx-mono);
+  font-size: 11.5px;
+  text-align: right;
+}
+
+.vx-usage-tr > span.is-dim {
+  color: var(--vx-muted-fg);
 }
 
 /* --- Right rail ------------------------------------------------------------ */
@@ -2560,6 +3106,19 @@ h3 {
   overflow: hidden;
   background: var(--vx-rail-bg);
   border-left: 1px solid var(--vx-border-soft);
+}
+
+/* Collapsed rails must not bleed into the workbench: the fixed width would
+   otherwise overflow the zero-width grid track. */
+.vx-body.is-rail-collapsed .vx-rail {
+  width: 0;
+  border-left: 0;
+}
+
+.vx-body.is-fullpage .vx-rail,
+.vx-body.is-fullpage .vx-preview,
+.vx-body.is-fullpage .vx-activity {
+  display: none;
 }
 
 .vx-rail-head {

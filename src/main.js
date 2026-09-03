@@ -3,6 +3,7 @@ import {
   AtSign,
   ArrowLeft,
   ArrowRight,
+  ArrowUp,
   ArrowUpRight,
   Battery,
   Brain,
@@ -11,6 +12,7 @@ import {
   Check,
   ChevronDown,
   ChevronRight,
+  ChevronsDownUp,
   ChevronsRight,
   ChevronsRightLeft,
   CircleDot,
@@ -23,6 +25,8 @@ import {
   Crosshair,
   Download,
   Eye,
+  File,
+  FileCode,
   FileCode2,
   FileDiff,
   FileText,
@@ -49,6 +53,7 @@ import {
   PanelLeftClose,
   PanelRightClose,
   Paperclip,
+  Pencil,
   Play,
   Plug,
   Plus,
@@ -71,6 +76,7 @@ import {
   SunMedium,
   Terminal,
   TriangleAlert,
+  Upload,
   UserRound,
   Wifi,
   Workflow,
@@ -216,65 +222,258 @@ document.querySelector("#app").innerHTML = `
           <div class="showcase-glow" aria-hidden="true"></div>
           <div class="desktop-showcase-tabs" role="tablist" aria-label="Vibex desktop workbench" data-desktop-tablist>
             <button class="desktop-showcase-tab is-active" type="button" role="tab" aria-selected="true" data-desktop-view="agent"><i data-lucide="message-square"></i><span data-desktop-tab="agent">Agent workbench</span></button>
-            <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="preview"><i data-lucide="code-2"></i><span data-desktop-tab="preview">Preview</span></button>
-            <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="files"><i data-lucide="folder-open"></i><span data-desktop-tab="files">Files &amp; Git</span></button>
+            <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="files"><i data-lucide="git-branch"></i><span data-desktop-tab="files">Files &amp; Git</span></button>
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="management"><i data-lucide="settings"></i><span data-desktop-tab="management">Config Center</span></button>
           </div>
           <div class="desktop-showcase-viewport" data-desktop-viewport>
             <div class="desktop-showcase-canvas" data-desktop-canvas>
               <div class="desktop-app" aria-label="Vibex desktop workbench">
-                <header class="desktop-titlebar">
-                  <div class="desktop-titlebar-left">
-                    <button class="desktop-icon-button" type="button" data-desktop-action="sidebar" aria-label="Toggle sidebar"><i data-lucide="panel-left-close"></i></button>
-                    <button class="desktop-icon-button is-disabled" type="button" aria-label="Go back"><i data-lucide="arrow-left"></i></button>
-                    <button class="desktop-icon-button is-disabled" type="button" aria-label="Go forward"><i data-lucide="arrow-right"></i></button>
+                <header class="vx-titlebar">
+                  <div class="vx-titlebar-side">
+                    <button class="vx-icon-btn is-lg" type="button" data-desktop-action="sidebar" aria-label="Collapse sidebar"><i data-lucide="panel-left-close"></i></button>
+                    <button class="vx-icon-btn is-disabled" type="button" aria-label="Go back" disabled><i data-lucide="arrow-left"></i></button>
+                    <button class="vx-icon-btn is-disabled" type="button" aria-label="Go forward" disabled><i data-lucide="arrow-right"></i></button>
                   </div>
-                  <div class="desktop-title-context"><strong>Design the product surface</strong><span><b>vibex</b><i data-lucide="git-branch"></i>codex/agent-session-core</span></div>
-                  <div class="desktop-titlebar-right"><button class="desktop-icon-button" type="button" aria-label="More session actions"><i data-lucide="ellipsis"></i></button><button class="desktop-icon-button" type="button" data-desktop-action="pair" aria-label="Pair mobile"><i data-lucide="smartphone"></i></button><button class="desktop-icon-button" type="button" data-desktop-action="settings" aria-label="Open settings"><i data-lucide="settings"></i></button><span class="desktop-runtime-dot" aria-label="Local runtime ready"></span><span class="desktop-window-controls"><button class="desktop-icon-button" type="button" aria-label="Minimize"><i data-lucide="minus"></i></button><button class="desktop-icon-button" type="button" aria-label="Maximize"><i data-lucide="square"></i></button><button class="desktop-icon-button" type="button" aria-label="Close"><i data-lucide="x"></i></button></span></div>
+                  <div class="vx-titlebar-main">
+                    <span class="vx-session-title">Refactor agent session timeline</span>
+                    <button class="vx-icon-btn is-sm" type="button" aria-label="Session actions"><i data-lucide="ellipsis"></i></button>
+                  </div>
+                  <div class="vx-titlebar-actions">
+                    <button class="vx-icon-btn is-lg" type="button" data-desktop-action="pair" aria-label="Pair mobile"><i data-lucide="smartphone"></i></button>
+                    <button class="vx-icon-btn is-lg" type="button" data-desktop-action="settings" aria-label="Open settings"><i data-lucide="settings"></i></button>
+                  </div>
+                  <div class="vx-win-controls">
+                    <button class="vx-win-btn" type="button" aria-label="Minimize"><i data-lucide="minus"></i></button>
+                    <button class="vx-win-btn" type="button" aria-label="Maximize"><i data-lucide="square"></i></button>
+                    <button class="vx-win-btn is-close" type="button" aria-label="Close"><i data-lucide="x"></i></button>
+                  </div>
                 </header>
-                <div class="desktop-shell is-right-rail-collapsed" data-desktop-shell>
-                  <aside class="desktop-sidebar">
-                    <div class="desktop-sidebar-actions"><button class="desktop-sidebar-button" type="button" data-desktop-action="new-session"><i data-lucide="plus"></i><span>New chat</span></button><button class="desktop-sidebar-button" type="button" data-desktop-action="management"><i data-lucide="settings"></i><span>Config Center</span></button><button class="desktop-sidebar-button" type="button" data-desktop-action="usage"><i data-lucide="activity"></i><span>Usage Statistics</span></button></div>
-                    <div class="desktop-sidebar-divider"></div>
-                    <div class="desktop-project-heading"><span>Projects</span><div><button class="desktop-icon-button" type="button" aria-label="More projects"><i data-lucide="ellipsis"></i></button><button class="desktop-icon-button" type="button" aria-label="Collapse projects"><i data-lucide="chevrons-right-left"></i></button><button class="desktop-icon-button" type="button" aria-label="Locate current session"><i data-lucide="crosshair"></i></button><button class="desktop-icon-button" type="button" aria-label="New project"><i data-lucide="plus"></i></button><button class="desktop-icon-button" type="button" aria-label="Search sessions"><i data-lucide="search"></i></button></div></div>
-                    <div class="desktop-project-row"><i data-lucide="folder"></i><strong>vibex</strong><span>2</span></div>
-                    <div class="desktop-workspace-row"><span class="desktop-status-dot"></span><div><strong>codex/agent-session-core</strong><small>Current Checkout</small></div><i data-lucide="chevron-down"></i></div>
-                    <div class="desktop-session-list"><button class="desktop-session-row is-selected" type="button" data-desktop-action="agent"><span class="desktop-agent-glyph"><i data-lucide="sparkles"></i></span><span><strong>Design the product surface</strong><small>just now</small></span><i data-lucide="ellipsis"></i></button><button class="desktop-session-row" type="button" data-desktop-action="agent"><span class="desktop-agent-glyph is-muted"><i data-lucide="message-square"></i></span><span><strong>Review desktop layout</strong><small>12 min ago</small></span><i data-lucide="ellipsis"></i></button></div>
-                  </aside>
-                  <main class="desktop-main">
-                    <div class="desktop-panel-stack">
-                      <section class="desktop-panel desktop-panel-agent is-active" data-desktop-panel="agent">
-                        <div class="desktop-timeline"><button class="desktop-continue-button" type="button" data-desktop-action="continue">Continue</button><div class="desktop-user-bubble"><div class="desktop-bubble-meta"><span>You</span><time>just now</time></div><p>Trace the active desktop shell and refine the product surface.</p></div><div class="desktop-turn-divider"><span><i data-lucide="loader-circle"></i> Working for 18s</span><i data-lucide="chevron-down"></i></div><div class="desktop-change-card"><div class="desktop-change-summary"><span><i data-lucide="file-diff"></i><strong>2 files updated</strong></span><em><b>-26</b> <b>+74</b></em></div><div class="desktop-change-row"><i data-lucide="file-text"></i><code>src/workbench.rs</code><span><b>-12</b> <b>+35</b></span></div><div class="desktop-change-row"><i data-lucide="file-text"></i><code>src/runtime.rs</code><span><b>-14</b> <b>+39</b></span></div><div class="desktop-change-actions"><button type="button"><i data-lucide="rotate-ccw"></i>Undo</button><button type="button"><i data-lucide="eye"></i>Review</button></div></div><div class="desktop-agent-block"><div class="desktop-agent-meta"><span class="desktop-agent-avatar"><i data-lucide="sparkles"></i></span><strong>Codex</strong><span>Agent response</span></div><p>I am tracing the current title bar, session sidebar, timeline, Composer, and right-side workspace surfaces before changing the presentation.</p><div class="desktop-inline-actions"><button type="button"><i data-lucide="copy"></i>Copy</button><button type="button"><i data-lucide="git-branch"></i>Fork</button></div></div><button class="desktop-tool-row" type="button" data-desktop-toggle="tool"><span><i data-lucide="square-terminal"></i><code>cargo test -p vibex-desktop</code></span><span class="desktop-tool-status">completed</span><i data-lucide="chevron-right"></i></button><button class="desktop-tool-row" type="button"><span><i data-lucide="file-text"></i><code>edit src/workbench.rs</code></span><span class="desktop-diff-add">+24</span><span class="desktop-diff-remove">-8</span><i data-lucide="chevron-right"></i></button></div>
-                        <div class="desktop-composer">
-                          <div class="desktop-composer-input">
-                            <span>Ask Vibex to inspect, edit, test, or explain this workspace...</span>
-                            <span class="desktop-composer-input-actions"><button class="desktop-icon-button" type="button" data-desktop-action="expand" aria-label="Expand input"><i data-lucide="maximize-2"></i></button><button class="desktop-icon-button" type="button" data-desktop-action="terminal" aria-label="Open terminal"><i data-lucide="square-terminal"></i></button></span>
-                          </div>
-                          <div class="desktop-composer-footer"><div class="desktop-composer-runtime"><button class="desktop-icon-button" type="button" aria-label="Add attachments"><i data-lucide="plus"></i></button><button class="desktop-runtime-choice is-active" type="button" data-runtime-choice="agent"><i data-lucide="sparkles"></i><span>Local runtime</span><i data-lucide="chevron-down"></i></button><button class="desktop-runtime-choice" type="button" data-runtime-choice="profile"><i data-lucide="shield-check"></i><span>Workspace access</span><i data-lucide="chevron-down"></i></button><button class="desktop-runtime-choice" type="button" data-runtime-choice="effort"><i data-lucide="brain"></i><span>Balanced</span><i data-lucide="chevron-down"></i></button><button class="desktop-runtime-choice" type="button" data-runtime-choice="mode"><i data-lucide="shield-alert"></i><span>Guarded</span><i data-lucide="chevron-down"></i></button></div><div class="desktop-composer-end"><button class="desktop-usage-button" type="button" aria-label="Open usage statistics"><i data-lucide="circle-dot"></i></button><button class="desktop-composer-select" type="button">Codex runtime <i data-lucide="chevron-down"></i></button><button class="desktop-send-button" type="button" data-desktop-action="send" aria-label="Send message"><i data-lucide="arrow-up"></i></button></div></div>
-                        </div>
-                      </section>
-
-                      <section class="desktop-panel desktop-panel-preview" data-desktop-panel="preview">
-                        <div class="desktop-panel-toolbar"><div><i data-lucide="code-2"></i><strong>Preview</strong><span>apps/desktop/src/app.rs</span></div><div><button class="desktop-icon-button" type="button" aria-label="Refresh preview"><i data-lucide="refresh-cw"></i></button><button class="desktop-icon-button" type="button" aria-label="Open preview"><i data-lucide="panel-right"></i></button></div></div>
-                        <div class="desktop-editor"><div class="desktop-editor-tabs"><span class="is-active">app.rs</span><span>code_workbench.rs</span><span>locale.rs</span></div><div class="desktop-code"><span><b>01</b><em>pub struct</em> VibexWorkbench {</span><span><b>02</b>    focus_handle: FocusHandle,</span><span><b>03</b>    selected_session_id: Option&lt;VibexSessionId&gt;,</span><span><b>04</b>    timeline: TimelineModel,</span><span><b>05</b>    composer_input: Entity&lt;InputState&gt;,</span><span class="desktop-code-highlight"><b>06</b>    preview_visible: bool,</span><span><b>07</b>    right_rail_mode: RightRailMode,</span><span><b>08</b>}</span><span><b>09</b></span><span><b>10</b><em>fn render_shell</em>(&amp;mut self) -&gt; AnyElement {</span><span><b>11</b>    <i>/* title bar + workspace shell */</i></span></div></div>
-                        <div class="desktop-preview-status"><span class="desktop-status-dot"></span><span>Local runtime ready</span><span>Rust · GPUI</span><span>Unsaved changes</span></div>
-                      </section>
-
-                      <section class="desktop-panel desktop-panel-files" data-desktop-panel="files">
-                        <div class="desktop-panel-toolbar"><div><i data-lucide="folder-open"></i><strong>Files &amp; Git</strong><span>codex/agent-session-core</span></div><div><button class="desktop-icon-button" type="button" aria-label="Refresh files"><i data-lucide="refresh-cw"></i></button><button class="desktop-icon-button" type="button" aria-label="Commit changes"><i data-lucide="git-commit-horizontal"></i></button></div></div>
-                        <div class="desktop-files-layout"><div class="desktop-file-tree"><div class="desktop-file-tree-heading"><span>Changes</span><strong>5</strong></div><button class="desktop-file-row is-folder" type="button"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>apps</span></button><button class="desktop-file-row is-folder" type="button"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>desktop</span></button><button class="desktop-file-row is-selected" type="button"><i data-lucide="file-text"></i><span>src/app.rs</span><em>M</em></button><button class="desktop-file-row" type="button"><i data-lucide="file-text"></i><span>src/code_workbench.rs</span><em>M</em></button><button class="desktop-file-row is-folder" type="button"><i data-lucide="chevron-right"></i><i data-lucide="folder"></i><span>crates</span></button><button class="desktop-file-row" type="button"><i data-lucide="file-text"></i><span>src/locale.rs</span><em>A</em></button></div><div class="desktop-diff-preview"><div class="desktop-diff-heading"><code>apps/desktop/src/app.rs</code><span>unstaged</span></div><pre><span class="desktop-diff-context">@@ render_shell</span><span class="desktop-diff-remove">- preview_overlay_open: bool,</span><span class="desktop-diff-add">+ right_rail_overlay_open: bool,</span><span class="desktop-diff-add">+ code_preview_visible: bool,</span><span>  sidebar_width: f32,</span><span class="desktop-diff-remove">- self.render_old_panel()</span><span class="desktop-diff-add">+ self.render_right_rail_panel()</span></pre></div></div>
-                        <div class="desktop-files-footer"><span><i data-lucide="git-branch"></i>codex/agent-session-core</span><span>3 added · 2 modified</span></div>
-                      </section>
-
-                      <section class="desktop-panel desktop-panel-management" data-desktop-panel="management">
-                        <div class="desktop-panel-toolbar"><div><i data-lucide="settings"></i><strong>Config Center</strong><span>Agent runtimes and provider profiles</span></div><button class="desktop-refresh-button" type="button"><i data-lucide="refresh-cw"></i>Refresh probe</button></div>
-                        <div class="desktop-management-layout"><nav class="desktop-settings-nav"><button class="is-active" type="button">General</button><button type="button">Agents</button><button type="button">Providers</button><button type="button">Appearance</button><button type="button">Session</button></nav><div class="desktop-settings-content"><div class="desktop-settings-heading"><div><strong>Agent runtimes</strong><span>Choose which local runtime starts new sessions.</span></div><button class="desktop-icon-button" type="button" aria-label="Search settings"><i data-lucide="scan-search"></i></button></div><div class="desktop-runtime-card is-selected"><span class="desktop-runtime-logo"><i data-lucide="sparkles"></i></span><div><strong>Codex</strong><small>codex · configured</small></div><span class="desktop-ready-pill">ready</span><i data-lucide="chevron-right"></i></div><div class="desktop-runtime-card"><span class="desktop-runtime-logo is-claude"><i data-lucide="bot"></i></span><div><strong>Claude Code</strong><small>claude · configured</small></div><span class="desktop-ready-pill">ready</span><i data-lucide="chevron-right"></i></div><div class="desktop-runtime-card is-muted"><span class="desktop-runtime-logo"><i data-lucide="plug"></i></span><div><strong>ACP</strong><small>acp · disabled</small></div><span class="desktop-disabled-pill">disabled</span><i data-lucide="chevron-right"></i></div></div></div>
-                      </section>
+                <div class="vx-body" data-desktop-shell>
+                  <aside class="vx-sidebar">
+                    <div class="vx-sidebar-actions">
+                      <button class="vx-side-btn" type="button" data-desktop-action="new-session"><i data-lucide="plus"></i><span>New chat</span></button>
+                      <button class="vx-side-btn" type="button" data-desktop-action="management"><i data-lucide="settings"></i><span>Config Center</span></button>
+                      <button class="vx-side-btn" type="button" data-desktop-action="usage"><i data-lucide="activity"></i><span>Usage Statistics</span></button>
                     </div>
+                    <div class="vx-sidebar-divider"></div>
+                    <div class="vx-projects-head">
+                      <span>Projects</span>
+                      <div class="vx-projects-tools">
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="More"><i data-lucide="ellipsis"></i></button>
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="Collapse all sessions"><i data-lucide="chevrons-right-left"></i></button>
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="Locate current session"><i data-lucide="crosshair"></i></button>
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="New project"><i data-lucide="plus"></i></button>
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="Search sessions"><i data-lucide="search"></i></button>
+                      </div>
+                    </div>
+                    <div class="vx-session-tree">
+                      <button class="vx-project-row" type="button">
+                        <span class="vx-project-logo"><img src="/assets/vibex-startup-mark.svg" alt="" /></span>
+                        <strong>vibex</strong>
+                        <span class="vx-count-badge">3</span>
+                        <span class="vx-project-hover"><i data-lucide="chevron-down"></i><i data-lucide="ellipsis"></i></span>
+                      </button>
+                      <div class="vx-session-list">
+                        <button class="vx-session-row is-selected" type="button" data-desktop-action="agent">
+                          <span class="vx-agent-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
+                          <span class="vx-session-name">Refactor agent session timeline</span>
+                          <span class="vx-session-time">12:41</span>
+                        </button>
+                        <button class="vx-session-row" type="button" data-desktop-action="agent">
+                          <span class="vx-agent-logo"><img src="/assets/agents/claude.svg" alt="" /></span>
+                          <span class="vx-session-name">Fix flaky worktree merge test</span>
+                          <span class="vx-session-time">Yesterday</span>
+                        </button>
+                        <button class="vx-session-row" type="button" data-desktop-action="agent">
+                          <span class="vx-agent-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
+                          <span class="vx-session-name">Polish composer empty state</span>
+                          <span class="vx-session-time">3 days ago</span>
+                        </button>
+                      </div>
+                    </div>
+                  </aside>
+
+                  <main class="vx-center">
+                    <section class="vx-panel is-active" data-desktop-panel="agent">
+                      <div class="vx-timeline">
+                        <div class="vx-user-row">
+                          <div class="vx-user-bubble">Trace the runtime handoff for worktree merges and tighten the timeline rendering.</div>
+                        </div>
+                        <div class="vx-turn">
+                          <div class="vx-turn-head">
+                            <span class="vx-turn-agent"><img src="/assets/agents/openai.svg" alt="" /></span>
+                            <button class="vx-turn-toggle" type="button" data-desktop-toggle="turn"><span>Worked for 1m 32s</span><i data-lucide="chevron-down"></i></button>
+                            <span class="vx-turn-runtime">gpt-5.1-codex · Codex</span>
+                          </div>
+                          <div class="vx-turn-body" data-turn-body>
+                            <button class="vx-command-card" type="button" data-desktop-toggle="tool" aria-expanded="true">
+                              <span class="vx-command-line"><i data-lucide="square-terminal"></i><code>pnpm vitest run agent/timeline</code></span>
+                              <span class="vx-command-end"><span class="vx-check"><i data-lucide="check"></i></span><i class="vx-caret" data-lucide="chevron-down"></i></span>
+                            </button>
+                            <div class="vx-command-output" data-command-output>
+                              <span class="is-pass">PASS</span> <span>src/agent/timeline.test.ts (24 tests)</span>
+                              <span class="is-pass">PASS</span> <span>src/agent/worktree.test.ts (11 tests)</span>
+                              <span class="is-dim">Duration 8.42s</span>
+                            </div>
+                            <div class="vx-fileop-row"><i data-lucide="pencil"></i><code>src/workbench/timeline.rs</code><span class="vx-diff-del">−31</span><span class="vx-diff-add">+86</span></div>
+                            <div class="vx-answer">
+                              <p>The merge handoff now runs through a single <code>WorktreeBridge</code> path, and the timeline renders each turn from a typed event log so replays stay deterministic.</p>
+                            </div>
+                          </div>
+                          <div class="vx-changes-card">
+                            <div class="vx-changes-head"><strong>3 files changed</strong><span class="vx-changes-nums"><b class="vx-diff-add">+128</b><b class="vx-diff-del">−47</b></span></div>
+                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/workbench/timeline.rs</code><span class="vx-diff-del">−31</span><span class="vx-diff-add">+86</span></button>
+                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/workbench/worktree.rs</code><span class="vx-diff-del">−9</span><span class="vx-diff-add">+31</span></button>
+                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/core/session.rs</code><span class="vx-diff-del">−7</span><span class="vx-diff-add">+11</span></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="vx-composer-wrap">
+                        <div class="vx-status-strip" data-status-strip>
+                          <span class="vx-strip-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
+                          <span class="vx-strip-spin"><i data-lucide="loader-circle"></i></span>
+                          <span>Working for <b data-elapsed>38</b>s</span>
+                          <span class="vx-strip-dot">·</span>
+                          <span>4 tool calls</span>
+                          <span class="vx-strip-dot">·</span>
+                          <span class="vx-strip-mono">+128 −47</span>
+                        </div>
+                        <div class="vx-composer">
+                          <div class="vx-composer-input">
+                            <span class="vx-composer-placeholder"><span data-typed-text></span><span class="vx-caret-blink"></span></span>
+                            <span class="vx-composer-side">
+                              <button class="vx-icon-btn is-md" type="button" data-desktop-action="expand" aria-label="Expand input"><i data-lucide="maximize-2"></i></button>
+                              <button class="vx-icon-btn is-md" type="button" aria-label="Terminal mode"><i data-lucide="square-terminal"></i></button>
+                            </span>
+                          </div>
+                          <div class="vx-composer-foot">
+                            <div class="vx-composer-left">
+                              <button class="vx-icon-btn is-md" type="button" aria-label="Add attachments"><i data-lucide="plus"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-brain" data-lucide="brain"></i><span>Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-shield" data-lucide="shield-alert"></i><span>Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                            </div>
+                            <div class="vx-composer-right">
+                              <button class="vx-token-ring" type="button" aria-label="Open usage statistics"><span></span></button>
+                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai.svg" alt="" /><span>Codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-send-btn" type="button" data-desktop-action="send" aria-label="Send message"><i data-lucide="arrow-up"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="vx-panel" data-desktop-panel="management">
+                      <div class="vx-settings">
+                        <div class="vx-settings-head">
+                          <div><strong>Agent runtimes</strong><span>Choose which local runtime starts new sessions.</span></div>
+                          <button class="vx-icon-btn is-md" type="button" aria-label="Search settings"><i data-lucide="scan-search"></i></button>
+                        </div>
+                        <div class="vx-runtime-card is-selected">
+                          <span class="vx-runtime-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
+                          <div><strong>Codex</strong><small>codex · configured</small></div>
+                          <span class="vx-pill is-ready">ready</span>
+                          <i data-lucide="chevron-right"></i>
+                        </div>
+                        <div class="vx-runtime-card">
+                          <span class="vx-runtime-logo"><img src="/assets/agents/claude.svg" alt="" /></span>
+                          <div><strong>Claude Code</strong><small>claude · configured</small></div>
+                          <span class="vx-pill is-ready">ready</span>
+                          <i data-lucide="chevron-right"></i>
+                        </div>
+                        <div class="vx-runtime-card">
+                          <span class="vx-runtime-logo"><img src="/assets/agents/gemini.svg" alt="" /></span>
+                          <div><strong>Gemini CLI</strong><small>gemini · configured</small></div>
+                          <span class="vx-pill is-ready">ready</span>
+                          <i data-lucide="chevron-right"></i>
+                        </div>
+                        <div class="vx-runtime-card is-muted">
+                          <span class="vx-runtime-logo"><i data-lucide="plug"></i></span>
+                          <div><strong>ACP</strong><small>acp · disabled</small></div>
+                          <span class="vx-pill is-off">disabled</span>
+                          <i data-lucide="chevron-right"></i>
+                        </div>
+                      </div>
+                    </section>
                   </main>
 
-                  <aside class="desktop-right-rail"><div class="desktop-right-rail-heading"><strong data-desktop-rail-title>Files</strong><button class="desktop-icon-button" type="button" data-desktop-action="right-rail-close" aria-label="Close right panel"><i data-lucide="chevrons-right"></i></button></div><div class="desktop-right-rail-body"><div class="desktop-rail-summary"><span class="desktop-status-dot"></span><div><strong>Current Checkout</strong><small>/workspace/vibex</small></div></div><div class="desktop-rail-item"><i data-lucide="file-text"></i><span>src/workbench.rs</span><em>M</em></div><div class="desktop-rail-item"><i data-lucide="square-terminal"></i><span>Terminal 1</span><em class="is-running">run</em></div><div class="desktop-rail-item"><i data-lucide="git-branch"></i><span>feature/workbench-shell</span><em>2</em></div></div><div class="desktop-right-rail-agent"><i data-lucide="sparkles"></i><span>Agent working</span></div></aside>
-                  <aside class="desktop-activity-rail" aria-label="Workspace tools"><button class="is-active" type="button" data-desktop-rail="files" aria-label="Files"><i data-lucide="folder-open"></i></button><button type="button" data-desktop-rail="git" aria-label="Git"><i data-lucide="git-branch"></i><span>2</span></button><button type="button" data-desktop-rail="terminal" aria-label="New terminal"><i data-lucide="square-terminal"></i></button><span class="desktop-activity-rail-spacer"></span><button type="button" aria-label="Workspace settings"><i data-lucide="settings-2"></i></button></aside>
+                  <aside class="vx-rail" data-desktop-rail>
+                    <div class="vx-rail-head">
+                      <strong data-desktop-rail-title>Files</strong>
+                      <button class="vx-icon-btn is-md" type="button" data-desktop-action="rail-close" aria-label="Close panel"><i data-lucide="chevrons-right"></i></button>
+                    </div>
+                    <div class="vx-rail-mode is-files" data-rail-mode="files">
+                      <div class="vx-rail-search"><i data-lucide="search"></i><span>Search workspace files</span></div>
+                      <div class="vx-filetree">
+                        <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>apps</span></div>
+                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-code"></i><span>app.rs</span></div>
+                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-code"></i><span>code_workbench.rs</span></div>
+                        <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>src</span></div>
+                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-code"></i><span>timeline.rs</span></div>
+                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-text"></i><span>locale.rs</span></div>
+                        <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>crates</span></div>
+                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file"></i><span>tokens.json</span></div>
+                      </div>
+                    </div>
+                    <div class="vx-rail-mode is-git" data-rail-mode="git">
+                      <div class="vx-git-tabs">
+                        <button class="is-active" type="button">Changes</button>
+                        <button type="button">Commits</button>
+                      </div>
+                      <div class="vx-git-toolbar">
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="Fetch"><i data-lucide="download"></i></button>
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="Push"><i data-lucide="upload"></i></button>
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="Refresh Git"><i data-lucide="rotate-ccw"></i></button>
+                        <span class="vx-toolbar-spacer"></span>
+                        <span class="vx-toolbar-divider"></span>
+                        <button class="vx-icon-btn is-xs" type="button" aria-label="Expand all changes"><i data-lucide="chevrons-down-up"></i></button>
+                      </div>
+                      <div class="vx-git-wsrow">
+                        <span class="vx-checkbox"></span>
+                        <div class="vx-git-wsname"><strong>vibex</strong><span>(4 files)</span></div>
+                        <span class="vx-git-nums"><b class="vx-diff-add">+132</b><b class="vx-diff-del">−49</b></span>
+                      </div>
+                      <div class="vx-git-list">
+                        <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">apps/desktop</span></div>
+                        <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox"></span><i data-lucide="file-code"></i><span class="vx-git-name">app.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+4</b><b class="vx-diff-del">−2</b></span><span class="vx-git-badge">M</span></div>
+                        <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">src/workbench</span></div>
+                        <div class="vx-git-row is-selected" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">timeline.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+86</b><b class="vx-diff-del">−31</b></span><span class="vx-git-badge">M</span></div>
+                        <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">worktree.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+31</b><b class="vx-diff-del">−9</b></span><span class="vx-git-badge">M</span></div>
+                        <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">crates/core</span></div>
+                        <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">session.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+11</b><b class="vx-diff-del">−7</b></span><span class="vx-git-badge">M</span></div>
+                      </div>
+                      <div class="vx-commit-box">
+                        <div class="vx-commit-row">
+                          <button class="vx-commit-type" type="button">feat<i data-lucide="chevron-down"></i></button>
+                          <span class="vx-amend"><span class="vx-checkbox"></span>amend</span>
+                        </div>
+                        <div class="vx-commit-input">feat: rework worktree merge backfill</div>
+                        <div class="vx-commit-actions">
+                          <button class="vx-commit-btn" type="button"><i data-lucide="rotate-ccw"></i>Rollback</button>
+                          <span class="vx-commit-spacer"></span>
+                          <button class="vx-commit-btn is-primary" type="button">Commit<span class="vx-commit-count">4</span></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="vx-rail-mode is-terminal" data-rail-mode="terminal" hidden>
+                      <div class="vx-term">
+                        <div class="vx-term-line"><span class="vx-term-prompt">❯</span><span>pnpm vitest run agent/timeline</span></div>
+                        <div class="vx-term-line is-dim">RUN v3.2.1 /workspace/vibex</div>
+                        <div class="vx-term-line"><span class="is-pass">✓</span><span>src/agent/timeline.test.ts (24 tests) 6.21s</span></div>
+                        <div class="vx-term-line"><span class="is-pass">✓</span><span>src/agent/worktree.test.ts (11 tests) 1.88s</span></div>
+                        <div class="vx-term-line is-dim">Test Files 2 passed (2)</div>
+                        <div class="vx-term-line is-dim">Tests 35 passed (35)</div>
+                        <div class="vx-term-line"><span class="vx-term-prompt">❯</span><span class="vx-term-cursor"></span></div>
+                      </div>
+                    </div>
+                  </aside>
+
+                  <nav class="vx-activity" aria-label="Workspace tools">
+                    <button class="is-active" type="button" data-desktop-rail="files" aria-label="Files"><i data-lucide="folder-open"></i></button>
+                    <button type="button" data-desktop-rail="git" aria-label="Git"><i data-lucide="git-branch"></i><span class="vx-activity-badge">4</span></button>
+                    <button type="button" data-desktop-rail="terminal" aria-label="New terminal"><i data-lucide="square-terminal"></i></button>
+                    <span class="vx-activity-spacer"></span>
+                    <button type="button" aria-label="Workspace settings"><i data-lucide="settings-2"></i></button>
+                  </nav>
                 </div>
               </div>
             </div>
@@ -284,8 +483,34 @@ document.querySelector("#app").innerHTML = `
       </div>
     </section>
 
+    <section class="mobile-showcase" id="mobile" aria-label="Vibex mobile app preview">
+      <div class="section-shell mobile-showcase-shell">
+        <div class="mobile-showcase-copy reveal">
+          <div class="section-kicker"><span>02</span> Native mobile</div>
+          <h2>The same workbench,<br />in your pocket.</h2>
+          <p>
+            Pair your phone with the desktop runtime and carry sessions, diffs, and approvals with you. The mobile interface is on its way — here's the shape of it.
+          </p>
+          <span class="mobile-showcase-badge"><i data-lucide="smartphone"></i><span>Mobile UI in development</span></span>
+        </div>
+        <div class="mobile-showcase-stage reveal">
+          <div class="mobile-phone-glow" aria-hidden="true"></div>
+          <div class="mobile-phone" role="img">
+            <div class="mobile-phone-frame">
+              <span class="mobile-phone-island" aria-hidden="true"></span>
+              <div class="mobile-phone-screen">
+                <span class="mobile-phone-placeholder">Mobile interface preview</span>
+              </div>
+            </div>
+            <div class="mobile-phone-base" aria-hidden="true"></div>
+          </div>
+          <p class="mobile-phone-caption"><i data-lucide="smartphone"></i><span>Mobile screen preview — coming soon</span></p>
+        </div>
+      </div>
+    </section>
+
     <section class="intro-section section-shell" id="product">
-      <div class="section-kicker reveal"><span>01</span> One focused surface</div>
+      <div class="section-kicker reveal"><span>03</span> One focused surface</div>
       <div class="intro-heading reveal">
         <h2>Direct the work.<br /><em>Keep the context.</em></h2>
         <p>
@@ -326,7 +551,7 @@ document.querySelector("#app").innerHTML = `
     <section class="architecture-section" id="architecture">
       <div class="section-shell architecture-shell">
         <div class="architecture-copy reveal">
-          <div class="section-kicker section-kicker-dark"><span>02</span> Local-first architecture</div>
+          <div class="section-kicker section-kicker-dark"><span>04</span> Local-first architecture</div>
           <h2>One runtime.<br />No hidden middleman.</h2>
           <p>
             Your desktop is the sole authority for sessions, files, Git, terminals, providers, and permissions. Vibex adds a better control surface, not another cloud that owns your work.
@@ -425,7 +650,7 @@ document.querySelector("#app").innerHTML = `
         </div>
 
         <div class="remote-copy reveal">
-          <div class="section-kicker"><span>03</span> Native mobile</div>
+          <div class="section-kicker"><span>05</span> Native mobile</div>
           <h2>Your agent is still working. You don't have to be.</h2>
           <p>
             Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.
@@ -442,7 +667,7 @@ document.querySelector("#app").innerHTML = `
     <section class="workflow-section">
       <div class="section-shell">
         <div class="workflow-heading reveal">
-          <div class="section-kicker"><span>04</span> The whole loop</div>
+          <div class="section-kicker"><span>06</span> The whole loop</div>
           <h2>From prompt to<br />reviewed change.</h2>
         </div>
         <div class="workflow-steps reveal">
@@ -466,7 +691,7 @@ document.querySelector("#app").innerHTML = `
     <section class="open-section">
       <div class="section-shell open-shell">
         <div class="open-copy reveal">
-          <div class="section-kicker section-kicker-dark"><span>05</span> Open source</div>
+          <div class="section-kicker section-kicker-dark"><span>07</span> Open source</div>
           <h2>Inspect the tool that inspects your code.</h2>
           <p>Vibex is licensed under AGPL-3.0-or-later. Read the source, build it yourself, or help shape what comes next.</p>
           <div class="open-actions">
@@ -488,7 +713,7 @@ document.querySelector("#app").innerHTML = `
 
     <section class="faq-section section-shell" id="faq">
       <div class="faq-heading reveal">
-        <div class="section-kicker"><span>06</span> Questions</div>
+        <div class="section-kicker"><span>08</span> Questions</div>
         <h2>The important details.</h2>
       </div>
       <div class="faq-list reveal">
@@ -554,6 +779,7 @@ document.querySelector("#app").innerHTML = `
 createIcons({
   icons: {
     ArrowRight,
+    ArrowUp,
     ArrowUpRight,
     Activity,
     AtSign,
@@ -565,6 +791,7 @@ createIcons({
     Check,
     ChevronDown,
     ChevronRight,
+    ChevronsDownUp,
     ChevronsRight,
     ChevronsRightLeft,
     CircleDot,
@@ -577,6 +804,8 @@ createIcons({
     Crosshair,
     Download,
     Eye,
+    File,
+    FileCode,
     FileCode2,
     FileDiff,
     FileText,
@@ -603,6 +832,7 @@ createIcons({
     PanelLeftClose,
     PanelRightClose,
     Paperclip,
+    Pencil,
     Play,
     Plug,
     Plus,
@@ -625,6 +855,7 @@ createIcons({
     SunMedium,
     Terminal,
     TriangleAlert,
+    Upload,
     UserRound,
     Wifi,
     Workflow,
@@ -643,10 +874,14 @@ const textBindings = [
   [".nav-actions .button-light", "nav.get"],
   [".final-actions .button-primary", "nav.get"],
   ["[data-desktop-tab=\"agent\"]", "showcase.desktop.agent"],
-  ["[data-desktop-tab=\"preview\"]", "showcase.desktop.preview"],
   ["[data-desktop-tab=\"files\"]", "showcase.desktop.files"],
   ["[data-desktop-tab=\"management\"]", "showcase.desktop.management"],
   ["[data-desktop-source]", "showcase.desktop.source"],
+  [".mobile-showcase-copy .section-kicker", "showcase.mobile.kicker"],
+  [".mobile-showcase-copy > p", "showcase.mobile.copy"],
+  [".mobile-showcase-badge span", "showcase.mobile.badge"],
+  [".mobile-phone-placeholder", "showcase.mobile.placeholder"],
+  [".mobile-phone-caption span", "showcase.mobile.screen"],
   [".mobile-nav a:nth-child(1)", "nav.product"],
   [".mobile-nav a:nth-child(2)", "nav.how"],
   [".mobile-nav a:nth-child(3)", "nav.remote"],
@@ -742,6 +977,7 @@ const textBindings = [
 
 const htmlBindings = [
   [".hero h1", "hero.title"],
+  [".mobile-showcase-copy h2", "showcase.mobile.title"],
   [".intro-heading h2", "intro.title"],
   [".architecture-copy h2", "architecture.title"],
   [".remote-copy h2", "remote.title"],
@@ -756,6 +992,7 @@ const attrBindings = [
   [".wordmark", "aria-label", "accessibility.home"],
   [".desktop-nav", "aria-label", "nav.primary"],
   ["[data-desktop-tablist]", "aria-label", "showcase.desktop.aria"],
+  [".mobile-showcase", "aria-label", "showcase.mobile.aria"],
   [".desktop-app", "aria-label", "showcase.desktop.aria"],
   [".architecture-diagram", "aria-label", "architecture.diagram.label"],
   ["[data-copy-command]", "title", "open.copyCommands"],
@@ -827,9 +1064,9 @@ function applyLanguage(language, { persist = true } = {}) {
   setBindingText("[data-hero-more-agents]", "hero.moreAgents");
 
   const activeDesktopView = desktopShowcase?.querySelector("[data-desktop-view].is-active")?.dataset.desktopView;
-  if (activeDesktopView) setDesktopView(activeDesktopView);
-  const activeDesktopRail = desktopShowcase?.querySelector("[data-desktop-rail].is-active")?.dataset.desktopRail;
-  if (activeDesktopRail) setDesktopRail(activeDesktopRail, { open: false });
+  if (activeDesktopView) setDesktopView(activeDesktopView, { restore: true });
+  const activeDesktopRail = desktopShowcase?.querySelector("[data-rail-mode]:not([hidden])")?.dataset.railMode;
+  if (activeDesktopRail) setDesktopRail(activeDesktopRail);
 
   setOwnText("[data-toast]", toast?.dataset.toastKey === "failed" ? translate(currentLanguage, "toast.failed") : translate(currentLanguage, "toast.copied"));
   const copyright = document.querySelector(".footer-bottom > span:first-child");
@@ -857,8 +1094,8 @@ updateHeader();
 const desktopShowcase = document.querySelector("[data-desktop-showcase]");
 const desktopViewport = desktopShowcase?.querySelector("[data-desktop-viewport]");
 const desktopCanvas = desktopShowcase?.querySelector("[data-desktop-canvas]");
-const DESKTOP_CANVAS_WIDTH = 1220;
-const DESKTOP_CANVAS_HEIGHT = 690;
+const DESKTOP_CANVAS_WIDTH = 1280;
+const DESKTOP_CANVAS_HEIGHT = 800;
 
 function resizeDesktopShowcase() {
   if (!desktopViewport || !desktopCanvas) return;
@@ -872,56 +1109,70 @@ if (desktopViewport && desktopCanvas) {
   new ResizeObserver(resizeDesktopShowcase).observe(desktopViewport);
 }
 
-function setDesktopView(viewKey) {
+const DESKTOP_VIEWS = ["agent", "files", "management"];
+const RAIL_LABEL_KEYS = {
+  files: "showcase.desktop.railFiles",
+  git: "showcase.desktop.railGit",
+  terminal: "showcase.desktop.railTerminal",
+};
+const VIEW_LABEL_KEYS = {
+  agent: "showcase.desktop.agent",
+  files: "showcase.desktop.files",
+  management: "showcase.desktop.management",
+};
+
+function setDesktopRail(railKey) {
   if (!desktopShowcase) return;
-  const view = ["agent", "preview", "files", "management"].includes(viewKey) ? viewKey : "agent";
+  const rail = ["files", "git", "terminal"].includes(railKey) ? railKey : "files";
+  desktopShowcase.querySelectorAll("[data-rail-mode]").forEach((mode) => {
+    mode.hidden = mode.dataset.railMode !== rail;
+  });
+  desktopShowcase.querySelectorAll("[data-desktop-rail]").forEach((tab) => {
+    tab.classList.toggle("is-active", tab.dataset.desktopRail === rail);
+  });
+  const title = desktopShowcase.querySelector("[data-desktop-rail-title]");
+  if (title) title.textContent = translate(currentLanguage, RAIL_LABEL_KEYS[rail]);
+}
+
+function setDesktopView(viewKey, { restore = false } = {}) {
+  if (!desktopShowcase) return;
+  const view = DESKTOP_VIEWS.includes(viewKey) ? viewKey : "agent";
   desktopShowcase.querySelectorAll("[data-desktop-view]").forEach((tab) => {
     const active = tab.dataset.desktopView === view;
     tab.classList.toggle("is-active", active);
     tab.setAttribute("aria-selected", String(active));
   });
+  // The "Files & Git" scene shares the agent timeline; it only swaps the right rail to Git.
+  const panelView = view === "management" ? "management" : "agent";
   desktopShowcase.querySelectorAll("[data-desktop-panel]").forEach((panel) => {
-    panel.classList.toggle("is-active", panel.dataset.desktopPanel === view);
+    panel.classList.toggle("is-active", panel.dataset.desktopPanel === panelView);
   });
+  if (!restore) setDesktopRail(view === "files" ? "git" : "files");
   const caption = desktopShowcase.querySelector("[data-desktop-caption]");
-  const labels = {
-    agent: "showcase.desktop.agent",
-    preview: "showcase.desktop.preview",
-    files: "showcase.desktop.files",
-    management: "showcase.desktop.management",
-  };
-  if (caption) caption.textContent = translate(currentLanguage, labels[view]);
-}
-
-function setDesktopRail(railKey, { open = true } = {}) {
-  if (!desktopShowcase) return;
-  const rail = ["files", "git", "terminal"].includes(railKey) ? railKey : "files";
-  desktopShowcase.querySelector("[data-desktop-shell]")?.classList.toggle("is-right-rail-open", open);
-  desktopShowcase.querySelectorAll("[data-desktop-rail]").forEach((tab) => {
-    tab.classList.toggle("is-active", tab.dataset.desktopRail === rail);
-  });
-  const title = desktopShowcase.querySelector("[data-desktop-rail-title]");
-  const labels = {
-    files: "showcase.desktop.railFiles",
-    git: "showcase.desktop.railGit",
-    terminal: "showcase.desktop.railTerminal",
-  };
-  if (title) title.textContent = translate(currentLanguage, labels[rail]);
+  if (caption) caption.textContent = translate(currentLanguage, VIEW_LABEL_KEYS[view]);
 }
 
 desktopShowcase?.querySelectorAll("[data-desktop-view]").forEach((tab) => {
-  tab.addEventListener("click", () => setDesktopView(tab.dataset.desktopView));
+  tab.addEventListener("click", () => {
+    setDesktopView(tab.dataset.desktopView);
+    markShowcaseInteraction();
+  });
 });
 
 desktopShowcase?.querySelectorAll("[data-runtime-choice]").forEach((choice) => {
   choice.addEventListener("click", () => {
     desktopShowcase.querySelectorAll("[data-runtime-choice]").forEach((item) => item.classList.remove("is-active"));
     choice.classList.add("is-active");
+    markShowcaseInteraction();
   });
 });
 
 desktopShowcase?.querySelectorAll("[data-desktop-rail]").forEach((tab) => {
-  tab.addEventListener("click", () => setDesktopRail(tab.dataset.desktopRail));
+  tab.addEventListener("click", () => {
+    desktopShowcase.querySelector("[data-desktop-shell]")?.classList.remove("is-rail-collapsed");
+    setDesktopRail(tab.dataset.desktopRail);
+    markShowcaseInteraction();
+  });
 });
 
 desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
@@ -931,49 +1182,135 @@ desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
       desktopShowcase.querySelector("[data-desktop-shell]")?.classList.toggle("is-sidebar-collapsed");
       return;
     }
-    if (kind === "right-rail-close") {
-      desktopShowcase.querySelector("[data-desktop-shell]")?.classList.remove("is-right-rail-open");
+    if (kind === "rail-close") {
+      desktopShowcase.querySelector("[data-desktop-shell]")?.classList.add("is-rail-collapsed");
       return;
     }
     if (kind === "management" || kind === "settings") {
       setDesktopView("management");
       return;
     }
-    if (kind === "preview") {
-      setDesktopView("preview");
-      return;
-    }
-    if (kind === "agent" || kind === "new-session") {
+    if (kind === "agent" || kind === "new-session" || kind === "usage") {
       setDesktopView("agent");
-      desktopShowcase.querySelectorAll(".desktop-session-row").forEach((row) => row.classList.toggle("is-selected", row === action));
+      desktopShowcase.querySelectorAll(".vx-session-row").forEach((row) => row.classList.toggle("is-selected", row === action));
       return;
     }
     if (kind === "send") {
-      const composer = desktopShowcase.querySelector(".desktop-composer");
+      const composer = desktopShowcase.querySelector(".vx-composer");
       composer?.classList.add("is-sent");
       window.setTimeout(() => composer?.classList.remove("is-sent"), 700);
+      resetStatusStrip();
       return;
     }
     if (kind === "expand") {
-      desktopShowcase.querySelector(".desktop-composer")?.classList.toggle("is-expanded");
+      desktopShowcase.querySelector(".vx-composer")?.classList.toggle("is-expanded");
       return;
     }
-    if (kind === "terminal") {
-      const composer = desktopShowcase.querySelector(".desktop-composer");
-      composer?.classList.add("is-terminal");
-      window.setTimeout(() => composer?.classList.remove("is-terminal"), 700);
+    if (kind === "pair") {
+      action.classList.add("is-pairing");
+      window.setTimeout(() => action.classList.remove("is-pairing"), 1200);
       return;
-    }
-    if (kind === "continue") {
-      action.classList.add("is-activated");
-      window.setTimeout(() => action.classList.remove("is-activated"), 700);
     }
   });
+  action.addEventListener("click", markShowcaseInteraction);
 });
 
 desktopShowcase?.querySelectorAll("[data-desktop-toggle]").forEach((toggle) => {
-  toggle.addEventListener("click", () => toggle.classList.toggle("is-expanded"));
+  toggle.addEventListener("click", () => {
+    const expanded = toggle.getAttribute("aria-expanded") !== "false";
+    toggle.setAttribute("aria-expanded", String(!expanded));
+    toggle.classList.toggle("is-collapsed", expanded);
+    const target = toggle.dataset.desktopToggle;
+    if (target === "turn") {
+      toggle.closest(".vx-turn")?.querySelector("[data-turn-body]")?.classList.toggle("is-collapsed", expanded);
+    }
+    if (target === "tool") {
+      toggle.closest(".vx-turn")?.querySelector("[data-command-output]")?.classList.toggle("is-collapsed", expanded);
+    }
+    markShowcaseInteraction();
+  });
 });
+
+// ---------------------------------------------------------------------------
+// Live composer animation: typing loop, working timer, auto scene rotation.
+// ---------------------------------------------------------------------------
+const typedText = desktopShowcase?.querySelector("[data-typed-text]");
+const elapsedLabel = desktopShowcase?.querySelector("[data-elapsed]");
+const statusStrip = desktopShowcase?.querySelector("[data-status-strip]");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const typingPhrases = [
+  "Tighten the worktree merge handoff",
+  "Add regression coverage for timeline replays",
+  "Type / for commands, @ for workspace files, $ for skills",
+];
+let typingIndex = 0;
+let charIndex = 0;
+let deleting = false;
+let elapsedSeconds = 38;
+let elapsedTimer = null;
+
+function startElapsedTimer() {
+  if (!elapsedLabel || prefersReducedMotion || elapsedTimer) return;
+  elapsedTimer = window.setInterval(() => {
+    elapsedSeconds += 1;
+    elapsedLabel.textContent = String(elapsedSeconds);
+  }, 1000);
+}
+
+function resetStatusStrip() {
+  elapsedSeconds = 0;
+  if (elapsedLabel) elapsedLabel.textContent = "0";
+}
+
+function tickTyping() {
+  if (!typedText) return;
+  const phrase = typingPhrases[typingIndex];
+  if (!deleting) {
+    charIndex += 1;
+    typedText.textContent = phrase.slice(0, charIndex);
+    if (charIndex >= phrase.length) {
+      deleting = true;
+      window.setTimeout(tickTyping, 2600);
+      return;
+    }
+  } else {
+    charIndex -= 1;
+    typedText.textContent = phrase.slice(0, charIndex);
+    if (charIndex <= 0) {
+      deleting = false;
+      typingIndex = (typingIndex + 1) % typingPhrases.length;
+      window.setTimeout(tickTyping, 700);
+      return;
+    }
+  }
+  window.setTimeout(tickTyping, deleting ? 22 : 52);
+}
+
+if (!prefersReducedMotion) {
+  window.setTimeout(tickTyping, 1200);
+  startElapsedTimer();
+}
+
+// Auto-rotate showcase scenes like a product demo reel; pauses while hovered
+// or shortly after any manual interaction.
+let rotateTimer = null;
+let lastInteraction = 0;
+
+function markShowcaseInteraction() {
+  lastInteraction = Date.now();
+}
+
+function startShowcaseRotation() {
+  if (!desktopShowcase || prefersReducedMotion || rotateTimer) return;
+  rotateTimer = window.setInterval(() => {
+    if (desktopShowcase.matches(":hover") || Date.now() - lastInteraction < 12000) return;
+    const active = desktopShowcase.querySelector("[data-desktop-view].is-active")?.dataset.desktopView ?? "agent";
+    const next = DESKTOP_VIEWS[(DESKTOP_VIEWS.indexOf(active) + 1) % DESKTOP_VIEWS.length];
+    setDesktopView(next);
+  }, 8000);
+}
+
+startShowcaseRotation();
 
 const copyButton = document.querySelector("[data-copy-command]");
 const toast = document.querySelector("[data-toast]");

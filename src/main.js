@@ -185,7 +185,7 @@ document.querySelector("#app").innerHTML = `
           <div class="hero-copy reveal">
             <h1>A native workbench<br />for code and agents</h1>
             <p class="hero-lede">
-              Run AI agents beside your files, terminal, Git, and previews while your machine stays in charge.
+              Your agents. Your workspace. Your control—from prompt to commit, desktop to mobile.
             </p>
           </div>
 

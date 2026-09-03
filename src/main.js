@@ -5,7 +5,9 @@ import {
   ArrowRight,
   ArrowUp,
   ArrowUpRight,
+  ArrowDownWideNarrow,
   Battery,
+  BookOpen,
   Brain,
   Bot,
   Braces,
@@ -23,12 +25,16 @@ import {
   Copy,
   Cpu,
   Crosshair,
+  Database,
   Download,
   Eye,
+  ExternalLink,
   File,
   FileCode,
   FileCode2,
+  FileCog,
   FileDiff,
+  FileJson,
   FileText,
   Folder,
   FolderOpen,
@@ -36,6 +42,7 @@ import {
   GitCommitHorizontal,
   Github,
   Ellipsis,
+  GripVertical,
   KeyRound,
   Globe2,
   Layers3,
@@ -75,6 +82,7 @@ import {
   SquareTerminal,
   SunMedium,
   Terminal,
+  Trash2,
   TriangleAlert,
   Upload,
   UserRound,
@@ -331,30 +339,32 @@ document.querySelector("#app").innerHTML = `
                       <div class="vx-composer-wrap">
                         <div class="vx-status-strip" data-status-strip>
                           <span class="vx-strip-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
-                          <span class="vx-strip-spin"><i data-lucide="loader-circle"></i></span>
-                          <span>Working for <b data-elapsed>38</b>s</span>
-                          <span class="vx-strip-dot">·</span>
-                          <span>4 tool calls</span>
-                          <span class="vx-strip-dot">·</span>
-                          <span class="vx-strip-mono">+128 −47</span>
+                          <span>Generating</span><span class="vx-strip-dot">·</span>
+                          <span><span data-elapsed>38s</span></span><span class="vx-strip-dot">·</span>
+                          <span>4 tool calls</span><span class="vx-strip-dot">·</span>
+                          <span class="vx-strip-diff"><b class="vx-diff-add">+128</b><b class="vx-diff-del">−47</b></span><span class="vx-strip-dot">·</span>
+                          <span>↑ 12.3k</span><span class="vx-strip-dot">·</span>
+                          <span>↓ 4.5k</span><span class="vx-strip-dot">·</span>
+                          <span>38%</span><span class="vx-strip-dot">·</span>
+                          <span>87 t/s</span>
                         </div>
                         <div class="vx-composer">
                           <div class="vx-composer-input">
                             <span class="vx-composer-placeholder"><span data-typed-text></span><span class="vx-caret-blink"></span></span>
                             <span class="vx-composer-side">
-                              <button class="vx-icon-btn is-md" type="button" data-desktop-action="expand" aria-label="Expand input"><i data-lucide="maximize-2"></i></button>
-                              <button class="vx-icon-btn is-md" type="button" aria-label="Terminal mode"><i data-lucide="square-terminal"></i></button>
+                              <button class="vx-icon-btn is-sm" type="button" data-desktop-action="expand" aria-label="Expand input"><i data-lucide="maximize-2"></i></button>
+                              <button class="vx-icon-btn is-md" type="button" data-desktop-action="terminal" aria-label="Create Composer terminal"><i data-lucide="square-terminal"></i></button>
                             </span>
                           </div>
                           <div class="vx-composer-foot">
                             <div class="vx-composer-left">
                               <button class="vx-icon-btn is-md" type="button" aria-label="Add attachments"><i data-lucide="plus"></i></button>
-                              <button class="vx-chip" type="button"><i class="is-brain" data-lucide="brain"></i><span>Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
-                              <button class="vx-chip" type="button"><i class="is-shield" data-lucide="shield-alert"></i><span>Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-effort" data-lucide="brain"></i><span>Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-mode" data-lucide="shield-alert"></i><span>Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                             </div>
                             <div class="vx-composer-right">
-                              <button class="vx-token-ring" type="button" aria-label="Open usage statistics"><span></span></button>
-                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai.svg" alt="" /><span>Codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-token-btn" type="button" aria-label="Token usage"><span class="vx-token-ring"></span></button>
+                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai.svg" alt="" /><span>codex · gpt-5.1-codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                               <button class="vx-send-btn" type="button" data-desktop-action="send" aria-label="Send message"><i data-lucide="arrow-up"></i></button>
                             </div>
                           </div>
@@ -362,107 +372,258 @@ document.querySelector("#app").innerHTML = `
                       </div>
                     </section>
 
+                    <section class="vx-panel" data-desktop-panel="home">
+                      <div class="vx-home">
+                        <div class="vx-home-mark">
+                          <img src="/assets/vibex-mark.svg" alt="" />
+                          <span>ibex</span>
+                        </div>
+                        <h1>Start something new</h1>
+                        <p class="vx-home-sub">Create a fresh session from a project directory or a temporary workspace</p>
+                        <div class="vx-home-capsule">
+                          <div class="vx-home-agents">
+                            <button class="vx-agent-tab is-active" type="button"><img src="/assets/agents/openai.svg" alt="" /><span>Codex</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/claude.svg" alt="" /><span>Claude Code</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/gemini.svg" alt="" /><span>Gemini CLI</span></button>
+                          </div>
+                          <button class="vx-icon-btn is-sm" type="button" aria-label="Sort agents"><i data-lucide="arrow-down-wide-narrow"></i></button>
+                        </div>
+                        <div class="vx-home-composer">
+                          <div class="vx-home-input"><span class="vx-composer-placeholder"><span data-typed-text></span><span class="vx-caret-blink"></span></span></div>
+                          <div class="vx-home-foot">
+                            <div class="vx-composer-left">
+                              <button class="vx-icon-btn is-md" type="button" aria-label="Add attachments"><i data-lucide="plus"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-effort" data-lucide="brain"></i><span>Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><i class="is-mode" data-lucide="shield-alert"></i><span>Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                            </div>
+                            <button class="vx-send-btn is-lg" type="button" aria-label="Create session"><i data-lucide="arrow-up"></i></button>
+                          </div>
+                        </div>
+                        <div class="vx-home-wsrow">
+                          <button class="vx-home-dir" type="button"><i data-lucide="folder"></i><span>vibex</span><i data-lucide="chevron-down"></i></button>
+                          <button class="vx-home-loc" type="button">Local</button>
+                          <button class="vx-home-dir" type="button"><i data-lucide="git-branch"></i><span>main</span></button>
+                        </div>
+                      </div>
+                    </section>
+
                     <section class="vx-panel" data-desktop-panel="management">
-                      <div class="vx-settings">
-                        <div class="vx-settings-head">
-                          <div><strong>Agent runtimes</strong><span>Choose which local runtime starts new sessions.</span></div>
-                          <button class="vx-icon-btn is-md" type="button" aria-label="Search settings"><i data-lucide="scan-search"></i></button>
+                      <div class="vx-mgmt">
+                        <div class="vx-mgmt-header"><i data-lucide="settings-2"></i><strong>Config Center</strong></div>
+                        <div class="vx-mgmt-side">
+                          <div class="vx-mgmt-nav">
+                            <button class="is-active" type="button" data-mgmt-tab="agents"><i data-lucide="bot"></i><span>Agent</span></button>
+                            <button type="button" data-mgmt-tab="mcp"><i data-lucide="network"></i><span>MCP</span></button>
+                            <button type="button" data-mgmt-tab="skills"><i data-lucide="book-open"></i><span>Skills</span></button>
+                          </div>
+                          <div class="vx-mgmt-search"><i data-lucide="search"></i><span>Search Agent</span></div>
+                          <div class="vx-mgmt-agents">
+                            <button class="vx-mgmt-agent is-selected" type="button" data-mgmt-agent="codex">
+                              <span class="vx-mgmt-agent-top">
+                                <span class="vx-mgmt-glyph"><img src="/assets/agents/openai.svg" alt="" /></span>
+                                <span class="vx-mgmt-agent-name">Codex</span>
+                                <span class="vx-mgmt-switch is-on"><span></span></span>
+                              </span>
+                              <small>3 configurations</small>
+                            </button>
+                            <button class="vx-mgmt-agent" type="button" data-mgmt-agent="claude">
+                              <span class="vx-mgmt-agent-top">
+                                <span class="vx-mgmt-glyph"><img src="/assets/agents/claude.svg" alt="" /></span>
+                                <span class="vx-mgmt-agent-name">Claude Code</span>
+                                <span class="vx-mgmt-switch is-on"><span></span></span>
+                              </span>
+                              <small>2 configurations</small>
+                            </button>
+                            <button class="vx-mgmt-agent" type="button" data-mgmt-agent="gemini">
+                              <span class="vx-mgmt-agent-top">
+                                <span class="vx-mgmt-glyph"><img src="/assets/agents/gemini.svg" alt="" /></span>
+                                <span class="vx-mgmt-agent-name">Gemini CLI</span>
+                                <span class="vx-mgmt-switch"><span></span></span>
+                              </span>
+                              <small>Not checked</small>
+                            </button>
+                            <div class="vx-mgmt-add">
+                              <span class="vx-mgmt-add-plus"><i data-lucide="plus"></i></span>
+                              <span>Add custom ACP Agent</span>
+                            </div>
+                          </div>
                         </div>
-                        <div class="vx-runtime-card is-selected">
-                          <span class="vx-runtime-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
-                          <div><strong>Codex</strong><small>codex · configured</small></div>
-                          <span class="vx-pill is-ready">ready</span>
-                          <i data-lucide="chevron-right"></i>
-                        </div>
-                        <div class="vx-runtime-card">
-                          <span class="vx-runtime-logo"><img src="/assets/agents/claude.svg" alt="" /></span>
-                          <div><strong>Claude Code</strong><small>claude · configured</small></div>
-                          <span class="vx-pill is-ready">ready</span>
-                          <i data-lucide="chevron-right"></i>
-                        </div>
-                        <div class="vx-runtime-card">
-                          <span class="vx-runtime-logo"><img src="/assets/agents/gemini.svg" alt="" /></span>
-                          <div><strong>Gemini CLI</strong><small>gemini · configured</small></div>
-                          <span class="vx-pill is-ready">ready</span>
-                          <i data-lucide="chevron-right"></i>
-                        </div>
-                        <div class="vx-runtime-card is-muted">
-                          <span class="vx-runtime-logo"><i data-lucide="plug"></i></span>
-                          <div><strong>ACP</strong><small>acp · disabled</small></div>
-                          <span class="vx-pill is-off">disabled</span>
-                          <i data-lucide="chevron-right"></i>
+                        <div class="vx-mgmt-handle"><span></span></div>
+                        <div class="vx-mgmt-main" data-mgmt-detail>
+                          <div class="vx-mgmt-pane is-active" data-mgmt-pane="agents">
+                            <div class="vx-mgmt-headrow">
+                              <span class="vx-mgmt-glyph is-lg" data-mgmt-logo><img src="/assets/agents/openai.svg" alt="" /></span>
+                              <div><strong data-mgmt-name>Codex</strong><small data-mgmt-desc>gpt-5.1-codex · Vibex-managed runtime</small></div>
+                              <span class="vx-mgmt-pill">Available</span>
+                            </div>
+                            <div class="vx-mgmt-card">
+                              <div class="vx-mgmt-cardhead">
+                                <span class="vx-mgmt-iconbox"><i data-lucide="bot"></i></span>
+                                <div><strong>Agent installation</strong><small>Vibex-managed runtime</small></div>
+                                <span class="vx-mgmt-ver">v0.4.2</span>
+                              </div>
+                              <div class="vx-mgmt-actions">
+                                <button class="vx-mgmt-btn" type="button"><i data-lucide="search"></i>Check for updates</button>
+                                <button class="vx-mgmt-btn is-danger" type="button"><i data-lucide="trash-2"></i>Uninstall</button>
+                              </div>
+                            </div>
+                            <div class="vx-mgmt-card">
+                              <div class="vx-mgmt-cardhead">
+                                <span class="vx-mgmt-iconbox"><i data-lucide="shield-alert"></i></span>
+                                <div><strong>Native credentials</strong><small>Sign in with authentication methods reported by this Agent.</small></div>
+                              </div>
+                              <div class="vx-mgmt-status">Signed in · codex</div>
+                            </div>
+                            <div class="vx-mgmt-card">
+                              <div class="vx-mgmt-cardhead">
+                                <span class="vx-mgmt-iconbox"><i data-lucide="database"></i></span>
+                                <div><strong>Model provider configuration</strong><small>Configure credentials and models for external model services.</small></div>
+                                <span class="vx-mgmt-count">3 configurations</span>
+                              </div>
+                              <div class="vx-mgmt-provider is-selected">
+                                <span class="vx-mgmt-grip"><i data-lucide="grip-vertical"></i></span>
+                                <span class="vx-mgmt-profile-glyph"><img src="/assets/agents/openai.svg" alt="" /></span>
+                                <div class="vx-mgmt-profile-name"><strong>OpenAI<span class="vx-mgmt-pill is-default">Default</span></strong><small>api.openai.com · 4 models</small></div>
+                                <span class="vx-mgmt-profile-actions"><i data-lucide="pencil"></i><i data-lucide="copy"></i><i data-lucide="activity"></i></span>
+                              </div>
+                              <div class="vx-mgmt-provider">
+                                <span class="vx-mgmt-grip"><i data-lucide="grip-vertical"></i></span>
+                                <span class="vx-mgmt-profile-glyph"><i data-lucide="sparkles"></i></span>
+                                <div class="vx-mgmt-profile-name"><strong>Azure OpenAI</strong><small>azure.openai.example · 2 models</small></div>
+                                <span class="vx-mgmt-profile-actions"><i data-lucide="pencil"></i><i data-lucide="copy"></i><i data-lucide="activity"></i></span>
+                              </div>
+                              <div class="vx-mgmt-provider">
+                                <span class="vx-mgmt-grip"><i data-lucide="grip-vertical"></i></span>
+                                <span class="vx-mgmt-profile-glyph"><i data-lucide="globe-2"></i></span>
+                                <div class="vx-mgmt-profile-name"><strong>OpenRouter</strong><small>openrouter.ai · 8 models</small></div>
+                                <span class="vx-mgmt-profile-actions"><i data-lucide="pencil"></i><i data-lucide="copy"></i><i data-lucide="activity"></i></span>
+                              </div>
+                              <div class="vx-mgmt-actions">
+                                <button class="vx-mgmt-btn" type="button"><img class="vx-img-icon" src="/assets/icons/import.svg" alt="" />Import existing config</button>
+                                <button class="vx-mgmt-btn is-primary" type="button"><i data-lucide="plus"></i>Add config</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="vx-mgmt-pane" data-mgmt-pane="mcp" hidden>
+                            <div class="vx-mgmt-empty"><strong>No MCP servers connected</strong><small>Add or import an MCP server to extend this Agent with external tools.</small><button class="vx-mgmt-btn is-primary" type="button"><img class="vx-img-icon" src="/assets/icons/import.svg" alt="" />Import Existing MCP</button></div>
+                          </div>
+                          <div class="vx-mgmt-pane" data-mgmt-pane="skills" hidden>
+                            <div class="vx-mgmt-empty"><strong>No skills installed</strong><small>Import existing Skills to make them available to this Agent.</small><button class="vx-mgmt-btn is-primary" type="button"><img class="vx-img-icon" src="/assets/icons/import.svg" alt="" />Import Existing Skills</button></div>
+                          </div>
                         </div>
                       </div>
                     </section>
                   </main>
 
+                  <aside class="vx-preview" data-desktop-preview>
+                    <div class="vx-preview-head">
+                      <strong>Preview</strong>
+                      <div class="vx-preview-tools">
+                        <button class="vx-icon-btn is-sm" type="button" aria-label="New terminal"><i data-lucide="square-terminal"></i></button>
+                        <span class="vx-preview-divider"></span>
+                        <button class="vx-icon-btn is-sm" type="button" aria-label="Full screen"><i data-lucide="maximize-2"></i></button>
+                        <button class="vx-icon-btn is-sm" type="button" data-desktop-action="preview-close" aria-label="Close preview panel"><i data-lucide="x"></i></button>
+                      </div>
+                    </div>
+                    <div class="vx-preview-tabs">
+                      <span class="vx-preview-tab is-active">
+                        <i data-lucide="square-terminal"></i>
+                        <span>Vibex Shell</span>
+                        <button class="vx-tab-close" type="button" aria-label="Close tab"><i data-lucide="x"></i></button>
+                      </span>
+                      <button class="vx-preview-add" type="button" aria-label="New preview tab"><i data-lucide="plus"></i></button>
+                    </div>
+                    <div class="vx-preview-term">
+                      <div class="vx-term-line"><span class="vx-term-prompt">❯</span><span>pnpm vitest run agent/timeline</span></div>
+                      <div class="vx-term-line is-dim">RUN v3.2.1 /workspace/vibex</div>
+                      <div class="vx-term-line"><span class="is-pass">✓</span><span>src/agent/timeline.test.ts (24 tests) 6.21s</span></div>
+                      <div class="vx-term-line"><span class="is-pass">✓</span><span>src/agent/worktree.test.ts (11 tests) 1.88s</span></div>
+                      <div class="vx-term-line is-dim">Test Files 2 passed (2)</div>
+                      <div class="vx-term-line is-dim">Tests 35 passed (35)</div>
+                      <div class="vx-term-line"><span class="vx-term-prompt">❯</span><span class="vx-term-cursor"></span></div>
+                    </div>
+                  </aside>
+
                   <aside class="vx-rail" data-desktop-rail>
                     <div class="vx-rail-head">
                       <strong data-desktop-rail-title>Files</strong>
-                      <button class="vx-icon-btn is-md" type="button" data-desktop-action="rail-close" aria-label="Close panel"><i data-lucide="chevrons-right"></i></button>
+                      <div class="vx-rail-tools">
+                        <div class="vx-file-actions">
+                          <button class="vx-file-action" type="button" aria-label="Open workspace with selected tool"><i data-lucide="external-link"></i></button>
+                          <button class="vx-file-action is-caret" type="button" aria-label="Open workspace with"><i data-lucide="chevron-down"></i></button>
+                        </div>
+                        <button class="vx-icon-btn is-md" type="button" data-desktop-action="rail-close" aria-label="Close panel"><i data-lucide="chevrons-right"></i></button>
+                      </div>
                     </div>
                     <div class="vx-rail-mode is-files" data-rail-mode="files">
-                      <div class="vx-rail-search"><i data-lucide="search"></i><span>Search workspace files</span></div>
+                      <div class="vx-rail-search"><i data-lucide="search"></i><span>Search workspace files</span><span class="vx-search-mode">Name</span></div>
                       <div class="vx-filetree">
                         <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>apps</span></div>
                         <div class="vx-file-row" style="--depth:1"><i data-lucide="file-code"></i><span>app.rs</span></div>
-                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-code"></i><span>code_workbench.rs</span></div>
+                        <div class="vx-file-row is-selected" style="--depth:1"><i data-lucide="file-code"></i><span>code_workbench.rs</span></div>
                         <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>src</span></div>
                         <div class="vx-file-row" style="--depth:1"><i data-lucide="file-code"></i><span>timeline.rs</span></div>
-                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-text"></i><span>locale.rs</span></div>
+                        <div class="vx-file-row" style="--depth:1"><i data-lucide="book-open"></i><span>README.md</span></div>
                         <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>crates</span></div>
-                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file"></i><span>tokens.json</span></div>
+                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-json"></i><span>tokens.json</span></div>
+                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-cog"></i><span>Cargo.toml</span></div>
                       </div>
                     </div>
                     <div class="vx-rail-mode is-git" data-rail-mode="git">
                       <div class="vx-git-tabs">
-                        <button class="is-active" type="button">Changes</button>
-                        <button type="button">Commits</button>
+                        <button class="is-active" type="button" data-git-tab="changes">Changes</button>
+                        <button type="button" data-git-tab="commits">Commits</button>
                       </div>
-                      <div class="vx-git-toolbar">
-                        <button class="vx-icon-btn is-xs" type="button" aria-label="Fetch"><i data-lucide="download"></i></button>
-                        <button class="vx-icon-btn is-xs" type="button" aria-label="Push"><i data-lucide="upload"></i></button>
-                        <button class="vx-icon-btn is-xs" type="button" aria-label="Refresh Git"><i data-lucide="rotate-ccw"></i></button>
-                        <span class="vx-toolbar-spacer"></span>
-                        <span class="vx-toolbar-divider"></span>
-                        <button class="vx-icon-btn is-xs" type="button" aria-label="Expand all changes"><i data-lucide="chevrons-down-up"></i></button>
-                      </div>
-                      <div class="vx-git-wsrow">
-                        <span class="vx-checkbox"></span>
-                        <div class="vx-git-wsname"><strong>vibex</strong><span>(4 files)</span></div>
-                        <span class="vx-git-nums"><b class="vx-diff-add">+132</b><b class="vx-diff-del">−49</b></span>
-                      </div>
-                      <div class="vx-git-list">
-                        <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">apps/desktop</span></div>
-                        <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox"></span><i data-lucide="file-code"></i><span class="vx-git-name">app.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+4</b><b class="vx-diff-del">−2</b></span><span class="vx-git-badge">M</span></div>
-                        <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">src/workbench</span></div>
-                        <div class="vx-git-row is-selected" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">timeline.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+86</b><b class="vx-diff-del">−31</b></span><span class="vx-git-badge">M</span></div>
-                        <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">worktree.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+31</b><b class="vx-diff-del">−9</b></span><span class="vx-git-badge">M</span></div>
-                        <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">crates/core</span></div>
-                        <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">session.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+11</b><b class="vx-diff-del">−7</b></span><span class="vx-git-badge">M</span></div>
-                      </div>
-                      <div class="vx-commit-box">
-                        <div class="vx-commit-row">
-                          <button class="vx-commit-type" type="button">feat<i data-lucide="chevron-down"></i></button>
-                          <span class="vx-amend"><span class="vx-checkbox"></span>amend</span>
+                      <div class="vx-git-page is-changes" data-git-page="changes">
+                        <div class="vx-git-toolbar">
+                          <button class="vx-icon-btn is-xs" type="button" aria-label="Fetch"><i data-lucide="download"></i></button>
+                          <button class="vx-icon-btn is-xs" type="button" aria-label="Push"><i data-lucide="upload"></i></button>
+                          <button class="vx-icon-btn is-xs" type="button" aria-label="Refresh Git"><i data-lucide="rotate-ccw"></i></button>
+                          <span class="vx-toolbar-spacer"></span>
+                          <span class="vx-toolbar-divider"></span>
+                          <button class="vx-icon-btn is-xs" type="button" aria-label="Expand all changes"><i data-lucide="chevrons-down-up"></i></button>
                         </div>
-                        <div class="vx-commit-input">feat: rework worktree merge backfill</div>
-                        <div class="vx-commit-actions">
-                          <button class="vx-commit-btn" type="button"><i data-lucide="rotate-ccw"></i>Rollback</button>
-                          <span class="vx-commit-spacer"></span>
-                          <button class="vx-commit-btn is-primary" type="button">Commit<span class="vx-commit-count">4</span></button>
+                        <div class="vx-git-wsrow">
+                          <span class="vx-checkbox"></span>
+                          <div class="vx-git-wsname"><strong>vibex</strong><span>(4 files)</span></div>
+                          <span class="vx-git-nums"><b class="vx-diff-add">+132</b><b class="vx-diff-del">−49</b></span>
+                        </div>
+                        <div class="vx-git-list">
+                          <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">apps/desktop</span></div>
+                          <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox"></span><i data-lucide="file-code"></i><span class="vx-git-name">app.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+4</b><b class="vx-diff-del">−2</b></span><span class="vx-git-badge">M</span></div>
+                          <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">src/workbench</span></div>
+                          <div class="vx-git-row is-selected" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">timeline.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+86</b><b class="vx-diff-del">−31</b></span><span class="vx-git-badge">M</span></div>
+                          <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">worktree.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+31</b><b class="vx-diff-del">−9</b></span><span class="vx-git-badge">M</span></div>
+                          <div class="vx-git-row is-dir" style="--depth:0"><span class="vx-checkbox"></span><i data-lucide="folder"></i><span class="vx-git-name">crates/core</span></div>
+                          <div class="vx-git-row" style="--depth:1"><span class="vx-checkbox is-checked"><i data-lucide="check"></i></span><i data-lucide="file-code"></i><span class="vx-git-name">session.rs</span><span class="vx-git-nums"><b class="vx-diff-add">+11</b><b class="vx-diff-del">−7</b></span><span class="vx-git-badge">M</span></div>
+                        </div>
+                        <div class="vx-commit-box">
+                          <div class="vx-commit-row">
+                            <button class="vx-commit-type" type="button">feat<i data-lucide="chevron-down"></i></button>
+                            <span class="vx-amend"><span class="vx-checkbox"></span>amend</span>
+                          </div>
+                          <div class="vx-commit-input">feat: rework worktree merge backfill</div>
+                          <div class="vx-commit-actions">
+                            <button class="vx-commit-btn" type="button"><i data-lucide="rotate-ccw"></i>Rollback</button>
+                            <span class="vx-commit-spacer"></span>
+                            <button class="vx-commit-btn is-primary" type="button">Commit<span class="vx-commit-count">4</span></button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="vx-rail-mode is-terminal" data-rail-mode="terminal" hidden>
-                      <div class="vx-term">
-                        <div class="vx-term-line"><span class="vx-term-prompt">❯</span><span>pnpm vitest run agent/timeline</span></div>
-                        <div class="vx-term-line is-dim">RUN v3.2.1 /workspace/vibex</div>
-                        <div class="vx-term-line"><span class="is-pass">✓</span><span>src/agent/timeline.test.ts (24 tests) 6.21s</span></div>
-                        <div class="vx-term-line"><span class="is-pass">✓</span><span>src/agent/worktree.test.ts (11 tests) 1.88s</span></div>
-                        <div class="vx-term-line is-dim">Test Files 2 passed (2)</div>
-                        <div class="vx-term-line is-dim">Tests 35 passed (35)</div>
-                        <div class="vx-term-line"><span class="vx-term-prompt">❯</span><span class="vx-term-cursor"></span></div>
+                      <div class="vx-git-page is-commits" data-git-page="commits" hidden>
+                        <div class="vx-git-filters">
+                          <button class="vx-git-filter" type="button"><span>Branch</span><i data-lucide="chevron-down"></i></button>
+                          <button class="vx-git-filter" type="button"><span>All Users</span><i data-lucide="chevron-down"></i></button>
+                          <button class="vx-git-filter is-date" type="button"><span>Any date</span><i data-lucide="chevron-down"></i></button>
+                        </div>
+                        <div class="vx-git-history">
+                          <div class="vx-history-row"><span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span></span><div class="vx-history-card is-selected"><div class="vx-history-subj">feat: rework worktree merge backfill<span class="vx-history-ref">main</span></div><div class="vx-history-meta"><span>2h ago</span><span>peatboy</span><span class="vx-history-hash">a3f9c12</span></div></div></div>
+                          <div class="vx-history-row"><span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span></span><div class="vx-history-card"><div class="vx-history-subj">fix: guard timeline replay against partial turns</div><div class="vx-history-meta"><span>5h ago</span><span>peatboy</span><span class="vx-history-hash">7b21e04</span></div></div></div>
+                          <div class="vx-history-row"><span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 C14 32 26 32 26 32 L26 64" stroke="#51a2ff" stroke-width="1.5" fill="none" /><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span><span class="vx-history-node is-lane"></span></span><div class="vx-history-card"><div class="vx-history-subj">chore: bump gpui-component pin<span class="vx-history-ref">codex/runtime</span></div><div class="vx-history-meta"><span>8h ago</span><span>codex</span><span class="vx-history-hash">c91d7f3</span></div></div></div>
+                          <div class="vx-history-row"><span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span></span><div class="vx-history-card"><div class="vx-history-subj">feat: add composer token ring tooltip</div><div class="vx-history-meta"><span>Yesterday</span><span>peatboy</span><span class="vx-history-hash">02e8b55</span></div></div></div>
+                          <div class="vx-history-row"><span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span></span><div class="vx-history-card"><div class="vx-history-subj">fix: clamp right rail width on narrow viewports</div><div class="vx-history-meta"><span>Yesterday</span><span>peatboy</span><span class="vx-history-hash">f4a0d19</span></div></div></div>
+                          <div class="vx-history-row"><span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span></span><div class="vx-history-card"><div class="vx-history-subj">chore: refresh theme tokens</div><div class="vx-history-meta"><span>2 days ago</span><span>peatboy</span><span class="vx-history-hash">88bc3a6</span></div></div></div>
+                        </div>
                       </div>
                     </div>
                   </aside>
@@ -470,7 +631,7 @@ document.querySelector("#app").innerHTML = `
                   <nav class="vx-activity" aria-label="Workspace tools">
                     <button class="is-active" type="button" data-desktop-rail="files" aria-label="Files"><i data-lucide="folder-open"></i></button>
                     <button type="button" data-desktop-rail="git" aria-label="Git"><i data-lucide="git-branch"></i><span class="vx-activity-badge">4</span></button>
-                    <button type="button" data-desktop-rail="terminal" aria-label="New terminal"><i data-lucide="square-terminal"></i></button>
+                    <button type="button" data-desktop-action="preview-open" aria-label="New terminal"><i data-lucide="square-terminal"></i></button>
                     <span class="vx-activity-spacer"></span>
                     <button type="button" aria-label="Workspace settings"><i data-lucide="settings-2"></i></button>
                   </nav>
@@ -781,10 +942,12 @@ createIcons({
     ArrowRight,
     ArrowUp,
     ArrowUpRight,
+    ArrowDownWideNarrow,
     Activity,
     AtSign,
     ArrowLeft,
     Battery,
+    BookOpen,
     Brain,
     Bot,
     Braces,
@@ -802,12 +965,16 @@ createIcons({
     Copy,
     Cpu,
     Crosshair,
+    Database,
     Download,
     Eye,
+    ExternalLink,
     File,
     FileCode,
     FileCode2,
+    FileCog,
     FileDiff,
+    FileJson,
     FileText,
     Folder,
     FolderOpen,
@@ -815,6 +982,7 @@ createIcons({
     GitCommitHorizontal,
     Github,
     Ellipsis,
+    GripVertical,
     KeyRound,
     Globe2,
     Layers3,
@@ -852,6 +1020,7 @@ createIcons({
     Sparkles,
     Settings2,
     SquareTerminal,
+    Trash2,
     SunMedium,
     Terminal,
     TriangleAlert,
@@ -1099,7 +1268,7 @@ const DESKTOP_CANVAS_HEIGHT = 800;
 
 function resizeDesktopShowcase() {
   if (!desktopViewport || !desktopCanvas) return;
-  const scale = Math.min(1, desktopViewport.clientWidth / DESKTOP_CANVAS_WIDTH);
+  const scale = desktopViewport.clientWidth / DESKTOP_CANVAS_WIDTH;
   desktopCanvas.style.setProperty("--desktop-scale", String(scale));
   desktopViewport.style.height = `${Math.ceil(DESKTOP_CANVAS_HEIGHT * scale)}px`;
 }
@@ -1113,17 +1282,25 @@ const DESKTOP_VIEWS = ["agent", "files", "management"];
 const RAIL_LABEL_KEYS = {
   files: "showcase.desktop.railFiles",
   git: "showcase.desktop.railGit",
-  terminal: "showcase.desktop.railTerminal",
 };
 const VIEW_LABEL_KEYS = {
   agent: "showcase.desktop.agent",
   files: "showcase.desktop.files",
   management: "showcase.desktop.management",
 };
+const MANAGEMENT_AGENT_KEYS = {
+  codex: { logo: "/assets/agents/openai.svg", name: "Codex", desc: "gpt-5.1-codex · Vibex-managed runtime" },
+  claude: { logo: "/assets/agents/claude.svg", name: "Claude Code", desc: "claude-sonnet-4.5 · External CLI" },
+  gemini: { logo: "/assets/agents/gemini.svg", name: "Gemini CLI", desc: "gemini-2.5-pro · External CLI" },
+};
+
+function setPreviewOpen(open) {
+  desktopShowcase?.querySelector("[data-desktop-preview]")?.classList.toggle("is-hidden", !open);
+}
 
 function setDesktopRail(railKey) {
   if (!desktopShowcase) return;
-  const rail = ["files", "git", "terminal"].includes(railKey) ? railKey : "files";
+  const rail = ["files", "git"].includes(railKey) ? railKey : "files";
   desktopShowcase.querySelectorAll("[data-rail-mode]").forEach((mode) => {
     mode.hidden = mode.dataset.railMode !== rail;
   });
@@ -1134,6 +1311,42 @@ function setDesktopRail(railKey) {
   if (title) title.textContent = translate(currentLanguage, RAIL_LABEL_KEYS[rail]);
 }
 
+function setGitTab(tabKey) {
+  if (!desktopShowcase) return;
+  const tab = ["changes", "commits"].includes(tabKey) ? tabKey : "changes";
+  desktopShowcase.querySelectorAll("[data-git-tab]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.gitTab === tab);
+  });
+  desktopShowcase.querySelectorAll("[data-git-page]").forEach((page) => {
+    page.hidden = page.dataset.gitPage !== tab;
+  });
+}
+
+function setMgmtTab(tabKey) {
+  if (!desktopShowcase) return;
+  const tab = ["agents", "mcp", "skills"].includes(tabKey) ? tabKey : "agents";
+  desktopShowcase.querySelectorAll("[data-mgmt-tab]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.mgmtTab === tab);
+  });
+  desktopShowcase.querySelectorAll("[data-mgmt-pane]").forEach((pane) => {
+    pane.hidden = pane.dataset.mgmtPane !== tab;
+  });
+}
+
+function selectMgmtAgent(agentKey) {
+  if (!desktopShowcase) return;
+  const meta = MANAGEMENT_AGENT_KEYS[agentKey] ?? MANAGEMENT_AGENT_KEYS.codex;
+  desktopShowcase.querySelectorAll("[data-mgmt-agent]").forEach((row) => {
+    row.classList.toggle("is-selected", row.dataset.mgmtAgent === agentKey);
+  });
+  const logo = desktopShowcase.querySelector("[data-mgmt-logo] img");
+  if (logo) logo.src = meta.logo;
+  const name = desktopShowcase.querySelector("[data-mgmt-name]");
+  if (name) name.textContent = meta.name;
+  const desc = desktopShowcase.querySelector("[data-mgmt-desc]");
+  if (desc) desc.textContent = meta.desc;
+}
+
 function setDesktopView(viewKey, { restore = false } = {}) {
   if (!desktopShowcase) return;
   const view = DESKTOP_VIEWS.includes(viewKey) ? viewKey : "agent";
@@ -1142,12 +1355,21 @@ function setDesktopView(viewKey, { restore = false } = {}) {
     tab.classList.toggle("is-active", active);
     tab.setAttribute("aria-selected", String(active));
   });
-  // The "Files & Git" scene shares the agent timeline; it only swaps the right rail to Git.
+  // "Agent workbench" and "Files & Git" share the timeline; the new-session
+  // home opens only through the "New chat" action.
   const panelView = view === "management" ? "management" : "agent";
   desktopShowcase.querySelectorAll("[data-desktop-panel]").forEach((panel) => {
     panel.classList.toggle("is-active", panel.dataset.desktopPanel === panelView);
   });
-  if (!restore) setDesktopRail(view === "files" ? "git" : "files");
+  if (!restore) {
+    setDesktopRail(view === "files" ? "git" : "files");
+    // The real app swaps the whole center surface for Config Center and
+    // closes the preview dock / right rail around it.
+    const shell = desktopShowcase.querySelector("[data-desktop-shell]");
+    shell?.classList.toggle("is-preview-hidden", view === "management");
+    if (view === "management") shell?.classList.add("is-rail-collapsed");
+    setPreviewOpen(view !== "management");
+  }
   const caption = desktopShowcase.querySelector("[data-desktop-caption]");
   if (caption) caption.textContent = translate(currentLanguage, VIEW_LABEL_KEYS[view]);
 }
@@ -1175,6 +1397,27 @@ desktopShowcase?.querySelectorAll("[data-desktop-rail]").forEach((tab) => {
   });
 });
 
+desktopShowcase?.querySelectorAll("[data-git-tab]").forEach((button) => {
+  button.addEventListener("click", () => {
+    setGitTab(button.dataset.gitTab);
+    markShowcaseInteraction();
+  });
+});
+
+desktopShowcase?.querySelectorAll("[data-mgmt-tab]").forEach((button) => {
+  button.addEventListener("click", () => {
+    setMgmtTab(button.dataset.mgmtTab);
+    markShowcaseInteraction();
+  });
+});
+
+desktopShowcase?.querySelectorAll("[data-mgmt-agent]").forEach((row) => {
+  row.addEventListener("click", () => {
+    selectMgmtAgent(row.dataset.mgmtAgent);
+    markShowcaseInteraction();
+  });
+});
+
 desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
   action.addEventListener("click", () => {
     const kind = action.dataset.desktopAction;
@@ -1190,9 +1433,41 @@ desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
       setDesktopView("management");
       return;
     }
-    if (kind === "agent" || kind === "new-session" || kind === "usage") {
+    if (kind === "agent" || kind === "usage") {
       setDesktopView("agent");
       desktopShowcase.querySelectorAll(".vx-session-row").forEach((row) => row.classList.toggle("is-selected", row === action));
+      return;
+    }
+    if (kind === "new-session") {
+      desktopShowcase.querySelectorAll("[data-desktop-view]").forEach((tab) => {
+        tab.classList.toggle("is-active", tab.dataset.desktopView === "agent");
+        tab.setAttribute("aria-selected", String(tab.dataset.desktopView === "agent"));
+      });
+      desktopShowcase.querySelectorAll("[data-desktop-panel]").forEach((panel) => {
+        panel.classList.toggle("is-active", panel.dataset.desktopPanel === "home");
+      });
+      const shell = desktopShowcase.querySelector("[data-desktop-shell]");
+      shell?.classList.remove("is-preview-hidden", "is-rail-collapsed");
+      setPreviewOpen(true);
+      const caption = desktopShowcase.querySelector("[data-desktop-caption]");
+      if (caption) caption.textContent = translate(currentLanguage, "showcase.desktop.agent");
+      return;
+    }
+    if (kind === "preview-open") {
+      const shell = desktopShowcase.querySelector("[data-desktop-shell]");
+      shell?.classList.remove("is-preview-hidden", "is-rail-collapsed");
+      setPreviewOpen(true);
+      return;
+    }
+    if (kind === "preview-close") {
+      setPreviewOpen(false);
+      return;
+    }
+    if (kind === "terminal") {
+      const preview = desktopShowcase.querySelector("[data-desktop-preview]");
+      const open = preview?.classList.contains("is-hidden") ?? false;
+      desktopShowcase.querySelector("[data-desktop-shell]")?.classList.remove("is-preview-hidden");
+      setPreviewOpen(open);
       return;
     }
     if (kind === "send") {
@@ -1234,7 +1509,7 @@ desktopShowcase?.querySelectorAll("[data-desktop-toggle]").forEach((toggle) => {
 // ---------------------------------------------------------------------------
 // Live composer animation: typing loop, working timer, auto scene rotation.
 // ---------------------------------------------------------------------------
-const typedText = desktopShowcase?.querySelector("[data-typed-text]");
+const typedTexts = [...(desktopShowcase?.querySelectorAll("[data-typed-text]") ?? [])];
 const elapsedLabel = desktopShowcase?.querySelector("[data-elapsed]");
 const statusStrip = desktopShowcase?.querySelector("[data-status-strip]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1253,21 +1528,22 @@ function startElapsedTimer() {
   if (!elapsedLabel || prefersReducedMotion || elapsedTimer) return;
   elapsedTimer = window.setInterval(() => {
     elapsedSeconds += 1;
-    elapsedLabel.textContent = String(elapsedSeconds);
+    elapsedLabel.textContent = `${elapsedSeconds}s`;
   }, 1000);
 }
 
 function resetStatusStrip() {
   elapsedSeconds = 0;
-  if (elapsedLabel) elapsedLabel.textContent = "0";
+  if (elapsedLabel) elapsedLabel.textContent = "0s";
 }
 
 function tickTyping() {
-  if (!typedText) return;
+  if (typedTexts.length === 0) return;
   const phrase = typingPhrases[typingIndex];
+  const apply = (text) => typedTexts.forEach((node) => { node.textContent = text; });
   if (!deleting) {
     charIndex += 1;
-    typedText.textContent = phrase.slice(0, charIndex);
+    apply(phrase.slice(0, charIndex));
     if (charIndex >= phrase.length) {
       deleting = true;
       window.setTimeout(tickTyping, 2600);
@@ -1275,7 +1551,7 @@ function tickTyping() {
     }
   } else {
     charIndex -= 1;
-    typedText.textContent = phrase.slice(0, charIndex);
+    apply(phrase.slice(0, charIndex));
     if (charIndex <= 0) {
       deleting = false;
       typingIndex = (typingIndex + 1) % typingPhrases.length;

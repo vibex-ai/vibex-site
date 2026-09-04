@@ -293,43 +293,44 @@ document.querySelector("#app").innerHTML = `
                       <div class="vx-session-list">
                         <button class="vx-session-row is-selected" type="button" data-desktop-action="agent">
                           <span class="vx-agent-logo"><img src="/assets/agents/openai-light.svg" alt="" /></span>
-                          <span class="vx-session-name">Refactor agent session timeline</span>
-                          <span class="vx-session-time">12:41</span>
+                          <span class="vx-session-name" data-i18n="showcase.desktop.sessions.timeline">Refactor agent session timeline</span>
+                          <span class="vx-session-time is-running" data-r="session-state" data-i18n="showcase.desktop.sessions.timeNow">Now</span>
+                          <span class="vx-session-state" data-r="session-spinner"><i data-lucide="loader-circle"></i></span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
                           <span class="vx-agent-logo"><img src="/assets/agents/claude.svg" alt="" /></span>
-                          <span class="vx-session-name">Fix flaky worktree merge test</span>
-                          <span class="vx-session-time">Yesterday</span>
+                          <span class="vx-session-name" data-i18n="showcase.desktop.sessions.worktreeTest">Fix flaky worktree merge test</span>
+                          <span class="vx-session-time" data-i18n="showcase.desktop.sessions.yesterday">Yesterday</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
                           <span class="vx-agent-logo"><img src="/assets/agents/openai-light.svg" alt="" /></span>
-                          <span class="vx-session-name">Polish composer empty state</span>
-                          <span class="vx-session-time">3 days ago</span>
+                          <span class="vx-session-name" data-i18n="showcase.desktop.sessions.composerState">Polish composer empty state</span>
+                          <span class="vx-session-time" data-i18n="showcase.desktop.sessions.days3">3 days ago</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
                           <span class="vx-agent-logo"><img src="/assets/agents/antigravity.svg" alt="" /></span>
-                          <span class="vx-session-name">Scaffold onboarding walkthrough</span>
-                          <span class="vx-session-time">Yesterday</span>
+                          <span class="vx-session-name" data-i18n="showcase.desktop.sessions.onboarding">Scaffold onboarding walkthrough</span>
+                          <span class="vx-session-time" data-i18n="showcase.desktop.sessions.yesterday">Yesterday</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
                           <span class="vx-agent-logo"><img src="/assets/agents/copilot-light.svg" alt="" /></span>
-                          <span class="vx-session-name">Draft release notes for v0.4</span>
-                          <span class="vx-session-time">Tuesday</span>
+                          <span class="vx-session-name" data-i18n="showcase.desktop.sessions.releaseNotes">Draft release notes for v0.4</span>
+                          <span class="vx-session-time" data-i18n="showcase.desktop.sessions.tuesday">Tuesday</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
                           <span class="vx-agent-logo"><img src="/assets/agents/opencode.svg" alt="" /></span>
-                          <span class="vx-session-name">Migrate settings store to TOML</span>
-                          <span class="vx-session-time">Monday</span>
+                          <span class="vx-session-name" data-i18n="showcase.desktop.sessions.tomlStore">Migrate settings store to TOML</span>
+                          <span class="vx-session-time" data-i18n="showcase.desktop.sessions.monday">Monday</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
                           <span class="vx-agent-logo"><img src="/assets/agents/pi-light.svg" alt="" /></span>
-                          <span class="vx-session-name">Audit command palette shortcuts</span>
-                          <span class="vx-session-time">Last week</span>
+                          <span class="vx-session-name" data-i18n="showcase.desktop.sessions.paletteAudit">Audit command palette shortcuts</span>
+                          <span class="vx-session-time" data-i18n="showcase.desktop.sessions.lastWeek">Last week</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
                           <span class="vx-agent-logo"><img src="/assets/agents/grok-light.svg" alt="" /></span>
-                          <span class="vx-session-name">Profile timeline replay cost</span>
-                          <span class="vx-session-time">Last week</span>
+                          <span class="vx-session-name" data-i18n="showcase.desktop.sessions.replayCost">Profile timeline replay cost</span>
+                          <span class="vx-session-time" data-i18n="showcase.desktop.sessions.lastWeek">Last week</span>
                         </button>
                       </div>
                     </div>
@@ -337,15 +338,15 @@ document.querySelector("#app").innerHTML = `
 
                   <main class="vx-center">
                     <section class="vx-panel is-active" data-desktop-panel="agent">
-                      <div class="vx-timeline" data-timeline>
-                        <div class="vx-user-row" data-replay-slot="user"></div>
-                        <div class="vx-turn" data-replay-slot="turn" hidden>
+                        <div class="vx-timeline" data-timeline>
+                          <div class="vx-user-row" data-replay-slot="user"></div>
+                          <div class="vx-turn" data-replay-slot="turn" hidden>
                           <div class="vx-turn-head">
                             <div class="vx-turn-headline">
                               <span class="vx-turn-agent"><img src="/assets/agents/openai-light.svg" alt="" /></span>
                               <button class="vx-turn-toggle" type="button" data-desktop-toggle="turn"><span data-r="time">Worked for 1m 32s</span><i data-lucide="chevron-down"></i></button>
                             </div>
-                            <span class="vx-turn-runtime">Agent account · gpt-5.1-codex</span>
+                            <span class="vx-turn-runtime">Agent account · gpt-6-astra</span>
                           </div>
                           <div class="vx-turn-body is-collapsed" data-turn-body data-replay-slot="process"></div>
                           <div data-replay-slot="answer"></div>
@@ -359,6 +360,7 @@ document.querySelector("#app").innerHTML = `
                             </div>
                           </div>
                         </div>
+                        <div class="vx-live-row" data-live-row hidden></div>
                       </div>
                       <div class="vx-composer-wrap">
                         <div class="vx-status-strip is-idle" data-status-strip>
@@ -388,7 +390,7 @@ document.querySelector("#app").innerHTML = `
                             </div>
                             <div class="vx-composer-right">
                               <button class="vx-token-btn" type="button" aria-label="Token usage"><span class="vx-token-ring"></span></button>
-                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai-light.svg" alt="" /><span data-i18n="showcase.desktop.chip.runtime">Agent account / gpt-5.1-codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai-light.svg" alt="" /><span data-i18n="showcase.desktop.chip.runtime">Agent account / gpt-6-astra</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                               <button class="vx-send-btn" type="button" data-desktop-action="send" aria-label="Send message"><i data-lucide="arrow-up"></i></button>
                             </div>
                           </div>
@@ -424,7 +426,7 @@ document.querySelector("#app").innerHTML = `
                               <button class="vx-chip" type="button"><i class="is-mode" data-lucide="shield-alert"></i><span data-i18n="showcase.desktop.chip.guarded">Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                             </div>
                             <div class="vx-composer-right">
-                              <button class="vx-chip" type="button"><img class="vx-chip-logo" src="/assets/agents/openai-light.svg" alt="" /><span data-i18n="showcase.desktop.chip.runtime">Agent account / gpt-5.1-codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button"><img class="vx-chip-logo" src="/assets/agents/openai-light.svg" alt="" /><span data-i18n="showcase.desktop.chip.runtime">Agent account / gpt-6-astra</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                               <button class="vx-send-btn is-lg" type="button" aria-label="Create session"><i data-lucide="arrow-up"></i></button>
                             </div>
                           </div>
@@ -605,7 +607,7 @@ document.querySelector("#app").innerHTML = `
                           <div class="vx-mgmt-pane is-active" data-mgmt-pane="agents">
                             <div class="vx-mgmt-headrow">
                               <span class="vx-mgmt-glyph is-lg" data-mgmt-logo><img src="/assets/agents/openai-light.svg" alt="" /></span>
-                              <div><strong data-mgmt-name>Codex</strong><small data-mgmt-desc>Agent account · gpt-5.1-codex</small></div>
+                              <div><strong data-mgmt-name>Codex</strong><small data-mgmt-desc>Agent account · gpt-6-astra</small></div>
                               <span class="vx-mgmt-pill" data-i18n="showcase.desktop.mgmt.available">Available</span>
                             </div>
                             <div class="vx-mgmt-card">
@@ -757,7 +759,7 @@ document.querySelector("#app").innerHTML = `
                               </div>
                             </div>
                             <div class="vx-usage-models" data-usage-page="models" hidden>
-                              <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5.1-codex</span><div class="vx-usage-modelbar"><span style="width:82%"></span></div><b>10,482</b></div>
+                              <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-6-astra</span><div class="vx-usage-modelbar"><span style="width:82%"></span></div><b>10,482</b></div>
                               <div class="vx-usage-modelrow"><span class="vx-usage-modelname">claude-sonnet-4.5</span><div class="vx-usage-modelbar"><span style="width:58%"></span></div><b>7,415</b></div>
                               <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gemini-2.5-pro</span><div class="vx-usage-modelbar"><span style="width:34%"></span></div><b>4,330</b></div>
                               <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5.1</span><div class="vx-usage-modelbar"><span style="width:18%"></span></div><b>2,296</b></div>
@@ -1601,12 +1603,12 @@ const VIEW_LABEL_KEYS = {
 // (vibex_core::is_user_visible_agent), grouped enabled-first like the real
 // Config Center, with subtitles showing config counts or check status.
 const MANAGEMENT_AGENT_KEYS = {
-  codex: { logo: "/assets/agents/openai-light.svg", name: "Codex", desc: "Agent account · gpt-5.1-codex" },
+  codex: { logo: "/assets/agents/openai-light.svg", name: "Codex", desc: "Agent account · gpt-6-astra" },
   claude: { logo: "/assets/agents/claude.svg", name: "Claude Code", desc: "Agent account · claude-sonnet-4.5" },
   gemini: { logo: "/assets/agents/gemini.svg", name: "Gemini CLI", desc: "External CLI · gemini-2.5-pro" },
   opencode: { logo: "/assets/agents/opencode.svg", name: "OpenCode", desc: "External CLI · External model" },
   antigravity: { logo: "/assets/agents/antigravity.svg", name: "Google Antigravity", desc: "External CLI · gemini-3-pro" },
-  copilot: { logo: "/assets/agents/copilot-light.svg", name: "GitHub Copilot", desc: "External CLI · gpt-5.1-codex" },
+  copilot: { logo: "/assets/agents/copilot-light.svg", name: "GitHub Copilot", desc: "External CLI · gpt-6-astra" },
   grok: { logo: "/assets/agents/grok-light.svg", name: "Grok", desc: "External CLI · grok-4.1" },
   pi: { logo: "/assets/agents/pi-light.svg", name: "Pi", desc: "External CLI · glm-5.1" },
   zcode: { logo: "/assets/agents/zcode-light.svg", name: "ZCode", desc: "External CLI · glm-5.1" },
@@ -2121,6 +2123,20 @@ function replayStop() {
   replay.running = false;
 }
 
+// Mirrors the app's sidebar session state: the active session shows a spinning
+// loader instead of its timestamp while the turn runs, and falls back to a
+// quiet timestamp when idle.
+function replaySetSessionState(running) {
+  desktopShowcase?.querySelectorAll('[data-r="session-state"]').forEach((time) => {
+    time.classList.toggle("is-running", running);
+    time.hidden = running;
+    if (!running) time.classList.remove("is-idle");
+  });
+  desktopShowcase?.querySelectorAll('[data-r="session-spinner"]').forEach((spinner) => {
+    spinner.classList.toggle("is-running", running);
+  });
+}
+
 function replayAfter(ms, fn) {
   replay.timers.push(window.setTimeout(fn, ms));
 }
@@ -2171,11 +2187,16 @@ function blockHtml(kind, args = []) {
           <span>12:41</span>
           <button class="vx-user-action" type="button"><i data-lucide="copy"></i><span>${c.copy}</span></button>
         </div>`;
-    case "reasoning":
+    case "reasoning": {
+      // args[0] === true renders the settled preview (with disclosure
+      // chevron); the default is the streaming live indicator.
+      const [settled] = args ?? [];
       return `
-        <div class="vx-reasoning is-streaming" data-r="reason" data-preview="${c.reasoningPreview}" data-full="${c.reasoningFull}">
-          <span class="vx-reasoning-body">${c.live.think}</span>
+        <div class="vx-reasoning${settled ? "" : " is-streaming"}" data-r="reason" data-preview="${c.reasoningPreview}" data-full="${c.reasoningFull}">
+          <span class="vx-reasoning-body">${settled ? c.reasoningPreview : c.live.think}</span>
+          ${settled ? '<i data-lucide="chevron-right"></i>' : ""}
         </div>`;
+    }
     case "activity": {
       const [icon, text] = args;
       return `<div class="vx-activity-line"><i data-lucide="${icon}"></i><span>${text}</span></div>`;
@@ -2289,7 +2310,7 @@ function blockHtml(kind, args = []) {
           <div class="vx-answer-foot" hidden>
             <span class="vx-answer-meta">
               <img src="/assets/agents/openai-light.svg" alt="" />
-              <span>Agent account · gpt-5.1-codex</span>
+              <span>Agent account · gpt-6-astra</span>
               <i data-lucide="clock-3"></i>
               <span data-r="answer-time">16s</span>
             </span>
@@ -2358,7 +2379,7 @@ function replayStartTicker() {
 
 async function runReplay(gen) {
   const alive = () => gen === replayGeneration;
-  const { processSlot, userSlot, turnSlot, answerSlot, changesSlot } = replay.refs;
+  const { processSlot, userSlot, turnSlot, answerSlot, changesSlot, liveRow } = replay.refs;
   const m = replay.metrics;
   const c = replayCopy();
   const append = (html) => {
@@ -2367,14 +2388,18 @@ async function runReplay(gen) {
     renderIcons();
     scrollTimeline();
   };
-  const setText = (selector, text) => {
-    const node = processSlot.querySelector(selector);
+  const setLive = (text) => {
+    const body = liveRow.querySelector(".vx-reasoning-body");
     // An expanded live row is being read; don't yank its text mid-scroll.
-    if (node && !node.closest('[data-r="reason"]')?.classList.contains("is-open")) node.textContent = text;
+    if (body && !liveRow.querySelector('[data-r="reason"]')?.classList.contains("is-open")) {
+      body.textContent = text;
+    }
   };
 
   // The user types in the composer below the timeline, then presses Enter.
-  agentComposer?.classList.add("is-typing");
+  // The hint behaves like a native placeholder: gone the moment the input is
+  // focused / typing starts, back when the composer is empty again.
+  agentComposer?.classList.add("is-focused", "is-typing");
   typeInto(agentTypedNode, c.message, 2100, alive);
   await replaySleep(2700); if (!alive()) return;
   agentComposer?.classList.remove("is-typing");
@@ -2389,34 +2414,38 @@ async function runReplay(gen) {
   turnSlot.classList.add("vx-reveal");
   turnSlot.querySelector("[data-turn-body]")?.classList.remove("is-collapsed");
   statusStrip.classList.remove("is-idle");
+  replaySetSessionState(true);
   m.start = Date.now();
   renderStrip();
   scrollTimeline();
 
-  // Thinking: the live shimmer line pins to the bottom and its label tracks
-  // whatever the agent is doing right now, exactly like the app's
-  // agent_pending_response flow.
-  const live = blockHtml("reasoning");
+  // Thinking: the shimmer line pins to the very bottom of the timeline and
+  // its label tracks whatever the agent is doing right now, exactly like the
+  // app's agent_pending_response flow. Click it to peek at the full thought.
   m.phase = "Thinking"; renderStrip();
   await replaySleep(400); if (!alive()) return;
-  append(live);
+  liveRow.innerHTML = blockHtml("reasoning");
+  liveRow.hidden = false;
+  liveRow.classList.add("vx-reveal");
+  renderIcons();
+  scrollTimeline();
   await replaySleep(2400); if (!alive()) return;
-  setText('[data-r="reason"] .vx-reasoning-body', c.reasoningPreview);
+  setLive(c.reasoningPreview);
 
   // Tool activity lines.
   m.phase = "Calling tool"; m.tools = 1; renderStrip();
-  setText('[data-r="reason"] .vx-reasoning-body', c.live.search);
+  setLive(c.live.search);
   append(blockHtml("activity", ["search", c.activitySearch]));
   await replaySleep(1000); if (!alive()) return;
   m.tools = 2; renderStrip();
-  setText('[data-r="reason"] .vx-reasoning-body', c.live.read);
+  setLive(c.live.read);
   append(blockHtml("activity", ["file-code", c.activityRead]));
   await replaySleep(1100); if (!alive()) return;
 
   // Command runs, but first waits for approval like the app's linked
   // command/permission card pair.
   m.tools = 3; m.phase = "Waiting for approval"; renderStrip();
-  setText('[data-r="reason"] .vx-reasoning-body', c.live.confirm);
+  setLive(c.live.confirm);
   append(blockHtml("command", [c.badgeWaiting]));
   append(blockHtml("permission"));
   await replaySleep(2400); if (!alive()) return;
@@ -2429,7 +2458,7 @@ async function runReplay(gen) {
 
   const commandCard = processSlot.querySelector(".vx-command-card");
   const badge = commandCard.querySelector('[data-r="badge"]');
-  setText('[data-r="reason"] .vx-reasoning-body', c.live.run);
+  setLive(c.live.run);
   badge.textContent = c.badgeRunning;
   commandCard.insertAdjacentHTML("beforeend", blockHtml("command-output"));
   renderIcons();
@@ -2442,12 +2471,12 @@ async function runReplay(gen) {
 
   // File edit lands; the strip diff starts counting.
   m.tools = 4; m.add = 86; m.del = 31; renderStrip();
-  setText('[data-r="reason"] .vx-reasoning-body', c.live.edit);
+  setLive(c.live.edit);
   append(blockHtml("fileop"));
   await replaySleep(1300); if (!alive()) return;
 
   // The form card is filled and submitted.
-  setText('[data-r="reason"] .vx-reasoning-body', c.live.form);
+  setLive(c.live.form);
   append(blockHtml("form"));
   await replaySleep(1400); if (!alive()) return;
   processSlot.querySelector('[data-r="form"] .vx-form-choice')?.classList.add("is-selected");
@@ -2459,12 +2488,8 @@ async function runReplay(gen) {
   // Answer streams in as the turn's conclusion; the reasoning line settles,
   // then the app collapses the finished turn's process rows so only the
   // conclusion stays visible.
-  setText('[data-r="reason"] .vx-reasoning-body', c.live.write);
+  setLive(c.live.write);
   await replaySleep(700); if (!alive()) return;
-  const reason = processSlot.querySelector('[data-r="reason"]');
-  reason.classList.remove("is-streaming");
-  reason.insertAdjacentHTML("beforeend", '<i data-lucide="chevron-right"></i>');
-  renderIcons();
   m.phase = "Generating"; m.generating = true; renderStrip();
   answerSlot.innerHTML = blockHtml("answer");
   answerSlot.classList.add("vx-reveal");
@@ -2497,27 +2522,29 @@ async function runReplay(gen) {
     await replaySleep(380); if (!alive()) return;
   }
 
-  // Turn complete — the app drops the status strip once nothing is running.
+  // Turn complete — the reasoning line settles into the (collapsed) process
+  // history and the app drops the status strip once nothing is running.
   m.phase = "Finalizing"; m.generating = false;
   m.inTok = 12300; m.outTok = 4500; m.cache = 38; renderStrip();
+  liveRow.hidden = true;
+  processSlot.insertAdjacentHTML("afterbegin", blockHtml("reasoning", [true]));
+  processSlot.firstElementChild?.classList.add("vx-reveal");
+  renderIcons();
   if (replay.refs.timeEl) replay.refs.timeEl.textContent = `${c.workedFor} ${fmtClock(Date.now() - m.start)}`;
   answerSlot.querySelector('[data-r="answer-time"]').textContent = fmtClock(Date.now() - m.start);
+  replaySetSessionState(false);
   await replaySleep(700); if (!alive()) return;
   statusStrip.classList.add("is-idle");
   replayStop();
 }
 
 function buildFinalState() {
-  const { processSlot, userSlot, turnSlot, answerSlot, changesSlot } = replay.refs;
+  const { processSlot, userSlot, turnSlot, answerSlot, changesSlot, liveRow } = replay.refs;
   const c = replayCopy();
   userSlot.innerHTML = `<div class="vx-user-bubble">${c.message}</div>
     ${blockHtml("user-actions")}`;
   turnSlot.hidden = false;
-  processSlot.insertAdjacentHTML("beforeend", blockHtml("reasoning"));
-  const reason = processSlot.querySelector('[data-r="reason"]');
-  reason.classList.remove("is-streaming");
-  reason.querySelector(".vx-reasoning-body").textContent = c.reasoningPreview;
-  reason.insertAdjacentHTML("beforeend", '<i data-lucide="chevron-right"></i>');
+  processSlot.insertAdjacentHTML("beforeend", blockHtml("reasoning", [true]));
   processSlot.insertAdjacentHTML("beforeend", blockHtml("activity", ["search", c.activitySearch]));
   processSlot.insertAdjacentHTML("beforeend", blockHtml("activity", ["file-code", c.activityRead]));
   processSlot.insertAdjacentHTML("beforeend", blockHtml("command", [c.badgeCompleted]));
@@ -2539,6 +2566,8 @@ function buildFinalState() {
   turnSlot.querySelector('[data-desktop-toggle="turn"]')?.classList.add("is-collapsed");
   changesSlot.hidden = false;
   changesSlot.querySelectorAll(".vx-changes-row").forEach((row) => { row.hidden = false; });
+  liveRow.hidden = true;
+  liveRow.innerHTML = "";
   renderIcons();
   statusStrip.classList.add("is-idle");
 }
@@ -2555,6 +2584,7 @@ function startTimelineReplay() {
   const processSlot = timelineEl.querySelector('[data-replay-slot="process"]');
   const answerSlot = timelineEl.querySelector('[data-replay-slot="answer"]');
   const changesSlot = timelineEl.querySelector('[data-replay-slot="changes"]');
+  const liveRow = timelineEl.querySelector("[data-live-row]");
   const timeEl = timelineEl.querySelector('[data-r="time"]');
 
   userSlot.innerHTML = "";
@@ -2562,14 +2592,18 @@ function startTimelineReplay() {
   turnSlot.classList.remove("vx-reveal");
   processSlot.innerHTML = "";
   answerSlot.innerHTML = "";
+  liveRow.hidden = true;
+  liveRow.innerHTML = "";
+  liveRow.classList.remove("vx-reveal", "is-open");
   changesSlot.hidden = true;
   changesSlot.classList.remove("vx-reveal");
   changesSlot.querySelectorAll(".vx-changes-row").forEach((row) => { row.hidden = true; });
   if (agentTypedNode) agentTypedNode.textContent = "";
-  agentComposer?.classList.remove("is-sent", "is-expanded");
+  agentComposer?.classList.remove("is-sent", "is-expanded", "is-focused", "is-typing");
+  replaySetSessionState(false);
   if (timeEl) timeEl.textContent = `${c.workedFor} 1m 32s`;
 
-  replay.refs = { userSlot, turnSlot, processSlot, answerSlot, changesSlot, timeEl };
+  replay.refs = { userSlot, turnSlot, processSlot, answerSlot, changesSlot, liveRow, timeEl };
   replay.metrics = {
     phase: "Preparing",
     tools: 0,

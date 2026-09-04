@@ -1247,6 +1247,48 @@ h3 {
   font-size: 11px;
 }
 
+/* Real app: the running session replaces its timestamp with a spinning
+   loader in the fixed-width right zone; other states show a status dot. */
+.vx-session-time.is-running {
+  color: var(--vx-muted-fg);
+}
+
+.vx-session-state {
+  display: none;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--vx-primary);
+}
+
+.vx-session-state.is-running {
+  display: grid;
+}
+
+.vx-session-state svg {
+  width: 14px;
+  height: 14px;
+  animation: vx-spin 0.9s linear infinite;
+}
+
+@keyframes vx-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* The live thinking line stays pinned at the bottom of the timeline, below
+   the newest turn content, like the app's streaming reasoning indicator. */
+.vx-live-row {
+  flex: none;
+  padding: 2px 0 6px;
+}
+
+.vx-live-row .vx-reasoning {
+  padding: 4px 2px;
+}
+
 /* --- Center column -------------------------------------------------------- */
 
 .vx-center {
@@ -1291,7 +1333,7 @@ h3 {
 }
 
 /* The mock toggles [hidden] from JS; make sure it always wins. */
-.vx-panel [hidden] {
+.desktop-app [hidden] {
   display: none !important;
 }
 
@@ -2437,14 +2479,15 @@ h3 {
   line-height: 1.5;
 }
 
-/* Static placeholder hint shown while the composer is empty; the replay
-   typing hides it once the first character lands. */
+/* Static placeholder hint shown while the composer is empty; it behaves like
+   a native placeholder — gone while typing or while the composer is focused. */
 .vx-composer-hint {
   color: var(--vx-faint);
   transition: opacity 0.2s ease;
 }
 
-.vx-composer.is-typing .vx-composer-hint {
+.vx-composer.is-typing .vx-composer-hint,
+.vx-composer.is-focused .vx-composer-hint {
   display: none;
 }
 

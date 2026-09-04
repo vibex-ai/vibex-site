@@ -219,7 +219,7 @@ document.querySelector("#app").innerHTML = `
               <span class="agent-support-label" data-hero-supports>Supports</span>
               <div class="agent-list">
                 <span class="agent-logo" title="Claude Code"><img src="/assets/agents/claude.svg" alt="Claude Code" /></span>
-                <span class="agent-logo agent-logo-mono" title="OpenAI Codex"><img src="/assets/agents/openai.svg" alt="OpenAI Codex" /></span>
+                <span class="agent-logo agent-logo-mono" title="OpenAI Codex"><img src="/assets/agents/openai-light.svg" alt="OpenAI Codex" /></span>
                 <span class="agent-logo" title="Antigravity"><img src="/assets/agents/antigravity.svg" alt="Antigravity" /></span>
                 <span class="agent-logo agent-logo-mono" title="GitHub Copilot"><img src="/assets/agents/copilot.svg" alt="GitHub Copilot" /></span>
                 <span class="agent-logo" title="OpenCode"><img src="/assets/agents/opencode.svg" alt="OpenCode" /></span>
@@ -284,12 +284,12 @@ document.querySelector("#app").innerHTML = `
                       <button class="vx-project-row" type="button">
                         <span class="vx-project-logo"><img src="/assets/vibex-startup-mark.svg" alt="" /></span>
                         <strong>vibex</strong>
-                        <span class="vx-count-badge">3</span>
+                        <span class="vx-count-badge">8</span>
                         <span class="vx-project-hover"><i data-lucide="chevron-down"></i><i data-lucide="ellipsis"></i></span>
                       </button>
                       <div class="vx-session-list">
                         <button class="vx-session-row is-selected" type="button" data-desktop-action="agent">
-                          <span class="vx-agent-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
+                          <span class="vx-agent-logo"><img src="/assets/agents/openai-light.svg" alt="" /></span>
                           <span class="vx-session-name">Refactor agent session timeline</span>
                           <span class="vx-session-time">12:41</span>
                         </button>
@@ -299,9 +299,34 @@ document.querySelector("#app").innerHTML = `
                           <span class="vx-session-time">Yesterday</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
-                          <span class="vx-agent-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
+                          <span class="vx-agent-logo"><img src="/assets/agents/openai-light.svg" alt="" /></span>
                           <span class="vx-session-name">Polish composer empty state</span>
                           <span class="vx-session-time">3 days ago</span>
+                        </button>
+                        <button class="vx-session-row" type="button" data-desktop-action="agent">
+                          <span class="vx-agent-logo"><img src="/assets/agents/antigravity.svg" alt="" /></span>
+                          <span class="vx-session-name">Scaffold onboarding walkthrough</span>
+                          <span class="vx-session-time">Yesterday</span>
+                        </button>
+                        <button class="vx-session-row" type="button" data-desktop-action="agent">
+                          <span class="vx-agent-logo"><img src="/assets/agents/copilot.svg" alt="" /></span>
+                          <span class="vx-session-name">Draft release notes for v0.4</span>
+                          <span class="vx-session-time">Tuesday</span>
+                        </button>
+                        <button class="vx-session-row" type="button" data-desktop-action="agent">
+                          <span class="vx-agent-logo"><img src="/assets/agents/opencode.svg" alt="" /></span>
+                          <span class="vx-session-name">Migrate settings store to TOML</span>
+                          <span class="vx-session-time">Monday</span>
+                        </button>
+                        <button class="vx-session-row" type="button" data-desktop-action="agent">
+                          <span class="vx-agent-logo"><img src="/assets/agents/pi.svg" alt="" /></span>
+                          <span class="vx-session-name">Audit command palette shortcuts</span>
+                          <span class="vx-session-time">Last week</span>
+                        </button>
+                        <button class="vx-session-row" type="button" data-desktop-action="agent">
+                          <span class="vx-agent-logo"><img src="/assets/agents/grok.svg" alt="" /></span>
+                          <span class="vx-session-name">Profile timeline replay cost</span>
+                          <span class="vx-session-time">Last week</span>
                         </button>
                       </div>
                     </div>
@@ -315,7 +340,7 @@ document.querySelector("#app").innerHTML = `
                         </div>
                         <div class="vx-turn">
                           <div class="vx-turn-head">
-                            <span class="vx-turn-agent"><img src="/assets/agents/openai.svg" alt="" /></span>
+                            <span class="vx-turn-agent"><img src="/assets/agents/openai-light.svg" alt="" /></span>
                             <button class="vx-turn-toggle" type="button" data-desktop-toggle="turn"><span>Worked for 1m 32s</span><i data-lucide="chevron-down"></i></button>
                             <span class="vx-turn-runtime">gpt-5.1-codex · Codex</span>
                           </div>
@@ -344,7 +369,7 @@ document.querySelector("#app").innerHTML = `
                       </div>
                       <div class="vx-composer-wrap">
                         <div class="vx-status-strip" data-status-strip>
-                          <span class="vx-strip-logo"><img src="/assets/agents/openai.svg" alt="" /></span>
+                          <span class="vx-strip-logo"><img src="/assets/agents/openai-light.svg" alt="" /></span>
                           <span>Generating</span><span class="vx-strip-dot">·</span>
                           <span><span data-elapsed>38s</span></span><span class="vx-strip-dot">·</span>
                           <span>4 tool calls</span><span class="vx-strip-dot">·</span>
@@ -370,7 +395,7 @@ document.querySelector("#app").innerHTML = `
                             </div>
                             <div class="vx-composer-right">
                               <button class="vx-token-btn" type="button" aria-label="Token usage"><span class="vx-token-ring"></span></button>
-                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai.svg" alt="" /><span data-i18n="showcase.desktop.chip.runtime">codex · gpt-5.1-codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-chip" type="button" data-runtime-choice="agent"><img class="vx-chip-logo" src="/assets/agents/openai-light.svg" alt="" /><span data-i18n="showcase.desktop.chip.runtime">Agent account / gpt-5.1-codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                               <button class="vx-send-btn" type="button" data-desktop-action="send" aria-label="Send message"><i data-lucide="arrow-up"></i></button>
                             </div>
                           </div>
@@ -381,16 +406,21 @@ document.querySelector("#app").innerHTML = `
                     <section class="vx-panel" data-desktop-panel="home">
                       <div class="vx-home">
                         <div class="vx-home-mark">
-                          <img src="/assets/vibex-mark-tight.svg" alt="" />
+                          <img src="/assets/vibex-mark-tight-light.svg" alt="" />
                           <span>ibex</span>
                         </div>
                         <h1 data-i18n="showcase.desktop.home.slogan">Start something new</h1>
                         <p class="vx-home-sub" data-i18n="showcase.desktop.home.description">Create a fresh session from a project directory or a temporary workspace</p>
                         <div class="vx-home-capsule">
                           <div class="vx-home-agents">
-                            <button class="vx-agent-tab is-active" type="button"><img src="/assets/agents/openai.svg" alt="" /><span>Codex</span></button>
+                            <button class="vx-agent-tab is-active" type="button"><img src="/assets/agents/openai-light.svg" alt="" /><span>Codex</span></button>
                             <button class="vx-agent-tab" type="button"><img src="/assets/agents/claude.svg" alt="" /><span>Claude Code</span></button>
                             <button class="vx-agent-tab" type="button"><img src="/assets/agents/gemini.svg" alt="" /><span>Gemini CLI</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/copilot.svg" alt="" /><span>GitHub Copilot</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/antigravity.svg" alt="" /><span>Antigravity</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/pi.svg" alt="" /><span>Pi</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/opencode.svg" alt="" /><span>OpenCode</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/grok.svg" alt="" /><span>Grok</span></button>
                           </div>
                           <button class="vx-icon-btn is-sm" type="button" aria-label="Sort agents"><i data-lucide="arrow-down-wide-narrow"></i></button>
                         </div>
@@ -402,7 +432,10 @@ document.querySelector("#app").innerHTML = `
                               <button class="vx-chip" type="button"><i class="is-effort" data-lucide="brain"></i><span data-i18n="showcase.desktop.chip.standard">Standard</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                               <button class="vx-chip" type="button"><i class="is-mode" data-lucide="shield-alert"></i><span data-i18n="showcase.desktop.chip.guarded">Guarded</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
                             </div>
-                            <button class="vx-send-btn is-lg" type="button" aria-label="Create session"><i data-lucide="arrow-up"></i></button>
+                            <div class="vx-composer-right">
+                              <button class="vx-chip" type="button"><img class="vx-chip-logo" src="/assets/agents/openai-light.svg" alt="" /><span data-i18n="showcase.desktop.chip.runtime">Agent account / gpt-5.1-codex</span><i class="vx-chip-caret" data-lucide="chevron-down"></i></button>
+                              <button class="vx-send-btn is-lg" type="button" aria-label="Create session"><i data-lucide="arrow-up"></i></button>
+                            </div>
                           </div>
                         </div>
                         <div class="vx-home-wsrow">
@@ -427,7 +460,7 @@ document.querySelector("#app").innerHTML = `
                             <div class="vx-mgmt-agents">
                               <button class="vx-mgmt-agent is-selected" type="button" data-mgmt-agent="codex">
                                 <span class="vx-mgmt-agent-top">
-                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/openai.svg" alt="" /></span>
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/openai-light.svg" alt="" /></span>
                                   <span class="vx-mgmt-agent-name">Codex</span>
                                   <span class="vx-mgmt-switch is-on"><span></span></span>
                                 </span>
@@ -476,7 +509,7 @@ document.querySelector("#app").innerHTML = `
                         <div class="vx-mgmt-main" data-mgmt-detail>
                           <div class="vx-mgmt-pane is-active" data-mgmt-pane="agents">
                             <div class="vx-mgmt-headrow">
-                              <span class="vx-mgmt-glyph is-lg" data-mgmt-logo><img src="/assets/agents/openai.svg" alt="" /></span>
+                              <span class="vx-mgmt-glyph is-lg" data-mgmt-logo><img src="/assets/agents/openai-light.svg" alt="" /></span>
                               <div><strong data-mgmt-name>Codex</strong><small data-mgmt-desc>gpt-5.1-codex · Vibex-managed runtime</small></div>
                               <span class="vx-mgmt-pill" data-i18n="showcase.desktop.mgmt.available">Available</span>
                             </div>
@@ -506,7 +539,7 @@ document.querySelector("#app").innerHTML = `
                               </div>
                               <div class="vx-mgmt-provider is-selected">
                                 <span class="vx-mgmt-grip"><i data-lucide="grip-vertical"></i></span>
-                                <span class="vx-mgmt-profile-glyph"><img src="/assets/agents/openai.svg" alt="" /></span>
+                                <span class="vx-mgmt-profile-glyph"><img src="/assets/agents/openai-light.svg" alt="" /></span>
                                 <div class="vx-mgmt-profile-name"><strong>OpenAI<span class="vx-mgmt-pill is-default" data-i18n="showcase.desktop.mgmt.default">Default</span></strong><small>api.openai.com · 4 models</small></div>
                                 <span class="vx-mgmt-profile-actions"><i data-lucide="pencil"></i><i data-lucide="copy"></i><i data-lucide="activity"></i></span>
                               </div>
@@ -1459,7 +1492,7 @@ const VIEW_LABEL_KEYS = {
   usage: "showcase.desktop.usage",
 };
 const MANAGEMENT_AGENT_KEYS = {
-  codex: { logo: "/assets/agents/openai.svg", name: "Codex", desc: "gpt-5.1-codex · Vibex-managed runtime" },
+  codex: { logo: "/assets/agents/openai-light.svg", name: "Codex", desc: "gpt-5.1-codex · Vibex-managed runtime" },
   claude: { logo: "/assets/agents/claude.svg", name: "Claude Code", desc: "claude-sonnet-4.5 · External CLI" },
   gemini: { logo: "/assets/agents/gemini.svg", name: "Gemini CLI", desc: "gemini-2.5-pro · External CLI" },
 };
@@ -1583,8 +1616,9 @@ desktopShowcase?.querySelectorAll("[data-desktop-rail]").forEach((tab) => {
     const shell = desktopShowcase.querySelector("[data-desktop-shell]");
     const alreadyActive = tab.classList.contains("is-active");
     if (alreadyActive) {
-      // Toggling the active rail button collapses the panel, like the app.
-      shell?.classList.add("is-rail-collapsed");
+      // Toggling the active rail button flips between collapsed and open,
+      // matching the app's rail behaviour.
+      shell?.classList.toggle("is-rail-collapsed");
     } else {
       shell?.classList.remove("is-rail-collapsed");
       setDesktopRail(tab.dataset.desktopRail);

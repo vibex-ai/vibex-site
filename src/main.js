@@ -239,6 +239,7 @@ document.querySelector("#app").innerHTML = `
         <div class="desktop-showcase reveal" data-desktop-showcase>
           <div class="showcase-glow" aria-hidden="true"></div>
           <div class="desktop-showcase-tabs" role="tablist" aria-label="Vibex desktop workbench" data-desktop-tablist>
+            <span class="desktop-showcase-thumb" data-desktop-thumb aria-hidden="true"></span>
             <button class="desktop-showcase-tab is-active" type="button" role="tab" aria-selected="true" data-desktop-view="agent"><i data-lucide="message-square"></i><span data-desktop-tab="agent">Agent workbench</span></button>
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="files"><i data-lucide="git-branch"></i><span data-desktop-tab="files">Files &amp; Git</span></button>
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="management"><i data-lucide="settings"></i><span data-desktop-tab="management">Config Center</span></button>
@@ -1731,6 +1732,19 @@ function setDesktopView(viewKey, { restore = false } = {}) {
   }
   const caption = desktopShowcase.querySelector("[data-desktop-caption]");
   if (caption) caption.textContent = translate(currentLanguage, VIEW_LABEL_KEYS[view]);
+  syncShowcaseThumb();
+}
+
+function syncShowcaseThumb() {
+  const tablist = desktopShowcase?.querySelector("[data-desktop-tablist]");
+  const thumb = tablist?.querySelector("[data-desktop-thumb]");
+  const active = tablist?.querySelector("[data-desktop-view].is-active");
+  if (!thumb || !active) return;
+  thumb.style.width = `${active.offsetWidth}px`;
+  // offsetLeft is measured from the tablist's inner border edge, which is
+  // exactly the thumb's absolute-positioning origin (left: 0).
+  thumb.style.transform = `translateX(${active.offsetLeft}px)`;
+  thumb.style.opacity = "1";
 }
 
 function setActivePanel(panelKey) {
@@ -2696,6 +2710,12 @@ startShowcaseRotation();
 
 // The agent workbench is the default view: kick off the first session replay.
 startTimelineReplay();
+
+// Thumb geometry depends on rendered fonts and label widths; re-measure once
+// the page settles and whenever the viewport changes.
+syncShowcaseThumb();
+if (document.fonts?.ready) document.fonts.ready.then(() => syncShowcaseThumb());
+window.addEventListener("resize", () => syncShowcaseThumb());
 
 const copyButton = document.querySelector("[data-copy-command]");
 const toast = document.querySelector("[data-toast]");

@@ -1740,10 +1740,14 @@ function syncShowcaseThumb() {
   const thumb = tablist?.querySelector("[data-desktop-thumb]");
   const active = tablist?.querySelector("[data-desktop-view].is-active");
   if (!thumb || !active) return;
-  thumb.style.width = `${active.offsetWidth}px`;
+  // The underline hugs the visible label (content box), not the full hit
+  // area: strip the tab's horizontal padding from both edges.
+  const padLeft = Number.parseFloat(getComputedStyle(active).paddingLeft) || 0;
+  const padRight = Number.parseFloat(getComputedStyle(active).paddingRight) || 0;
+  thumb.style.width = `${active.offsetWidth - padLeft - padRight}px`;
   // offsetLeft is measured from the tablist's inner border edge, which is
   // exactly the thumb's absolute-positioning origin (left: 0).
-  thumb.style.transform = `translateX(${active.offsetLeft}px)`;
+  thumb.style.transform = `translateX(${active.offsetLeft + padLeft}px)`;
   thumb.style.opacity = "1";
 }
 

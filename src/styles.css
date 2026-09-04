@@ -787,8 +787,7 @@ h3 {
 --------------------------------------------------------------------------- */
 
 .desktop-app {
-  --vx-bg: #09090b;
-  --vx-fg: #fafafa;
+  --vx-bg: #09090b;  --vx-fg: #fafafa;
   --vx-sidebar: #18181b;
   --vx-card: #18181b;
   --vx-composer: #1c1c1e;
@@ -1286,7 +1285,14 @@ h3 {
 
 .vx-user-row {
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   justify-content: flex-end;
+}
+
+/* The mock toggles [hidden] from JS; make sure it always wins. */
+.vx-panel [hidden] {
+  display: none !important;
 }
 
 .vx-user-bubble {
@@ -1298,6 +1304,352 @@ h3 {
   color: var(--vx-fg);
   font-size: 13px;
   line-height: 1.5;
+}
+
+/* Real app: latest user message shows hover actions (copy / edit) under the
+   bubble, right-aligned. The replay reveals them briefly. */
+.vx-user-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.vx-user-row:hover .vx-user-actions,
+.vx-user-row.is-editing .vx-user-actions {
+  opacity: 1;
+}
+
+.vx-user-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.vx-user-action:hover {
+  color: var(--vx-fg);
+}
+
+.vx-user-action svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Real app: inline editing replaces the bubble with an input + save/discard. */
+.vx-user-editor {
+  display: flex;
+  max-width: 78%;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.vx-user-editor textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--vx-input);
+  border-radius: 12px;
+  background: var(--vx-muted);
+  color: var(--vx-fg);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: none;
+}
+
+.vx-user-editor textarea:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Real app: streaming reasoning hugs its text with a shimmer sweep over the
+   first line; settled reasoning shows a muted one-line preview. */
+.vx-reasoning {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 12.5px;
+}
+
+.vx-reasoning.is-streaming {
+  cursor: default;
+}
+
+.vx-reasoning-body {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Expanded reasoning shows the full text with normal wrapping. */
+.vx-reasoning.is-open {
+  align-items: flex-start;
+}
+
+.vx-reasoning.is-open .vx-reasoning-body {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.vx-reasoning svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  transition: transform 0.18s ease;
+}
+
+.vx-reasoning.is-open svg {
+  transform: rotate(90deg);
+}
+
+.vx-reasoning.is-streaming .vx-reasoning-body {
+  background: linear-gradient(
+    100deg,
+    var(--vx-muted-fg) 40%,
+    var(--vx-fg) 50%,
+    var(--vx-muted-fg) 60%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: vx-shimmer 2.2s linear infinite;
+}
+
+@keyframes vx-shimmer {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -80% 0;
+  }
+}
+
+/* Real app: lightweight tool activity is a single muted line with a 14px
+   icon, hover brightens it. */
+.vx-activity-line {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 12.5px;
+}
+
+.vx-activity-line:hover {
+  color: var(--vx-fg);
+}
+
+.vx-activity-line svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
+.vx-activity-line span {
+  overflow: hidden;
+  min-width: 0;
+  flex: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Real app: permission card — warning border/header while pending, muted
+   resolution line once processed. */
+.vx-permission-card {
+  overflow: hidden;
+  border: 1px solid rgba(239, 176, 0, 0.42);
+  border-radius: 8px;
+  background: rgba(24, 24, 27, 0.72);
+}
+
+.vx-permission-card.is-approved {
+  border-color: var(--vx-border);
+}
+
+.vx-permission-head {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(239, 176, 0, 0.08);
+  color: var(--vx-fg);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.vx-permission-card.is-approved .vx-permission-head {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.vx-permission-head svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--vx-warning);
+}
+
+.vx-permission-card.is-approved .vx-permission-head svg {
+  color: var(--vx-success);
+}
+
+.vx-permission-title {
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-permission-status {
+  flex: none;
+  color: var(--vx-warning);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.vx-permission-card.is-approved .vx-permission-status {
+  color: var(--vx-success);
+}
+
+.vx-permission-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.vx-permission-body code {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.055);
+  color: #d4d4d8;
+  font-family: var(--vx-mono);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.vx-permission-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Real app: elicitation (form) card — warning-tinted card with labeled
+   fields, outline choices and outline/primary footer buttons. */
+.vx-form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(239, 176, 0, 0.42);
+  border-radius: 8px;
+  background: rgba(239, 176, 0, 0.05);
+}
+
+.vx-form-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--vx-fg);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.vx-form-title svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--vx-warning);
+}
+
+.vx-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vx-form-field label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.vx-form-field label em {
+  color: var(--vx-warning);
+  font-style: normal;
+}
+
+.vx-form-input {
+  display: flex;
+  height: 32px;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid var(--vx-input);
+  border-radius: 7px;
+  background: rgba(9, 9, 11, 0.6);
+  color: #d4d4d8;
+  font-size: 12px;
+}
+
+.vx-form-choices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.vx-form-choice {
+  display: inline-flex;
+  height: 30px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.vx-form-choice svg {
+  width: 13px;
+  height: 13px;
+}
+
+.vx-form-choice.is-selected {
+  border-color: transparent;
+  background: var(--vx-primary);
+  color: var(--vx-primary-fg);
+}
+
+.vx-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .vx-turn {
@@ -1807,6 +2159,55 @@ h3 {
   filter: brightness(1.08);
 }
 
+/* Real app small buttons: h-30 rounded-lg — primary / outline / danger. */
+.vx-btn {
+  display: inline-flex;
+  height: 30px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vx-btn svg {
+  width: 13px;
+  height: 13px;
+}
+
+.vx-btn.is-primary {
+  border-color: transparent;
+  background: var(--vx-primary);
+  color: var(--vx-primary-fg);
+}
+
+.vx-btn.is-primary:hover {
+  filter: brightness(1.08);
+}
+
+.vx-btn.is-outline {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: var(--vx-fg);
+}
+
+.vx-btn.is-outline:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.vx-btn.is-danger {
+  border-color: rgba(255, 100, 103, 0.35);
+  background: rgba(255, 100, 103, 0.1);
+  color: var(--vx-danger);
+}
+
+.vx-btn.is-danger:hover {
+  background: rgba(255, 100, 103, 0.16);
+}
+
 .vx-git-nums b {
   font-size: 11px;
   font-weight: 500;
@@ -1831,6 +2232,44 @@ h3 {
   padding: 0 6px;
   color: var(--vx-muted-fg);
   font-size: 11.5px;
+  transition: opacity 0.5s ease;
+}
+
+/* Real app: the status strip exists only while the turn is incomplete. */
+.vx-status-strip.is-idle {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Badge variant for a running command (secondary bg, no border). */
+.vx-badge.is-running {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.vx-timeline.is-scrollable {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.vx-timeline.is-scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+/* Entry animation for timeline blocks as the replay appends them. */
+.vx-reveal {
+  animation: vx-reveal 0.3s ease both;
+}
+
+@keyframes vx-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .vx-strip-logo {
@@ -2117,7 +2556,7 @@ h3 {
   flex: 1;
   min-width: 0;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -2126,18 +2565,21 @@ h3 {
   display: none;
 }
 
+/* Tabs never shrink or wrap — overflow scrolls horizontally like the app's
+   `overflow_x_scroll` tab strip. */
 .vx-agent-tab {
   display: flex;
+  flex: none;
   height: 36px;
   align-items: center;
-  gap: 7px;
-  padding: 0 12px;
+  gap: 6px;
+  padding: 0 10px;
   border: 1px solid transparent;
   border-radius: 18px;
   background: transparent;
   color: var(--vx-muted-fg);
   cursor: pointer;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -2155,6 +2597,10 @@ h3 {
 .vx-agent-tab img {
   width: 16px;
   height: 16px;
+}
+
+.vx-agent-tab span {
+  white-space: nowrap;
 }
 
 .vx-home-capsule > .vx-icon-btn {
@@ -2182,41 +2628,60 @@ h3 {
   padding: 6px 8px 8px;
 }
 
+/* Real app: workspace triggers are borderless ghost buttons (h-32 px-2/6,
+   text-xs medium, muted icons, 6px gap) packed to the left below the
+   composer. The project trigger is slightly larger (folder icon 16px). */
 .vx-home-wsrow {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 8px;
   margin-top: 14px;
+  padding: 0 2px;
 }
 
-.vx-home-dir,
-.vx-home-loc {
+.vx-ws-btn {
   display: inline-flex;
-  height: 30px;
+  height: 32px;
   align-items: center;
   gap: 6px;
-  padding: 0 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-width: 0;
+  padding: 0 8px;
+  border: 0;
   border-radius: 8px;
   background: transparent;
   color: var(--vx-muted-fg);
   cursor: pointer;
   font-size: 12px;
+  font-weight: 500;
 }
 
-.vx-home-dir:hover,
-.vx-home-loc:hover {
+.vx-ws-btn:hover {
   color: var(--vx-fg);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
 }
 
-.vx-home-dir svg {
-  width: 13px;
-  height: 13px;
+.vx-ws-btn svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  color: var(--vx-muted-fg);
 }
 
-.vx-home-loc {
-  border-style: dashed;
+.vx-ws-btn svg.is-lg {
+  width: 16px;
+  height: 16px;
+}
+
+.vx-ws-btn span {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-ws-btn + .vx-ws-btn {
+  margin-left: -2px;
 }
 
 /* --- Config Center panel --------------------------------------------------- */

@@ -1724,8 +1724,9 @@ function setDesktopView(viewKey, { restore = false } = {}) {
     setDesktopRail(view === "files" ? "git" : "files");
     const shell = desktopShowcase.querySelector("[data-desktop-shell]");
     shell?.classList.toggle("is-fullpage", fullpage);
-    // Sessions open without the terminal dock; it only appears when the
-    // user explicitly opens a Composer terminal or preview tab.
+    // Views open in the canonical session layout: Files/Git rail docked,
+    // terminal dock closed (it only appears when explicitly requested).
+    shell?.classList.remove("is-rail-collapsed");
     setPreviewOpen(false);
   }
   const caption = desktopShowcase.querySelector("[data-desktop-caption]");
@@ -1771,6 +1772,11 @@ desktopShowcase?.querySelectorAll("button[data-desktop-rail]").forEach((tab) => 
     } else {
       shell?.classList.remove("is-rail-collapsed");
       setDesktopRail(tab.dataset.desktopRail);
+    }
+    // The Files/Git rail and the terminal dock share the right edge: bringing
+    // the rail back retires the dock, like the app's single right panel.
+    if (shell && !shell.classList.contains("is-rail-collapsed")) {
+      setPreviewOpen(false);
     }
     markShowcaseInteraction();
   });
@@ -1863,18 +1869,28 @@ desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
     if (kind === "preview-open") {
       const shell = desktopShowcase.querySelector("[data-desktop-shell]");
       shell?.classList.remove("is-fullpage");
-      shell?.classList.remove("is-rail-collapsed");
+      // The terminal multi-tab dock replaces the Files/Git rail on the right
+      // edge: show the dock alone instead of keeping both panels visible.
+      shell?.classList.add("is-rail-collapsed");
       setPreviewOpen(true);
       return;
     }
     if (kind === "preview-close") {
       setPreviewOpen(false);
+      // The dock replaced the Files/Git rail on the right edge; hand the
+      // edge back when the dock closes.
+      desktopShowcase.querySelector("[data-desktop-shell]")?.classList.remove("is-rail-collapsed");
       return;
     }
     if (kind === "terminal") {
       const preview = desktopShowcase.querySelector("[data-desktop-preview]");
       const open = preview?.classList.contains("is-hidden") ?? false;
-      desktopShowcase.querySelector("[data-desktop-shell]")?.classList.remove("is-fullpage");
+      const shell = desktopShowcase.querySelector("[data-desktop-shell]");
+      shell?.classList.remove("is-fullpage");
+      // Opening a Composer terminal swaps the Files/Git rail for the dock,
+      // same as the activity-bar terminal button; closing hands the edge back.
+      if (open) shell?.classList.add("is-rail-collapsed");
+      else shell?.classList.remove("is-rail-collapsed");
       setPreviewOpen(open);
       return;
     }

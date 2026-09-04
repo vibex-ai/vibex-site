@@ -10,8 +10,8 @@ import {
   ArrowDownWideNarrow,
   Battery,
   BookOpen,
-  Brain,
   Bot,
+  Brain,
   Braces,
   Check,
   ChevronDown,
@@ -33,7 +33,6 @@ import {
   ExternalLink,
   File,
   FileCode,
-  FileCode2,
   FileCog,
   FileDiff,
   FileJson,
@@ -57,7 +56,6 @@ import {
   MessageSquare,
   Monitor,
   Network,
-  PanelRight,
   PanelLeft,
   PanelLeftClose,
   PanelRightClose,
@@ -83,14 +81,12 @@ import {
   Settings2,
   SquareTerminal,
   SunMedium,
-  Terminal,
   Trash2,
   TriangleAlert,
   Undo2,
   Upload,
   UserRound,
   Wifi,
-  Workflow,
   X,
   Zap,
   Mic,
@@ -937,110 +933,193 @@ document.querySelector("#app").innerHTML = `
       </div>
     </section>
 
-    <section class="mobile-showcase" id="mobile" aria-label="Vibex mobile app preview">
-      <div class="section-shell mobile-showcase-shell">
-        <div class="mobile-showcase-copy reveal">
-          <div class="section-kicker"><span>02</span> Native mobile</div>
-          <h2>The same workbench,<br />in your pocket.</h2>
-          <p>
-            Pair your phone with the desktop runtime and carry sessions, diffs, and approvals with you. The mobile interface is on its way — here's the shape of it.
-          </p>
-          <span class="mobile-showcase-badge"><i data-lucide="smartphone"></i><span>Mobile UI in development</span></span>
-        </div>
-        <div class="mobile-showcase-stage reveal">
-          <div class="mobile-phone-glow" aria-hidden="true"></div>
-          <div class="mobile-phone" role="img">
-            <div class="mobile-phone-frame">
-              <span class="mobile-phone-island" aria-hidden="true"></span>
-              <div class="mobile-phone-screen">
-                <span class="mobile-phone-placeholder">Mobile interface preview</span>
-              </div>
-            </div>
-            <div class="mobile-phone-base" aria-hidden="true"></div>
-          </div>
-          <p class="mobile-phone-caption"><i data-lucide="smartphone"></i><span>Mobile screen preview — coming soon</span></p>
-        </div>
-      </div>
-    </section>
-
-    <section class="intro-section section-shell" id="product">
-      <div class="section-kicker reveal"><span>03</span> One focused surface</div>
-      <div class="intro-heading reveal">
+    <section class="workbench-section section-shell" id="product">
+      <div class="section-kicker reveal"><span>02</span> The workbench</div>
+      <div class="workbench-heading reveal">
         <h2>Direct the work.<br /><em>Keep the context.</em></h2>
         <p>
           Vibex brings the whole coding loop into one native workspace, so agents can work with real context and you can inspect every change without switching tools.
         </p>
       </div>
 
+      <div class="bento-grid">
+        <article class="bento-card reveal">
+          <div class="bento-visual" aria-hidden="true">
+            <div class="bv-row"><span class="bv-file">src/workbench/timeline.rs</span><span class="bv-add">+86</span><span class="bv-del">-31</span></div>
+            <div class="bv-row"><span class="bv-file">src/workbench/worktree.rs</span><span class="bv-add">+12</span><span class="bv-del">-9</span></div>
+            <div class="bv-line bv-line-add">+ let bridge = WorktreeBridge::queue(request);</div>
+            <div class="bv-line bv-line-del">- let merge = merge_handoff(previous);</div>
+            <div class="bv-row bv-row-foot"><span class="bv-branch"><i data-lucide="git-branch"></i>feat/worktree-bridge</span><span class="bv-dim">3 staged</span></div>
+          </div>
+          <div class="bento-head"><span class="bento-number">01</span><i data-lucide="git-branch"></i></div>
+          <h3>Git-native review</h3>
+          <p>Stage, commit, branch, and inspect blame without leaving the session — isolated worktrees with guarded merges keep experiments contained.</p>
+          <div class="bento-foot">Diffs · Blame · Worktrees</div>
+        </article>
+
+        <article class="bento-card reveal">
+          <div class="bento-visual" aria-hidden="true">
+            <div class="bv-term">
+              <div><span class="prompt">$</span> cargo test -p vibex worktree</div>
+              <div class="bv-dim">running 35 tests</div>
+              <div><span class="is-pass">test</span> worktree::merge_backfill ... ok</div>
+              <div><span class="is-pass">test</span> worktree::runtime_handoff ... ok</div>
+              <div class="bv-dim">test result: ok. 35 passed · 8.42s</div>
+            </div>
+          </div>
+          <div class="bento-head"><span class="bento-number">02</span><i data-lucide="square-terminal"></i></div>
+          <h3>Terminal &amp; processes</h3>
+          <p>Native PTYs with ANSI emulation, tabs, scrollback, and search run beside the conversation — not in another window.</p>
+          <div class="bento-foot">PTY · ANSI · Tabs</div>
+        </article>
+
+        <article class="bento-card reveal">
+          <div class="bento-visual" aria-hidden="true">
+            <div class="bv-row"><i class="bv-shield" data-lucide="shield-alert"></i><span class="bv-file" data-i18n="bento.approvals.command">Command execution</span></div>
+            <div class="bv-term bv-term-indented"><span class="prompt">$</span> cargo test -p vibex worktree</div>
+            <div class="bv-chips">
+              <span class="bv-chip bv-chip-danger"><i data-lucide="x"></i><span data-i18n="bento.approvals.deny">Deny</span></span>
+              <span class="bv-chip"><i data-lucide="undo-2"></i><span data-i18n="bento.approvals.always">Always</span></span>
+              <span class="bv-chip bv-chip-primary"><i data-lucide="check"></i><span data-i18n="bento.approvals.approve">Approve</span></span>
+            </div>
+          </div>
+          <div class="bento-head"><span class="bento-number">03</span><i data-lucide="shield-check"></i></div>
+          <h3>Approvals &amp; elicitation</h3>
+          <p>Privileged actions pause for your decision, and agents can collect structured answers with typed forms mid-turn.</p>
+          <div class="bento-foot">Permissions · Forms</div>
+        </article>
+
+        <article class="bento-card reveal">
+          <div class="bento-visual" aria-hidden="true">
+            <div class="bv-row"><i class="bv-icon" data-lucide="plug"></i><span class="bv-file">mcp · filesystem</span><span class="bv-dot"></span></div>
+            <div class="bv-row"><i class="bv-icon" data-lucide="plug"></i><span class="bv-file">mcp · github</span><span class="bv-dot"></span></div>
+            <div class="bv-row"><i class="bv-icon" data-lucide="book-open"></i><span class="bv-file">skill · release-notes</span><span class="bv-dot"></span></div>
+            <div class="bv-row"><i class="bv-icon" data-lucide="braces"></i><span class="bv-file">prompt · review-checklist</span><span class="bv-dot"></span></div>
+          </div>
+          <div class="bento-head"><span class="bento-number">04</span><i data-lucide="plug"></i></div>
+          <h3>MCP, Skills &amp; Prompts</h3>
+          <p>Import, validate, and scope MCP servers and reusable workflow resources without scattering configuration files.</p>
+          <div class="bento-foot">MCP · Skills · Hooks</div>
+        </article>
+
+        <article class="bento-card reveal">
+          <div class="bento-visual" aria-hidden="true">
+            <div class="bv-row"><i class="bv-icon" data-lucide="clock-3"></i><span class="bv-file">nightly-benchmark</span><span class="bv-cron">0 6 * * *</span></div>
+            <div class="bv-row"><i class="bv-icon" data-lucide="clock-3"></i><span class="bv-file">weekly-report</span><span class="bv-cron">0 9 * * 1</span></div>
+            <div class="bv-row"><i class="bv-icon bv-icon-ok" data-lucide="circle-check"></i><span class="bv-dim">06:00 · exit 0 · 41 runs</span></div>
+          </div>
+          <div class="bento-head"><span class="bento-number">05</span><i data-lucide="clock-3"></i></div>
+          <h3>Scheduled automation</h3>
+          <p>Run one-shot, interval, or daily agent jobs with explicit run state, recovery, and audit history.</p>
+          <div class="bento-foot">Cron · Graphs · Audit</div>
+        </article>
+
+        <article class="bento-card reveal">
+          <div class="bento-visual" aria-hidden="true">
+            <div class="bv-bars">
+              <div class="bv-bar"><span>gpt-6-astra</span><span class="bv-bar-track"><span class="bv-bar-fill" style="width:62%"></span></span><span class="bv-bar-val">62%</span></div>
+              <div class="bv-bar"><span>claude-sonnet-4.5</span><span class="bv-bar-track"><span class="bv-bar-fill bv-bar-fill-alt" style="width:31%"></span></span><span class="bv-bar-val">31%</span></div>
+              <div class="bv-bar"><span>glm-5.1</span><span class="bv-bar-track"><span class="bv-bar-fill bv-bar-fill-dim" style="width:7%"></span></span><span class="bv-bar-val">7%</span></div>
+            </div>
+            <div class="bv-row bv-row-foot"><span class="bv-dim">12.3k in · 4.5k out</span><span class="bv-dim">38% cache</span></div>
+          </div>
+          <div class="bento-head"><span class="bento-number">06</span><i data-lucide="activity"></i></div>
+          <h3>Usage &amp; continuity</h3>
+          <p>Token accounting per session and model, desktop notifications, and timelines that recover across restarts.</p>
+          <div class="bento-foot">Tokens · Alerts · Recovery</div>
+        </article>
+      </div>
     </section>
 
-    <section class="feature-band">
+    <section class="agents-section" id="agents">
       <div class="section-shell">
-        <div class="feature-grid">
-          <article class="feature-card reveal">
-            <div class="feature-number">01</div>
-            <div class="feature-icon"><i data-lucide="cpu"></i></div>
-            <h3>Native by design</h3>
-            <p>A Rust-first GPUI desktop app built for fast startup, durable sessions, and long-running work.</p>
-            <div class="feature-foot">Rust · GPUI · SQLite</div>
-          </article>
-          <article class="feature-card reveal">
-            <div class="feature-number">02</div>
-            <div class="feature-icon feature-icon-coral"><i data-lucide="workflow"></i></div>
-            <h3>Your agents, together</h3>
-            <p>Use Codex, Claude Code, and ACP-compatible agents from one consistent, provider-neutral workspace.</p>
-            <div class="feature-foot">Codex · Claude · ACP</div>
-          </article>
-          <article class="feature-card reveal">
-            <div class="feature-number">03</div>
-            <div class="feature-icon feature-icon-blue"><i data-lucide="panel-right"></i></div>
-            <h3>Context within reach</h3>
-            <p>Files, diffs, terminal state, previews, permissions, and agent output stay connected to the task.</p>
-            <div class="feature-foot">Files · Git · Terminal</div>
-          </article>
+        <div class="section-kicker reveal"><span>03</span> Agents</div>
+        <div class="agents-heading reveal">
+          <h2>Bring your own agents.</h2>
+          <p>
+            Vibex speaks the Agent Client Protocol (ACP) — a neutral contract between workbench and agent. Built-in presets are ready to go, and any ACP-compatible agent runs in the same workbench.
+          </p>
+        </div>
+
+        <div class="agent-cloud reveal">
+          <span class="agent-chip"><img src="/assets/agents/claude.svg" alt="" />Claude Code</span>
+          <span class="agent-chip"><img src="/assets/agents/openai-light.svg" alt="" />Codex</span>
+          <span class="agent-chip"><img src="/assets/agents/zcode-light.svg" alt="" />ZCode</span>
+          <span class="agent-chip"><img src="/assets/agents/opencode.svg" alt="" />OpenCode</span>
+          <span class="agent-chip"><img src="/assets/agents/gemini.svg" alt="" />Gemini CLI</span>
+          <span class="agent-chip"><img src="/assets/agents/copilot-light.svg" alt="" />GitHub Copilot</span>
+          <span class="agent-chip"><img src="/assets/agents/antigravity.svg" alt="" />Antigravity</span>
+          <span class="agent-chip"><img src="/assets/agents/cursor-light.svg" alt="" />Cursor</span>
+          <span class="agent-chip"><img src="/assets/agents/cline-light.svg" alt="" />Cline</span>
+          <span class="agent-chip"><img src="/assets/agents/devin-light.svg" alt="" />Devin CLI</span>
+          <span class="agent-chip"><img src="/assets/agents/grok-light.svg" alt="" />Grok</span>
+          <span class="agent-chip"><img src="/assets/agents/hermes-light.svg" alt="" />Hermes</span>
+          <span class="agent-chip"><img src="/assets/agents/kimi.svg" alt="" />Kimi Code</span>
+          <span class="agent-chip"><img src="/assets/agents/pi-light.svg" alt="" />Pi</span>
+          <span class="agent-chip"><img src="/assets/agents/qwen.svg" alt="" />Qwen Code</span>
+          <span class="agent-chip"><img src="/assets/agents/codebuddy-code.svg" alt="" />Codebuddy Code</span>
+          <span class="agent-chip"><img src="/assets/agents/deepseek-harness.svg" alt="" />DeepSeek Harness</span>
+          <span class="agent-chip"><img src="/assets/agents/glm-acp-agent-light.svg" alt="" />GLM ACP Agent</span>
+          <span class="agent-chip agent-chip-acp"><i data-lucide="plug"></i><span data-acp-chip>Any ACP-compatible agent</span></span>
+        </div>
+
+        <div class="agents-foot reveal">
+          <div class="agents-missing">
+            <span>Missing yours?</span>
+            <a href="${githubUrl}/issues" target="_blank" rel="noreferrer">Register it on GitHub <i data-lucide="arrow-up-right"></i></a>
+          </div>
+          <span class="agents-foot-mono">ACP schema 1.6 · provider-neutral</span>
         </div>
       </div>
     </section>
 
-    <section class="architecture-section" id="architecture">
-      <div class="section-shell architecture-shell">
-        <div class="architecture-copy reveal">
-          <div class="section-kicker section-kicker-dark"><span>04</span> Local-first architecture</div>
+    <section class="where-section" id="architecture">
+      <div class="section-shell">
+        <div class="section-kicker section-kicker-dark reveal"><span>04</span> Local-first architecture</div>
+        <div class="where-heading reveal">
           <h2>One runtime.<br />No hidden middleman.</h2>
           <p>
             Your desktop is the sole authority for sessions, files, Git, terminals, providers, and permissions. Vibex adds a better control surface, not another cloud that owns your work.
           </p>
+        </div>
+
+        <div class="where-grid">
+          <article class="where-card reveal">
+            <span class="where-number">01</span>
+            <div class="where-card-head">
+              <i data-lucide="monitor"></i>
+              <div><span class="where-name">Desktop</span><span class="where-role">The authority</span></div>
+            </div>
+            <p>Sessions, files, Git, terminals, providers, and permissions live and execute on your machine.</p>
+            <div class="where-foot">Linux · macOS · Windows</div>
+          </article>
+          <article class="where-card reveal">
+            <span class="where-number">02</span>
+            <div class="where-card-head">
+              <i data-lucide="smartphone"></i>
+              <div><span class="where-name">Mobile</span><span class="where-role">The companion</span></div>
+            </div>
+            <p>Pairs with your desktop once, then mirrors the same typed timeline for approvals, follow-ups, and file checks.</p>
+            <div class="where-foot">iOS · Android</div>
+          </article>
+          <article class="where-card reveal">
+            <span class="where-number">03</span>
+            <div class="where-card-head">
+              <i data-lucide="server"></i>
+              <div><span class="where-name">Relay</span><span class="where-role">Optional · zero-knowledge</span></div>
+            </div>
+            <p>A self-hosted transport that forwards encrypted frames between your devices. It never becomes a second database.</p>
+            <div class="where-foot">Docker · self-hosted</div>
+          </article>
+        </div>
+
+        <div class="where-more reveal">
           <ul class="check-list">
             <li><i data-lucide="check"></i> Workspace state stays on your machine</li>
             <li><i data-lucide="check"></i> Provider credentials remain under your control</li>
             <li><i data-lucide="check"></i> Every privileged action can require approval</li>
           </ul>
           <a class="inline-link-dark" href="${githubUrl}#readme" target="_blank" rel="noreferrer">Read the architecture <i data-lucide="arrow-up-right"></i></a>
-        </div>
-
-        <div class="architecture-diagram reveal" aria-label="Vibex local-first architecture diagram">
-          <div class="diagram-label">YOUR MACHINE</div>
-          <div class="diagram-core">
-            <div class="core-head"><img src="/assets/vibex-mark.svg" alt="" /><span>Vibex desktop runtime</span><i data-lucide="circle-check"></i></div>
-            <div class="core-grid">
-              <span><i data-lucide="bot"></i> Agents</span>
-              <span><i data-lucide="file-code-2"></i> Files</span>
-              <span><i data-lucide="git-branch"></i> Git</span>
-              <span><i data-lucide="terminal"></i> Terminal</span>
-            </div>
-          </div>
-          <div class="diagram-connection">
-            <span class="pulse-dot"></span>
-            <div></div>
-            <span>typed + encrypted</span>
-            <div></div>
-            <span class="pulse-dot"></span>
-          </div>
-          <div class="diagram-clients">
-            <div class="client-node"><i data-lucide="smartphone"></i><span>Native mobile</span><small>Remote client</small></div>
-            <div class="client-node"><i data-lucide="server"></i><span>Optional relay</span><small>Zero-knowledge</small></div>
-          </div>
-          <div class="diagram-note"><i data-lucide="lock-keyhole"></i> The relay forwards encrypted frames. It never becomes a second state authority.</div>
         </div>
       </div>
     </section>
@@ -1128,15 +1207,19 @@ document.querySelector("#app").innerHTML = `
           <div class="workflow-line" aria-hidden="true"><span></span></div>
           <article>
             <span>01</span><i data-lucide="message-square"></i><h3>Direct</h3><p>Give the agent a task with the actual workspace in view.</p>
+            <div class="workflow-tags" aria-hidden="true"><span>composer</span><span>@ files</span><span>/ commands</span></div>
           </article>
           <article>
             <span>02</span><i data-lucide="zap"></i><h3>Observe</h3><p>Follow plans, tool calls, terminal output, and approvals live.</p>
+            <div class="workflow-tags" aria-hidden="true"><span>timeline</span><span>approvals</span><span>terminal</span></div>
           </article>
           <article>
             <span>03</span><i data-lucide="file-diff"></i><h3>Review</h3><p>Inspect changed files and diffs beside the conversation.</p>
+            <div class="workflow-tags" aria-hidden="true"><span>diffs</span><span>blame</span><span>worktrees</span></div>
           </article>
           <article>
             <span>04</span><i data-lucide="git-branch"></i><h3>Ship</h3><p>Commit with the full context of how the work was produced.</p>
+            <div class="workflow-tags" aria-hidden="true"><span>commit</span><span>push</span><span>history</span></div>
           </article>
         </div>
       </div>
@@ -1150,7 +1233,7 @@ document.querySelector("#app").innerHTML = `
           <p>Vibex is licensed under AGPL-3.0-or-later. Read the source, build it yourself, or help shape what comes next.</p>
           <div class="open-actions">
             <a class="button button-dark" href="${githubUrl}" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Open GitHub <i data-lucide="arrow-up-right"></i></a>
-            <span>Rust-first · Local-first · Community-built</span>
+            <span>AGPL-3.0-or-later · Inspect every frame that leaves your machine</span>
           </div>
         </div>
         <div class="code-panel reveal">
@@ -1204,6 +1287,7 @@ document.querySelector("#app").innerHTML = `
           <a class="button button-primary" href="${githubUrl}/releases" target="_blank" rel="noreferrer">Get Vibex <i data-lucide="arrow-right"></i></a>
           <a class="text-link" href="${githubUrl}" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Star on GitHub <i data-lucide="arrow-up-right"></i></a>
         </div>
+        <span class="final-platforms" data-final-platforms>Free and open source · Linux · macOS · Windows · iOS · Android</span>
       </div>
     </section>
   </main>
@@ -1267,7 +1351,6 @@ function renderIcons() {
     ExternalLink,
     File,
     FileCode,
-    FileCode2,
     FileCog,
     FileDiff,
     FileJson,
@@ -1291,7 +1374,6 @@ function renderIcons() {
     MessageSquare,
     Monitor,
     Network,
-    PanelRight,
     PanelLeft,
     PanelLeftClose,
     PanelRightClose,
@@ -1318,13 +1400,11 @@ function renderIcons() {
     SquareTerminal,
     Trash2,
     SunMedium,
-    Terminal,
     TriangleAlert,
     Undo2,
     Upload,
     UserRound,
     Wifi,
-    Workflow,
     X,
     Zap,
     Mic,
@@ -1353,45 +1433,49 @@ const textBindings = [
   ["[data-desktop-tab=\"files\"]", "showcase.desktop.files"],
   ["[data-desktop-tab=\"management\"]", "showcase.desktop.management"],
   ["[data-desktop-source]", "showcase.desktop.source"],
-  [".mobile-showcase-copy .section-kicker", "showcase.mobile.kicker"],
-  [".mobile-showcase-copy > p", "showcase.mobile.copy"],
-  [".mobile-showcase-badge span", "showcase.mobile.badge"],
-  [".mobile-phone-placeholder", "showcase.mobile.placeholder"],
-  [".mobile-phone-caption span", "showcase.mobile.screen"],
   [".mobile-nav a:nth-child(1)", "nav.product"],
   [".mobile-nav a:nth-child(2)", "nav.how"],
   [".mobile-nav a:nth-child(3)", "nav.remote"],
   [".mobile-nav a:nth-child(4)", "nav.faq"],
-  [".hero .eyebrow", "hero.eyebrow"],
   [".hero-lede", "hero.lede"],
-  [".hero-meta div:nth-child(2)", "hero.meta.local"],
-  [".hero-meta div:nth-child(3)", "hero.meta.devices"],
-  [".intro-section .section-kicker", "intro.kicker"],
-  [".intro-heading p", "intro.copy"],
-  [".feature-card:nth-child(1) h3", "features.native.title"],
-  [".feature-card:nth-child(1) p", "features.native.copy"],
-  [".feature-card:nth-child(2) h3", "features.agents.title"],
-  [".feature-card:nth-child(2) p", "features.agents.copy"],
-  [".feature-card:nth-child(3) h3", "features.context.title"],
-  [".feature-card:nth-child(3) p", "features.context.copy"],
-  [".architecture-copy .section-kicker", "architecture.kicker"],
-  [".architecture-copy > p", "architecture.copy"],
-  [".check-list li:nth-child(1)", "architecture.check.workspace"],
-  [".check-list li:nth-child(2)", "architecture.check.credentials"],
-  [".check-list li:nth-child(3)", "architecture.check.approval"],
-  [".inline-link-dark", "architecture.link"],
-  [".diagram-label", "architecture.machine"],
-  [".core-head span", "architecture.runtime"],
-  [".core-grid span:nth-child(1)", "architecture.agents"],
-  [".core-grid span:nth-child(2)", "architecture.files"],
-  [".core-grid span:nth-child(3)", "architecture.git"],
-  [".core-grid span:nth-child(4)", "architecture.terminal"],
-  [".diagram-connection > span:nth-of-type(2)", "architecture.connection"],
-  [".client-node:nth-child(1) span", "architecture.mobile"],
-  [".client-node:nth-child(1) small", "architecture.remoteClient"],
-  [".client-node:nth-child(2) span", "architecture.relay"],
-  [".client-node:nth-child(2) small", "architecture.zeroKnowledge"],
-  [".diagram-note", "architecture.note"],
+  [".workbench-section .section-kicker", "workbench.kicker"],
+  [".workbench-heading p", "workbench.copy"],
+  [".bento-card:nth-child(1) h3", "bento.git.title"],
+  [".bento-card:nth-child(1) p", "bento.git.copy"],
+  [".bento-card:nth-child(2) h3", "bento.terminal.title"],
+  [".bento-card:nth-child(2) p", "bento.terminal.copy"],
+  [".bento-card:nth-child(3) h3", "bento.approvals.title"],
+  [".bento-card:nth-child(3) p", "bento.approvals.copy"],
+  [".bento-card:nth-child(4) h3", "bento.mcp.title"],
+  [".bento-card:nth-child(4) p", "bento.mcp.copy"],
+  [".bento-card:nth-child(5) h3", "bento.automation.title"],
+  [".bento-card:nth-child(5) p", "bento.automation.copy"],
+  [".bento-card:nth-child(6) h3", "bento.usage.title"],
+  [".bento-card:nth-child(6) p", "bento.usage.copy"],
+  [".agents-section .section-kicker", "agents.kicker"],
+  [".agents-heading p", "agents.copy"],
+  ["[data-acp-chip]", "agents.acp"],
+  [".agents-missing span", "agents.missing"],
+  [".agents-missing a", "agents.register"],
+  [".agents-foot-mono", "agents.foot"],
+  [".where-section .section-kicker", "where.kicker"],
+  [".where-heading p", "where.copy"],
+  [".where-card:nth-child(1) .where-name", "where.desktop.name"],
+  [".where-card:nth-child(1) .where-role", "where.desktop.role"],
+  [".where-card:nth-child(1) p", "where.desktop.copy"],
+  [".where-card:nth-child(1) .where-foot", "where.desktop.foot"],
+  [".where-card:nth-child(2) .where-name", "where.mobile.name"],
+  [".where-card:nth-child(2) .where-role", "where.mobile.role"],
+  [".where-card:nth-child(2) p", "where.mobile.copy"],
+  [".where-card:nth-child(2) .where-foot", "where.mobile.foot"],
+  [".where-card:nth-child(3) .where-name", "where.relay.name"],
+  [".where-card:nth-child(3) .where-role", "where.relay.role"],
+  [".where-card:nth-child(3) p", "where.relay.copy"],
+  [".where-card:nth-child(3) .where-foot", "where.relay.foot"],
+  [".check-list li:nth-child(1)", "where.check.workspace"],
+  [".check-list li:nth-child(2)", "where.check.credentials"],
+  [".check-list li:nth-child(3)", "where.check.approval"],
+  [".inline-link-dark", "where.link"],
   [".remote-chip.chip-direct span", "remote.direct"],
   [".remote-chip.chip-secure span", "remote.encrypted"],
   [".remote-chip.chip-secure small", "remote.endToEnd"],
@@ -1453,9 +1537,9 @@ const textBindings = [
 
 const htmlBindings = [
   [".hero h1", "hero.title"],
-  [".mobile-showcase-copy h2", "showcase.mobile.title"],
-  [".intro-heading h2", "intro.title"],
-  [".architecture-copy h2", "architecture.title"],
+  [".workbench-heading h2", "workbench.title"],
+  [".agents-heading h2", "agents.title"],
+  [".where-heading h2", "where.title"],
   [".remote-copy h2", "remote.title"],
   [".workflow-heading h2", "workflow.title"],
   [".open-copy h2", "open.title"],
@@ -1468,9 +1552,8 @@ const attrBindings = [
   [".wordmark", "aria-label", "accessibility.home"],
   [".desktop-nav", "aria-label", "nav.primary"],
   ["[data-desktop-tablist]", "aria-label", "showcase.desktop.aria"],
-  [".mobile-showcase", "aria-label", "showcase.mobile.aria"],
   [".desktop-app", "aria-label", "showcase.desktop.aria"],
-  [".architecture-diagram", "aria-label", "architecture.diagram.label"],
+  [".where-grid", "aria-label", "where.grid.label"],
   ["[data-copy-command]", "title", "open.copyCommands"],
   ["[data-copy-command]", "aria-label", "open.copyCommands"],
   [".phone-frame", "aria-label", "remote.aria"],
@@ -1544,6 +1627,7 @@ function applyLanguage(language, { persist = true } = {}) {
   setBindingText("[data-hero-download-options]", "hero.downloadOptions");
   setBindingText("[data-hero-supports]", "hero.supports");
   setBindingText("[data-hero-more-agents]", "hero.moreAgents");
+  setBindingText("[data-final-platforms]", "cta.platforms");
 
   const activeDesktopView = desktopShowcase?.querySelector("[data-desktop-view].is-active")?.dataset.desktopView;
   if (activeDesktopView) setDesktopView(activeDesktopView, { restore: true });
@@ -1976,6 +2060,29 @@ function tickTyping() {
 
 if (!prefersReducedMotion) {
   window.setTimeout(tickTyping, 1200);
+}
+
+// --- Reveal on scroll --------------------------------------------------------
+// Sections start slightly shifted and fade in the first time they enter the
+// viewport. Reduced motion (or a missing IntersectionObserver) shows
+// everything immediately.
+const revealEls = [...document.querySelectorAll(".reveal")];
+if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+  revealEls.forEach((el) => el.classList.add("is-visible"));
+} else {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    // A small bottom inset keeps elements from revealing while barely peeking
+    // above the fold; threshold 0 stays safe for tall grids.
+    { rootMargin: "0px 0px -8% 0px", threshold: 0 },
+  );
+  revealEls.forEach((el) => revealObserver.observe(el));
 }
 
 // --- Session timeline replay -------------------------------------------------

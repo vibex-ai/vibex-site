@@ -1279,7 +1279,7 @@ h3 {
   flex: 1;
   min-height: 0;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   overflow: hidden;
   padding: 18px 20px 6px;
 }
@@ -1303,33 +1303,51 @@ h3 {
 .vx-turn {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
+/* Real app: the "Worked for…" header sits in its own row with a hairline
+   divider (border-b + pb-2) before the process cards. */
 .vx-turn-head {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--vx-border-soft);
   color: var(--vx-muted-fg);
   font-size: 12.5px;
+}
+
+.vx-turn-headline {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
 }
 
 .vx-turn-agent {
   display: grid;
   place-items: center;
+  width: 16px;
+  height: 16px;
   color: var(--vx-primary);
 }
 
 .vx-turn-toggle {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   border: 0;
   background: none;
   color: inherit;
   cursor: pointer;
   font-size: 12.5px;
   padding: 0;
+}
+
+.vx-turn-toggle:hover {
+  color: var(--vx-fg);
 }
 
 .vx-turn-toggle svg {
@@ -1343,55 +1361,71 @@ h3 {
 }
 
 .vx-turn-runtime {
-  margin-left: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: rgba(159, 159, 169, 0.8);
-  font-size: 11.5px;
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* Real app: the runtime attribution only appears while hovering the turn
+   (opacity 0 -> 1 on group hover). The mock keeps it visible on hover. */
+.vx-turn:hover .vx-turn-runtime {
+  opacity: 1;
 }
 
 .vx-turn-body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .vx-turn-body.is-collapsed {
   display: none;
 }
 
+/* Real app: process cards are rounded-lg with a min-h-40 header row
+   (px-3 py-2, gap-2) and a card background at 0.72 opacity. */
 .vx-command-card {
+  overflow: hidden;
+  border: 1px solid var(--vx-border);
+  border-radius: 8px;
+  background: rgba(24, 24, 27, 0.72);
+}
+
+.vx-command-head {
   display: flex;
+  min-height: 40px;
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--vx-border);
-  border-radius: 8px;
-  background: var(--vx-card);
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
   color: #d4d4d8;
   cursor: pointer;
+  font: inherit;
   text-align: left;
 }
 
-.vx-command-card:hover {
-  background: #1f1f23;
+.vx-command-head:hover {
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.vx-command-line {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 8px;
-}
-
-.vx-command-line svg {
-  width: 14px;
-  height: 14px;
+.vx-command-head > svg {
+  width: 15px;
+  height: 15px;
   flex: none;
   color: var(--vx-muted-fg);
 }
 
-.vx-command-line code {
+.vx-command-head code {
   overflow: hidden;
+  min-width: 0;
+  flex: 0 1 auto;
   font-family: var(--vx-mono);
   font-size: 11.5px;
   text-overflow: ellipsis;
@@ -1399,51 +1433,45 @@ h3 {
   color: #e4e4e7;
 }
 
-.vx-command-end {
-  display: flex;
-  margin-left: auto;
+/* Real app: shadcn-style status pill — h-5 rounded-full px-2 uppercase. */
+.vx-badge {
+  display: inline-flex;
+  height: 18px;
   align-items: center;
-  gap: 6px;
-}
-
-.vx-check {
-  display: grid;
-  place-items: center;
-  width: 16px;
-  height: 16px;
+  flex: none;
+  padding: 0 7px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
-  background: rgba(34, 197, 94, 0.14);
-  color: var(--vx-success);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--vx-fg);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.vx-check svg {
-  width: 11px;
-  height: 11px;
-}
-
+/* createIcons copies the class onto the svg itself, so size .vx-caret
+   directly (a `.vx-caret svg` descendant selector would never match). */
 .vx-caret {
+  width: 14px;
+  height: 14px;
+  flex: none;
   color: var(--vx-faint);
   transition: transform 0.18s ease;
 }
 
-.vx-caret svg {
-  width: 14px;
-  height: 14px;
-}
-
-.vx-command-card.is-collapsed .vx-caret {
+.vx-command-head.is-collapsed .vx-caret {
   transform: rotate(-90deg);
 }
 
+/* Real app: expanded card body — border-t, px-3 py-3, gap-2, with muted
+   detail boxes and uppercase labels. */
 .vx-command-output {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 3px 10px;
-  margin-top: -5px;
-  padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0 0 8px 8px;
-  background: #0e0e10;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-family: var(--vx-mono);
   font-size: 11px;
   line-height: 1.5;
@@ -1458,51 +1486,121 @@ h3 {
 }
 
 .is-dim {
-  grid-column: 1 / -1;
   color: var(--vx-faint);
 }
 
-.vx-fileop-row {
+.vx-detail-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0 10px;
   color: var(--vx-muted-fg);
-  font-size: 12px;
 }
 
-.vx-fileop-row svg {
-  width: 13px;
-  height: 13px;
-  color: var(--vx-faint);
-}
-
-.vx-fileop-row code {
+.vx-detail-row code {
   overflow: hidden;
-  font-family: var(--vx-mono);
-  font-size: 11.5px;
+  min-width: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #d4d4d8;
 }
 
-.vx-fileop-row .vx-diff-del {
-  margin-left: auto;
+.vx-detail-box {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.055);
+  color: #d4d4d8;
+}
+
+.vx-detail-box.is-log div {
+  color: #d4d4d8;
+}
+
+.vx-detail-label {
+  color: var(--vx-muted-fg);
+  font-family: "InterVariable", Inter, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.vx-detail-exit {
+  color: var(--vx-muted-fg);
+}
+
+.vx-detail-exit.is-pass {
+  color: var(--vx-success);
+}
+
+/* Real app: file operation card — same card chrome as the command card,
+   header shows "Editing <name>" with +/- counts and an open-file action. */
+.vx-fileop-card {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--vx-border);
+  border-radius: 8px;
+  background: rgba(24, 24, 27, 0.72);
+  color: #d4d4d8;
+}
+
+.vx-fileop-card > svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--vx-muted-fg);
+}
+
+.vx-fileop-card strong {
+  overflow: hidden;
+  min-width: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-fileop-card .vx-caret {
+  flex: none;
+  color: var(--vx-muted-fg);
+}
+
+/* Real app packs title, caret, +/- counts and the open action to the left. */
+
+.vx-fileop-open {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 6px;
+  color: var(--vx-muted-fg);
+}
+
+.vx-fileop-open svg {
+  width: 13px;
+  height: 13px;
+}
+
+.vx-fileop-open:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--vx-fg);
 }
 
 .vx-diff-add {
+  flex: none;
   color: var(--vx-success);
   font-family: var(--vx-mono);
+  font-size: 11px;
+  font-weight: 500;
 }
 
 .vx-diff-del {
+  flex: none;
   color: var(--vx-danger);
   font-family: var(--vx-mono);
-}
-
-.vx-fileop-row .vx-diff-add,
-.vx-fileop-row .vx-diff-del {
-  flex: none;
   font-size: 11px;
   font-weight: 500;
 }
@@ -1525,45 +1623,122 @@ h3 {
   font-size: 11.5px;
 }
 
-.vx-changes-card {
-  max-width: 88%;
-  overflow: hidden;
-  border: 1px solid var(--vx-border);
-  border-radius: 10px;
-  background: var(--vx-card);
+/* Real app: answer footer — metadata row (agent logo, runtime label, clock,
+   duration) on the left, hover action buttons on the right. */
+.vx-answer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
 }
 
+.vx-answer-meta {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+}
+
+.vx-answer-meta > img {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.vx-answer-meta > span:first-of-type {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-answer-meta svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
+.vx-answer-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  color: var(--vx-muted-fg);
+}
+
+.vx-answer-actions span {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+}
+
+.vx-answer-actions svg {
+  width: 13px;
+  height: 13px;
+}
+
+.vx-answer-actions span:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--vx-fg);
+}
+
+.vx-changes-card {
+  overflow: hidden;
+  border: 1px solid var(--vx-border);
+  border-radius: 8px;
+  background: rgba(24, 24, 27, 0.72);
+}
+
+/* Real app: 42px header with a File icon, medium-weight title and mono
+   counts (removed first, then added). */
 .vx-changes-head {
   display: flex;
-  height: 40px;
+  height: 42px;
   align-items: center;
   gap: 8px;
   padding: 0 12px;
 }
 
+.vx-changes-head svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--vx-muted-fg);
+}
+
 .vx-changes-head strong {
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
   color: var(--vx-fg);
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .vx-changes-nums {
   display: flex;
   gap: 8px;
-  margin-left: auto;
-  font-size: 11.5px;
+  font-family: var(--vx-mono);
+  font-size: 11px;
   font-weight: 500;
 }
 
 .vx-changes-row {
   display: flex;
-  height: 34px;
+  height: 36px;
   align-items: center;
   gap: 8px;
   width: 100%;
   padding: 0 12px;
   border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
   background: transparent;
   color: #a1a1aa;
   cursor: pointer;
@@ -1597,8 +1772,41 @@ h3 {
   margin-left: auto;
 }
 
-.vx-changes-row .vx-diff-add,
-.vx-changes-row .vx-diff-del,
+/* Real app: footer row with the primary "Review" button on the right. */
+.vx-changes-foot {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.vx-review-btn {
+  display: inline-flex;
+  height: 30px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--vx-primary);
+  color: var(--vx-primary-fg);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vx-review-btn svg {
+  width: 13px;
+  height: 13px;
+}
+
+.vx-review-btn:hover {
+  filter: brightness(1.08);
+}
+
 .vx-git-nums b {
   font-size: 11px;
   font-weight: 500;
@@ -1619,10 +1827,10 @@ h3 {
   min-height: 24px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   padding: 0 6px;
   color: var(--vx-muted-fg);
-  font-size: 12px;
+  font-size: 11.5px;
 }
 
 .vx-strip-logo {
@@ -1632,20 +1840,31 @@ h3 {
 }
 
 .vx-strip-logo img {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 }
 
 .vx-strip-dot {
-  color: #52525b;
+  color: rgba(159, 159, 169, 0.72);
+}
+
+/* Real app: token rates render with 12px arrow icons next to the value. */
+.vx-strip-io {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.vx-strip-io svg {
+  width: 12px;
+  height: 12px;
 }
 
 .vx-strip-diff {
   display: inline-flex;
   gap: 8px;
-  font-family: var(--vx-mono);
   font-size: 11.5px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .vx-composer {
@@ -1878,8 +2097,11 @@ h3 {
   font-size: 14px;
 }
 
+/* Real app: the agent capsule and the composer are both full-width children
+   of the same max-w-[768px] column, so they always line up. */
 .vx-home-capsule {
   display: flex;
+  width: min(700px, 100%);
   height: 49px;
   align-items: center;
   gap: 4px;
@@ -1892,8 +2114,16 @@ h3 {
 
 .vx-home-agents {
   display: flex;
+  flex: 1;
+  min-width: 0;
   align-items: center;
   gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.vx-home-agents::-webkit-scrollbar {
+  display: none;
 }
 
 .vx-agent-tab {
@@ -1933,7 +2163,7 @@ h3 {
 }
 
 .vx-home-composer {
-  width: min(620px, 100%);
+  width: min(700px, 100%);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 20px;
@@ -2197,6 +2427,29 @@ h3 {
 .vx-mgmt-switch.is-on span {
   transform: translateX(13px);
   background: var(--vx-primary-fg);
+}
+
+/* Real app: agents that are not added yet show a small outlined "+" action
+   instead of the enable switch. */
+.vx-mgmt-plus {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 7px;
+  color: var(--vx-muted-fg);
+}
+
+.vx-mgmt-plus svg {
+  width: 13px;
+  height: 13px;
+}
+
+.vx-mgmt-agent:hover .vx-mgmt-plus {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--vx-fg);
 }
 
 .vx-mgmt-add {

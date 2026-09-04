@@ -5,6 +5,7 @@ import {
   ArrowRight,
   ArrowUp,
   ArrowUpRight,
+  ArrowUpToLine,
   ArrowDownWideNarrow,
   Battery,
   BookOpen,
@@ -309,7 +310,7 @@ document.querySelector("#app").innerHTML = `
                           <span class="vx-session-time">Yesterday</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
-                          <span class="vx-agent-logo"><img src="/assets/agents/copilot.svg" alt="" /></span>
+                          <span class="vx-agent-logo"><img src="/assets/agents/copilot-light.svg" alt="" /></span>
                           <span class="vx-session-name">Draft release notes for v0.4</span>
                           <span class="vx-session-time">Tuesday</span>
                         </button>
@@ -319,12 +320,12 @@ document.querySelector("#app").innerHTML = `
                           <span class="vx-session-time">Monday</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
-                          <span class="vx-agent-logo"><img src="/assets/agents/pi.svg" alt="" /></span>
+                          <span class="vx-agent-logo"><img src="/assets/agents/pi-light.svg" alt="" /></span>
                           <span class="vx-session-name">Audit command palette shortcuts</span>
                           <span class="vx-session-time">Last week</span>
                         </button>
                         <button class="vx-session-row" type="button" data-desktop-action="agent">
-                          <span class="vx-agent-logo"><img src="/assets/agents/grok.svg" alt="" /></span>
+                          <span class="vx-agent-logo"><img src="/assets/agents/grok-light.svg" alt="" /></span>
                           <span class="vx-session-name">Profile timeline replay cost</span>
                           <span class="vx-session-time">Last week</span>
                         </button>
@@ -340,30 +341,67 @@ document.querySelector("#app").innerHTML = `
                         </div>
                         <div class="vx-turn">
                           <div class="vx-turn-head">
-                            <span class="vx-turn-agent"><img src="/assets/agents/openai-light.svg" alt="" /></span>
-                            <button class="vx-turn-toggle" type="button" data-desktop-toggle="turn"><span>Worked for 1m 32s</span><i data-lucide="chevron-down"></i></button>
-                            <span class="vx-turn-runtime">gpt-5.1-codex · Codex</span>
+                            <div class="vx-turn-headline">
+                              <span class="vx-turn-agent"><img src="/assets/agents/openai-light.svg" alt="" /></span>
+                              <button class="vx-turn-toggle" type="button" data-desktop-toggle="turn"><span>Worked for 1m 32s</span><i data-lucide="chevron-down"></i></button>
+                            </div>
+                            <span class="vx-turn-runtime">Agent account · gpt-5.1-codex</span>
                           </div>
                           <div class="vx-turn-body" data-turn-body>
-                            <button class="vx-command-card" type="button" data-desktop-toggle="tool" aria-expanded="true">
-                              <span class="vx-command-line"><i data-lucide="square-terminal"></i><code>pnpm vitest run agent/timeline</code></span>
-                              <span class="vx-command-end"><span class="vx-check"><i data-lucide="check"></i></span><i class="vx-caret" data-lucide="chevron-down"></i></span>
-                            </button>
-                            <div class="vx-command-output" data-command-output>
-                              <span class="is-pass">PASS</span> <span>src/agent/timeline.test.ts (24 tests)</span>
-                              <span class="is-pass">PASS</span> <span>src/agent/worktree.test.ts (11 tests)</span>
-                              <span class="is-dim">Duration 8.42s</span>
+                            <div class="vx-command-card">
+                              <button class="vx-command-head" type="button" data-desktop-toggle="tool" aria-expanded="true">
+                                <i data-lucide="square-terminal"></i>
+                                <code>pnpm vitest run agent/timeline</code>
+                                <i class="vx-caret" data-lucide="chevron-down"></i>
+                                <span class="vx-badge">Completed</span>
+                              </button>
+                              <div class="vx-command-output" data-command-output>
+                                <div class="vx-detail-row"><span>Working directory</span><code>/workspace/vibex</code></div>
+                                <div class="vx-detail-box">$ pnpm vitest run agent/timeline</div>
+                                <div class="vx-detail-block">
+                                  <span class="vx-detail-label">Output</span>
+                                  <div class="vx-detail-box is-log">
+                                    <div><span class="is-pass">PASS</span> src/agent/timeline.test.ts (24 tests)</div>
+                                    <div><span class="is-pass">PASS</span> src/agent/worktree.test.ts (11 tests)</div>
+                                    <div class="is-dim">Duration 8.42s</div>
+                                  </div>
+                                </div>
+                                <div class="vx-detail-exit is-pass">Exit code: 0</div>
+                              </div>
                             </div>
-                            <div class="vx-fileop-row"><i data-lucide="pencil"></i><code>src/workbench/timeline.rs</code><span class="vx-diff-del">−31</span><span class="vx-diff-add">+86</span></div>
+                            <div class="vx-fileop-card">
+                              <i data-lucide="file-text"></i>
+                              <strong>Editing timeline.rs</strong>
+                              <i class="vx-caret" data-lucide="chevron-down"></i>
+                              <span class="vx-diff-del">-31</span>
+                              <span class="vx-diff-add">+86</span>
+                              <span class="vx-fileop-open"><i data-lucide="folder-open"></i></span>
+                            </div>
                             <div class="vx-answer">
                               <p>The merge handoff now runs through a single <code>WorktreeBridge</code> path, and the timeline renders each turn from a typed event log so replays stay deterministic.</p>
+                              <div class="vx-answer-foot">
+                                <span class="vx-answer-meta">
+                                  <img src="/assets/agents/openai-light.svg" alt="" />
+                                  <span>Agent account · gpt-5.1-codex</span>
+                                  <i data-lucide="clock-3"></i>
+                                  <span>1m 32s</span>
+                                </span>
+                                <span class="vx-answer-actions">
+                                  <span><i data-lucide="copy"></i></span>
+                                  <span><i data-lucide="arrow-up-to-line"></i></span>
+                                  <span><i data-lucide="git-branch"></i></span>
+                                </span>
+                              </div>
                             </div>
                           </div>
                           <div class="vx-changes-card">
-                            <div class="vx-changes-head"><strong>3 files changed</strong><span class="vx-changes-nums"><b class="vx-diff-add">+128</b><b class="vx-diff-del">−47</b></span></div>
-                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/workbench/timeline.rs</code><span class="vx-diff-del">−31</span><span class="vx-diff-add">+86</span></button>
-                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/workbench/worktree.rs</code><span class="vx-diff-del">−9</span><span class="vx-diff-add">+31</span></button>
-                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/core/session.rs</code><span class="vx-diff-del">−7</span><span class="vx-diff-add">+11</span></button>
+                            <div class="vx-changes-head"><i data-lucide="file"></i><strong>3 files changed</strong><span class="vx-changes-nums"><b class="vx-diff-del">-47</b><b class="vx-diff-add">+128</b></span></div>
+                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/workbench/timeline.rs</code><span class="vx-diff-del">-31</span><span class="vx-diff-add">+86</span></button>
+                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/workbench/worktree.rs</code><span class="vx-diff-del">-9</span><span class="vx-diff-add">+31</span></button>
+                            <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/core/session.rs</code><span class="vx-diff-del">-7</span><span class="vx-diff-add">+11</span></button>
+                            <div class="vx-changes-foot">
+                              <button class="vx-review-btn" type="button"><i data-lucide="eye"></i><span>Review</span></button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -373,11 +411,11 @@ document.querySelector("#app").innerHTML = `
                           <span>Generating</span><span class="vx-strip-dot">·</span>
                           <span><span data-elapsed>38s</span></span><span class="vx-strip-dot">·</span>
                           <span>4 tool calls</span><span class="vx-strip-dot">·</span>
-                          <span class="vx-strip-diff"><b class="vx-diff-add">+128</b><b class="vx-diff-del">−47</b></span><span class="vx-strip-dot">·</span>
-                          <span>↑ 12.3k</span><span class="vx-strip-dot">·</span>
-                          <span>↓ 4.5k</span><span class="vx-strip-dot">·</span>
+                          <span class="vx-strip-diff"><b class="vx-diff-add">+128</b><b class="vx-diff-del">-47</b></span><span class="vx-strip-dot">·</span>
+                          <span class="vx-strip-io"><i data-lucide="arrow-up"></i><span>12.3k</span></span><span class="vx-strip-dot">·</span>
+                          <span class="vx-strip-io"><i data-lucide="arrow-down"></i><span>4.5k</span></span><span class="vx-strip-dot">·</span>
                           <span>38%</span><span class="vx-strip-dot">·</span>
-                          <span>87 t/s</span>
+                          <span>86.9 t/s</span>
                         </div>
                         <div class="vx-composer">
                           <div class="vx-composer-input">
@@ -416,11 +454,10 @@ document.querySelector("#app").innerHTML = `
                             <button class="vx-agent-tab is-active" type="button"><img src="/assets/agents/openai-light.svg" alt="" /><span>Codex</span></button>
                             <button class="vx-agent-tab" type="button"><img src="/assets/agents/claude.svg" alt="" /><span>Claude Code</span></button>
                             <button class="vx-agent-tab" type="button"><img src="/assets/agents/gemini.svg" alt="" /><span>Gemini CLI</span></button>
-                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/copilot.svg" alt="" /><span>GitHub Copilot</span></button>
                             <button class="vx-agent-tab" type="button"><img src="/assets/agents/antigravity.svg" alt="" /><span>Antigravity</span></button>
-                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/pi.svg" alt="" /><span>Pi</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/pi-light.svg" alt="" /><span>Pi</span></button>
                             <button class="vx-agent-tab" type="button"><img src="/assets/agents/opencode.svg" alt="" /><span>OpenCode</span></button>
-                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/grok.svg" alt="" /><span>Grok</span></button>
+                            <button class="vx-agent-tab" type="button"><img src="/assets/agents/grok-light.svg" alt="" /><span>Grok</span></button>
                           </div>
                           <button class="vx-icon-btn is-sm" type="button" aria-label="Sort agents"><i data-lucide="arrow-down-wide-narrow"></i></button>
                         </div>
@@ -458,14 +495,6 @@ document.querySelector("#app").innerHTML = `
                           <div class="vx-mgmt-sidebody" data-mgmt-sidebar="agents">
                             <div class="vx-mgmt-search"><i data-lucide="search"></i><span data-i18n="showcase.desktop.mgmt.searchAgents">Search Agent</span></div>
                             <div class="vx-mgmt-agents">
-                              <button class="vx-mgmt-agent is-selected" type="button" data-mgmt-agent="codex">
-                                <span class="vx-mgmt-agent-top">
-                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/openai-light.svg" alt="" /></span>
-                                  <span class="vx-mgmt-agent-name">Codex</span>
-                                  <span class="vx-mgmt-switch is-on"><span></span></span>
-                                </span>
-                                <small>3 configurations</small>
-                              </button>
                               <button class="vx-mgmt-agent" type="button" data-mgmt-agent="claude">
                                 <span class="vx-mgmt-agent-top">
                                   <span class="vx-mgmt-glyph"><img src="/assets/agents/claude.svg" alt="" /></span>
@@ -474,13 +503,125 @@ document.querySelector("#app").innerHTML = `
                                 </span>
                                 <small>2 configurations</small>
                               </button>
+                              <button class="vx-mgmt-agent is-selected" type="button" data-mgmt-agent="codex">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/openai-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Codex</span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
+                                </span>
+                                <small>3 configurations</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="opencode">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/opencode.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">OpenCode</span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
+                                </span>
+                                <small>Not checked</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="antigravity">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/antigravity.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Google Antigravity</span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
+                                </span>
+                                <small>Not checked</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="copilot">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/copilot-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">GitHub Copilot</span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
+                                </span>
+                                <small>Not checked</small>
+                              </button>
                               <button class="vx-mgmt-agent" type="button" data-mgmt-agent="gemini">
                                 <span class="vx-mgmt-agent-top">
                                   <span class="vx-mgmt-glyph"><img src="/assets/agents/gemini.svg" alt="" /></span>
                                   <span class="vx-mgmt-agent-name">Gemini CLI</span>
-                                  <span class="vx-mgmt-switch"><span></span></span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
                                 </span>
                                 <small>Not checked</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="grok">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/grok-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Grok</span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
+                                </span>
+                                <small>Not checked</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="pi">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/pi-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Pi</span>
+                                  <span class="vx-mgmt-switch is-on"><span></span></span>
+                                </span>
+                                <small>Not checked</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="zcode">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/zcode-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">ZCode</span>
+                                  <span class="vx-mgmt-plus"><i data-lucide="plus"></i></span>
+                                </span>
+                                <small>Not added</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="cline">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/cline-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Cline</span>
+                                  <span class="vx-mgmt-plus"><i data-lucide="plus"></i></span>
+                                </span>
+                                <small>Not added</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="codebuddy-code">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/codebuddy-code.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Codebuddy Code</span>
+                                  <span class="vx-mgmt-plus"><i data-lucide="plus"></i></span>
+                                </span>
+                                <small>Not added</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="cursor">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/cursor-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Cursor</span>
+                                  <span class="vx-mgmt-plus"><i data-lucide="plus"></i></span>
+                                </span>
+                                <small>Not added</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="deepseek-harness">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/deepseek-harness.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">DeepSeek Harness</span>
+                                  <span class="vx-mgmt-plus"><i data-lucide="plus"></i></span>
+                                </span>
+                                <small>Not added</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="devin">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/devin-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Devin CLI</span>
+                                  <span class="vx-mgmt-plus"><i data-lucide="plus"></i></span>
+                                </span>
+                                <small>Not added</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="hermes">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/hermes-light.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Hermes</span>
+                                  <span class="vx-mgmt-plus"><i data-lucide="plus"></i></span>
+                                </span>
+                                <small>Not added</small>
+                              </button>
+                              <button class="vx-mgmt-agent" type="button" data-mgmt-agent="kimi">
+                                <span class="vx-mgmt-agent-top">
+                                  <span class="vx-mgmt-glyph"><img src="/assets/agents/kimi.svg" alt="" /></span>
+                                  <span class="vx-mgmt-agent-name">Kimi Code CLI</span>
+                                  <span class="vx-mgmt-plus"><i data-lucide="plus"></i></span>
+                                </span>
+                                <small>Not added</small>
                               </button>
                               <div class="vx-mgmt-add">
                                 <span class="vx-mgmt-add-plus"><i data-lucide="plus"></i></span>
@@ -510,13 +651,13 @@ document.querySelector("#app").innerHTML = `
                           <div class="vx-mgmt-pane is-active" data-mgmt-pane="agents">
                             <div class="vx-mgmt-headrow">
                               <span class="vx-mgmt-glyph is-lg" data-mgmt-logo><img src="/assets/agents/openai-light.svg" alt="" /></span>
-                              <div><strong data-mgmt-name>Codex</strong><small data-mgmt-desc>gpt-5.1-codex · Vibex-managed runtime</small></div>
+                              <div><strong data-mgmt-name>Codex</strong><small data-mgmt-desc>Agent account · gpt-5.1-codex</small></div>
                               <span class="vx-mgmt-pill" data-i18n="showcase.desktop.mgmt.available">Available</span>
                             </div>
                             <div class="vx-mgmt-card">
                               <div class="vx-mgmt-cardhead">
                                 <span class="vx-mgmt-iconbox"><i data-lucide="bot"></i></span>
-                                <div><strong data-i18n="showcase.desktop.mgmt.installation">Agent installation</strong><small>Vibex-managed runtime</small></div>
+                                <div><strong data-i18n="showcase.desktop.mgmt.installation">Agent installation</strong><small>ACP · managed by Vibex</small></div>
                                 <span class="vx-mgmt-ver">v0.4.2</span>
                               </div>
                               <div class="vx-mgmt-actions">
@@ -1128,7 +1269,9 @@ createIcons({
     ArrowRight,
     ArrowUp,
     ArrowUpRight,
+    ArrowUpToLine,
     ArrowDownWideNarrow,
+    ArrowDown,
     Activity,
     AtSign,
     ArrowLeft,
@@ -1491,10 +1634,26 @@ const VIEW_LABEL_KEYS = {
   management: "showcase.desktop.management",
   usage: "showcase.desktop.usage",
 };
+// Catalog snapshot mirrors the desktop app's user-visible Agent list
+// (vibex_core::is_user_visible_agent), grouped enabled-first like the real
+// Config Center, with subtitles showing config counts or check status.
 const MANAGEMENT_AGENT_KEYS = {
-  codex: { logo: "/assets/agents/openai-light.svg", name: "Codex", desc: "gpt-5.1-codex · Vibex-managed runtime" },
-  claude: { logo: "/assets/agents/claude.svg", name: "Claude Code", desc: "claude-sonnet-4.5 · External CLI" },
-  gemini: { logo: "/assets/agents/gemini.svg", name: "Gemini CLI", desc: "gemini-2.5-pro · External CLI" },
+  codex: { logo: "/assets/agents/openai-light.svg", name: "Codex", desc: "Agent account · gpt-5.1-codex" },
+  claude: { logo: "/assets/agents/claude.svg", name: "Claude Code", desc: "Agent account · claude-sonnet-4.5" },
+  gemini: { logo: "/assets/agents/gemini.svg", name: "Gemini CLI", desc: "External CLI · gemini-2.5-pro" },
+  opencode: { logo: "/assets/agents/opencode.svg", name: "OpenCode", desc: "External CLI · External model" },
+  antigravity: { logo: "/assets/agents/antigravity.svg", name: "Google Antigravity", desc: "External CLI · gemini-3-pro" },
+  copilot: { logo: "/assets/agents/copilot-light.svg", name: "GitHub Copilot", desc: "External CLI · gpt-5.1-codex" },
+  grok: { logo: "/assets/agents/grok-light.svg", name: "Grok", desc: "External CLI · grok-4.1" },
+  pi: { logo: "/assets/agents/pi-light.svg", name: "Pi", desc: "External CLI · glm-5.1" },
+  zcode: { logo: "/assets/agents/zcode-light.svg", name: "ZCode", desc: "External CLI · glm-5.1" },
+  cline: { logo: "/assets/agents/cline-light.svg", name: "Cline", desc: "External CLI · External model" },
+  "codebuddy-code": { logo: "/assets/agents/codebuddy-code.svg", name: "Codebuddy Code", desc: "External CLI · External model" },
+  cursor: { logo: "/assets/agents/cursor-light.svg", name: "Cursor", desc: "External CLI · composer-2" },
+  "deepseek-harness": { logo: "/assets/agents/deepseek-harness.svg", name: "DeepSeek Harness", desc: "External CLI · deepseek-v4" },
+  devin: { logo: "/assets/agents/devin-light.svg", name: "Devin CLI", desc: "External CLI · External model" },
+  hermes: { logo: "/assets/agents/hermes-light.svg", name: "Hermes", desc: "External CLI · hermes-4.5" },
+  kimi: { logo: "/assets/agents/kimi.svg", name: "Kimi Code CLI", desc: "External CLI · kimi-k3" },
 };
 
 function setPreviewOpen(open) {

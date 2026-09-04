@@ -116,6 +116,23 @@ function docsUrl(path = "") {
   return `${docsBaseUrl}${languagePrefix}${path ? `/${path}` : ""}`;
 }
 
+// Detect the visitor's desktop platform so the hero CTA can read
+// "Download for macOS" instead of assuming Linux. Mobile browsers and
+// unknown environments fall back to the platform-neutral wording.
+function detectDownloadPlatform() {
+  if (typeof navigator === "undefined") return null;
+  const ua = navigator.userAgent;
+  if (/Android|iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) {
+    return null;
+  }
+  if (/Windows/i.test(ua)) return "Windows";
+  if (/Macintosh|Mac OS X/i.test(ua)) return "macOS";
+  if (/Linux|X11|CrOS/i.test(ua)) return "Linux";
+  return null;
+}
+
+const downloadPlatform = detectDownloadPlatform();
+
 let currentLanguage = getInitialLanguage();
 
 document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
@@ -214,7 +231,7 @@ document.querySelector("#app").innerHTML = `
               <div class="hero-buttons">
                 <a class="button button-primary" href="${githubUrl}/releases/latest" target="_blank" rel="noreferrer">
                   <i data-lucide="download"></i>
-                  <span data-hero-download>Download for Linux</span>
+                  <span data-hero-download>Download Vibex</span>
                   <i data-lucide="arrow-right"></i>
                 </a>
                 <a class="button hero-github" href="${githubUrl}" target="_blank" rel="noreferrer">
@@ -1604,8 +1621,12 @@ function setOwnText(selector, value) {
   });
 }
 
-function setBindingText(selector, key) {
-  setOwnText(selector, translate(currentLanguage, key));
+function setBindingText(selector, key, vars) {
+  let text = translate(currentLanguage, key);
+  for (const [name, value] of Object.entries(vars ?? {})) {
+    text = text.replaceAll(`{${name}}`, value);
+  }
+  setOwnText(selector, text);
 }
 
 function applyLanguage(language, { persist = true } = {}) {
@@ -1659,7 +1680,11 @@ function applyLanguage(language, { persist = true } = {}) {
   });
   setBindingText(".mobile-language > span", "language.label");
   setBindingText("[data-hero-download-lede]", "hero.downloadLead");
-  setBindingText("[data-hero-download]", "hero.download");
+  setBindingText(
+    "[data-hero-download]",
+    downloadPlatform ? "hero.download" : "hero.download.generic",
+    downloadPlatform ? { platform: downloadPlatform } : undefined,
+  );
   setBindingText("[data-hero-github]", "hero.github");
   setBindingText("[data-hero-download-options]", "hero.downloadOptions");
   setBindingText("[data-hero-supports]", "hero.supports");

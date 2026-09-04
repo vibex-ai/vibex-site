@@ -1761,17 +1761,13 @@ function syncSessionTitle(visible) {
 
 desktopShowcase?.querySelectorAll("[data-desktop-view]").forEach((tab) => {
   tab.addEventListener("click", () => {
-    setDesktopView(tab.dataset.desktopView);
-    markShowcaseInteraction();
-  });
+    setDesktopView(tab.dataset.desktopView);  });
 });
 
 desktopShowcase?.querySelectorAll("[data-runtime-choice]").forEach((choice) => {
   choice.addEventListener("click", () => {
     desktopShowcase.querySelectorAll("[data-runtime-choice]").forEach((item) => item.classList.remove("is-active"));
-    choice.classList.add("is-active");
-    markShowcaseInteraction();
-  });
+    choice.classList.add("is-active");  });
 });
 
 // Rail tabs are the activity-bar buttons only; clicks inside the rail panel
@@ -1792,30 +1788,22 @@ desktopShowcase?.querySelectorAll("button[data-desktop-rail]").forEach((tab) => 
     // the rail back retires the dock, like the app's single right panel.
     if (shell && !shell.classList.contains("is-rail-collapsed")) {
       setPreviewOpen(false);
-    }
-    markShowcaseInteraction();
-  });
+    }  });
 });
 
 desktopShowcase?.querySelectorAll("[data-git-tab]").forEach((button) => {
   button.addEventListener("click", () => {
-    setGitTab(button.dataset.gitTab);
-    markShowcaseInteraction();
-  });
+    setGitTab(button.dataset.gitTab);  });
 });
 
 desktopShowcase?.querySelectorAll("[data-mgmt-tab]").forEach((button) => {
   button.addEventListener("click", () => {
-    setMgmtTab(button.dataset.mgmtTab);
-    markShowcaseInteraction();
-  });
+    setMgmtTab(button.dataset.mgmtTab);  });
 });
 
 desktopShowcase?.querySelectorAll("[data-usage-seg] [data-usage-view], .vx-usage-range [data-usage-view]").forEach((button) => {
   button.addEventListener("click", () => {
-    setUsageView(button.dataset.usageView);
-    markShowcaseInteraction();
-  });
+    setUsageView(button.dataset.usageView);  });
 });
 
 function setUsageView(viewKey) {
@@ -1831,9 +1819,7 @@ function setUsageView(viewKey) {
 
 desktopShowcase?.querySelectorAll("[data-mgmt-agent]").forEach((row) => {
   row.addEventListener("click", () => {
-    selectMgmtAgent(row.dataset.mgmtAgent);
-    markShowcaseInteraction();
-  });
+    selectMgmtAgent(row.dataset.mgmtAgent);  });
 });
 
 desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
@@ -1926,7 +1912,6 @@ desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
       return;
     }
   });
-  action.addEventListener("click", markShowcaseInteraction);
 });
 
 // Toggles are delegated because the replay rebuilds the timeline DOM.
@@ -1943,7 +1928,6 @@ desktopShowcase?.addEventListener("click", (event) => {
   if (target === "tool") {
     toggle.closest(".vx-command-card")?.querySelector("[data-command-output]")?.classList.toggle("is-collapsed", expanded);
   }
-  markShowcaseInteraction();
 });
 
 // ---------------------------------------------------------------------------
@@ -2686,51 +2670,39 @@ timelineEl?.addEventListener("click", (event) => {
   body.textContent = open ? reason.dataset.full : reason.dataset.preview;
 });
 
-// Auto-rotate showcase scenes like a product demo reel; the thumb's fill
-// doubles as a progress bar tracking each view's display time. The reel
-// holds (progress freezes) while hovered, shortly after any manual
-// interaction, or mid-replay.
+// Auto-rotate showcase scenes like a product demo reel. The thumb's fill
+// doubles as a progress bar for the current view's display time and always
+// runs: views playing the ~18s session replay get a matching long period,
+// plain views rotate after 8s. If the replay outlasts the period the bar
+// holds at 100% until it finishes instead of cutting it off.
 const ROTATE_INTERVAL = 8000;
-const ROTATE_HOLD_MS = 12000;
+const ROTATE_REPLAY_INTERVAL = 20000;
 const ROTATE_MAX_TICK = 250; // clamp stalls (background tab) so returning never skips views
 let rotateElapsed = 0;
 let rotateLastTick = 0;
+let rotateDuration = ROTATE_INTERVAL;
 let rotateFrame = null;
-let lastInteraction = 0;
-
-function markShowcaseInteraction() {
-  lastInteraction = Date.now();
-}
 
 function resetShowcaseProgress() {
+  rotateDuration = replay.running ? ROTATE_REPLAY_INTERVAL : ROTATE_INTERVAL;
   rotateElapsed = 0;
   rotateLastTick = performance.now();
 }
 
-function rotateOnHold(now) {
-  // Don't yank the user away mid-replay: the session flow takes ~18s.
-  return replay.running
-    || desktopShowcase.matches(":hover")
-    || now - lastInteraction < ROTATE_HOLD_MS;
-}
-
 function stepShowcaseRotation(now) {
-  if (rotateOnHold(now)) {
-    // Freeze in place: shift the reference timestamp so held time never
-    // counts toward the switch.
-    rotateLastTick = now;
-  } else {
-    rotateElapsed += Math.min(now - rotateLastTick, ROTATE_MAX_TICK);
-    rotateLastTick = now;
-    if (rotateElapsed >= ROTATE_INTERVAL) {
-      rotateElapsed = 0;
+  rotateElapsed += Math.min(now - rotateLastTick, ROTATE_MAX_TICK);
+  rotateLastTick = now;
+  if (rotateElapsed >= rotateDuration) {
+    if (replay.running) {
+      rotateElapsed = rotateDuration;
+    } else {
       const active = desktopShowcase.querySelector("[data-desktop-view].is-active")?.dataset.desktopView ?? "agent";
       const next = DESKTOP_VIEWS[(DESKTOP_VIEWS.indexOf(active) + 1) % DESKTOP_VIEWS.length];
       setDesktopView(next);
     }
   }
   const fill = desktopShowcase?.querySelector("[data-desktop-progress]");
-  if (fill) fill.style.transform = `scaleX(${Math.min(rotateElapsed / ROTATE_INTERVAL, 1)})`;
+  if (fill) fill.style.transform = `scaleX(${Math.min(rotateElapsed / rotateDuration, 1)})`;
   rotateFrame = window.requestAnimationFrame(stepShowcaseRotation);
 }
 

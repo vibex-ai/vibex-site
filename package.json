@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
     "lucide": "^0.468.0"
   },
   "devDependencies": {
+    "jsdom": "^30.0.1",
     "vite": "^7.1.3"
   }
 }

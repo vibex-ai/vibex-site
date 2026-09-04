@@ -459,7 +459,7 @@ document.querySelector("#app").innerHTML = `
                           <img src=${vibexMarkTightLight} alt="" />
                           <span>ibex</span>
                         </div>
-                        <h1 data-i18n="showcase.desktop.home.slogan">Start something new</h1>
+                        <p class="vx-home-title" data-i18n="showcase.desktop.home.slogan">Start something new</p>
                         <p class="vx-home-sub" data-i18n="showcase.desktop.home.description">Create a fresh session from a project directory or a temporary workspace</p>
                         <div class="vx-home-capsule">
                           <div class="vx-home-agents">

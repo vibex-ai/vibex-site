@@ -2692,7 +2692,7 @@ h3 {
   line-height: 1;
 }
 
-.vx-home h1 {
+.vx-home-title {
   margin: 0;
   color: var(--vx-fg);
   font-size: 24px;

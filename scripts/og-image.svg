@@ -1,0 +1,48 @@
+<!-- Social preview card (og:image, 1200x630).
+     Regenerate with:
+     XDG_DATA_HOME=<dir with ibm-plex-sans-semibold.ttf under fonts/> \
+       rsvg-convert -w 1200 -h 630 scripts/og-image.svg -o public/assets/og.png -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow" cx="0.5" cy="0.05" r="1.1">
+      <stop offset="0" stop-color="#ffb36b" stop-opacity="0.5"/>
+      <stop offset="0.18" stop-color="#f763a0" stop-opacity="0.2"/>
+      <stop offset="0.42" stop-color="#815ec2" stop-opacity="0.12"/>
+      <stop offset="0.75" stop-color="#080909" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gridline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f2f1eb" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#f2f1eb" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#f2f1eb" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background: page color plus the hero's warm glow -->
+  <rect width="1200" height="630" fill="#080909"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- faint horizontal grid, echoing the hero backdrop -->
+  <g stroke="url(#gridline)" stroke-width="1">
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="390" x2="1200" y2="390"/>
+    <line x1="0" y1="480" x2="1200" y2="480"/>
+  </g>
+
+  <!-- wordmark: mark + "ibex", mirroring the site wordmark proportions -->
+  <g transform="translate(88,86)">
+    <g transform="translate(0,4)">
+      <path fill="#f2f1eb" d="M24.8 27.5H39.7Q41.2 27.5 42.2 29.2L63.6 67.2Q64.6 68.9 63.6 70.6L54.8 86.1Q53.8 87.8 52.8 85.8L24 29.5Q23 27.5 24.8 27.5Z"/>
+      <path fill="#f2f1eb" d="M70.1 27.5H85.1Q86.9 27.5 86.1 29.2L77 45.9Q75 47.2 73.4 46L66.5 33.8L68.4 29.2Q68.8 27.5 70.1 27.5Z"/>
+    </g>
+    <text x="102" y="86" font-family="IBM Plex Sans, sans-serif" font-size="76" font-weight="600" letter-spacing="-2" fill="#f2f1eb">ibex</text>
+  </g>
+
+  <g font-family="IBM Plex Sans, sans-serif" fill="#f2f1eb">
+    <text x="88" y="345" font-size="84" font-weight="600" letter-spacing="-2.5">The local-first AI</text>
+    <text x="88" y="440" font-size="84" font-weight="600" letter-spacing="-2.5">coding workbench.</text>
+    <text x="88" y="516" font-size="31" font-weight="400" letter-spacing="-0.3" fill="#a4a69f">Your agents. Your workspace. Your control—from prompt to commit,</text>
+    <text x="88" y="558" font-size="31" font-weight="400" letter-spacing="-0.3" fill="#a4a69f">desktop to mobile.</text>
+  </g>
+</svg>

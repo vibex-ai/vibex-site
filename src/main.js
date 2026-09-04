@@ -223,7 +223,7 @@ document.querySelector("#app").innerHTML = `
               <span class="agent-support-label" data-hero-supports>Supports</span>
               <div class="agent-list">
                 <span class="agent-logo" title="Claude Code"><img src="/assets/agents/claude.svg" alt="Claude Code" /></span>
-                <span class="agent-logo agent-logo-mono" title="OpenAI Codex"><img src="/assets/agents/openai-light.svg" alt="OpenAI Codex" /></span>
+                <span class="agent-logo" title="OpenAI Codex"><img src="/assets/agents/openai-light.svg" alt="OpenAI Codex" /></span>
                 <span class="agent-logo" title="Antigravity"><img src="/assets/agents/antigravity.svg" alt="Antigravity" /></span>
                 <span class="agent-logo agent-logo-mono" title="GitHub Copilot"><img src="/assets/agents/copilot.svg" alt="GitHub Copilot" /></span>
                 <span class="agent-logo" title="OpenCode"><img src="/assets/agents/opencode.svg" alt="OpenCode" /></span>

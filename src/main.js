@@ -86,6 +86,7 @@ import {
   Terminal,
   Trash2,
   TriangleAlert,
+  Undo2,
   Upload,
   UserRound,
   Wifi,
@@ -827,7 +828,7 @@ document.querySelector("#app").innerHTML = `
                     </div>
                   </aside>
 
-                  <aside class="vx-rail" data-desktop-rail>
+                  <aside class="vx-rail">
                     <div class="vx-rail-head">
                       <strong data-desktop-rail-title>Files</strong>
                       <div class="vx-rail-tools">
@@ -854,7 +855,7 @@ document.querySelector("#app").innerHTML = `
                     </div>
                     <div class="vx-rail-mode is-git" data-rail-mode="git">
                       <div class="vx-git-tabs">
-                        <button class="is-active" type="button" data-git-tab="changes">Changes</button>
+                        <button class="is-active" type="button" data-git-tab="changes">Changes<span class="vx-git-sync is-push">↗ 1</span></button>
                         <button type="button" data-git-tab="commits">Commits</button>
                       </div>
                       <div class="vx-git-page is-changes" data-git-page="changes">
@@ -862,6 +863,7 @@ document.querySelector("#app").innerHTML = `
                           <button class="vx-icon-btn is-xs" type="button" aria-label="Fetch"><i data-lucide="download"></i></button>
                           <button class="vx-icon-btn is-xs" type="button" aria-label="Push"><i data-lucide="upload"></i></button>
                           <button class="vx-icon-btn is-xs" type="button" aria-label="Refresh Git"><i data-lucide="rotate-ccw"></i></button>
+                          <button class="vx-icon-btn is-xs" type="button" aria-label="Rollback selected changes"><i data-lucide="undo-2"></i></button>
                           <span class="vx-toolbar-spacer"></span>
                           <span class="vx-toolbar-divider"></span>
                           <button class="vx-icon-btn is-xs" type="button" aria-label="Expand all changes"><i data-lucide="chevrons-down-up"></i></button>
@@ -886,14 +888,21 @@ document.querySelector("#app").innerHTML = `
                             <span class="vx-amend"><span class="vx-checkbox"></span>amend</span>
                           </div>
                           <div class="vx-commit-input">feat: rework worktree merge backfill</div>
-                          <div class="vx-commit-actions">
-                            <button class="vx-commit-btn" type="button"><i data-lucide="rotate-ccw"></i>Rollback</button>
-                            <span class="vx-commit-spacer"></span>
-                            <button class="vx-commit-btn is-primary" type="button">Commit<span class="vx-commit-count">4</span></button>
-                          </div>
+                        <div class="vx-commit-actions">
+                          <button class="vx-commit-btn" type="button"><i data-lucide="rotate-ccw"></i>Rollback</button>
+                          <span class="vx-commit-spacer"></span>
+                          <button class="vx-commit-btn is-commit" type="button">Commit<span class="vx-commit-count">4</span><i data-lucide="chevron-down"></i></button>
+                        </div>
                         </div>
                       </div>
                       <div class="vx-git-page is-commits" data-git-page="commits" hidden>
+                        <div class="vx-git-toolbar">
+                          <button class="vx-icon-btn is-xs" type="button" aria-label="Fetch"><i data-lucide="download"></i></button>
+                          <button class="vx-icon-btn is-xs" type="button" aria-label="Push"><i data-lucide="upload"></i></button>
+                          <button class="vx-icon-btn is-xs" type="button" aria-label="Refresh Git"><i data-lucide="rotate-ccw"></i></button>
+                          <span class="vx-toolbar-spacer"></span>
+                          <div class="vx-git-search"><i data-lucide="search"></i><span>Search commits</span></div>
+                        </div>
                         <div class="vx-git-filters">
                           <button class="vx-git-filter" type="button"><span>Branch</span><i data-lucide="chevron-down"></i></button>
                           <button class="vx-git-filter" type="button"><span>All Users</span><i data-lucide="chevron-down"></i></button>
@@ -1310,6 +1319,7 @@ function renderIcons() {
     SunMedium,
     Terminal,
     TriangleAlert,
+    Undo2,
     Upload,
     UserRound,
     Wifi,
@@ -1748,7 +1758,9 @@ desktopShowcase?.querySelectorAll("[data-runtime-choice]").forEach((choice) => {
   });
 });
 
-desktopShowcase?.querySelectorAll("[data-desktop-rail]").forEach((tab) => {
+// Rail tabs are the activity-bar buttons only; clicks inside the rail panel
+// itself must not re-trigger the mode switch.
+desktopShowcase?.querySelectorAll("button[data-desktop-rail]").forEach((tab) => {
   tab.addEventListener("click", () => {
     const shell = desktopShowcase.querySelector("[data-desktop-shell]");
     const alreadyActive = tab.classList.contains("is-active");

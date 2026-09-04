@@ -4092,7 +4092,7 @@ h3 {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  padding: 2px 8px 8px;
+  padding: 4px 0 8px;
 }
 
 .vx-file-row {
@@ -4101,9 +4101,8 @@ h3 {
   height: 28px;
   align-items: center;
   gap: 6px;
-  border-radius: 6px;
-  padding-left: calc(6px + var(--depth, 0) * 20px);
-  padding-right: 6px;
+  padding-left: calc(8px + var(--depth, 0) * 20px);
+  padding-right: 8px;
   color: rgba(250, 250, 250, 0.75);
   font-size: 12.5px;
   font-weight: 500;
@@ -4113,8 +4112,10 @@ h3 {
   background: rgba(255, 255, 255, 0.045);
 }
 
+/* Real app: selected rows use the primary tint (border 0.25 / bg 0.07). */
 .vx-file-row.is-selected {
-  background: rgba(228, 228, 231, 0.08);
+  background: rgba(228, 228, 231, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(228, 228, 231, 0.25);
 }
 
 /* indent guides drawn per row so they tile into continuous lines */
@@ -4124,7 +4125,7 @@ h3 {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(16px + var(--depth, 0) * 20px);
+  left: calc(20px + var(--depth, 0) * 20px);
   width: 1px;
   background: rgba(255, 255, 255, 0.1);
   content: "";
@@ -4196,6 +4197,29 @@ h3 {
   font-weight: 600;
 }
 
+/* Real app: Changes carries pull/push sync badges (↙ info, ↗ success). */
+.vx-git-sync {
+  display: inline-flex;
+  height: 14px;
+  align-items: center;
+  margin-left: 5px;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--vx-muted-fg);
+  font-family: var(--vx-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.vx-git-sync.is-push {
+  color: var(--vx-success);
+}
+
+.vx-git-sync.is-pull {
+  color: #51a2ff;
+}
+
 .vx-git-tabs button.is-active {
   color: var(--vx-fg);
 }
@@ -4241,9 +4265,32 @@ h3 {
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* Real app: history mode adds a commit search box at the right of the
+   toolbar (w-260, input border, background token). */
+.vx-git-search {
+  display: flex;
+  height: 28px;
+  width: 150px;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  border: 1px solid var(--vx-input);
+  border-radius: 6px;
+  background: var(--vx-bg);
+  color: var(--vx-faint);
+  font-size: 11px;
+}
+
+.vx-git-search svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+}
+
 .vx-git-wsrow {
   display: flex;
-  height: 44px;
+  height: 48px;
   flex: none;
   align-items: center;
   gap: 8px;
@@ -4252,7 +4299,7 @@ h3 {
 
 .vx-git-wsname strong {
   color: var(--vx-fg);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 500;
 }
 
@@ -4306,10 +4353,9 @@ h3 {
   align-items: center;
   gap: 6px;
   border: 1px solid transparent;
-  border-radius: 6px;
   color: #a1a1aa;
-  padding-left: calc(6px + var(--depth, 0) * 20px);
-  padding-right: 6px;
+  padding-left: calc(4px + var(--depth, 0) * 20px);
+  padding-right: 4px;
   font-size: 12px;
 }
 
@@ -4347,6 +4393,14 @@ h3 {
   font-size: 11px;
 }
 
+/* Real app: zero-count diff numbers stay visible but fade to 35% opacity. */
+.vx-git-row .vx-diff-add.is-zero,
+.vx-git-row .vx-diff-del.is-zero,
+.vx-git-nums .vx-diff-add.is-zero,
+.vx-git-nums .vx-diff-del.is-zero {
+  color: rgba(250, 250, 250, 0.35);
+}
+
 .vx-git-badge {
   display: grid;
   place-items: center;
@@ -4358,8 +4412,10 @@ h3 {
   color: rgba(250, 250, 250, 0.55);
   font-family: var(--vx-mono);
   font-size: 10.5px;
+  margin-left: 8px;
 }
 
+/* Real app: selection uses the primary tint (border 0.28 / bg 0.07). */
 .vx-git-row.is-selected {
   border-color: rgba(228, 228, 231, 0.28);
   background: rgba(228, 228, 231, 0.07);
@@ -4383,8 +4439,8 @@ h3 {
 
 .vx-commit-type {
   display: inline-flex;
-  width: 104px;
-  height: 30px;
+  width: 112px;
+  height: 32px;
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
@@ -4411,7 +4467,7 @@ h3 {
 }
 
 .vx-commit-input {
-  height: 76px;
+  height: 80px;
   padding: 8px 10px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 7px;
@@ -4430,7 +4486,7 @@ h3 {
 
 .vx-commit-btn {
   display: inline-flex;
-  height: 34px;
+  height: 36px;
   align-items: center;
   gap: 6px;
   padding: 0 12px;
@@ -4450,6 +4506,22 @@ h3 {
   width: 14px;
   height: 14px;
   color: var(--vx-muted-fg);
+}
+
+/* Real app: Commit is an outline dropdown button with a count chip and
+   caret; the chip uses a primary-tinted pill with mono digits. */
+.vx-commit-btn.is-commit {
+  padding: 0 8px 0 12px;
+}
+
+.vx-commit-btn.is-commit svg {
+  width: 12px;
+  height: 12px;
+  color: var(--vx-muted-fg);
+}
+
+.vx-commit-count {
+  font-weight: 600;
 }
 
 .vx-commit-count {

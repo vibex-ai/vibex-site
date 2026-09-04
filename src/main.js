@@ -107,6 +107,15 @@ import {
 } from "./i18n.js";
 
 const githubUrl = "https://github.com/vibex-ai/vibex";
+const docsBaseUrl = "https://vibex.peatboy.com/docs";
+
+// Docs serve zh-CN at the root and prefix the English tree with /en/, so
+// mirror the landing page's current language onto documentation links.
+function docsUrl(path = "") {
+  const languagePrefix = currentLanguage === "zh" ? "" : "/en";
+  return `${docsBaseUrl}${languagePrefix}${path ? `/${path}` : ""}`;
+}
+
 let currentLanguage = getInitialLanguage();
 
 document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
@@ -124,6 +133,7 @@ document.querySelector("#app").innerHTML = `
         <a href="#architecture">How it works</a>
         <a href="#remote">Remote</a>
         <a href="#faq">FAQ</a>
+        <a href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer">Docs</a>
       </nav>
 
       <div class="nav-actions">
@@ -160,6 +170,7 @@ document.querySelector("#app").innerHTML = `
       <a href="#architecture">How it works</a>
       <a href="#remote">Remote</a>
       <a href="#faq">FAQ</a>
+      <a href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer">Docs</a>
       <a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub <i data-lucide="arrow-up-right"></i></a>
       <div class="mobile-language">
         <span>Language</span>
@@ -211,9 +222,14 @@ document.querySelector("#app").innerHTML = `
                   <span data-hero-github>View on GitHub</span>
                 </a>
               </div>
-              <a class="hero-download-options" href="${githubUrl}/releases" target="_blank" rel="noreferrer" data-hero-download-options>
-                All download options
-              </a>
+              <div class="hero-options">
+                <a class="hero-download-options" href="${githubUrl}/releases" target="_blank" rel="noreferrer" data-hero-download-options>
+                  All download options
+                </a>
+                <a class="hero-download-options" href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer" data-hero-docs>
+                  Read the docs
+                </a>
+              </div>
             </div>
             <div class="agent-support" aria-label="Supported agents">
               <span class="agent-support-label" data-hero-supports>Supports</span>
@@ -955,6 +971,7 @@ document.querySelector("#app").innerHTML = `
           <h3>Git-native review</h3>
           <p>Stage, commit, branch, and inspect blame without leaving the session — isolated worktrees with guarded merges keep experiments contained.</p>
           <div class="bento-foot">Diffs · Blame · Worktrees</div>
+          <a class="bento-doc-link" href="${docsUrl("git")}" data-docs-page="git" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i><span data-i18n-text="bento.readMore"></span><i data-lucide="arrow-up-right"></i></a>
         </article>
 
         <article class="bento-card reveal">
@@ -971,6 +988,7 @@ document.querySelector("#app").innerHTML = `
           <h3>Terminal &amp; processes</h3>
           <p>Native PTYs with ANSI emulation, tabs, scrollback, and search run beside the conversation — not in another window.</p>
           <div class="bento-foot">PTY · ANSI · Tabs</div>
+          <a class="bento-doc-link" href="${docsUrl("terminal-and-previews")}" data-docs-page="terminal-and-previews" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i><span data-i18n-text="bento.readMore"></span><i data-lucide="arrow-up-right"></i></a>
         </article>
 
         <article class="bento-card reveal">
@@ -987,6 +1005,7 @@ document.querySelector("#app").innerHTML = `
           <h3>Approvals &amp; elicitation</h3>
           <p>Privileged actions pause for your decision, and agents can collect structured answers with typed forms mid-turn.</p>
           <div class="bento-foot">Permissions · Forms</div>
+          <a class="bento-doc-link" href="${docsUrl("sessions")}" data-docs-page="sessions" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i><span data-i18n-text="bento.readMore"></span><i data-lucide="arrow-up-right"></i></a>
         </article>
 
         <article class="bento-card reveal">
@@ -1000,6 +1019,7 @@ document.querySelector("#app").innerHTML = `
           <h3>MCP, Skills &amp; Prompts</h3>
           <p>Import, validate, and scope MCP servers and reusable workflow resources without scattering configuration files.</p>
           <div class="bento-foot">MCP · Skills · Hooks</div>
+          <a class="bento-doc-link" href="${docsUrl("mcp-skills-prompts-hooks")}" data-docs-page="mcp-skills-prompts-hooks" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i><span data-i18n-text="bento.readMore"></span><i data-lucide="arrow-up-right"></i></a>
         </article>
 
         <article class="bento-card reveal">
@@ -1012,6 +1032,7 @@ document.querySelector("#app").innerHTML = `
           <h3>Scheduled automation</h3>
           <p>Run one-shot, interval, or daily agent jobs with explicit run state, recovery, and audit history.</p>
           <div class="bento-foot">Cron · Graphs · Audit</div>
+          <a class="bento-doc-link" href="${docsUrl("scheduled-automation")}" data-docs-page="scheduled-automation" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i><span data-i18n-text="bento.readMore"></span><i data-lucide="arrow-up-right"></i></a>
         </article>
 
         <article class="bento-card reveal">
@@ -1027,6 +1048,7 @@ document.querySelector("#app").innerHTML = `
           <h3>Usage &amp; continuity</h3>
           <p>Token accounting per session and model, desktop notifications, and timelines that recover across restarts.</p>
           <div class="bento-foot">Tokens · Alerts · Recovery</div>
+          <a class="bento-doc-link" href="${docsUrl("privacy-and-recovery")}" data-docs-page="privacy-and-recovery" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i><span data-i18n-text="bento.readMore"></span><i data-lucide="arrow-up-right"></i></a>
         </article>
       </div>
     </section>
@@ -1119,7 +1141,7 @@ document.querySelector("#app").innerHTML = `
             <li><i data-lucide="check"></i> Provider credentials remain under your control</li>
             <li><i data-lucide="check"></i> Every privileged action can require approval</li>
           </ul>
-          <a class="inline-link-dark" href="${githubUrl}#readme" target="_blank" rel="noreferrer">Read the architecture <i data-lucide="arrow-up-right"></i></a>
+          <a class="inline-link-dark" href="${docsUrl("developer/architecture")}" data-docs-page="developer/architecture" target="_blank" rel="noreferrer">Read the architecture <i data-lucide="arrow-up-right"></i></a>
         </div>
       </div>
     </section>
@@ -1193,6 +1215,7 @@ document.querySelector("#app").innerHTML = `
             <div><i data-lucide="network"></i><span><strong>Best route wins</strong>Connect directly or through your self-hosted relay.</span></div>
             <div><i data-lucide="lock-keyhole"></i><span><strong>Private by construction</strong>Relay traffic stays end-to-end encrypted.</span></div>
           </div>
+          <a class="inline-doc-link" href="${docsUrl("remote-mobile")}" data-docs-page="remote-mobile" target="_blank" rel="noreferrer" data-remote-docs>Remote access &amp; mobile guide <i data-lucide="arrow-up-right"></i></a>
         </div>
       </div>
     </section>
@@ -1233,6 +1256,7 @@ document.querySelector("#app").innerHTML = `
           <p>Vibex is licensed under AGPL-3.0-or-later. Read the source, build it yourself, or help shape what comes next.</p>
           <div class="open-actions">
             <a class="button button-dark" href="${githubUrl}" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Open GitHub <i data-lucide="arrow-up-right"></i></a>
+            <a class="button button-dark" href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i> <span data-docs-label>Read the docs</span> <i data-lucide="arrow-up-right"></i></a>
             <span>AGPL-3.0-or-later · Inspect every frame that leaves your machine</span>
           </div>
         </div>
@@ -1274,6 +1298,7 @@ document.querySelector("#app").innerHTML = `
           <summary><span>Which platforms are supported?</span><i data-lucide="chevron-down"></i></summary>
           <p>The project includes a native desktop application plus native Android and iOS clients. Check the latest release notes for current packaged builds and platform requirements.</p>
         </details>
+        <a class="inline-doc-link faq-doc-link" href="${docsUrl("troubleshooting")}" data-docs-page="troubleshooting" target="_blank" rel="noreferrer">Troubleshooting guide <i data-lucide="arrow-up-right"></i></a>
       </div>
     </section>
 
@@ -1300,7 +1325,7 @@ document.querySelector("#app").innerHTML = `
       </div>
       <div class="footer-links">
         <div><span>Product</span><a href="#product">Workbench</a><a href="#remote">Mobile</a><a href="${githubUrl}/releases" target="_blank" rel="noreferrer">Releases</a></div>
-        <div><span>Resources</span><a href="${githubUrl}#readme" target="_blank" rel="noreferrer">Documentation</a><a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub</a><a href="${githubUrl}/issues" target="_blank" rel="noreferrer">Issues</a></div>
+        <div><span>Resources</span><a href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer">Documentation</a><a href="${docsUrl("troubleshooting")}" data-docs-page="troubleshooting" target="_blank" rel="noreferrer">Troubleshooting</a><a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub</a><a href="${githubUrl}/issues" target="_blank" rel="noreferrer">Issues</a></div>
         <div><span>Project</span><a href="${githubUrl}/blob/main/LICENSE" target="_blank" rel="noreferrer">License</a><a href="${githubUrl}/commits/main" target="_blank" rel="noreferrer">Changelog</a><a href="${githubUrl}/graphs/contributors" target="_blank" rel="noreferrer">Contributors</a></div>
       </div>
     </div>
@@ -1437,7 +1462,10 @@ const textBindings = [
   [".mobile-nav a:nth-child(2)", "nav.how"],
   [".mobile-nav a:nth-child(3)", "nav.remote"],
   [".mobile-nav a:nth-child(4)", "nav.faq"],
+  [".desktop-nav a:nth-child(5)", "nav.docs"],
+  [".mobile-nav a:nth-child(5)", "nav.docs"],
   [".hero-lede", "hero.lede"],
+  ["[data-hero-docs]", "hero.docs"],
   [".workbench-section .section-kicker", "workbench.kicker"],
   [".workbench-heading p", "workbench.copy"],
   [".bento-card:nth-child(1) h3", "bento.git.title"],
@@ -1494,6 +1522,7 @@ const textBindings = [
   [".remote-points > div:nth-child(2) span", "remote.route.copy"],
   [".remote-points > div:nth-child(3) strong", "remote.private.title"],
   [".remote-points > div:nth-child(3) span", "remote.private.copy"],
+  ["[data-remote-docs]", "remote.docs"],
   [".workflow-heading .section-kicker", "workflow.kicker"],
   [".workflow-steps article:nth-of-type(1) h3", "workflow.direct.title"],
   [".workflow-steps article:nth-of-type(1) p", "workflow.direct.copy"],
@@ -1507,6 +1536,8 @@ const textBindings = [
   [".open-copy > p", "open.copy"],
   [".open-copy .open-actions .button-dark", "open.github"],
   [".open-actions > span", "open.principles"],
+  ["[data-docs-label]", "hero.docs"],
+  [".faq-doc-link", "faq.docs"],
   [".code-panel-head span:first-child", "open.build"],
   [".faq-heading .section-kicker", "faq.kicker"],
   [".faq-list details:nth-child(1) summary span", "faq.editor.q"],
@@ -1527,7 +1558,8 @@ const textBindings = [
   [".footer-links > div:nth-child(1) a:nth-of-type(3)", "footer.releases"],
   [".footer-links > div:nth-child(2) > span", "footer.resources"],
   [".footer-links > div:nth-child(2) a:nth-of-type(1)", "footer.documentation"],
-  [".footer-links > div:nth-child(2) a:nth-of-type(3)", "footer.issues"],
+  [".footer-links > div:nth-child(2) a:nth-of-type(2)", "footer.troubleshooting"],
+  [".footer-links > div:nth-child(2) a:nth-of-type(4)", "footer.issues"],
   [".footer-links > div:nth-child(3) > span", "footer.project"],
   [".footer-links > div:nth-child(3) a:nth-of-type(1)", "footer.license"],
   [".footer-links > div:nth-child(3) a:nth-of-type(2)", "footer.changelog"],
@@ -1594,6 +1626,11 @@ function applyLanguage(language, { persist = true } = {}) {
   });
   attrBindings.forEach(([selector, attribute, key]) => {
     document.querySelectorAll(selector).forEach((element) => element.setAttribute(attribute, translate(currentLanguage, key)));
+  });
+  // Documentation links always follow the active language: zh-CN docs live at
+  // the docs root, English pages under /en/.
+  document.querySelectorAll("[data-docs-page]").forEach((element) => {
+    element.setAttribute("href", docsUrl(element.dataset.docsPage));
   });
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     element.textContent = translate(currentLanguage, element.dataset.i18n);

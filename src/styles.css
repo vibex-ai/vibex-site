@@ -569,6 +569,12 @@ h3 {
   color: var(--text);
 }
 
+.hero-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
 .hero-github {
   border-color: var(--line);
   background: transparent;
@@ -5092,6 +5098,20 @@ h3 {
   font-size: 10px;
 }
 
+.bento-doc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bento-doc-link:hover {
+  text-decoration: underline;
+}
+
 /* Micro-visuals inside bento cards — tiny product-true fragments */
 
 .bento-visual {
@@ -5569,6 +5589,31 @@ h3 {
 
 .inline-link-dark:hover {
   color: #126733;
+}
+
+/* Text links into the docs site — remote (dark bg) and FAQ (page bg) */
+.inline-doc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 36px;
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.inline-doc-link:hover {
+  text-decoration: underline;
+}
+
+.remote-copy .inline-doc-link {
+  margin-top: 30px;
+}
+
+.faq-doc-link {
+  margin-top: 0;
+  padding: 20px 0 18px;
+  border-bottom: 1px solid var(--line);
 }
 
 .remote-section {
@@ -6179,6 +6224,10 @@ h3 {
   align-items: center;
   gap: 20px;
   margin-top: 32px;
+}
+
+.open-actions .button {
+  font-size: 14px;
 }
 
 .open-actions > span {

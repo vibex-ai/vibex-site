@@ -239,7 +239,7 @@ document.querySelector("#app").innerHTML = `
         <div class="desktop-showcase reveal" data-desktop-showcase>
           <div class="showcase-glow" aria-hidden="true"></div>
           <div class="desktop-showcase-tabs" role="tablist" aria-label="Vibex desktop workbench" data-desktop-tablist>
-            <span class="desktop-showcase-thumb" data-desktop-thumb aria-hidden="true"></span>
+            <span class="desktop-showcase-thumb" data-desktop-thumb aria-hidden="true"><span class="desktop-showcase-progress" data-desktop-progress></span></span>
             <button class="desktop-showcase-tab is-active" type="button" role="tab" aria-selected="true" data-desktop-view="agent"><i data-lucide="message-square"></i><span data-desktop-tab="agent">Agent workbench</span></button>
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="files"><i data-lucide="git-branch"></i><span data-desktop-tab="files">Files &amp; Git</span></button>
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="management"><i data-lucide="settings"></i><span data-desktop-tab="management">Config Center</span></button>
@@ -1733,6 +1733,7 @@ function setDesktopView(viewKey, { restore = false } = {}) {
   const caption = desktopShowcase.querySelector("[data-desktop-caption]");
   if (caption) caption.textContent = translate(currentLanguage, VIEW_LABEL_KEYS[view]);
   syncShowcaseThumb();
+  resetShowcaseProgress();
 }
 
 function syncShowcaseThumb() {
@@ -2685,25 +2686,58 @@ timelineEl?.addEventListener("click", (event) => {
   body.textContent = open ? reason.dataset.full : reason.dataset.preview;
 });
 
-// Auto-rotate showcase scenes like a product demo reel; pauses while hovered
-// or shortly after any manual interaction.
-let rotateTimer = null;
+// Auto-rotate showcase scenes like a product demo reel; the thumb's fill
+// doubles as a progress bar tracking each view's display time. The reel
+// holds (progress freezes) while hovered, shortly after any manual
+// interaction, or mid-replay.
+const ROTATE_INTERVAL = 8000;
+const ROTATE_HOLD_MS = 12000;
+const ROTATE_MAX_TICK = 250; // clamp stalls (background tab) so returning never skips views
+let rotateElapsed = 0;
+let rotateLastTick = 0;
+let rotateFrame = null;
 let lastInteraction = 0;
 
 function markShowcaseInteraction() {
   lastInteraction = Date.now();
 }
 
+function resetShowcaseProgress() {
+  rotateElapsed = 0;
+  rotateLastTick = performance.now();
+}
+
+function rotateOnHold(now) {
+  // Don't yank the user away mid-replay: the session flow takes ~18s.
+  return replay.running
+    || desktopShowcase.matches(":hover")
+    || now - lastInteraction < ROTATE_HOLD_MS;
+}
+
+function stepShowcaseRotation(now) {
+  if (rotateOnHold(now)) {
+    // Freeze in place: shift the reference timestamp so held time never
+    // counts toward the switch.
+    rotateLastTick = now;
+  } else {
+    rotateElapsed += Math.min(now - rotateLastTick, ROTATE_MAX_TICK);
+    rotateLastTick = now;
+    if (rotateElapsed >= ROTATE_INTERVAL) {
+      rotateElapsed = 0;
+      const active = desktopShowcase.querySelector("[data-desktop-view].is-active")?.dataset.desktopView ?? "agent";
+      const next = DESKTOP_VIEWS[(DESKTOP_VIEWS.indexOf(active) + 1) % DESKTOP_VIEWS.length];
+      setDesktopView(next);
+    }
+  }
+  const fill = desktopShowcase?.querySelector("[data-desktop-progress]");
+  if (fill) fill.style.transform = `scaleX(${Math.min(rotateElapsed / ROTATE_INTERVAL, 1)})`;
+  rotateFrame = window.requestAnimationFrame(stepShowcaseRotation);
+}
+
 function startShowcaseRotation() {
-  if (!desktopShowcase || prefersReducedMotion || rotateTimer) return;
-  rotateTimer = window.setInterval(() => {
-    // Don't yank the user away mid-replay: the session flow takes ~18s.
-    if (replay.running) return;
-    if (desktopShowcase.matches(":hover") || Date.now() - lastInteraction < 12000) return;
-    const active = desktopShowcase.querySelector("[data-desktop-view].is-active")?.dataset.desktopView ?? "agent";
-    const next = DESKTOP_VIEWS[(DESKTOP_VIEWS.indexOf(active) + 1) % DESKTOP_VIEWS.length];
-    setDesktopView(next);
-  }, 8000);
+  if (!desktopShowcase || prefersReducedMotion || rotateFrame) return;
+  rotateLastTick = performance.now();
+  rotateFrame = window.requestAnimationFrame(stepShowcaseRotation);
 }
 
 startShowcaseRotation();

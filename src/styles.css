@@ -740,12 +740,27 @@ h3 {
   width: 0;
   height: 2px;
   border-radius: 1px;
-  background: var(--text);
+  background: rgba(255, 255, 255, 0.22);
+  overflow: hidden;
   opacity: 0;
   transition:
     transform 260ms cubic-bezier(0.33, 1, 0.68, 1),
     width 260ms cubic-bezier(0.33, 1, 0.68, 1),
     opacity 200ms ease;
+}
+
+/* Fill inside the thumb: grows with the current view's remaining display
+   time, like a progress bar baked into the indicator. */
+.desktop-showcase-progress {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--text);
+  transform: scaleX(0);
+  transform-origin: left;
+  /* No CSS transition: the fill is driven per-frame from JS so it can
+     freeze and resume with the carousel's pause conditions. */
 }
 
 .desktop-showcase-tab {
@@ -781,6 +796,10 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
   .desktop-showcase-thumb {
     transition: opacity 200ms ease;
+  }
+
+  .desktop-showcase-progress {
+    transform: none;
   }
 }
 

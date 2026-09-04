@@ -252,7 +252,7 @@ document.querySelector("#app").innerHTML = `
                     <button class="vx-icon-btn is-disabled" type="button" aria-label="Go forward" disabled><i data-lucide="arrow-right"></i></button>
                   </div>
                   <div class="vx-titlebar-main" data-desktop-title-main>
-                    <span class="vx-session-title">Refactor agent session timeline</span>
+                    <span class="vx-session-title" data-i18n="showcase.desktop.sessionTitle">Refactor agent session timeline</span>
                     <button class="vx-icon-btn is-sm" type="button" aria-label="Session actions"><i data-lucide="ellipsis"></i></button>
                   </div>
                   <div class="vx-titlebar-actions">
@@ -347,7 +347,8 @@ document.querySelector("#app").innerHTML = `
                             </div>
                             <span class="vx-turn-runtime">Agent account · gpt-5.1-codex</span>
                           </div>
-                          <div class="vx-turn-body" data-turn-body data-replay-slot="process"></div>
+                          <div class="vx-turn-body is-collapsed" data-turn-body data-replay-slot="process"></div>
+                          <div data-replay-slot="answer"></div>
                           <div class="vx-changes-card" data-replay-slot="changes" hidden>
                             <div class="vx-changes-head"><i data-lucide="file"></i><strong><span data-r="files">3</span> files changed</strong><span class="vx-changes-nums"><b class="vx-diff-del" data-r="del">-47</b><b class="vx-diff-add" data-r="add">+128</b></span></div>
                             <button class="vx-changes-row" type="button"><i data-lucide="file-text"></i><code>src/workbench/timeline.rs</code><span class="vx-diff-del">-31</span><span class="vx-diff-add">+86</span></button>
@@ -373,7 +374,7 @@ document.querySelector("#app").innerHTML = `
                         </div>
                         <div class="vx-composer">
                           <div class="vx-composer-input">
-                            <span class="vx-composer-placeholder"><span data-typed-text></span><span class="vx-caret-blink"></span></span>
+                            <span class="vx-composer-placeholder"><span class="vx-composer-hint" data-i18n="showcase.desktop.home.placeholder">Describe a task, or type / for commands, @ for files, $ for skills</span><span data-typed-text></span><span class="vx-caret-blink"></span></span>
                             <span class="vx-composer-side">
                               <button class="vx-icon-btn is-sm" type="button" data-desktop-action="expand" aria-label="Expand input"><i data-lucide="maximize-2"></i></button>
                               <button class="vx-icon-btn is-md" type="button" data-desktop-action="terminal" aria-label="Create Composer terminal"><i data-lucide="square-terminal"></i></button>
@@ -391,8 +392,7 @@ document.querySelector("#app").innerHTML = `
                               <button class="vx-send-btn" type="button" data-desktop-action="send" aria-label="Send message"><i data-lucide="arrow-up"></i></button>
                             </div>
                           </div>
-                        </div>
-                      </div>
+                        </div>                      </div>
                     </section>
 
                     <section class="vx-panel" data-desktop-panel="home">
@@ -796,7 +796,7 @@ document.querySelector("#app").innerHTML = `
                     </section>
                   </main>
 
-                  <aside class="vx-preview" data-desktop-preview>
+                  <aside class="vx-preview is-hidden" data-desktop-preview>
                     <div class="vx-preview-head">
                       <strong>Preview</strong>
                       <div class="vx-preview-tools">
@@ -1540,6 +1540,10 @@ function applyLanguage(language, { persist = true } = {}) {
   if (homePanelActive) syncSessionTitle(false);
   const activeDesktopRail = desktopShowcase?.querySelector("[data-rail-mode]:not([hidden])")?.dataset.railMode;
   if (activeDesktopRail) setDesktopRail(activeDesktopRail);
+  // The session timeline is rebuilt in the active language on every switch;
+  // mid-replay it restarts so the narration matches the new copy.
+  const agentPanelActive = Boolean(desktopShowcase?.querySelector('[data-desktop-panel="agent"].is-active'));
+  if (agentPanelActive) startTimelineReplay();
 
   setOwnText("[data-toast]", toast?.dataset.toastKey === "failed" ? translate(currentLanguage, "toast.failed") : translate(currentLanguage, "toast.copied"));
   const copyright = document.querySelector(".footer-bottom > span:first-child");
@@ -1708,7 +1712,9 @@ function setDesktopView(viewKey, { restore = false } = {}) {
     setDesktopRail(view === "files" ? "git" : "files");
     const shell = desktopShowcase.querySelector("[data-desktop-shell]");
     shell?.classList.toggle("is-fullpage", fullpage);
-    setPreviewOpen(!fullpage);
+    // Sessions open without the terminal dock; it only appears when the
+    // user explicitly opens a Composer terminal or preview tab.
+    setPreviewOpen(false);
   }
   const caption = desktopShowcase.querySelector("[data-desktop-caption]");
   if (caption) caption.textContent = translate(currentLanguage, VIEW_LABEL_KEYS[view]);
@@ -1944,17 +1950,157 @@ if (!prefersReducedMotion) {
 }
 
 // --- Session timeline replay -------------------------------------------------
+// All replay copy is bilingual; the timeline rebuilds on language change.
 
-const REPLAY_SCRIPT = {
-  oldMessage: "Trace the runtime handoff for worktree merges.",
-  message:
-    "Trace the runtime handoff for worktree merges and tighten the timeline rendering.",
-  reasoningPreview: "Trace where worktree merges hand off between the runtime and the UI.",
-  reasoningFull:
-    "Trace where worktree merges hand off between the runtime and the UI. The merge path lives in WorktreeBridge: requests are queued on the runtime side, then the timeline consumes typed events from the session log. Check the backfill ordering first, then the replay path.",
-  answer:
-    "The merge handoff now runs through a single WorktreeBridge path, and the timeline renders each turn from a typed event log so replays stay deterministic.",
-  command: "cargo test -p vibex worktree",
+const REPLAY_COPY = {
+  en: {
+    message:
+      "Trace the runtime handoff for worktree merges and tighten the timeline rendering.",
+    reasoningPreview:
+      "Trace where worktree merges hand off between the runtime and the UI.",
+    reasoningFull:
+      "Trace where worktree merges hand off between the runtime and the UI. The merge path lives in WorktreeBridge: requests are queued on the runtime side, then the timeline consumes typed events from the session log. Check the backfill ordering first, then the replay path.",
+    live: {
+      think: "Tracing the worktree merge handoff…",
+      search: "Searching workspace files…",
+      read: "Reading src/workbench/worktree.rs…",
+      confirm: "Waiting for confirmation…",
+      run: "Running cargo test -p vibex worktree…",
+      edit: "Editing src/workbench/timeline.rs…",
+      form: "Collecting worktree settings…",
+      write: "Writing the summary…",
+    },
+    activitySearch: "Searching workspace files · worktree merge handoff",
+    activityRead: "Reading src/workbench/worktree.rs",
+    activityResolved: "Worktree settings · Resolved",
+    copy: "Copy",
+    workedFor: "Worked for",
+    command: "cargo test -p vibex worktree",
+    badgeRunning: "Running",
+    badgeCompleted: "Completed",
+    badgeWaiting: "Waiting for confirmation",
+    detailCwd: "Working directory",
+    detailOutput: "Output",
+    detailExit: "Exit code: 0",
+    permission: {
+      title: "Command execution",
+      pending: "Waiting for confirmation",
+      approved: "Approved",
+      desc: "Confirm whether the Agent may run this command.",
+      always: "Always allow for session",
+      deny: "Deny",
+      approve: "Approve",
+    },
+    form: {
+      title: "Worktree settings",
+      strategy: "Merge strategy",
+      rebase: "Rebase",
+      squash: "Squash",
+      summary: "Summary",
+      summaryValue: "Worktree merge handoff — typed event log",
+      decline: "Decline",
+      submit: "Submit",
+    },
+    answerP1:
+      "The merge handoff now runs through a single WorktreeBridge path, and the timeline renders each turn from a typed event log so replays stay deterministic.",
+    answerSubhead1: "What changed",
+    answerBullets: [
+      "Merge requests queue through one runtime-side bridge, so backfills can no longer interleave with live turns.",
+      "Timeline rows carry typed payloads, making replay byte-for-byte deterministic.",
+      "Worktree settings are collected up front, removing the mid-turn confirmation round-trip.",
+    ],
+    answerTableTitle: "Merge replay cost",
+    answerTableHead: ["Phase", "Before", "After"],
+    answerTableRows: [
+      ["Backfill", "412 ms", "96 ms"],
+      ["Replay", "268 ms", "71 ms"],
+      ["Render", "154 ms", "58 ms"],
+    ],
+    answerChartTitle: "Timeline replay cost (ms)",
+    answerBars: [
+      { label: "v0.3", value: "412 ms", width: 100, cls: "is-before" },
+      { label: "v0.4", value: "96 ms", width: 23, cls: "is-after" },
+    ],
+  },
+  zh: {
+    message:
+      "梳理 worktree 合并的运行时交接，并收紧时间线的渲染路径。",
+    reasoningPreview:
+      "追踪 worktree 合并在运行时与 UI 之间的交接路径。",
+    reasoningFull:
+      "追踪 worktree 合并在运行时与 UI 之间的交接路径。合并路径位于 WorktreeBridge：请求在运行时侧统一排队，时间线再从会话日志消费类型化事件。先检查回填顺序，再看回放路径。",
+    live: {
+      think: "正在追踪 worktree 合并交接…",
+      search: "正在搜索工作区文件…",
+      read: "正在读取 src/workbench/worktree.rs…",
+      confirm: "正在等待确认…",
+      run: "正在运行 cargo test -p vibex worktree…",
+      edit: "正在编辑 src/workbench/timeline.rs…",
+      form: "正在收集 Worktree 设置…",
+      write: "正在撰写总结…",
+    },
+    activitySearch: "搜索工作区文件 · worktree 合并交接",
+    activityRead: "读取 src/workbench/worktree.rs",
+    activityResolved: "Worktree 设置 · 已完成",
+    copy: "复制",
+    workedFor: "工作了",
+    command: "cargo test -p vibex worktree",
+    badgeRunning: "运行中",
+    badgeCompleted: "已完成",
+    badgeWaiting: "等待确认",
+    detailCwd: "工作目录",
+    detailOutput: "输出",
+    detailExit: "退出码：0",
+    permission: {
+      title: "命令执行",
+      pending: "等待确认",
+      approved: "已允许",
+      desc: "请确认是否允许 Agent 执行此命令。",
+      always: "本会话始终允许",
+      deny: "拒绝",
+      approve: "允许",
+    },
+    form: {
+      title: "Worktree 设置",
+      strategy: "合并策略",
+      rebase: "Rebase",
+      squash: "Squash",
+      summary: "摘要",
+      summaryValue: "Worktree 合并交接 — 类型化事件日志",
+      decline: "拒绝",
+      submit: "提交",
+    },
+    answerP1:
+      "合并交接现在收敛到单一的 WorktreeBridge 路径，时间线改为从类型化事件日志渲染每一轮对话，保证回放的确定性。",
+    answerSubhead1: "变更要点",
+    answerBullets: [
+      "合并请求在运行时侧统一排队，回填不会再与进行中的回合交错。",
+      "时间线行携带类型化载荷，回放逐字节可复现。",
+      "Worktree 设置改为前置收集，去掉了回合中的确认往返。",
+    ],
+    answerTableTitle: "合并回放开销",
+    answerTableHead: ["阶段", "之前", "之后"],
+    answerTableRows: [
+      ["回填", "412 ms", "96 ms"],
+      ["回放", "268 ms", "71 ms"],
+      ["渲染", "154 ms", "58 ms"],
+    ],
+    answerChartTitle: "时间线回放耗时（毫秒）",
+    answerBars: [
+      { label: "v0.3", value: "412 ms", width: 100, cls: "is-before" },
+      { label: "v0.4", value: "96 ms", width: 23, cls: "is-after" },
+    ],
+  },
+};
+
+const replayCopy = () => REPLAY_COPY[currentLanguage] ?? REPLAY_COPY.en;
+
+const PHASE_LABELS_ZH = {
+  Preparing: "准备中",
+  Thinking: "思考中",
+  "Calling tool": "调用工具",
+  "Waiting for approval": "等待确认",
+  Generating: "生成中",
 };
 
 const timelineEl = desktopShowcase?.querySelector("[data-timeline]");
@@ -2016,32 +2162,20 @@ function typeInto(node, text, duration, alive = () => true) {
   });
 }
 
-function blockHtml(kind, args) {
+function blockHtml(kind, args = []) {
+  const c = replayCopy();
   switch (kind) {
     case "user-actions":
       return `
         <div class="vx-user-actions">
           <span>12:41</span>
-          <button class="vx-user-action" type="button"><i data-lucide="copy"></i><span>Copy</span></button>
-          <button class="vx-user-action" type="button" data-r="edit"><i data-lucide="pencil"></i><span>Edit</span></button>
+          <button class="vx-user-action" type="button"><i data-lucide="copy"></i><span>${c.copy}</span></button>
         </div>`;
-    case "editor":
+    case "reasoning":
       return `
-        <div class="vx-user-editor">
-          <textarea rows="2" spellcheck="false"></textarea>
-          <div class="vx-permission-actions">
-            <button class="vx-btn is-outline" type="button">Discard</button>
-            <button class="vx-btn is-primary" type="button"><i data-lucide="check"></i>Save</button>
-          </div>
+        <div class="vx-reasoning is-streaming" data-r="reason" data-preview="${c.reasoningPreview}" data-full="${c.reasoningFull}">
+          <span class="vx-reasoning-body">${c.live.think}</span>
         </div>`;
-    case "reasoning": {
-      const [preview, full, streaming] = args;
-      return `
-        <div class="vx-reasoning${streaming ? " is-streaming" : ""}" data-r="reason" data-preview="${preview}" data-full="${full}">
-          <span class="vx-reasoning-body">${preview}</span>
-          ${streaming ? "" : '<i data-lucide="chevron-right"></i>'}
-        </div>`;
-    }
     case "activity": {
       const [icon, text] = args;
       return `<div class="vx-activity-line"><i data-lucide="${icon}"></i><span>${text}</span></div>`;
@@ -2052,7 +2186,7 @@ function blockHtml(kind, args) {
         <div class="vx-command-card">
           <button class="vx-command-head" type="button" data-desktop-toggle="tool" aria-expanded="true">
             <i data-lucide="square-terminal"></i>
-            <code>${REPLAY_SCRIPT.command}</code>
+            <code>${c.command}</code>
             <i class="vx-caret" data-lucide="chevron-down"></i>
             <span class="vx-badge is-running" data-r="badge">${badge}</span>
           </button>
@@ -2061,10 +2195,10 @@ function blockHtml(kind, args) {
     case "command-output":
       return `
         <div class="vx-command-output" data-command-output>
-          <div class="vx-detail-row"><span>Working directory</span><code>/workspace/vibex</code></div>
-          <div class="vx-detail-box">$ ${REPLAY_SCRIPT.command}</div>
+          <div class="vx-detail-row"><span>${c.detailCwd}</span><code>/workspace/vibex</code></div>
+          <div class="vx-detail-box">$ ${c.command}</div>
           <div class="vx-detail-block">
-            <span class="vx-detail-label">Output</span>
+            <span class="vx-detail-label">${c.detailOutput}</span>
             <div class="vx-detail-box is-log">
               <div>running 35 tests</div>
               <div><span class="is-pass">test</span> worktree::merge_backfill ... ok</div>
@@ -2072,46 +2206,46 @@ function blockHtml(kind, args) {
               <div class="is-dim">test result: ok. 35 passed; 0 failed; finished in 8.42s</div>
             </div>
           </div>
-          <div class="vx-detail-exit is-pass">Exit code: 0</div>
+          <div class="vx-detail-exit is-pass">${c.detailExit}</div>
         </div>`;
     case "permission":
       return `
         <div class="vx-permission-card" data-r="permission">
           <div class="vx-permission-head">
             <i data-lucide="shield-alert"></i>
-            <span class="vx-permission-title">Command execution</span>
-            <span class="vx-permission-status">Waiting for confirmation</span>
+            <span class="vx-permission-title">${c.permission.title}</span>
+            <span class="vx-permission-status">${c.permission.pending}</span>
           </div>
           <div class="vx-permission-body">
-            <span>Confirm whether the Agent may run this command.</span>
-            <code>${REPLAY_SCRIPT.command}</code>
+            <span>${c.permission.desc}</span>
+            <code>${c.command}</code>
             <div class="vx-permission-actions">
-              <button class="vx-btn is-outline" type="button">Always allow for session</button>
-              <button class="vx-btn is-danger" type="button"><i data-lucide="x"></i>Deny</button>
-              <button class="vx-btn is-primary" type="button"><i data-lucide="check"></i>Approve</button>
+              <button class="vx-btn is-outline" type="button">${c.permission.always}</button>
+              <button class="vx-btn is-danger" type="button"><i data-lucide="x"></i>${c.permission.deny}</button>
+              <button class="vx-btn is-primary" type="button"><i data-lucide="check"></i>${c.permission.approve}</button>
             </div>
           </div>
         </div>`;
     case "form":
       return `
         <div class="vx-form-card" data-r="form">
-          <div class="vx-form-title"><i data-lucide="info"></i><span>Worktree settings</span></div>
+          <div class="vx-form-title"><i data-lucide="info"></i><span>${c.form.title}</span></div>
           <div class="vx-form-fields">
             <div class="vx-form-field">
-              <label>Merge strategy <em>*</em></label>
+              <label>${c.form.strategy} <em>*</em></label>
               <div class="vx-form-choices">
-                <button class="vx-form-choice" type="button"><i data-lucide="check"></i>Rebase</button>
-                <button class="vx-form-choice" type="button">Squash</button>
+                <button class="vx-form-choice" type="button"><i data-lucide="check"></i>${c.form.rebase}</button>
+                <button class="vx-form-choice" type="button">${c.form.squash}</button>
               </div>
             </div>
             <div class="vx-form-field">
-              <label>Summary <em>*</em></label>
-              <div class="vx-form-input">Worktree merge handoff — typed event log</div>
+              <label>${c.form.summary} <em>*</em></label>
+              <div class="vx-form-input">${c.form.summaryValue}</div>
             </div>
           </div>
           <div class="vx-form-actions">
-            <button class="vx-btn is-outline" type="button"><i data-lucide="x"></i>Decline</button>
-            <button class="vx-btn is-primary" type="button" data-r="form-submit"><i data-lucide="check"></i>Submit</button>
+            <button class="vx-btn is-outline" type="button"><i data-lucide="x"></i>${c.form.decline}</button>
+            <button class="vx-btn is-primary" type="button" data-r="form-submit"><i data-lucide="check"></i>${c.form.submit}</button>
           </div>
         </div>`;
     case "fileop":
@@ -2128,6 +2262,30 @@ function blockHtml(kind, args) {
       return `
         <div class="vx-answer" data-r="answer">
           <p data-r="answer-text"></p>
+          <div class="vx-answer-rest" hidden>
+            <div class="vx-answer-sub">${c.answerSubhead1}</div>
+            <ul>${c.answerBullets.map((item) => `<li>${item}</li>`).join("")}</ul>
+            <div class="vx-answer-sub">${c.answerTableTitle}</div>
+            <table class="vx-answer-table">
+              <thead><tr>${c.answerTableHead.map((head) => `<th>${head}</th>`).join("")}</tr></thead>
+              <tbody>${c.answerTableRows
+                .map((row) => `<tr>${row.map((cell, index) => `<td${index === 0 ? ' class="is-name"' : ""}>${cell}</td>`).join("")}</tr>`)
+                .join("")}</tbody>
+            </table>
+            <div class="vx-answer-sub">${c.answerChartTitle}</div>
+            <div class="vx-bars">
+              ${c.answerBars
+                .map(
+                  (bar) => `
+                <div class="vx-bar-row">
+                  <span class="vx-bar-label">${bar.label}</span>
+                  <span class="vx-bar-track"><span class="vx-bar-fill ${bar.cls}" style="width:${bar.width}%"></span></span>
+                  <span class="vx-bar-val">${bar.value}</span>
+                </div>`,
+                )
+                .join("")}
+            </div>
+          </div>
           <div class="vx-answer-foot" hidden>
             <span class="vx-answer-meta">
               <img src="/assets/agents/openai-light.svg" alt="" />
@@ -2151,10 +2309,14 @@ function renderStrip() {
   const m = replay.metrics;
   if (!statusStrip || !m) return;
   const query = (selector) => statusStrip.querySelector(selector);
-  query("[data-strip-phase]").textContent = m.phase;
+  query("[data-strip-phase]").textContent =
+    currentLanguage === "zh" ? (PHASE_LABELS_ZH[m.phase] ?? m.phase) : m.phase;
   query("[data-elapsed]").textContent = fmtClock(Date.now() - m.start);
   const tools = query("[data-strip-tools]");
-  tools.textContent = `${m.tools} tool call${m.tools === 1 ? "" : "s"}`;
+  tools.textContent =
+    currentLanguage === "zh"
+      ? `${m.tools} 次工具调用`
+      : `${m.tools} tool call${m.tools === 1 ? "" : "s"}`;
   query('[data-seg="tools"]').hidden = m.tools === 0;
   query("[data-strip-add]").textContent = `+${m.add}`;
   query("[data-strip-del]").textContent = `-${m.del}`;
@@ -2178,7 +2340,7 @@ function replayStartTicker() {
     const m = replay.metrics;
     if (!m || statusStrip.classList.contains("is-idle")) return;
     const label = fmtClock(Date.now() - m.start);
-    if (m.timeEl) m.timeEl.textContent = `Worked for ${label}`;
+    if (m.timeEl) m.timeEl.textContent = `${replayCopy().workedFor} ${label}`;
     const elapsedEl = statusStrip.querySelector("[data-elapsed]");
     if (elapsedEl) elapsedEl.textContent = label;
     if (m.phase !== "Generating" && m.phase !== "Finalizing") {
@@ -2196,105 +2358,135 @@ function replayStartTicker() {
 
 async function runReplay(gen) {
   const alive = () => gen === replayGeneration;
-  const { processSlot, userSlot, turnSlot, changesSlot } = replay.refs;
+  const { processSlot, userSlot, turnSlot, answerSlot, changesSlot } = replay.refs;
   const m = replay.metrics;
+  const c = replayCopy();
   const append = (html) => {
     processSlot.insertAdjacentHTML("beforeend", html);
     processSlot.lastElementChild?.classList.add("vx-reveal");
     renderIcons();
     scrollTimeline();
   };
+  const setText = (selector, text) => {
+    const node = processSlot.querySelector(selector);
+    // An expanded live row is being read; don't yank its text mid-scroll.
+    if (node && !node.closest('[data-r="reason"]')?.classList.contains("is-open")) node.textContent = text;
+  };
 
-  // Edit the previous prompt in place, then send it.
-  userSlot.classList.add("is-editing");
-  await replaySleep(800); if (!alive()) return;
-  userSlot.querySelector(".vx-user-bubble").outerHTML = blockHtml("editor");
-  renderIcons();
-  const area = userSlot.querySelector("textarea");
-  typeInto(area, REPLAY_SCRIPT.message, 1500, alive);
-  await replaySleep(1900); if (!alive()) return;
-  userSlot.classList.remove("is-editing");
-  userSlot.innerHTML = `<div class="vx-user-bubble">${REPLAY_SCRIPT.message}</div>`;
+  // The user types in the composer below the timeline, then presses Enter.
+  agentComposer?.classList.add("is-typing");
+  typeInto(agentTypedNode, c.message, 2100, alive);
+  await replaySleep(2700); if (!alive()) return;
+  agentComposer?.classList.remove("is-typing");
+  await replaySleep(400); if (!alive()) return;
   agentComposer?.classList.add("is-sent");
   replayAfter(700, () => agentComposer?.classList.remove("is-sent"));
   if (agentTypedNode) agentTypedNode.textContent = "";
+  userSlot.innerHTML = `<div class="vx-user-bubble">${c.message}</div>
+    ${blockHtml("user-actions")}`;
+  renderIcons();
   turnSlot.hidden = false;
   turnSlot.classList.add("vx-reveal");
+  turnSlot.querySelector("[data-turn-body]")?.classList.remove("is-collapsed");
   statusStrip.classList.remove("is-idle");
   m.start = Date.now();
   renderStrip();
   scrollTimeline();
 
-  // Thinking: reasoning streams with the app's shimmer label.
+  // Thinking: the live shimmer line pins to the bottom and its label tracks
+  // whatever the agent is doing right now, exactly like the app's
+  // agent_pending_response flow.
+  const live = blockHtml("reasoning");
   m.phase = "Thinking"; renderStrip();
-  await replaySleep(500); if (!alive()) return;
-  append(blockHtml("reasoning", [REPLAY_SCRIPT.reasoningPreview, REPLAY_SCRIPT.reasoningFull, true]));
-  await replaySleep(2600); if (!alive()) return;
+  await replaySleep(400); if (!alive()) return;
+  append(live);
+  await replaySleep(2400); if (!alive()) return;
+  setText('[data-r="reason"] .vx-reasoning-body', c.reasoningPreview);
 
   // Tool activity lines.
   m.phase = "Calling tool"; m.tools = 1; renderStrip();
-  append(blockHtml("activity", ["search", "Searching workspace files · worktree merge handoff"]));
-  await replaySleep(800); if (!alive()) return;
+  setText('[data-r="reason"] .vx-reasoning-body', c.live.search);
+  append(blockHtml("activity", ["search", c.activitySearch]));
+  await replaySleep(1000); if (!alive()) return;
   m.tools = 2; renderStrip();
-  append(blockHtml("activity", ["file-code", "Reading src/workbench/worktree.rs"]));
-  await replaySleep(900); if (!alive()) return;
+  setText('[data-r="reason"] .vx-reasoning-body', c.live.read);
+  append(blockHtml("activity", ["file-code", c.activityRead]));
+  await replaySleep(1100); if (!alive()) return;
 
   // Command runs, but first waits for approval like the app's linked
   // command/permission card pair.
   m.tools = 3; m.phase = "Waiting for approval"; renderStrip();
-  append(blockHtml("command", ["Waiting for confirmation"]));
+  setText('[data-r="reason"] .vx-reasoning-body', c.live.confirm);
+  append(blockHtml("command", [c.badgeWaiting]));
   append(blockHtml("permission"));
-  await replaySleep(2200); if (!alive()) return;
+  await replaySleep(2400); if (!alive()) return;
   const permission = processSlot.querySelector('[data-r="permission"]');
   permission.classList.add("is-approved");
-  permission.querySelector(".vx-permission-status").textContent = "Approved";
+  permission.querySelector(".vx-permission-status").textContent = c.permission.approved;
   permission.querySelector(".vx-permission-actions")?.remove();
   m.phase = "Calling tool"; renderStrip();
   await replaySleep(600); if (!alive()) return;
 
   const commandCard = processSlot.querySelector(".vx-command-card");
   const badge = commandCard.querySelector('[data-r="badge"]');
-  badge.textContent = "Running";
+  setText('[data-r="reason"] .vx-reasoning-body', c.live.run);
+  badge.textContent = c.badgeRunning;
   commandCard.insertAdjacentHTML("beforeend", blockHtml("command-output"));
   renderIcons();
   scrollTimeline();
   m.cacheShown = true; renderStrip();
-  await replaySleep(1800); if (!alive()) return;
-  badge.textContent = "Completed";
+  await replaySleep(1900); if (!alive()) return;
+  badge.textContent = c.badgeCompleted;
   badge.classList.remove("is-running");
   await replaySleep(500); if (!alive()) return;
 
   // File edit lands; the strip diff starts counting.
   m.tools = 4; m.add = 86; m.del = 31; renderStrip();
+  setText('[data-r="reason"] .vx-reasoning-body', c.live.edit);
   append(blockHtml("fileop"));
-  await replaySleep(1200); if (!alive()) return;
+  await replaySleep(1300); if (!alive()) return;
 
-  // Settle the reasoning preview, then the form card is filled and submitted.
+  // The form card is filled and submitted.
+  setText('[data-r="reason"] .vx-reasoning-body', c.live.form);
+  append(blockHtml("form"));
+  await replaySleep(1400); if (!alive()) return;
+  processSlot.querySelector('[data-r="form"] .vx-form-choice')?.classList.add("is-selected");
+  await replaySleep(900); if (!alive()) return;
+  processSlot.querySelector('[data-r="form"]').outerHTML = blockHtml("activity", ["check", c.activityResolved]);
+  renderIcons();
+  scrollTimeline();
+
+  // Answer streams in as the turn's conclusion; the reasoning line settles,
+  // then the app collapses the finished turn's process rows so only the
+  // conclusion stays visible.
+  setText('[data-r="reason"] .vx-reasoning-body', c.live.write);
+  await replaySleep(700); if (!alive()) return;
   const reason = processSlot.querySelector('[data-r="reason"]');
   reason.classList.remove("is-streaming");
   reason.insertAdjacentHTML("beforeend", '<i data-lucide="chevron-right"></i>');
   renderIcons();
-  append(blockHtml("form"));
-  await replaySleep(1300); if (!alive()) return;
-  processSlot.querySelector('[data-r="form"] .vx-form-choice')?.classList.add("is-selected");
-  await replaySleep(900); if (!alive()) return;
-  processSlot.querySelector('[data-r="form"]').outerHTML = blockHtml("activity", ["check", "Worktree settings · Resolved"]);
-  renderIcons();
-  scrollTimeline();
-
-  // Answer streams in, then metadata and the changes card. This maps to the
-  // app's Generating phase: t/s climbs and output tokens accumulate.
   m.phase = "Generating"; m.generating = true; renderStrip();
-  append(blockHtml("answer"));
-  const answerText = processSlot.querySelector('[data-r="answer-text"]');
-  await typeInto(answerText, REPLAY_SCRIPT.answer, 2700, alive);
+  answerSlot.innerHTML = blockHtml("answer");
+  answerSlot.classList.add("vx-reveal");
+  renderIcons();
+  const answerText = answerSlot.querySelector('[data-r="answer-text"]');
+  await typeInto(answerText, c.answerP1, 2900, alive);
   if (!alive()) return;
-  answerText.innerHTML = REPLAY_SCRIPT.answer.replace("WorktreeBridge", "<code>WorktreeBridge</code>");
-  const foot = processSlot.querySelector('[data-r="answer"] .vx-answer-foot');
-  foot.hidden = false;
-  processSlot.querySelector('[data-r="answer-time"]').textContent = fmtClock(Date.now() - m.start);
+  answerText.innerHTML = c.answerP1.replace("WorktreeBridge", "<code>WorktreeBridge</code>");
+  const answerRest = answerSlot.querySelector(".vx-answer-rest");
+  answerRest.hidden = false;
+  answerRest.classList.add("vx-reveal");
   scrollTimeline();
-  await replaySleep(500); if (!alive()) return;
+  await replaySleep(700); if (!alive()) return;
+  const foot = answerSlot.querySelector(".vx-answer-foot");
+  foot.hidden = false;
+  answerSlot.querySelector('[data-r="answer-time"]').textContent = fmtClock(Date.now() - m.start);
+  // Collapse the work in progress — mirrors timeline_turn_process_expanded
+  // flipping false once the turn completes.
+  turnSlot.querySelector("[data-turn-body]")?.classList.add("is-collapsed");
+  turnSlot.querySelector('[data-desktop-toggle="turn"]')?.classList.add("is-collapsed");
+  scrollTimeline();
+  await replaySleep(600); if (!alive()) return;
   changesSlot.hidden = false;
   changesSlot.classList.add("vx-reveal");
   scrollTimeline();
@@ -2306,34 +2498,45 @@ async function runReplay(gen) {
   }
 
   // Turn complete — the app drops the status strip once nothing is running.
-  m.inTok = 12300; m.outTok = 4500; m.cache = 38; m.generating = false; renderStrip();
-  if (replay.refs.timeEl) replay.refs.timeEl.textContent = `Worked for ${fmtClock(Date.now() - m.start)}`;
-  processSlot.querySelector('[data-r="answer-time"]').textContent = fmtClock(Date.now() - m.start);
+  m.phase = "Finalizing"; m.generating = false;
+  m.inTok = 12300; m.outTok = 4500; m.cache = 38; renderStrip();
+  if (replay.refs.timeEl) replay.refs.timeEl.textContent = `${c.workedFor} ${fmtClock(Date.now() - m.start)}`;
+  answerSlot.querySelector('[data-r="answer-time"]').textContent = fmtClock(Date.now() - m.start);
   await replaySleep(700); if (!alive()) return;
   statusStrip.classList.add("is-idle");
   replayStop();
 }
 
 function buildFinalState() {
-  const { processSlot, userSlot, turnSlot, changesSlot } = replay.refs;
-  userSlot.innerHTML = `<div class="vx-user-bubble">${REPLAY_SCRIPT.message}</div>`;
+  const { processSlot, userSlot, turnSlot, answerSlot, changesSlot } = replay.refs;
+  const c = replayCopy();
+  userSlot.innerHTML = `<div class="vx-user-bubble">${c.message}</div>
+    ${blockHtml("user-actions")}`;
   turnSlot.hidden = false;
-  processSlot.insertAdjacentHTML("beforeend", blockHtml("reasoning", [REPLAY_SCRIPT.reasoningPreview, REPLAY_SCRIPT.reasoningFull, false]));
-  processSlot.insertAdjacentHTML("beforeend", blockHtml("activity", ["search", "Searching workspace files · worktree merge handoff"]));
-  processSlot.insertAdjacentHTML("beforeend", blockHtml("activity", ["file-code", "Reading src/workbench/worktree.rs"]));
-  processSlot.insertAdjacentHTML("beforeend", blockHtml("command", ["Completed"]));
+  processSlot.insertAdjacentHTML("beforeend", blockHtml("reasoning"));
+  const reason = processSlot.querySelector('[data-r="reason"]');
+  reason.classList.remove("is-streaming");
+  reason.querySelector(".vx-reasoning-body").textContent = c.reasoningPreview;
+  reason.insertAdjacentHTML("beforeend", '<i data-lucide="chevron-right"></i>');
+  processSlot.insertAdjacentHTML("beforeend", blockHtml("activity", ["search", c.activitySearch]));
+  processSlot.insertAdjacentHTML("beforeend", blockHtml("activity", ["file-code", c.activityRead]));
+  processSlot.insertAdjacentHTML("beforeend", blockHtml("command", [c.badgeCompleted]));
   processSlot.insertAdjacentHTML("beforeend", blockHtml("command-output"));
   processSlot.insertAdjacentHTML("beforeend", blockHtml("permission"));
   const permission = processSlot.querySelector('[data-r="permission"]');
   permission.classList.add("is-approved");
-  permission.querySelector(".vx-permission-status").textContent = "Approved";
+  permission.querySelector(".vx-permission-status").textContent = c.permission.approved;
   permission.querySelector(".vx-permission-actions")?.remove();
-  processSlot.insertAdjacentHTML("beforeend", blockHtml("activity", ["check", "Worktree settings · Resolved"]));
+  processSlot.insertAdjacentHTML("beforeend", blockHtml("activity", ["check", c.activityResolved]));
   processSlot.insertAdjacentHTML("beforeend", blockHtml("fileop"));
   processSlot.insertAdjacentHTML("beforeend", blockHtml("answer"));
-  const answerText = processSlot.querySelector('[data-r="answer-text"]');
-  answerText.innerHTML = REPLAY_SCRIPT.answer.replace("WorktreeBridge", "<code>WorktreeBridge</code>");
-  processSlot.querySelector('[data-r="answer"] .vx-answer-foot').hidden = false;
+  answerSlot.querySelector('[data-r="answer-text"]').innerHTML = c.answerP1.replace("WorktreeBridge", "<code>WorktreeBridge</code>");
+  answerSlot.querySelector(".vx-answer-rest").hidden = false;
+  answerSlot.querySelector(".vx-answer-foot").hidden = false;
+  answerSlot.querySelector('[data-r="answer-time"]').textContent = "16s";
+  // Finished turns keep their process rows collapsed by default.
+  turnSlot.querySelector("[data-turn-body]")?.classList.add("is-collapsed");
+  turnSlot.querySelector('[data-desktop-toggle="turn"]')?.classList.add("is-collapsed");
   changesSlot.hidden = false;
   changesSlot.querySelectorAll(".vx-changes-row").forEach((row) => { row.hidden = false; });
   renderIcons();
@@ -2345,26 +2548,28 @@ function startTimelineReplay() {
   replayGeneration += 1;
   const gen = replayGeneration;
   replayStop();
+  const c = replayCopy();
 
   const userSlot = timelineEl.querySelector('[data-replay-slot="user"]');
   const turnSlot = timelineEl.querySelector('[data-replay-slot="turn"]');
   const processSlot = timelineEl.querySelector('[data-replay-slot="process"]');
+  const answerSlot = timelineEl.querySelector('[data-replay-slot="answer"]');
   const changesSlot = timelineEl.querySelector('[data-replay-slot="changes"]');
   const timeEl = timelineEl.querySelector('[data-r="time"]');
 
-  userSlot.innerHTML = `
-    <div class="vx-user-bubble">${REPLAY_SCRIPT.oldMessage}</div>
-    ${blockHtml("user-actions")}`;
+  userSlot.innerHTML = "";
   turnSlot.hidden = true;
   turnSlot.classList.remove("vx-reveal");
   processSlot.innerHTML = "";
+  answerSlot.innerHTML = "";
   changesSlot.hidden = true;
   changesSlot.classList.remove("vx-reveal");
   changesSlot.querySelectorAll(".vx-changes-row").forEach((row) => { row.hidden = true; });
   if (agentTypedNode) agentTypedNode.textContent = "";
   agentComposer?.classList.remove("is-sent", "is-expanded");
+  if (timeEl) timeEl.textContent = `${c.workedFor} 1m 32s`;
 
-  replay.refs = { userSlot, turnSlot, processSlot, changesSlot, timeEl };
+  replay.refs = { userSlot, turnSlot, processSlot, answerSlot, changesSlot, timeEl };
   replay.metrics = {
     phase: "Preparing",
     tools: 0,
@@ -2394,10 +2599,11 @@ function startTimelineReplay() {
 }
 
 // Reasoning rows expand to their full text on click, like the app's
-// expandable thinking stream.
+// expandable thinking stream. The live (streaming) row expands too; while
+// expanded the replay stops overwriting its label.
 timelineEl?.addEventListener("click", (event) => {
   const reason = event.target.closest('[data-r="reason"]');
-  if (!reason || reason.classList.contains("is-streaming")) return;
+  if (!reason) return;
   const body = reason.querySelector(".vx-reasoning-body");
   const open = reason.classList.toggle("is-open");
   body.textContent = open ? reason.dataset.full : reason.dataset.preview;

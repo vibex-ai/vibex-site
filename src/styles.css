@@ -1442,8 +1442,7 @@ h3 {
 }
 
 /* Real app: lightweight tool activity is a single muted line with a 14px
-   icon, hover brightens it. */
-.vx-activity-line {
+   icon, hover brightens it. */.vx-activity-line {
   display: flex;
   min-width: 0;
   align-items: center;
@@ -1975,6 +1974,99 @@ h3 {
   font-size: 11.5px;
 }
 
+/* Rich markdown blocks in the conclusion: subheads, lists, a compact table
+   and a small bar chart, mirroring the app's MarkdownView rendering. */
+.vx-answer-sub {
+  margin: 12px 0 4px;
+  color: var(--vx-fg);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vx-answer ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.vx-answer ul li {
+  color: rgba(250, 250, 250, 0.86);
+}
+
+.vx-answer-table {
+  margin-top: 4px;
+  border-collapse: collapse;
+}
+
+.vx-answer-table th {
+  padding: 3px 22px 4px 0;
+  color: var(--vx-muted-fg);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.vx-answer-table td {
+  padding: 4px 22px 4px 0;
+  border-top: 1px solid var(--vx-border-soft);
+  color: #d4d4d8;
+  font-family: var(--vx-mono);
+  font-size: 11px;
+}
+
+.vx-answer-table td.is-name {
+  color: var(--vx-fg);
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.vx-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+  max-width: 440px;
+}
+
+.vx-bar-row {
+  display: grid;
+  grid-template-columns: 34px 1fr 56px;
+  align-items: center;
+  gap: 10px;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+}
+
+.vx-bar-track {
+  display: block;
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.vx-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  background: var(--vx-faint);
+}
+
+.vx-bar-fill.is-after {
+  background: var(--vx-success);
+}
+
+.vx-bar-val {
+  color: #d4d4d8;
+  font-family: var(--vx-mono);
+  text-align: right;
+  white-space: nowrap;
+}
+
 /* Real app: answer footer — metadata row (agent logo, runtime label, clock,
    duration) on the left, hover action buttons on the right. */
 .vx-answer-foot {
@@ -2343,6 +2435,17 @@ h3 {
   color: #ececef;
   font-size: 13.5px;
   line-height: 1.5;
+}
+
+/* Static placeholder hint shown while the composer is empty; the replay
+   typing hides it once the first character lands. */
+.vx-composer-hint {
+  color: var(--vx-faint);
+  transition: opacity 0.2s ease;
+}
+
+.vx-composer.is-typing .vx-composer-hint {
+  display: none;
 }
 
 .vx-caret-blink {

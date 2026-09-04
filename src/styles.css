@@ -719,12 +719,12 @@ h3 {
 .desktop-showcase-tabs {
   position: relative;
   display: flex;
-  width: 100%;
+  width: max-content;
   max-width: 100%;
   align-items: stretch;
   justify-content: center;
   gap: 30px;
-  margin: 0 0 16px;
+  margin: 0 auto 16px;
   padding: 0;
   border: 0;
   border-bottom: 1px solid var(--line-soft);

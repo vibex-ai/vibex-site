@@ -6,6 +6,7 @@ import {
   ArrowUp,
   ArrowUpRight,
   ArrowUpToLine,
+  ArrowDown,
   ArrowDownWideNarrow,
   Battery,
   BookOpen,
@@ -1364,7 +1365,7 @@ createIcons({
     LayoutDashboard,
     HardDrive,
     Inbox,
-    ImportIcon,
+    "Import": ImportIcon,
     RotateCw,
   },
 });

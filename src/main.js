@@ -170,9 +170,9 @@ document.querySelector("#app").innerHTML = `
       </a>
 
       <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#mobile" data-nav="mobile">Mobile</a>
         <a href="#product" data-nav="product">Product</a>
         <a href="#agents" data-nav="agents">Agents</a>
-        <a href="#mobile" data-nav="mobile">Mobile</a>
         <a href="#faq" data-nav="faq">FAQ</a>
         <a href="${docsUrl()}" data-nav="docs" data-docs-page="" target="_blank" rel="noreferrer">Docs</a>
       </nav>
@@ -207,9 +207,9 @@ document.querySelector("#app").innerHTML = `
     </div>
 
     <div class="mobile-nav" data-mobile-nav>
+      <a href="#mobile" data-nav="mobile">Mobile</a>
       <a href="#product" data-nav="product">Product</a>
       <a href="#agents" data-nav="agents">Agents</a>
-      <a href="#mobile" data-nav="mobile">Mobile</a>
       <a href="#faq" data-nav="faq">FAQ</a>
       <a href="${docsUrl()}" data-nav="docs" data-docs-page="" target="_blank" rel="noreferrer">Docs</a>
       <a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub <i data-lucide="arrow-up-right"></i></a>
@@ -990,8 +990,106 @@ document.querySelector("#app").innerHTML = `
       </div>
     </section>
 
+    <section class="mobile-section" id="mobile">
+      <div class="mobile-glow" aria-hidden="true"></div>
+      <div class="section-shell mobile-shell">
+        <div class="mobile-head reveal">
+          <div class="section-kicker"><span>02</span> Native mobile</div>
+          <h2 data-i18n-html="remote.title">Your agent is still working.<br /><em>You don't have to be.</em></h2>
+          <p data-i18n="remote.copy">Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.</p>
+        </div>
+
+        <div class="phone-stage reveal">
+          <div class="phone-device" aria-label="Vibex mobile session rendered as an interactive phone preview">
+            <div class="phone-device-screen">
+              <div class="iphone-status" aria-hidden="true">
+                <span class="iphone-status-time" data-phone-time>9:41</span>
+                <span class="iphone-status-icons"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery"></i></span>
+              </div>
+
+              <div class="iphone-app">
+                <header class="iphone-nav">
+                  <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
+                  <span class="iphone-nav-agent">
+                    <img src=${openaiLight} alt="" />
+                    <span class="iphone-nav-name">
+                      <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
+                      <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
+                    </span>
+                  </span>
+                  <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
+                </header>
+
+                <div class="iphone-thread">
+                  <div class="iphone-runpill" data-phone-runpill>
+                    <i data-lucide="loader-circle"></i>
+                    <span data-i18n="remote.phone.working">Working on it…</span>
+                  </div>
+
+                  <div class="iphone-bubble is-user">
+                    <p data-i18n="remote.phone.user">Bump the test coverage for the session store before the release build.</p>
+                  </div>
+
+                  <div class="iphone-toolcard">
+                    <div class="iphone-toolcard-head">
+                      <i data-lucide="square-terminal"></i>
+                      <code>cargo test -p vibex store</code>
+                    </div>
+                    <div class="iphone-toolcard-body">
+                      <span class="is-dim">running 12 tests</span>
+                      <span class="is-pass">test session_store::persists_timeline ... ok</span>
+                      <span class="is-dim">12 passed · 2.14s</span>
+                    </div>
+                  </div>
+
+                  <div class="iphone-bubble is-agent">
+                    <p data-i18n="remote.phone.agentText">Done — added 4 tests around timeline persistence. Coverage for the session store is now 91%.</p>
+                  </div>
+
+                  <div class="iphone-changes" data-i18n="remote.phone.chipDiff">3 files changed</div>
+
+                  <div class="iphone-approval" data-phone-approval>
+                    <div class="iphone-approval-head">
+                      <i data-lucide="file-diff"></i>
+                      <strong data-i18n="remote.phone.approveTitle">Approve push to main?</strong>
+                    </div>
+                    <div class="iphone-approval-actions">
+                      <button class="iphone-approval-btn is-deny" type="button" data-approval-deny><i data-lucide="x"></i><span data-i18n="remote.phone.deny">Not now</span></button>
+                      <button class="iphone-approval-btn is-approve" type="button" data-approval-approve><i data-lucide="check"></i><span data-i18n="remote.phone.approve">Approve</span></button>
+                    </div>
+                    <div class="iphone-approval-done" hidden data-approval-done>
+                      <i class="is-ok" data-lucide="circle-check"></i>
+                      <i class="is-snooze" data-lucide="clock"></i>
+                      <span class="is-ok-text" data-i18n="remote.phone.approved">Push approved from mobile</span>
+                      <span class="is-snooze-text" data-i18n="remote.phone.snoozed">Not now — ask me again later</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="iphone-composer" aria-hidden="true">
+                  <span data-i18n="remote.phone.composer">Reply…</span>
+                  <i data-lucide="arrow-up"></i>
+                </div>
+              </div>
+              <div class="iphone-home-indicator" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobile-points reveal">
+          <div><i data-lucide="scan-line"></i><span><strong>Pair in seconds</strong><em>One-time QR offer with scoped device permissions.</em></span></div>
+          <div><i data-lucide="network"></i><span><strong>Best route wins</strong><em>Connect directly or through your self-hosted relay.</em></span></div>
+          <div><i data-lucide="lock-keyhole"></i><span><strong>Private by construction</strong><em>Relay traffic stays end-to-end encrypted.</em></span></div>
+        </div>
+
+        <div class="mobile-cta reveal">
+          <a class="inline-doc-link" href="${docsUrl("remote-mobile")}" data-docs-page="remote-mobile" target="_blank" rel="noreferrer" data-remote-docs>Remote access &amp; mobile guide <i data-lucide="arrow-up-right"></i></a>
+        </div>
+      </div>
+    </section>
+
     <section class="workbench-section section-shell" id="product">
-      <div class="section-kicker reveal"><span>02</span> The workbench</div>
+      <div class="section-kicker reveal"><span>03</span> The workbench</div>
       <div class="workbench-heading reveal">
         <h2>Direct the work.<br /><em>Keep the context.</em></h2>
         <p>
@@ -1097,7 +1195,7 @@ document.querySelector("#app").innerHTML = `
     <section class="agents-section" id="agents">
       <div class="section-shell">
         <div class="agents-head reveal">
-          <div class="section-kicker"><span>03</span> Agents</div>
+          <div class="section-kicker"><span>04</span> Agents</div>
           <h2>Bring your own agents.</h2>
           <p>
             Vibex speaks the Agent Client Protocol (ACP) — a neutral contract between workbench and agent. Built-in presets are ready to go, and any ACP-compatible agent runs in the same workbench.
@@ -1136,104 +1234,6 @@ document.querySelector("#app").innerHTML = `
               <a href="${githubUrl}/issues" target="_blank" rel="noreferrer">Register it on GitHub <i data-lucide="arrow-up-right"></i></a>
             </span>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="mobile-section" id="mobile">
-      <div class="mobile-glow" aria-hidden="true"></div>
-      <div class="section-shell mobile-shell">
-        <div class="mobile-head reveal">
-          <div class="section-kicker"><span>04</span> Native mobile</div>
-          <h2 data-i18n-html="remote.title">Your agent is still working.<br /><em>You don't have to be.</em></h2>
-          <p data-i18n="remote.copy">Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.</p>
-        </div>
-
-        <div class="phone-stage reveal">
-          <div class="phone-device" aria-label="Vibex mobile session rendered as an interactive phone preview">
-            <div class="phone-device-screen">
-              <div class="iphone-status" aria-hidden="true">
-                <span class="iphone-status-time" data-phone-time>9:41</span>
-                <span class="iphone-status-icons"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery"></i></span>
-              </div>
-
-              <div class="iphone-app">
-                <header class="iphone-nav">
-                  <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
-                  <span class="iphone-nav-agent">
-                    <img src=${openaiLight} alt="" />
-                    <span class="iphone-nav-name">
-                      <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
-                      <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
-                    </span>
-                  </span>
-                  <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
-                </header>
-
-                <div class="iphone-thread">
-                  <div class="iphone-runpill" data-phone-runpill>
-                    <i data-lucide="loader-circle"></i>
-                    <span data-i18n="remote.phone.working">Working on it…</span>
-                  </div>
-
-                  <div class="iphone-bubble is-user">
-                    <p data-i18n="remote.phone.user">Bump the test coverage for the session store before the release build.</p>
-                  </div>
-
-                  <div class="iphone-toolcard">
-                    <div class="iphone-toolcard-head">
-                      <i data-lucide="square-terminal"></i>
-                      <code>cargo test -p vibex store</code>
-                    </div>
-                    <div class="iphone-toolcard-body">
-                      <span class="is-dim">running 12 tests</span>
-                      <span class="is-pass">test session_store::persists_timeline ... ok</span>
-                      <span class="is-dim">12 passed · 2.14s</span>
-                    </div>
-                  </div>
-
-                  <div class="iphone-bubble is-agent">
-                    <p data-i18n="remote.phone.agentText">Done — added 4 tests around timeline persistence. Coverage for the session store is now 91%.</p>
-                  </div>
-
-                  <div class="iphone-changes" data-i18n="remote.phone.chipDiff">3 files changed</div>
-
-                  <div class="iphone-approval" data-phone-approval>
-                    <div class="iphone-approval-head">
-                      <i data-lucide="file-diff"></i>
-                      <strong data-i18n="remote.phone.approveTitle">Approve push to main?</strong>
-                    </div>
-                    <div class="iphone-approval-actions">
-                      <button class="iphone-approval-btn is-deny" type="button" data-approval-deny><i data-lucide="x"></i><span data-i18n="remote.phone.deny">Not now</span></button>
-                      <button class="iphone-approval-btn is-approve" type="button" data-approval-approve><i data-lucide="check"></i><span data-i18n="remote.phone.approve">Approve</span></button>
-                    </div>
-                    <div class="iphone-approval-done" hidden data-approval-done>
-                      <i class="is-ok" data-lucide="circle-check"></i>
-                      <i class="is-snooze" data-lucide="clock"></i>
-                      <span class="is-ok-text" data-i18n="remote.phone.approved">Push approved from mobile</span>
-                      <span class="is-snooze-text" data-i18n="remote.phone.snoozed">Not now — ask me again later</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="iphone-composer" aria-hidden="true">
-                  <span data-i18n="remote.phone.composer">Reply…</span>
-                  <i data-lucide="arrow-up"></i>
-                </div>
-              </div>
-              <div class="iphone-home-indicator" aria-hidden="true"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mobile-points reveal">
-          <div><i data-lucide="scan-line"></i><span><strong>Pair in seconds</strong><em>One-time QR offer with scoped device permissions.</em></span></div>
-          <div><i data-lucide="network"></i><span><strong>Best route wins</strong><em>Connect directly or through your self-hosted relay.</em></span></div>
-          <div><i data-lucide="lock-keyhole"></i><span><strong>Private by construction</strong><em>Relay traffic stays end-to-end encrypted.</em></span></div>
-        </div>
-
-        <div class="mobile-cta reveal">
-          <a class="inline-doc-link" href="${docsUrl("remote-mobile")}" data-docs-page="remote-mobile" target="_blank" rel="noreferrer" data-remote-docs>Remote access &amp; mobile guide <i data-lucide="arrow-up-right"></i></a>
         </div>
       </div>
     </section>

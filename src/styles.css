@@ -5317,8 +5317,7 @@ h3 {
 
 .agents-section {
   padding-block: 118px 128px;
-  border-top: 1px solid var(--line-soft);
-  background: #0b0c0b;
+  background: var(--page);
 }
 
 .agents-head h2 {
@@ -5477,7 +5476,6 @@ h3 {
   position: relative;
   overflow: hidden;
   padding-block: 128px;
-  border-top: 1px solid var(--line-soft);
   background: var(--page);
 }
 
@@ -6265,8 +6263,7 @@ h3 {
   position: relative;
   overflow: hidden;
   padding-block: 115px 125px;
-  border-top: 1px solid var(--line);
-  background: #10120f;
+  background: var(--page);
   text-align: center;
 }
 
@@ -6341,8 +6338,7 @@ h3 {
 }
 
 .site-footer {
-  border-top: 1px solid var(--line);
-  background: #070807;
+  background: var(--page);
 }
 
 .footer-main {

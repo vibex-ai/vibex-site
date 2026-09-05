@@ -8,6 +8,7 @@ import {
   ArrowUpToLine,
   ArrowDown,
   ArrowDownWideNarrow,
+  ArrowLeftRight,
   Battery,
   BookOpen,
   Bot,
@@ -15,6 +16,7 @@ import {
   Braces,
   Check,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   ChevronsDownUp,
   ChevronsRight,
@@ -27,9 +29,11 @@ import {
   Copy,
   Cpu,
   Crosshair,
+  Clock,
   Database,
   Download,
   Eye,
+  EyeOff,
   ExternalLink,
   File,
   FileCode,
@@ -44,6 +48,7 @@ import {
   Github,
   Ellipsis,
   GripVertical,
+  Hammer,
   KeyRound,
   Globe2,
   Layers3,
@@ -69,6 +74,7 @@ import {
   RotateCcw,
   ScanLine,
   ScanSearch,
+  Scale,
   Server,
   Search,
   Settings,
@@ -171,11 +177,11 @@ document.querySelector("#app").innerHTML = `
       </a>
 
       <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="#product">Product</a>
-        <a href="#architecture">How it works</a>
-        <a href="#remote">Remote</a>
-        <a href="#faq">FAQ</a>
-        <a href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer">Docs</a>
+        <a href="#product" data-nav="product">Product</a>
+        <a href="#agents" data-nav="agents">Agents</a>
+        <a href="#mobile" data-nav="mobile">Mobile</a>
+        <a href="#faq" data-nav="faq">FAQ</a>
+        <a href="${docsUrl()}" data-nav="docs" data-docs-page="" target="_blank" rel="noreferrer">Docs</a>
       </nav>
 
       <div class="nav-actions">
@@ -208,11 +214,11 @@ document.querySelector("#app").innerHTML = `
     </div>
 
     <div class="mobile-nav" data-mobile-nav>
-      <a href="#product">Product</a>
-      <a href="#architecture">How it works</a>
-      <a href="#remote">Remote</a>
-      <a href="#faq">FAQ</a>
-      <a href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer">Docs</a>
+      <a href="#product" data-nav="product">Product</a>
+      <a href="#agents" data-nav="agents">Agents</a>
+      <a href="#mobile" data-nav="mobile">Mobile</a>
+      <a href="#faq" data-nav="faq">FAQ</a>
+      <a href="${docsUrl()}" data-nav="docs" data-docs-page="" target="_blank" rel="noreferrer">Docs</a>
       <a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub <i data-lucide="arrow-up-right"></i></a>
       <div class="mobile-language">
         <span>Language</span>
@@ -1097,54 +1103,85 @@ document.querySelector("#app").innerHTML = `
 
     <section class="agents-section" id="agents">
       <div class="section-shell">
-        <div class="section-kicker reveal"><span>03</span> Agents</div>
-        <div class="agents-heading reveal">
+        <div class="agents-head reveal">
+          <div class="section-kicker"><span>03</span> Agents</div>
           <h2>Bring your own agents.</h2>
           <p>
             Vibex speaks the Agent Client Protocol (ACP) — a neutral contract between workbench and agent. Built-in presets are ready to go, and any ACP-compatible agent runs in the same workbench.
           </p>
         </div>
 
-        <div class="agent-cloud reveal">
-          <span class="agent-chip"><img src=${claude} alt="" />Claude Code</span>
-          <span class="agent-chip"><img src=${openaiLight} alt="" />Codex</span>
-          <span class="agent-chip"><img src=${zcodeLight} alt="" />ZCode</span>
-          <span class="agent-chip"><img src=${opencode} alt="" />OpenCode</span>
-          <span class="agent-chip"><img src=${gemini} alt="" />Gemini CLI</span>
-          <span class="agent-chip"><img src=${copilotLight} alt="" />GitHub Copilot</span>
-          <span class="agent-chip"><img src=${antigravity} alt="" />Antigravity</span>
-          <span class="agent-chip"><img src=${cursorLight} alt="" />Cursor</span>
-          <span class="agent-chip"><img src=${clineLight} alt="" />Cline</span>
-          <span class="agent-chip"><img src=${devinLight} alt="" />Devin CLI</span>
-          <span class="agent-chip"><img src=${grokLight} alt="" />Grok</span>
-          <span class="agent-chip"><img src=${hermesLight} alt="" />Hermes</span>
-          <span class="agent-chip"><img src=${kimi} alt="" />Kimi Code</span>
-          <span class="agent-chip"><img src=${piLight} alt="" />Pi</span>
-          <span class="agent-chip"><img src=${qwen} alt="" />Qwen Code</span>
-          <span class="agent-chip"><img src=${codebuddyCode} alt="" />Codebuddy Code</span>
-          <span class="agent-chip"><img src=${deepseekHarness} alt="" />DeepSeek Harness</span>
-          <span class="agent-chip"><img src=${glmAcpAgentLight} alt="" />GLM ACP Agent</span>
-          <span class="agent-chip agent-chip-acp"><i data-lucide="plug"></i><span data-acp-chip>Any ACP-compatible agent</span></span>
-        </div>
-
-        <div class="agents-foot reveal">
-          <div class="agents-missing">
-            <span>Missing yours?</span>
-            <a href="${githubUrl}/issues" target="_blank" rel="noreferrer">Register it on GitHub <i data-lucide="arrow-up-right"></i></a>
+        <div class="agent-registry reveal">
+          <div class="agent-registry-head">
+            <span class="agent-registry-title"><i data-lucide="plug"></i><span data-agent-registry>ACP registry</span></span>
+            <span class="agents-foot-mono">ACP schema 1.6 · provider-neutral</span>
           </div>
-          <span class="agents-foot-mono">ACP schema 1.6 · provider-neutral</span>
+          <div class="agent-cloud">
+            <span class="agent-chip"><img src=${claude} alt="" />Claude Code</span>
+            <span class="agent-chip"><img src=${openaiLight} alt="" />Codex</span>
+            <span class="agent-chip"><img src=${zcodeLight} alt="" />ZCode</span>
+            <span class="agent-chip"><img src=${opencode} alt="" />OpenCode</span>
+            <span class="agent-chip"><img src=${gemini} alt="" />Gemini CLI</span>
+            <span class="agent-chip"><img src=${copilotLight} alt="" />GitHub Copilot</span>
+            <span class="agent-chip"><img src=${antigravity} alt="" />Antigravity</span>
+            <span class="agent-chip"><img src=${cursorLight} alt="" />Cursor</span>
+            <span class="agent-chip"><img src=${clineLight} alt="" />Cline</span>
+            <span class="agent-chip"><img src=${devinLight} alt="" />Devin CLI</span>
+            <span class="agent-chip"><img src=${grokLight} alt="" />Grok</span>
+            <span class="agent-chip"><img src=${hermesLight} alt="" />Hermes</span>
+            <span class="agent-chip"><img src=${kimi} alt="" />Kimi Code</span>
+            <span class="agent-chip"><img src=${piLight} alt="" />Pi</span>
+            <span class="agent-chip"><img src=${qwen} alt="" />Qwen Code</span>
+            <span class="agent-chip"><img src=${codebuddyCode} alt="" />Codebuddy Code</span>
+            <span class="agent-chip"><img src=${deepseekHarness} alt="" />DeepSeek Harness</span>
+            <span class="agent-chip"><img src=${glmAcpAgentLight} alt="" />GLM ACP Agent</span>
+            <span class="agent-chip agent-chip-acp"><i data-lucide="plug"></i><span data-acp-chip>Any ACP-compatible agent</span></span>
+          </div>
+          <div class="agent-registry-foot">
+            <span class="agents-missing">
+              <span>Missing yours?</span>
+              <a href="${githubUrl}/issues" target="_blank" rel="noreferrer">Register it on GitHub <i data-lucide="arrow-up-right"></i></a>
+            </span>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="where-section" id="architecture">
       <div class="section-shell">
-        <div class="section-kicker section-kicker-dark reveal"><span>04</span> Local-first architecture</div>
-        <div class="where-heading reveal">
-          <h2>One runtime.<br />No hidden middleman.</h2>
+        <div class="where-head reveal">
+          <div class="section-kicker section-kicker-dark"><span>04</span> Local-first architecture</div>
+          <h2>One runtime.<br /><em>No hidden middleman.</em></h2>
           <p>
             Your desktop is the sole authority for sessions, files, Git, terminals, providers, and permissions. Vibex adds a better control surface, not another cloud that owns your work.
           </p>
+        </div>
+
+        <div class="where-diagram reveal" aria-label="What runs where on a Vibex setup">
+          <div class="where-node">
+            <span class="where-node-icon"><i data-lucide="smartphone"></i></span>
+            <strong>Mobile</strong>
+            <small data-i18n="where.diagram.companion">companion</small>
+          </div>
+          <div class="where-link">
+            <span data-i18n="where.diagram.direct">Direct · E2E</span>
+            <i data-lucide="arrow-left-right"></i>
+          </div>
+          <div class="where-node">
+            <span class="where-node-icon"><i data-lucide="server"></i></span>
+            <strong>Relay</strong>
+            <small data-i18n="where.diagram.optional">optional</small>
+          </div>
+          <div class="where-link">
+            <span data-i18n="where.diagram.relay">Self-hosted</span>
+            <i data-lucide="arrow-left-right"></i>
+          </div>
+          <div class="where-node is-authority">
+            <span class="where-node-tag" data-i18n="where.diagram.authority">The authority</span>
+            <span class="where-node-icon"><i data-lucide="monitor"></i></span>
+            <strong>Desktop</strong>
+            <small data-i18n="where.diagram.runs">runs the work</small>
+          </div>
         </div>
 
         <div class="where-grid">
@@ -1188,75 +1225,99 @@ document.querySelector("#app").innerHTML = `
       </div>
     </section>
 
-    <section class="remote-section" id="remote">
-      <div class="remote-grid-pattern" aria-hidden="true"></div>
-      <div class="section-shell remote-shell">
-        <div class="phone-scene reveal">
-          <div class="phone-frame">
-            <span class="phone-speaker" aria-hidden="true"></span>
-            <div class="phone-screen">
-              <div class="phone-statusbar" aria-hidden="true">
-                <span class="phone-statusbar-time" data-phone-time>9:41</span>
-                <span class="phone-statusbar-icons"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery"></i></span>
-              </div>
-              <div class="phone-statusbar-spacer" aria-hidden="true"></div>
-
-              <div class="phone-app" data-phone-app>
-                <header class="phone-chat-header">
-                  <span class="phone-chat-avatar"><i data-lucide="sparkles"></i></span>
-                  <div class="phone-chat-peer">
-                    <strong data-phone-agent>Vibex · Codex</strong>
-                    <span class="phone-chat-presence" data-phone-presence><i data-lucide="loader-circle"></i><em data-phone-presence-text>Refactoring workbench.rs</em></span>
-                  </div>
-                  <button class="phone-chat-more" type="button" tabindex="-1" aria-hidden="true"><i data-lucide="ellipsis"></i></button>
-                </header>
-
-                <div class="phone-timeline">
-                  <div class="phone-bubble phone-bubble-user">
-                    <p data-phone-user>Bump the test coverage for the session store before the release build.</p>
-                    <time data-phone-user-time>09:38</time>
-                  </div>
-
-                  <div class="phone-tool-card" data-phone-tool>
-                    <div class="phone-tool-head"><i data-lucide="square-terminal"></i><code data-phone-tool-cmd>cargo test -p vibex store</code></div>
-                    <div class="phone-tool-lines"><span data-phone-tool-line1>running 12 tests</span><span data-phone-tool-line2>test session_store::persists_timeline ... ok</span></div>
-                  </div>
-
-                  <div class="phone-bubble phone-bubble-agent">
-                    <p data-phone-agent-text>Done — added 4 tests around timeline persistence. Coverage for the session store is now 91%.</p>
-                    <time data-phone-agent-time>09:41</time>
-                  </div>
-
-                  <div class="phone-actions">
-                    <span class="phone-chip"><i data-lucide="file-diff"></i><span data-phone-chip-diff>3 files changed</span></span>
-                    <span class="phone-chip phone-chip-accent"><i data-lucide="check"></i><span data-phone-chip-approve>Approve push</span></span>
-                  </div>
-                </div>
-
-                <div class="phone-composer" aria-hidden="true">
-                  <span data-phone-composer>Reply…</span>
-                  <i data-lucide="mic"></i>
-                </div>
-
-                <div class="phone-home-indicator" aria-hidden="true"></div>
-              </div>
-            </div>
-          </div>
-          <div class="remote-chip chip-direct"><i data-lucide="radio"></i><span>Direct route</span><small>12 ms</small></div>
-          <div class="remote-chip chip-secure"><i data-lucide="shield-check"></i><span>Encrypted</span><small>End to end</small></div>
+    <section class="mobile-section" id="mobile">
+      <div class="mobile-glow" aria-hidden="true"></div>
+      <div class="section-shell mobile-shell">
+        <div class="mobile-head reveal">
+          <div class="section-kicker"><span>05</span> Native mobile</div>
+          <h2 data-i18n-html="remote.title">Your agent is still working.<br /><em>You don't have to be.</em></h2>
+          <p data-i18n="remote.copy">Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.</p>
         </div>
 
-        <div class="remote-copy reveal">
-          <div class="section-kicker"><span>05</span> Native mobile</div>
-          <h2>Your agent is still working. You don't have to be.</h2>
-          <p>
-            Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.
-          </p>
-          <div class="remote-points">
-            <div><i data-lucide="scan-line"></i><span><strong>Pair in seconds</strong>One-time QR offer with scoped device permissions.</span></div>
-            <div><i data-lucide="network"></i><span><strong>Best route wins</strong>Connect directly or through your self-hosted relay.</span></div>
-            <div><i data-lucide="lock-keyhole"></i><span><strong>Private by construction</strong>Relay traffic stays end-to-end encrypted.</span></div>
+        <div class="phone-stage reveal">
+          <div class="phone-device" aria-label="Vibex mobile session rendered as an interactive phone preview">
+            <div class="phone-device-screen">
+              <div class="iphone-status" aria-hidden="true">
+                <span class="iphone-status-time" data-phone-time>9:41</span>
+                <span class="iphone-status-icons"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery"></i></span>
+              </div>
+
+              <div class="iphone-app">
+                <header class="iphone-nav">
+                  <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
+                  <span class="iphone-nav-agent">
+                    <img src=${openaiLight} alt="" />
+                    <span class="iphone-nav-name">
+                      <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
+                      <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
+                    </span>
+                  </span>
+                  <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
+                </header>
+
+                <div class="iphone-thread">
+                  <div class="iphone-runpill" data-phone-runpill>
+                    <i data-lucide="loader-circle"></i>
+                    <span data-i18n="remote.phone.working">Working on it…</span>
+                  </div>
+
+                  <div class="iphone-bubble is-user">
+                    <p data-i18n="remote.phone.user">Bump the test coverage for the session store before the release build.</p>
+                  </div>
+
+                  <div class="iphone-toolcard">
+                    <div class="iphone-toolcard-head">
+                      <i data-lucide="square-terminal"></i>
+                      <code>cargo test -p vibex store</code>
+                    </div>
+                    <div class="iphone-toolcard-body">
+                      <span class="is-dim">running 12 tests</span>
+                      <span class="is-pass">test session_store::persists_timeline ... ok</span>
+                      <span class="is-dim">12 passed · 2.14s</span>
+                    </div>
+                  </div>
+
+                  <div class="iphone-bubble is-agent">
+                    <p data-i18n="remote.phone.agentText">Done — added 4 tests around timeline persistence. Coverage for the session store is now 91%.</p>
+                  </div>
+
+                  <div class="iphone-changes" data-i18n="remote.phone.chipDiff">3 files changed</div>
+
+                  <div class="iphone-approval" data-phone-approval>
+                    <div class="iphone-approval-head">
+                      <i data-lucide="file-diff"></i>
+                      <strong data-i18n="remote.phone.approveTitle">Approve push to main?</strong>
+                    </div>
+                    <div class="iphone-approval-actions">
+                      <button class="iphone-approval-btn is-deny" type="button" data-approval-deny><i data-lucide="x"></i><span data-i18n="remote.phone.deny">Not now</span></button>
+                      <button class="iphone-approval-btn is-approve" type="button" data-approval-approve><i data-lucide="check"></i><span data-i18n="remote.phone.approve">Approve</span></button>
+                    </div>
+                    <div class="iphone-approval-done" hidden data-approval-done>
+                      <i class="is-ok" data-lucide="circle-check"></i>
+                      <i class="is-snooze" data-lucide="clock"></i>
+                      <span class="is-ok-text" data-i18n="remote.phone.approved">Push approved from mobile</span>
+                      <span class="is-snooze-text" data-i18n="remote.phone.snoozed">Not now — ask me again later</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="iphone-composer" aria-hidden="true">
+                  <span data-i18n="remote.phone.composer">Reply…</span>
+                  <i data-lucide="arrow-up"></i>
+                </div>
+              </div>
+              <div class="iphone-home-indicator" aria-hidden="true"></div>
+            </div>
           </div>
+        </div>
+
+        <div class="mobile-points reveal">
+          <div><i data-lucide="scan-line"></i><span><strong>Pair in seconds</strong><em>One-time QR offer with scoped device permissions.</em></span></div>
+          <div><i data-lucide="network"></i><span><strong>Best route wins</strong><em>Connect directly or through your self-hosted relay.</em></span></div>
+          <div><i data-lucide="lock-keyhole"></i><span><strong>Private by construction</strong><em>Relay traffic stays end-to-end encrypted.</em></span></div>
+        </div>
+
+        <div class="mobile-cta reveal">
           <a class="inline-doc-link" href="${docsUrl("remote-mobile")}" data-docs-page="remote-mobile" target="_blank" rel="noreferrer" data-remote-docs>Remote access &amp; mobile guide <i data-lucide="arrow-up-right"></i></a>
         </div>
       </div>
@@ -1264,25 +1325,41 @@ document.querySelector("#app").innerHTML = `
 
     <section class="workflow-section">
       <div class="section-shell">
-        <div class="workflow-heading reveal">
+        <div class="workflow-head reveal">
           <div class="section-kicker"><span>06</span> The whole loop</div>
-          <h2>From prompt to<br />reviewed change.</h2>
+          <h2>From prompt to<br /><em>reviewed change.</em></h2>
         </div>
         <div class="workflow-steps reveal">
           <div class="workflow-line" aria-hidden="true"><span></span></div>
           <article>
+            <div class="workflow-visual" aria-hidden="true">
+              <div class="wv-prompt"><span>›</span><span class="wv-typed">Bump coverage for the session store</span><span class="wv-caret"></span></div>
+              <div class="wv-dim">composer · vibex/main</div>
+            </div>
             <span>01</span><i data-lucide="message-square"></i><h3>Direct</h3><p>Give the agent a task with the actual workspace in view.</p>
             <div class="workflow-tags" aria-hidden="true"><span>composer</span><span>@ files</span><span>/ commands</span></div>
           </article>
           <article>
+            <div class="workflow-visual" aria-hidden="true">
+              <div class="wv-status"><span class="wv-pulse"></span>Running · cargo test</div>
+              <div class="wv-chips"><span>2 tool calls</span><span>+128</span><span>-47</span></div>
+            </div>
             <span>02</span><i data-lucide="zap"></i><h3>Observe</h3><p>Follow plans, tool calls, terminal output, and approvals live.</p>
             <div class="workflow-tags" aria-hidden="true"><span>timeline</span><span>approvals</span><span>terminal</span></div>
           </article>
           <article>
+            <div class="workflow-visual" aria-hidden="true">
+              <div class="wv-file">src/workbench/timeline.rs</div>
+              <div class="wv-line is-del">- let merge = merge_handoff(prev);</div>
+              <div class="wv-line is-add">+ let bridge = WorktreeBridge::queue(…);</div>
+            </div>
             <span>03</span><i data-lucide="file-diff"></i><h3>Review</h3><p>Inspect changed files and diffs beside the conversation.</p>
             <div class="workflow-tags" aria-hidden="true"><span>diffs</span><span>blame</span><span>worktrees</span></div>
           </article>
           <article>
+            <div class="workflow-visual" aria-hidden="true">
+              <div class="wv-commit"><span class="is-pass">✓</span><div><code>feat: cover session store</code><small>a3f9c12 · main</small></div></div>
+            </div>
             <span>04</span><i data-lucide="git-branch"></i><h3>Ship</h3><p>Commit with the full context of how the work was produced.</p>
             <div class="workflow-tags" aria-hidden="true"><span>commit</span><span>push</span><span>history</span></div>
           </article>
@@ -1293,13 +1370,17 @@ document.querySelector("#app").innerHTML = `
     <section class="open-section">
       <div class="section-shell open-shell">
         <div class="open-copy reveal">
-          <div class="section-kicker section-kicker-dark"><span>07</span> Open source</div>
+          <div class="section-kicker"><span>07</span> Open source</div>
           <h2>Inspect the tool that inspects your code.</h2>
           <p>Vibex is licensed under AGPL-3.0-or-later. Read the source, build it yourself, or help shape what comes next.</p>
+          <ul class="open-list">
+            <li><i data-lucide="scale"></i><span data-i18n="open.list.license">AGPL-3.0-or-later — every frame is auditable</span></li>
+            <li><i data-lucide="hammer"></i><span data-i18n="open.list.build">Build from source with a single command</span></li>
+            <li><i data-lucide="eye-off"></i><span data-i18n="open.list.privacy">No telemetry, no accounts, no cloud</span></li>
+          </ul>
           <div class="open-actions">
-            <a class="button button-dark" href="${githubUrl}" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Open GitHub <i data-lucide="arrow-up-right"></i></a>
-            <a class="button button-dark" href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i> <span data-docs-label>Read the docs</span> <i data-lucide="arrow-up-right"></i></a>
-            <span>AGPL-3.0-or-later · Inspect every frame that leaves your machine</span>
+            <a class="button button-primary" href="${githubUrl}" target="_blank" rel="noreferrer"><i data-lucide="github"></i><span data-open-github>Open GitHub</span> <i data-lucide="arrow-up-right"></i></a>
+            <a class="button open-ghost" href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i> <span data-docs-label>Read the docs</span> <i data-lucide="arrow-up-right"></i></a>
           </div>
         </div>
         <div class="code-panel reveal">
@@ -1366,7 +1447,7 @@ document.querySelector("#app").innerHTML = `
         <p>The local-first AI coding workbench.</p>
       </div>
       <div class="footer-links">
-        <div><span>Product</span><a href="#product">Workbench</a><a href="#remote">Mobile</a><a href="${githubUrl}/releases" target="_blank" rel="noreferrer">Releases</a></div>
+        <div><span>Product</span><a href="#product">Workbench</a><a href="#mobile">Mobile</a><a href="${githubUrl}/releases" target="_blank" rel="noreferrer">Releases</a></div>
         <div><span>Resources</span><a href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer">Documentation</a><a href="${docsUrl("troubleshooting")}" data-docs-page="troubleshooting" target="_blank" rel="noreferrer">Troubleshooting</a><a href="${githubUrl}" target="_blank" rel="noreferrer">GitHub</a><a href="${githubUrl}/issues" target="_blank" rel="noreferrer">Issues</a></div>
         <div><span>Project</span><a href="${githubUrl}/blob/main/LICENSE" target="_blank" rel="noreferrer">License</a><a href="${githubUrl}/commits/main" target="_blank" rel="noreferrer">Changelog</a><a href="${githubUrl}/graphs/contributors" target="_blank" rel="noreferrer">Contributors</a></div>
       </div>
@@ -1392,6 +1473,7 @@ function renderIcons() {
     ArrowDown,
     Activity,
     AtSign,
+    ArrowLeftRight,
     ArrowLeft,
     Battery,
     BookOpen,
@@ -1400,6 +1482,7 @@ function renderIcons() {
     Braces,
     Check,
     ChevronDown,
+    ChevronLeft,
     ChevronRight,
     ChevronsDownUp,
     ChevronsRight,
@@ -1407,6 +1490,7 @@ function renderIcons() {
     CircleDot,
     CircleCheck,
     Clock3,
+    Clock,
     Clipboard,
     Code2,
     Copy,
@@ -1415,6 +1499,7 @@ function renderIcons() {
     Database,
     Download,
     Eye,
+    EyeOff,
     ExternalLink,
     File,
     FileCode,
@@ -1429,6 +1514,7 @@ function renderIcons() {
     Github,
     Ellipsis,
     GripVertical,
+    Hammer,
     KeyRound,
     Globe2,
     Layers3,
@@ -1454,6 +1540,7 @@ function renderIcons() {
     RotateCcw,
     ScanLine,
     ScanSearch,
+    Scale,
     Server,
     Search,
     Settings,
@@ -1490,22 +1577,17 @@ renderIcons();
 
 const textBindings = [
   [".skip-link", "accessibility.skip"],
-  [".desktop-nav a:nth-child(1)", "nav.product"],
-  [".desktop-nav a:nth-child(2)", "nav.how"],
-  [".desktop-nav a:nth-child(3)", "nav.remote"],
-  [".desktop-nav a:nth-child(4)", "nav.faq"],
+  ['[data-nav="product"]', "nav.product"],
+  ['[data-nav="agents"]', "nav.agents"],
+  ['[data-nav="mobile"]', "nav.mobile"],
+  ['[data-nav="faq"]', "nav.faq"],
+  ['[data-nav="docs"]', "nav.docs"],
   [".nav-actions .button-light", "nav.get"],
   [".final-actions .button-primary", "nav.get"],
   ["[data-desktop-tab=\"agent\"]", "showcase.desktop.agent"],
   ["[data-desktop-tab=\"files\"]", "showcase.desktop.files"],
   ["[data-desktop-tab=\"management\"]", "showcase.desktop.management"],
   ["[data-desktop-source]", "showcase.desktop.source"],
-  [".mobile-nav a:nth-child(1)", "nav.product"],
-  [".mobile-nav a:nth-child(2)", "nav.how"],
-  [".mobile-nav a:nth-child(3)", "nav.remote"],
-  [".mobile-nav a:nth-child(4)", "nav.faq"],
-  [".desktop-nav a:nth-child(5)", "nav.docs"],
-  [".mobile-nav a:nth-child(5)", "nav.docs"],
   [".hero-lede", "hero.lede"],
   ["[data-hero-docs]", "hero.docs"],
   [".workbench-section .section-kicker", "workbench.kicker"],
@@ -1523,13 +1605,14 @@ const textBindings = [
   [".bento-card:nth-child(6) h3", "bento.usage.title"],
   [".bento-card:nth-child(6) p", "bento.usage.copy"],
   [".agents-section .section-kicker", "agents.kicker"],
-  [".agents-heading p", "agents.copy"],
+  [".agents-head p", "agents.copy"],
   ["[data-acp-chip]", "agents.acp"],
+  ["[data-agent-registry]", "agents.registry"],
   [".agents-missing span", "agents.missing"],
   [".agents-missing a", "agents.register"],
   [".agents-foot-mono", "agents.foot"],
   [".where-section .section-kicker", "where.kicker"],
-  [".where-heading p", "where.copy"],
+  [".where-head p", "where.copy"],
   [".where-card:nth-child(1) .where-name", "where.desktop.name"],
   [".where-card:nth-child(1) .where-role", "where.desktop.role"],
   [".where-card:nth-child(1) p", "where.desktop.copy"],
@@ -1546,26 +1629,16 @@ const textBindings = [
   [".check-list li:nth-child(2)", "where.check.credentials"],
   [".check-list li:nth-child(3)", "where.check.approval"],
   [".inline-link-dark", "where.link"],
-  [".remote-chip.chip-direct span", "remote.direct"],
-  [".remote-chip.chip-secure span", "remote.encrypted"],
-  [".remote-chip.chip-secure small", "remote.endToEnd"],
-  ["[data-phone-agent]", "remote.phone.agent"],
-  ["[data-phone-presence-text]", "remote.phone.presence"],
-  ["[data-phone-user]", "remote.phone.user"],
-  ["[data-phone-agent-text]", "remote.phone.agentText"],
-  ["[data-phone-chip-diff]", "remote.phone.chipDiff"],
-  ["[data-phone-chip-approve]", "remote.phone.chipApprove"],
-  ["[data-phone-composer]", "remote.phone.composer"],
-  [".remote-copy .section-kicker", "remote.kicker"],
-  [".remote-copy > p", "remote.copy"],
-  [".remote-points > div:nth-child(1) strong", "remote.pair.title"],
-  [".remote-points > div:nth-child(1) span", "remote.pair.copy"],
-  [".remote-points > div:nth-child(2) strong", "remote.route.title"],
-  [".remote-points > div:nth-child(2) span", "remote.route.copy"],
-  [".remote-points > div:nth-child(3) strong", "remote.private.title"],
-  [".remote-points > div:nth-child(3) span", "remote.private.copy"],
+  [".mobile-head .section-kicker", "remote.kicker"],
+  [".mobile-head p", "remote.copy"],
+  [".mobile-points > div:nth-child(1) strong", "remote.pair.title"],
+  [".mobile-points > div:nth-child(1) em", "remote.pair.copy"],
+  [".mobile-points > div:nth-child(2) strong", "remote.route.title"],
+  [".mobile-points > div:nth-child(2) em", "remote.route.copy"],
+  [".mobile-points > div:nth-child(3) strong", "remote.private.title"],
+  [".mobile-points > div:nth-child(3) em", "remote.private.copy"],
   ["[data-remote-docs]", "remote.docs"],
-  [".workflow-heading .section-kicker", "workflow.kicker"],
+  [".workflow-head .section-kicker", "workflow.kicker"],
   [".workflow-steps article:nth-of-type(1) h3", "workflow.direct.title"],
   [".workflow-steps article:nth-of-type(1) p", "workflow.direct.copy"],
   [".workflow-steps article:nth-of-type(2) h3", "workflow.observe.title"],
@@ -1576,8 +1649,7 @@ const textBindings = [
   [".workflow-steps article:nth-of-type(4) p", "workflow.ship.copy"],
   [".open-copy .section-kicker", "open.kicker"],
   [".open-copy > p", "open.copy"],
-  [".open-copy .open-actions .button-dark", "open.github"],
-  [".open-actions > span", "open.principles"],
+  ["[data-open-github]", "open.github"],
   ["[data-docs-label]", "hero.docs"],
   [".faq-doc-link", "faq.docs"],
   [".code-panel-head span:first-child", "open.build"],
@@ -1612,10 +1684,9 @@ const textBindings = [
 const htmlBindings = [
   [".hero h1", "hero.title"],
   [".workbench-heading h2", "workbench.title"],
-  [".agents-heading h2", "agents.title"],
-  [".where-heading h2", "where.title"],
-  [".remote-copy h2", "remote.title"],
-  [".workflow-heading h2", "workflow.title"],
+  [".agents-head h2", "agents.title"],
+  [".where-head h2", "where.title"],
+  [".workflow-head h2", "workflow.title"],
   [".open-copy h2", "open.title"],
   [".faq-heading h2", "faq.title"],
   [".final-inner h2", "cta.title"],
@@ -1627,10 +1698,10 @@ const attrBindings = [
   [".desktop-nav", "aria-label", "nav.primary"],
   ["[data-desktop-tablist]", "aria-label", "showcase.desktop.aria"],
   [".desktop-app", "aria-label", "showcase.desktop.aria"],
-  [".where-grid", "aria-label", "where.grid.label"],
+  [".where-diagram", "aria-label", "where.grid.label"],
   ["[data-copy-command]", "title", "open.copyCommands"],
   ["[data-copy-command]", "aria-label", "open.copyCommands"],
-  [".phone-frame", "aria-label", "remote.aria"],
+  [".phone-device", "aria-label", "remote.aria"],
 ];
 
 function setOwnText(selector, value) {
@@ -1684,6 +1755,13 @@ function applyLanguage(language, { persist = true } = {}) {
   document.querySelectorAll("[data-i18n-text]").forEach((element) => {
     element.textContent = translate(currentLanguage, element.dataset.i18nText);
   });
+  document.querySelectorAll("[data-i18n-html]").forEach((element) => {
+    element.innerHTML = translate(currentLanguage, element.dataset.i18nHtml);
+  });
+
+  // The phone approval card is a tiny state machine; reset it on language
+  // switch so nothing renders a stale mix of the two locales.
+  resetPhoneApproval();
 
   const menuOpen = menuButton?.getAttribute("aria-expanded") === "true";
   menuButton?.setAttribute("aria-label", translate(currentLanguage, menuOpen ? "nav.close" : "nav.open"));
@@ -2950,6 +3028,35 @@ function updatePhoneClock() {
 }
 updatePhoneClock();
 window.setInterval(updatePhoneClock, 30_000);
+
+// The mobile section's approval card is a mock of the real permission flow:
+// tapping Approve settles the card into a confirmed state, Deny dismisses it,
+// and either state (or a language switch) returns to the pending invitation.
+const phoneApproval = document.querySelector("[data-phone-approval]");
+const approvalActions = phoneApproval?.querySelector(".iphone-approval-actions");
+const approvalDone = phoneApproval?.querySelector("[data-approval-done]");
+let approvalResetTimer = null;
+
+function resetPhoneApproval() {
+  if (!phoneApproval) return;
+  window.clearTimeout(approvalResetTimer);
+  approvalResetTimer = null;
+  phoneApproval.classList.remove("is-approved", "is-denied");
+  if (approvalActions) approvalActions.hidden = false;
+  if (approvalDone) approvalDone.hidden = true;
+}
+
+phoneApproval?.querySelectorAll("[data-approval-approve], [data-approval-deny]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const isApproved = button.matches("[data-approval-approve]");
+    phoneApproval.classList.toggle("is-approved", isApproved);
+    phoneApproval.classList.toggle("is-denied", !isApproved);
+    if (approvalActions) approvalActions.hidden = true;
+    if (approvalDone) approvalDone.hidden = false;
+    window.clearTimeout(approvalResetTimer);
+    approvalResetTimer = window.setTimeout(resetPhoneApproval, 9000);
+  });
+});
 
 const languageSwitchers = [...document.querySelectorAll("[data-language-switcher]")];
 const closeLanguageMenus = () => {

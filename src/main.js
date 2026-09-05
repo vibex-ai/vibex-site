@@ -8,7 +8,6 @@ import {
   ArrowUpToLine,
   ArrowDown,
   ArrowDownWideNarrow,
-  ArrowLeftRight,
   Battery,
   BookOpen,
   Bot,
@@ -33,7 +32,6 @@ import {
   Database,
   Download,
   Eye,
-  EyeOff,
   ExternalLink,
   File,
   FileCode,
@@ -48,7 +46,6 @@ import {
   Github,
   Ellipsis,
   GripVertical,
-  Hammer,
   KeyRound,
   Globe2,
   Layers3,
@@ -59,7 +56,6 @@ import {
   Menu,
   Minus,
   MessageSquare,
-  Monitor,
   Network,
   PanelLeft,
   PanelLeftClose,
@@ -74,8 +70,6 @@ import {
   RotateCcw,
   ScanLine,
   ScanSearch,
-  Scale,
-  Server,
   Search,
   Settings,
   ShieldCheck,
@@ -94,7 +88,6 @@ import {
   UserRound,
   Wifi,
   X,
-  Zap,
   Mic,
   ChartPie,
   LayoutDashboard,
@@ -1147,89 +1140,11 @@ document.querySelector("#app").innerHTML = `
       </div>
     </section>
 
-    <section class="where-section" id="architecture">
-      <div class="section-shell">
-        <div class="where-head reveal">
-          <div class="section-kicker section-kicker-dark"><span>04</span> Local-first architecture</div>
-          <h2>One runtime.<br /><em>No hidden middleman.</em></h2>
-          <p>
-            Your desktop is the sole authority for sessions, files, Git, terminals, providers, and permissions. Vibex adds a better control surface, not another cloud that owns your work.
-          </p>
-        </div>
-
-        <div class="where-diagram reveal" aria-label="What runs where on a Vibex setup">
-          <div class="where-node">
-            <span class="where-node-icon"><i data-lucide="smartphone"></i></span>
-            <strong>Mobile</strong>
-            <small data-i18n="where.diagram.companion">companion</small>
-          </div>
-          <div class="where-link">
-            <span data-i18n="where.diagram.direct">Direct · E2E</span>
-            <i data-lucide="arrow-left-right"></i>
-          </div>
-          <div class="where-node">
-            <span class="where-node-icon"><i data-lucide="server"></i></span>
-            <strong>Relay</strong>
-            <small data-i18n="where.diagram.optional">optional</small>
-          </div>
-          <div class="where-link">
-            <span data-i18n="where.diagram.relay">Self-hosted</span>
-            <i data-lucide="arrow-left-right"></i>
-          </div>
-          <div class="where-node is-authority">
-            <span class="where-node-tag" data-i18n="where.diagram.authority">The authority</span>
-            <span class="where-node-icon"><i data-lucide="monitor"></i></span>
-            <strong>Desktop</strong>
-            <small data-i18n="where.diagram.runs">runs the work</small>
-          </div>
-        </div>
-
-        <div class="where-grid">
-          <article class="where-card reveal">
-            <span class="where-number">01</span>
-            <div class="where-card-head">
-              <i data-lucide="monitor"></i>
-              <div><span class="where-name">Desktop</span><span class="where-role">The authority</span></div>
-            </div>
-            <p>Sessions, files, Git, terminals, providers, and permissions live and execute on your machine.</p>
-            <div class="where-foot">Linux · macOS · Windows</div>
-          </article>
-          <article class="where-card reveal">
-            <span class="where-number">02</span>
-            <div class="where-card-head">
-              <i data-lucide="smartphone"></i>
-              <div><span class="where-name">Mobile</span><span class="where-role">The companion</span></div>
-            </div>
-            <p>Pairs with your desktop once, then mirrors the same typed timeline for approvals, follow-ups, and file checks.</p>
-            <div class="where-foot">iOS · Android</div>
-          </article>
-          <article class="where-card reveal">
-            <span class="where-number">03</span>
-            <div class="where-card-head">
-              <i data-lucide="server"></i>
-              <div><span class="where-name">Relay</span><span class="where-role">Optional · zero-knowledge</span></div>
-            </div>
-            <p>A self-hosted transport that forwards encrypted frames between your devices. It never becomes a second database.</p>
-            <div class="where-foot">Docker · self-hosted</div>
-          </article>
-        </div>
-
-        <div class="where-more reveal">
-          <ul class="check-list">
-            <li><i data-lucide="check"></i> Workspace state stays on your machine</li>
-            <li><i data-lucide="check"></i> Provider credentials remain under your control</li>
-            <li><i data-lucide="check"></i> Every privileged action can require approval</li>
-          </ul>
-          <a class="inline-link-dark" href="${docsUrl("developer/architecture")}" data-docs-page="developer/architecture" target="_blank" rel="noreferrer">Read the architecture <i data-lucide="arrow-up-right"></i></a>
-        </div>
-      </div>
-    </section>
-
     <section class="mobile-section" id="mobile">
       <div class="mobile-glow" aria-hidden="true"></div>
       <div class="section-shell mobile-shell">
         <div class="mobile-head reveal">
-          <div class="section-kicker"><span>05</span> Native mobile</div>
+          <div class="section-kicker"><span>04</span> Native mobile</div>
           <h2 data-i18n-html="remote.title">Your agent is still working.<br /><em>You don't have to be.</em></h2>
           <p data-i18n="remote.copy">Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.</p>
         </div>
@@ -1323,81 +1238,9 @@ document.querySelector("#app").innerHTML = `
       </div>
     </section>
 
-    <section class="workflow-section">
-      <div class="section-shell">
-        <div class="workflow-head reveal">
-          <div class="section-kicker"><span>06</span> The whole loop</div>
-          <h2>From prompt to<br /><em>reviewed change.</em></h2>
-        </div>
-        <div class="workflow-steps reveal">
-          <div class="workflow-line" aria-hidden="true"><span></span></div>
-          <article>
-            <div class="workflow-visual" aria-hidden="true">
-              <div class="wv-prompt"><span>›</span><span class="wv-typed">Bump coverage for the session store</span><span class="wv-caret"></span></div>
-              <div class="wv-dim">composer · vibex/main</div>
-            </div>
-            <span>01</span><i data-lucide="message-square"></i><h3>Direct</h3><p>Give the agent a task with the actual workspace in view.</p>
-            <div class="workflow-tags" aria-hidden="true"><span>composer</span><span>@ files</span><span>/ commands</span></div>
-          </article>
-          <article>
-            <div class="workflow-visual" aria-hidden="true">
-              <div class="wv-status"><span class="wv-pulse"></span>Running · cargo test</div>
-              <div class="wv-chips"><span>2 tool calls</span><span>+128</span><span>-47</span></div>
-            </div>
-            <span>02</span><i data-lucide="zap"></i><h3>Observe</h3><p>Follow plans, tool calls, terminal output, and approvals live.</p>
-            <div class="workflow-tags" aria-hidden="true"><span>timeline</span><span>approvals</span><span>terminal</span></div>
-          </article>
-          <article>
-            <div class="workflow-visual" aria-hidden="true">
-              <div class="wv-file">src/workbench/timeline.rs</div>
-              <div class="wv-line is-del">- let merge = merge_handoff(prev);</div>
-              <div class="wv-line is-add">+ let bridge = WorktreeBridge::queue(…);</div>
-            </div>
-            <span>03</span><i data-lucide="file-diff"></i><h3>Review</h3><p>Inspect changed files and diffs beside the conversation.</p>
-            <div class="workflow-tags" aria-hidden="true"><span>diffs</span><span>blame</span><span>worktrees</span></div>
-          </article>
-          <article>
-            <div class="workflow-visual" aria-hidden="true">
-              <div class="wv-commit"><span class="is-pass">✓</span><div><code>feat: cover session store</code><small>a3f9c12 · main</small></div></div>
-            </div>
-            <span>04</span><i data-lucide="git-branch"></i><h3>Ship</h3><p>Commit with the full context of how the work was produced.</p>
-            <div class="workflow-tags" aria-hidden="true"><span>commit</span><span>push</span><span>history</span></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="open-section">
-      <div class="section-shell open-shell">
-        <div class="open-copy reveal">
-          <div class="section-kicker"><span>07</span> Open source</div>
-          <h2>Inspect the tool that inspects your code.</h2>
-          <p>Vibex is licensed under AGPL-3.0-or-later. Read the source, build it yourself, or help shape what comes next.</p>
-          <ul class="open-list">
-            <li><i data-lucide="scale"></i><span data-i18n="open.list.license">AGPL-3.0-or-later — every frame is auditable</span></li>
-            <li><i data-lucide="hammer"></i><span data-i18n="open.list.build">Build from source with a single command</span></li>
-            <li><i data-lucide="eye-off"></i><span data-i18n="open.list.privacy">No telemetry, no accounts, no cloud</span></li>
-          </ul>
-          <div class="open-actions">
-            <a class="button button-primary" href="${githubUrl}" target="_blank" rel="noreferrer"><i data-lucide="github"></i><span data-open-github>Open GitHub</span> <i data-lucide="arrow-up-right"></i></a>
-            <a class="button open-ghost" href="${docsUrl()}" data-docs-page="" target="_blank" rel="noreferrer"><i data-lucide="book-open"></i> <span data-docs-label>Read the docs</span> <i data-lucide="arrow-up-right"></i></a>
-          </div>
-        </div>
-        <div class="code-panel reveal">
-          <div class="code-panel-head"><span>Build from source</span><span>bash</span></div>
-          <pre><code><span class="prompt">$</span> git clone https://github.com/vibex-ai/vibex
-<span class="prompt">$</span> cd vibex
-<span class="prompt">$</span> pnpm install --frozen-lockfile
-<span class="prompt">$</span> pnpm dev:desktop</code></pre>
-          <button class="copy-button" type="button" data-copy-command title="Copy build commands" aria-label="Copy build commands"><i data-lucide="copy"></i></button>
-          <div class="code-status"><span></span> Rust 1.97 · Node 22 · pnpm 11</div>
-        </div>
-      </div>
-    </section>
-
     <section class="faq-section section-shell" id="faq">
       <div class="faq-heading reveal">
-        <div class="section-kicker"><span>08</span> Questions</div>
+        <div class="section-kicker"><span>05</span> Questions</div>
         <h2>The important details.</h2>
       </div>
       <div class="faq-list reveal">
@@ -1459,7 +1302,6 @@ document.querySelector("#app").innerHTML = `
     </div>
   </footer>
 
-  <div class="toast" role="status" aria-live="polite" data-toast><i data-lucide="check"></i> Commands copied</div>
 `;
 
 function renderIcons() {
@@ -1473,7 +1315,6 @@ function renderIcons() {
     ArrowDown,
     Activity,
     AtSign,
-    ArrowLeftRight,
     ArrowLeft,
     Battery,
     BookOpen,
@@ -1499,7 +1340,6 @@ function renderIcons() {
     Database,
     Download,
     Eye,
-    EyeOff,
     ExternalLink,
     File,
     FileCode,
@@ -1514,7 +1354,6 @@ function renderIcons() {
     Github,
     Ellipsis,
     GripVertical,
-    Hammer,
     KeyRound,
     Globe2,
     Layers3,
@@ -1525,7 +1364,6 @@ function renderIcons() {
     Menu,
     Minus,
     MessageSquare,
-    Monitor,
     Network,
     PanelLeft,
     PanelLeftClose,
@@ -1540,8 +1378,6 @@ function renderIcons() {
     RotateCcw,
     ScanLine,
     ScanSearch,
-    Scale,
-    Server,
     Search,
     Settings,
     ShieldCheck,
@@ -1560,7 +1396,6 @@ function renderIcons() {
     UserRound,
     Wifi,
     X,
-    Zap,
     Mic,
     ChartPie,
     LayoutDashboard,
@@ -1611,24 +1446,6 @@ const textBindings = [
   [".agents-missing span", "agents.missing"],
   [".agents-missing a", "agents.register"],
   [".agents-foot-mono", "agents.foot"],
-  [".where-section .section-kicker", "where.kicker"],
-  [".where-head p", "where.copy"],
-  [".where-card:nth-child(1) .where-name", "where.desktop.name"],
-  [".where-card:nth-child(1) .where-role", "where.desktop.role"],
-  [".where-card:nth-child(1) p", "where.desktop.copy"],
-  [".where-card:nth-child(1) .where-foot", "where.desktop.foot"],
-  [".where-card:nth-child(2) .where-name", "where.mobile.name"],
-  [".where-card:nth-child(2) .where-role", "where.mobile.role"],
-  [".where-card:nth-child(2) p", "where.mobile.copy"],
-  [".where-card:nth-child(2) .where-foot", "where.mobile.foot"],
-  [".where-card:nth-child(3) .where-name", "where.relay.name"],
-  [".where-card:nth-child(3) .where-role", "where.relay.role"],
-  [".where-card:nth-child(3) p", "where.relay.copy"],
-  [".where-card:nth-child(3) .where-foot", "where.relay.foot"],
-  [".check-list li:nth-child(1)", "where.check.workspace"],
-  [".check-list li:nth-child(2)", "where.check.credentials"],
-  [".check-list li:nth-child(3)", "where.check.approval"],
-  [".inline-link-dark", "where.link"],
   [".mobile-head .section-kicker", "remote.kicker"],
   [".mobile-head p", "remote.copy"],
   [".mobile-points > div:nth-child(1) strong", "remote.pair.title"],
@@ -1638,21 +1455,7 @@ const textBindings = [
   [".mobile-points > div:nth-child(3) strong", "remote.private.title"],
   [".mobile-points > div:nth-child(3) em", "remote.private.copy"],
   ["[data-remote-docs]", "remote.docs"],
-  [".workflow-head .section-kicker", "workflow.kicker"],
-  [".workflow-steps article:nth-of-type(1) h3", "workflow.direct.title"],
-  [".workflow-steps article:nth-of-type(1) p", "workflow.direct.copy"],
-  [".workflow-steps article:nth-of-type(2) h3", "workflow.observe.title"],
-  [".workflow-steps article:nth-of-type(2) p", "workflow.observe.copy"],
-  [".workflow-steps article:nth-of-type(3) h3", "workflow.review.title"],
-  [".workflow-steps article:nth-of-type(3) p", "workflow.review.copy"],
-  [".workflow-steps article:nth-of-type(4) h3", "workflow.ship.title"],
-  [".workflow-steps article:nth-of-type(4) p", "workflow.ship.copy"],
-  [".open-copy .section-kicker", "open.kicker"],
-  [".open-copy > p", "open.copy"],
-  ["[data-open-github]", "open.github"],
-  ["[data-docs-label]", "hero.docs"],
   [".faq-doc-link", "faq.docs"],
-  [".code-panel-head span:first-child", "open.build"],
   [".faq-heading .section-kicker", "faq.kicker"],
   [".faq-list details:nth-child(1) summary span", "faq.editor.q"],
   [".faq-list details:nth-child(1) p", "faq.editor.a"],
@@ -1685,9 +1488,6 @@ const htmlBindings = [
   [".hero h1", "hero.title"],
   [".workbench-heading h2", "workbench.title"],
   [".agents-head h2", "agents.title"],
-  [".where-head h2", "where.title"],
-  [".workflow-head h2", "workflow.title"],
-  [".open-copy h2", "open.title"],
   [".faq-heading h2", "faq.title"],
   [".final-inner h2", "cta.title"],
 ];
@@ -1698,9 +1498,6 @@ const attrBindings = [
   [".desktop-nav", "aria-label", "nav.primary"],
   ["[data-desktop-tablist]", "aria-label", "showcase.desktop.aria"],
   [".desktop-app", "aria-label", "showcase.desktop.aria"],
-  [".where-diagram", "aria-label", "where.grid.label"],
-  ["[data-copy-command]", "title", "open.copyCommands"],
-  ["[data-copy-command]", "aria-label", "open.copyCommands"],
   [".phone-device", "aria-label", "remote.aria"],
 ];
 
@@ -1807,7 +1604,6 @@ function applyLanguage(language, { persist = true } = {}) {
   const agentPanelActive = Boolean(desktopShowcase?.querySelector('[data-desktop-panel="agent"].is-active'));
   if (agentPanelActive) startTimelineReplay();
 
-  setOwnText("[data-toast]", toast?.dataset.toastKey === "failed" ? translate(currentLanguage, "toast.failed") : translate(currentLanguage, "toast.copied"));
   const copyright = document.querySelector(".footer-bottom > span:first-child");
   if (copyright) copyright.innerHTML = `© <span data-year>${new Date().getFullYear()}</span> ${translate(currentLanguage, "footer.copyright")}`;
 }
@@ -2995,30 +2791,7 @@ syncShowcaseThumb();
 if (document.fonts?.ready) document.fonts.ready.then(() => syncShowcaseThumb());
 window.addEventListener("resize", () => syncShowcaseThumb());
 
-const copyButton = document.querySelector("[data-copy-command]");
-const toast = document.querySelector("[data-toast]");
-const command = `git clone https://github.com/vibex-ai/vibex
-cd vibex
-pnpm install --frozen-lockfile
-pnpm dev:desktop`;
-
-copyButton.addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(command);
-    toast.dataset.toastKey = "copied";
-    setOwnText("[data-toast]", translate(currentLanguage, "toast.copied"));
-    toast.classList.add("is-visible");
-    window.setTimeout(() => toast.classList.remove("is-visible"), 2200);
-  } catch {
-    toast.dataset.toastKey = "failed";
-    setOwnText("[data-toast]", translate(currentLanguage, "toast.failed"));
-    toast.classList.add("is-visible");
-    window.setTimeout(() => toast.classList.remove("is-visible"), 2500);
-  }
-});
-
 document.querySelector("[data-year]").textContent = new Date().getFullYear();
-toast.dataset.toastKey = "copied";
 
 const phoneClock = document.querySelector("[data-phone-time]");
 function updatePhoneClock() {

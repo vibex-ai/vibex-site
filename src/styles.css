@@ -1285,6 +1285,27 @@ h3 {
   animation: vx-spin 0.9s linear infinite;
 }
 
+/* Scripted demo: the new session row slides in and shows a spinner instead
+   of a clock while the agent turn runs. */
+.vx-session-row.is-new {
+  animation: vx-session-in 0.35s ease;
+}
+
+.vx-session-time.is-running .vx-session-clock {
+  display: none;
+}
+
+@keyframes vx-session-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes vx-spin {
   to {
     transform: rotate(360deg);
@@ -2590,6 +2611,107 @@ h3 {
   flex: none;
 }
 
+/* Model-provider chip dropdown: floats above the composer foot like the
+   app's runtime picker (search row, account groups, check on selection). */
+.vx-picker {
+  position: relative;
+}
+
+.vx-picker-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  display: flex;
+  width: 268px;
+  flex-direction: column;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: #131316;
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.8);
+  animation: vx-menu-in 0.16s ease;
+}
+
+.vx-picker-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+  margin-bottom: 4px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--vx-faint);
+  font-size: 11.5px;
+}
+
+.vx-picker-search svg {
+  width: 12px;
+  height: 12px;
+}
+
+.vx-picker-group {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 8px 4px;
+  color: var(--vx-faint);
+  font-size: 11px;
+}
+
+.vx-picker-group svg {
+  width: 12px;
+  height: 12px;
+}
+
+.vx-picker-group small {
+  margin-left: auto;
+  font-size: 10px;
+}
+
+.vx-picker-model {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--vx-fg);
+  cursor: pointer;
+  font-size: 12px;
+  text-align: left;
+}
+
+.vx-picker-model:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.vx-picker-model svg {
+  width: 13px;
+  height: 13px;
+  color: var(--vx-muted-fg);
+}
+
+.vx-picker-model span {
+  flex: 1;
+}
+
+.vx-picker-check {
+  display: none;
+  width: 13px !important;
+  height: 13px !important;
+  color: var(--vx-success) !important;
+}
+
+.vx-picker-model.is-selected .vx-picker-check,
+.vx-usage-option.is-selected .vx-picker-check {
+  display: block;
+}
+
 .vx-token-btn {
   display: grid;
   place-items: center;
@@ -2617,6 +2739,7 @@ h3 {
 }
 
 .vx-send-btn {
+  position: relative;
   display: grid;
   place-items: center;
   width: 32px;
@@ -2642,6 +2765,20 @@ h3 {
   width: 40px;
   height: 40px;
   border-radius: 20px;
+}
+
+/* Demo affordance: scripted presses ping the pressed control. */
+.is-pulse {
+  animation: vx-pulse 0.82s ease;
+}
+
+.is-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  animation: vx-pair-ping 0.82s ease-out;
+  pointer-events: none;
 }
 
 /* --- New-session home panel ------------------------------------------------ */
@@ -2769,16 +2906,23 @@ h3 {
 
 .vx-home-composer {
   width: min(700px, 100%);
-  overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 20px;
   background: var(--vx-card);
   box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
 }
 
+/* No `overflow: hidden` — the provider picker menu floats above the foot. */
+
 .vx-home-input {
   min-height: 112px;
   padding: 14px 14px 4px;
+}
+
+/* The scripted demo owns the home composer while typing; the placeholder
+   hides like the app's once text starts flowing. */
+.vx-home-composer.is-typing .vx-composer-hint {
+  display: none;
 }
 
 .vx-home-foot {
@@ -3125,12 +3269,14 @@ h3 {
 }
 
 .vx-mgmt-main {
+  position: relative;
   min-height: 0;
   overflow: auto;
   padding: 16px;
 }
 
 .vx-mgmt-pane {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -3240,6 +3386,36 @@ h3 {
   height: 20px;
 }
 
+/* Update flow: the check button swaps its icon for a spinner, then an
+   "Available: vX" pill and a green dot join the version label. */
+.vx-mgmt-ver-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vx-mgmt-ver.is-update {
+  color: var(--vx-success);
+}
+
+.vx-mgmt-dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--vx-success);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.vx-mgmt-btn-icon[hidden],
+.vx-mgmt-btn-loader[hidden] {
+  display: none;
+}
+
+.vx-mgmt-btn-loader {
+  animation: vx-spin 0.9s linear infinite;
+}
+
 .vx-mgmt-ver,
 .vx-mgmt-count {
   flex: none;
@@ -3310,6 +3486,218 @@ h3 {
 .vx-mgmt-btn.is-primary svg,
 .vx-mgmt-btn.is-primary .vx-img-icon {
   color: var(--vx-primary-fg);
+}
+
+/* Provider config editor: an in-card form the demo fills field by field. */
+.vx-mgmt-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 14px 14px;
+  padding: 12px 14px 14px;
+  border: 1px solid rgba(228, 228, 231, 0.18);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.vx-mgmt-editor.is-open {
+  animation: vx-editor-in 0.3s ease;
+}
+
+.vx-mgmt-editor-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vx-mgmt-editor-row > label {
+  color: var(--vx-muted-fg);
+  font-size: 11.5px;
+}
+
+.vx-mgmt-editor-input {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(9, 9, 11, 0.7);
+  font-family: var(--vx-mono);
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.vx-mgmt-editor-input .vx-composer-hint {
+  color: rgba(250, 250, 250, 0.32);
+  font-size: 12px;
+}
+
+.vx-mgmt-editor-input.is-typing .vx-composer-hint {
+  display: none;
+}
+
+.vx-mgmt-model-add {
+  display: flex;
+  gap: 8px;
+}
+
+.vx-mgmt-model-add .vx-mgmt-editor-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.vx-mgmt-model-add .vx-mgmt-btn {
+  height: 34px;
+  padding: 0 10px;
+}
+
+.vx-mgmt-model-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vx-mgmt-model-list:empty {
+  display: none;
+}
+
+.vx-mgmt-model-chip {
+  display: inline-flex;
+  height: 24px;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--vx-fg);
+  font-family: var(--vx-mono);
+  font-size: 11px;
+}
+
+.vx-mgmt-model-chip svg {
+  width: 11px;
+  height: 11px;
+}
+
+.vx-mgmt-model-chip.is-new {
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.08);
+  animation: vx-editor-in 0.3s ease;
+}
+
+.vx-mgmt-editor-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+/* Upgrade takes over the pane with a scrim and a spinning badge; the toast
+   confirms the result at the bottom of the detail area. */
+.vx-mgmt-upgrading {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(9, 9, 11, 0.84);
+}
+
+.vx-mgmt-upglyph {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--vx-primary);
+}
+
+.vx-mgmt-upglyph svg {
+  width: 18px;
+  height: 18px;
+  animation: vx-spin 1s linear infinite;
+}
+
+.vx-mgmt-upgrading strong {
+  display: block;
+  color: var(--vx-fg);
+  font-size: 13px;
+}
+
+.vx-mgmt-upgrading small {
+  display: block;
+  max-width: 300px;
+  margin-top: 3px;
+  color: var(--vx-muted-fg);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.vx-mgmt-toast {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 10px;
+  background: rgba(9, 19, 13, 0.95);
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.8);
+  color: var(--vx-success);
+  font-size: 12px;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition: opacity 0.24s ease, transform 0.24s ease;
+  pointer-events: none;
+}
+
+.vx-mgmt-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.vx-mgmt-toast svg {
+  width: 15px;
+  height: 15px;
+}
+
+.vx-mgmt-toast span {
+  color: var(--vx-fg);
+}
+
+@keyframes vx-editor-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Shared +/- stat pair (git rows, commit drawer, diff file heads). */
+.vx-diff-nums {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+  font-family: var(--vx-mono);
+  font-size: 10.5px;
+}
+
+.vx-diff-nums b {
+  font-weight: 500;
 }
 
 .vx-mgmt-provider {
@@ -3656,6 +4044,49 @@ h3 {
 .vx-usage-filter svg:last-child {
   width: 11px;
   height: 11px;
+}
+
+/* Agent filter dropdown for the usage statistics panel. */
+.vx-usage-picker {
+  position: relative;
+}
+
+.vx-usage-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 40;
+  min-width: 150px;
+  padding: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: #131316;
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.8);
+  animation: vx-menu-in 0.16s ease;
+}
+
+.vx-usage-option {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--vx-fg);
+  cursor: pointer;
+  font-size: 12px;
+  text-align: left;
+}
+
+.vx-usage-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.vx-usage-option span {
+  flex: 1;
 }
 
 .vx-usage-scroll {
@@ -4434,6 +4865,18 @@ h3 {
   background: rgba(228, 228, 231, 0.07);
 }
 
+/* Demo: rows are click-to-stage; committed rows fade out of the list. */
+[data-demo-commit-row] .vx-checkbox {
+  cursor: pointer;
+}
+
+.vx-git-row.is-committed {
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
 .vx-commit-box {
   display: flex;
   flex: none;
@@ -4489,6 +4932,25 @@ h3 {
   font-family: var(--vx-mono);
   font-size: 11.5px;
   line-height: 1.5;
+}
+
+.vx-commit-input .vx-composer-hint {
+  color: rgba(250, 250, 250, 0.32);
+  font-size: 11.5px;
+}
+
+.vx-commit-input.is-typing .vx-composer-hint {
+  display: none;
+}
+
+/* Demo: while the commit runs the button spins and ignores clicks. */
+.vx-commit-btn.is-running {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.vx-commit-spinner {
+  animation: vx-spin 0.9s linear infinite;
 }
 
 .vx-commit-actions {
@@ -4713,11 +5175,87 @@ h3 {
   font-size: 11px;
 }
 
+/* Demo: the fresh commit slides in on top of the history list. */
+.vx-history-row.is-new {
+  animation: vx-session-in 0.35s ease;
+}
+
 .vx-history-hash {
   font-family: var(--vx-mono);
   font-size: 10.5px;
   color: var(--vx-faint);
 }
+
+/* Demo: picking a commit reveals a file-tree drawer for that commit below
+   the history list. */
+.vx-commit-drawer {
+  flex: none;
+  margin: 8px 12px 12px;
+  border: 1px solid var(--vx-border);
+  border-radius: 8px;
+  background: rgba(9, 9, 11, 0.75);
+}
+
+.vx-commit-drawer-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--vx-border-soft);
+  color: var(--vx-muted-fg);
+  font-size: 12px;
+}
+
+.vx-commit-drawer-head svg {
+  width: 13px;
+  height: 13px;
+}
+
+.vx-commit-drawer-head strong {
+  color: var(--vx-fg);
+  font-weight: 500;
+}
+
+.vx-commit-drawer-head .vx-diff-nums {
+  margin-left: auto;
+}
+
+.vx-commit-drawer-list {
+  padding: 6px;
+}
+
+.vx-commit-drawer-row {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  padding-left: calc(8px + var(--depth, 0) * 18px);
+  border-radius: 5px;
+  color: var(--vx-muted-fg);
+  font-size: 12px;
+}
+
+.vx-commit-drawer-row svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
+.vx-commit-drawer-row .vx-diff-nums {
+  margin-left: auto;
+}
+
+/* Staggered reveal; re-adding .is-open restarts it on repeat visits. */
+.vx-commit-drawer.is-open .vx-commit-drawer-row {
+  animation: vx-editor-in 0.28s ease backwards;
+}
+
+.vx-commit-drawer.is-open .vx-commit-drawer-row:nth-child(1) { animation-delay: 0.04s; }
+.vx-commit-drawer.is-open .vx-commit-drawer-row:nth-child(2) { animation-delay: 0.1s; }
+.vx-commit-drawer.is-open .vx-commit-drawer-row:nth-child(3) { animation-delay: 0.16s; }
+.vx-commit-drawer.is-open .vx-commit-drawer-row:nth-child(4) { animation-delay: 0.22s; }
+.vx-commit-drawer.is-open .vx-commit-drawer-row:nth-child(5) { animation-delay: 0.28s; }
 
 /* Preview dock (terminal lives here, not in the right rail) */
 
@@ -4887,6 +5425,137 @@ h3 {
   animation: vx-blink 1.1s steps(2) infinite;
 }
 
+/* Demo: the terminal body doubles as a scrollable commit-diff viewer. */
+.vx-preview-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px;
+  background: #0a0a0c;
+  color: #caccca;
+  font-family: var(--vx-mono);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.vx-preview-body.is-commit {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  color: var(--vx-fg);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.vx-diff-head {
+  display: flex;
+  height: 38px;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 11.5px;
+}
+
+.vx-diff-files {
+  color: var(--vx-muted-fg);
+}
+
+.vx-diff-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 10px;
+}
+
+.vx-diff-file {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: #101013;
+}
+
+.vx-diff-file + .vx-diff-file {
+  margin-top: 10px;
+}
+
+.vx-diff-filehead {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 11px;
+}
+
+.vx-diff-filehead svg {
+  width: 12px;
+  height: 12px;
+  color: var(--vx-faint);
+}
+
+.vx-diff-filehead code {
+  color: var(--vx-fg);
+  font-family: var(--vx-mono);
+  font-size: 11px;
+}
+
+.vx-diff-filehead .vx-diff-nums {
+  margin-left: auto;
+}
+
+.vx-diff-table {
+  padding: 6px 0;
+  font-family: var(--vx-mono);
+  font-size: 11px;
+  line-height: 17px;
+}
+
+.vx-diff-line {
+  display: flex;
+  padding: 0 10px;
+  white-space: pre;
+}
+
+.vx-diff-line code {
+  overflow: hidden;
+  flex: 1;
+  color: #caccca;
+}
+
+.vx-diff-no {
+  width: 34px;
+  flex: none;
+  margin-right: 10px;
+  color: rgba(250, 250, 250, 0.26);
+  text-align: right;
+  user-select: none;
+}
+
+.vx-diff-line.is-ctx {
+  color: rgba(250, 250, 250, 0.55);
+}
+
+.vx-diff-line.is-del {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.vx-diff-line.is-del code {
+  color: #fca5a5;
+}
+
+.vx-diff-line.is-add {
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.vx-diff-line.is-add code {
+  color: #86efac;
+}
+
 /* --- Activity rail ---------------------------------------------------------- */
 
 .vx-activity {
@@ -4907,6 +5576,7 @@ h3 {
   place-items: center;
   width: 28px;
   height: 28px;
+  overflow: visible;
   flex: none;
   border: 0;
   border-radius: 6px;
@@ -4971,10 +5641,38 @@ h3 {
   100% { box-shadow: 0 0 0 9px rgba(34, 197, 94, 0); }
 }
 
+@keyframes vx-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .vx-caret-blink,
   .vx-term-cursor {
     animation: none;
+  }
+
+  .is-pulse,
+  .is-pulse::after,
+  .vx-session-row.is-new,
+  .vx-history-row.is-new,
+  .vx-commit-drawer.is-open .vx-commit-drawer-row,
+  .vx-picker-menu,
+  .vx-usage-menu,
+  .vx-mgmt-editor.is-open,
+  .vx-mgmt-model-chip.is-new {
+    animation: none;
+  }
+
+  .vx-mgmt-toast,
+  .vx-git-row.is-committed {
+    transition: none;
   }
 }
 

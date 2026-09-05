@@ -50,6 +50,17 @@
     />
 
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <style>
+      /* Critical: hide the skip link before the stylesheet arrives — dev mode
+         injects CSS via JS, so without this it flashes in the top-left on
+         every reload. .skip-link:focus in styles.css still overrides it. */
+      .skip-link {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        transform: translateY(-160%);
+      }
+    </style>
     <link
       rel="preload"
       href="/assets/inter-variable.woff2"

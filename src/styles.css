@@ -488,17 +488,6 @@ h3 {
   line-height: 1.5;
 }
 
-.eyebrow,
-.section-kicker {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--muted-strong);
-  font-family: "Lilex", monospace;
-  font-size: 12px;
-  text-transform: uppercase;
-}
-
 .live-dot {
   width: 7px;
   height: 7px;
@@ -4997,20 +4986,11 @@ h3 {
   padding-block: 132px 120px;
 }
 
-.section-kicker {
-  color: var(--muted);
-}
-
-.section-kicker span {
-  color: var(--green);
-}
-
 .workbench-heading {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
   gap: 80px;
   align-items: end;
-  margin-top: 24px;
 }
 
 .workbench-heading h2,
@@ -5322,7 +5302,6 @@ h3 {
 
 .agents-head h2 {
   max-width: 780px;
-  margin-top: 27px;
 }
 
 .agents-head > p {
@@ -5484,7 +5463,7 @@ h3 {
 }
 
 .mobile-head h2 {
-  margin-top: 27px;
+  margin-top: 0;
 }
 
 .mobile-head h2 em {
@@ -6201,7 +6180,6 @@ h3 {
 
 .faq-heading h2 {
   max-width: 460px;
-  margin-top: 27px;
 }
 
 .faq-list {
@@ -6738,10 +6716,6 @@ h3 {
 
   .workbench-section {
     padding-block: 88px 80px;
-  }
-
-  .workbench-heading {
-    margin-top: 18px;
   }
 
   .workbench-heading h2,

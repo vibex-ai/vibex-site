@@ -991,7 +991,6 @@ document.querySelector("#app").innerHTML = `
     <section class="mobile-section" id="mobile">
       <div class="section-shell mobile-shell">
         <div class="mobile-head reveal">
-          <div class="section-kicker"><span>02</span> Native mobile</div>
           <h2 data-i18n-html="remote.title">Your agent is still working.<br /><em>You don't have to be.</em></h2>
           <p data-i18n="remote.copy">Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.</p>
         </div>
@@ -1165,7 +1164,6 @@ document.querySelector("#app").innerHTML = `
     </section>
 
     <section class="workbench-section section-shell" id="product">
-      <div class="section-kicker reveal"><span>03</span> The workbench</div>
       <div class="workbench-heading reveal">
         <h2>Direct the work.<br /><em>Keep the context.</em></h2>
         <p>
@@ -1271,7 +1269,6 @@ document.querySelector("#app").innerHTML = `
     <section class="agents-section" id="agents">
       <div class="section-shell">
         <div class="agents-head reveal">
-          <div class="section-kicker"><span>04</span> Agents</div>
           <h2>Bring your own agents.</h2>
           <p>
             Vibex speaks the Agent Client Protocol (ACP) — a neutral contract between workbench and agent. Built-in presets are ready to go, and any ACP-compatible agent runs in the same workbench.
@@ -1316,7 +1313,6 @@ document.querySelector("#app").innerHTML = `
 
     <section class="faq-section section-shell" id="faq">
       <div class="faq-heading reveal">
-        <div class="section-kicker"><span>05</span> Questions</div>
         <h2>The important details.</h2>
       </div>
       <div class="faq-list reveal">
@@ -1498,7 +1494,6 @@ const textBindings = [
   ["[data-desktop-source]", "showcase.desktop.source"],
   [".hero-lede", "hero.lede"],
   ["[data-hero-docs]", "hero.docs"],
-  [".workbench-section .section-kicker", "workbench.kicker"],
   [".workbench-heading p", "workbench.copy"],
   [".bento-card:nth-child(1) h3", "bento.git.title"],
   [".bento-card:nth-child(1) p", "bento.git.copy"],
@@ -1512,18 +1507,15 @@ const textBindings = [
   [".bento-card:nth-child(5) p", "bento.automation.copy"],
   [".bento-card:nth-child(6) h3", "bento.usage.title"],
   [".bento-card:nth-child(6) p", "bento.usage.copy"],
-  [".agents-section .section-kicker", "agents.kicker"],
   [".agents-head p", "agents.copy"],
   ["[data-acp-chip]", "agents.acp"],
   ["[data-agent-registry]", "agents.registry"],
   [".agents-missing span", "agents.missing"],
   [".agents-missing a", "agents.register"],
   [".agents-foot-mono", "agents.foot"],
-  [".mobile-head .section-kicker", "remote.kicker"],
   [".mobile-head p", "remote.copy"],
   ["[data-remote-docs]", "remote.docs"],
   [".faq-doc-link", "faq.docs"],
-  [".faq-heading .section-kicker", "faq.kicker"],
   [".faq-list details:nth-child(1) summary span", "faq.editor.q"],
   [".faq-list details:nth-child(1) p", "faq.editor.a"],
   [".faq-list details:nth-child(2) summary span", "faq.cloud.q"],

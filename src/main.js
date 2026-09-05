@@ -1346,7 +1346,6 @@ document.querySelector("#app").innerHTML = `
     </section>
 
     <section class="final-cta">
-      <div class="final-grid" aria-hidden="true"></div>
       <div class="final-glow" aria-hidden="true"></div>
       <div class="section-shell final-inner reveal">
         <img src=${vibexMark} alt="" />

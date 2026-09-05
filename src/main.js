@@ -68,8 +68,6 @@ import {
   RefreshCw,
   Radio,
   RotateCcw,
-  ScanLine,
-  ScanSearch,
   Search,
   Settings,
   ShieldCheck,
@@ -999,91 +997,170 @@ document.querySelector("#app").innerHTML = `
           <p data-i18n="remote.copy">Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.</p>
         </div>
 
-        <div class="phone-stage reveal">
-          <div class="phone-device" aria-label="Vibex mobile session rendered as an interactive phone preview">
-            <div class="phone-device-screen">
-              <div class="iphone-status" aria-hidden="true">
-                <span class="iphone-status-time" data-phone-time>9:41</span>
-                <span class="iphone-status-icons"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery"></i></span>
-              </div>
-
-              <div class="iphone-app">
-                <header class="iphone-nav">
-                  <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
-                  <span class="iphone-nav-agent">
-                    <img src=${openaiLight} alt="" />
-                    <span class="iphone-nav-name">
-                      <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
-                      <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
-                    </span>
-                  </span>
-                  <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
-                </header>
-
-                <div class="iphone-thread">
-                  <div class="iphone-runpill" data-phone-runpill>
-                    <i data-lucide="loader-circle"></i>
-                    <span data-i18n="remote.phone.working">Working on it…</span>
-                  </div>
-
-                  <div class="iphone-bubble is-user">
-                    <p data-i18n="remote.phone.user">Bump the test coverage for the session store before the release build.</p>
-                  </div>
-
-                  <div class="iphone-toolcard">
-                    <div class="iphone-toolcard-head">
-                      <i data-lucide="square-terminal"></i>
-                      <code>cargo test -p vibex store</code>
-                    </div>
-                    <div class="iphone-toolcard-body">
-                      <span class="is-dim">running 12 tests</span>
-                      <span class="is-pass">test session_store::persists_timeline ... ok</span>
-                      <span class="is-dim">12 passed · 2.14s</span>
-                    </div>
-                  </div>
-
-                  <div class="iphone-bubble is-agent">
-                    <p data-i18n="remote.phone.agentText">Done — added 4 tests around timeline persistence. Coverage for the session store is now 91%.</p>
-                  </div>
-
-                  <div class="iphone-changes" data-i18n="remote.phone.chipDiff">3 files changed</div>
-
-                  <div class="iphone-approval" data-phone-approval>
-                    <div class="iphone-approval-head">
-                      <i data-lucide="file-diff"></i>
-                      <strong data-i18n="remote.phone.approveTitle">Approve push to main?</strong>
-                    </div>
-                    <div class="iphone-approval-actions">
-                      <button class="iphone-approval-btn is-deny" type="button" data-approval-deny><i data-lucide="x"></i><span data-i18n="remote.phone.deny">Not now</span></button>
-                      <button class="iphone-approval-btn is-approve" type="button" data-approval-approve><i data-lucide="check"></i><span data-i18n="remote.phone.approve">Approve</span></button>
-                    </div>
-                    <div class="iphone-approval-done" hidden data-approval-done>
-                      <i class="is-ok" data-lucide="circle-check"></i>
-                      <i class="is-snooze" data-lucide="clock"></i>
-                      <span class="is-ok-text" data-i18n="remote.phone.approved">Push approved from mobile</span>
-                      <span class="is-snooze-text" data-i18n="remote.phone.snoozed">Not now — ask me again later</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="iphone-composer" aria-hidden="true">
-                  <span data-i18n="remote.phone.composer">Reply…</span>
-                  <i data-lucide="arrow-up"></i>
-                </div>
-              </div>
-              <div class="iphone-home-indicator" aria-hidden="true"></div>
+        <div class="mobile-layout reveal">
+          <div class="mobile-scenes">
+            <button class="mobile-scene is-active" type="button" data-mobile-scene="progress" aria-pressed="true">
+              <span class="mobile-scene-indicator" aria-hidden="true"></span>
+              <span class="mobile-scene-title" data-i18n="remote.scene.progress.title">Live progress, from anywhere</span>
+              <span class="mobile-scene-desc"><span data-i18n="remote.scene.progress.desc">Tool runs, diffs and replies stream to your phone while the desktop does the heavy lifting.</span></span>
+            </button>
+            <button class="mobile-scene" type="button" data-mobile-scene="approvals" aria-pressed="false">
+              <span class="mobile-scene-indicator" aria-hidden="true"></span>
+              <span class="mobile-scene-title" data-i18n="remote.scene.approvals.title">Answer in one tap</span>
+              <span class="mobile-scene-desc"><span data-i18n="remote.scene.approvals.desc">The agent pauses at permission gates. Approve — or defer — without walking back to your desk.</span></span>
+            </button>
+            <button class="mobile-scene" type="button" data-mobile-scene="pairing" aria-pressed="false">
+              <span class="mobile-scene-indicator" aria-hidden="true"></span>
+              <span class="mobile-scene-title" data-i18n="remote.scene.pairing.title">Pair once, stay private</span>
+              <span class="mobile-scene-desc"><span data-i18n="remote.scene.pairing.desc">Link your phone with a one-time QR. Traffic runs direct or through your relay, end-to-end encrypted.</span></span>
+            </button>
+            <div class="mobile-doc">
+              <a class="inline-doc-link" href="${docsUrl("remote-mobile")}" data-docs-page="remote-mobile" target="_blank" rel="noreferrer" data-remote-docs>Remote access &amp; mobile guide <i data-lucide="arrow-up-right"></i></a>
             </div>
           </div>
-        </div>
 
-        <div class="mobile-points reveal">
-          <div><i data-lucide="scan-line"></i><span><strong>Pair in seconds</strong><em>One-time QR offer with scoped device permissions.</em></span></div>
-          <div><i data-lucide="network"></i><span><strong>Best route wins</strong><em>Connect directly or through your self-hosted relay.</em></span></div>
-          <div><i data-lucide="lock-keyhole"></i><span><strong>Private by construction</strong><em>Relay traffic stays end-to-end encrypted.</em></span></div>
-        </div>
+          <div class="phone-stage">
+            <div class="phone-device" aria-label="Vibex mobile session rendered as an interactive phone preview">
+              <div class="phone-device-screen">
+                <div class="iphone-status" aria-hidden="true">
+                  <span class="iphone-status-time" data-phone-time>9:41</span>
+                  <span class="iphone-status-icons"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery"></i></span>
+                </div>
 
-        <div class="mobile-cta reveal">
-          <a class="inline-doc-link" href="${docsUrl("remote-mobile")}" data-docs-page="remote-mobile" target="_blank" rel="noreferrer" data-remote-docs>Remote access &amp; mobile guide <i data-lucide="arrow-up-right"></i></a>
+                <div class="iphone-app">
+                  <div class="iphone-panes">
+                    <div class="iphone-pane is-active" data-phone-pane="progress">
+                      <header class="iphone-nav">
+                        <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
+                        <span class="iphone-nav-agent">
+                          <img src=${openaiLight} alt="" />
+                          <span class="iphone-nav-name">
+                            <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
+                            <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
+                          </span>
+                        </span>
+                        <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
+                      </header>
+
+                      <div class="iphone-thread">
+                        <div class="iphone-runpill" data-phone-runpill>
+                          <i data-lucide="loader-circle"></i>
+                          <span data-i18n="remote.phone.working">Working on it…</span>
+                        </div>
+
+                        <div class="iphone-bubble is-user">
+                          <p data-i18n="remote.phone.user">Bump the test coverage for the session store before the release build.</p>
+                        </div>
+
+                        <div class="iphone-toolcard">
+                          <div class="iphone-toolcard-head">
+                            <i data-lucide="square-terminal"></i>
+                            <code>cargo test -p vibex store</code>
+                          </div>
+                          <div class="iphone-toolcard-body">
+                            <span class="is-dim">running 12 tests</span>
+                            <span class="is-pass">test session_store::persists_timeline ... ok</span>
+                            <span class="is-dim">12 passed · 2.14s</span>
+                          </div>
+                        </div>
+
+                        <div class="iphone-toolcard is-running">
+                          <div class="iphone-toolcard-head">
+                            <i data-lucide="square-terminal"></i>
+                            <code>cargo build --release</code>
+                          </div>
+                          <div class="iphone-toolcard-body">
+                            <span class="is-dim">Compiling vibex-core v0.4.2</span>
+                            <span class="is-dim">Compiling vibex-store v0.4.2</span>
+                            <span class="is-run"><i data-lucide="loader-circle"></i>linking vibex-cli…</span>
+                          </div>
+                        </div>
+
+                        <div class="iphone-bubble is-agent">
+                          <p data-i18n="remote.phone.agentText">Done — added 4 tests around timeline persistence. Coverage for the session store is now 91%.</p>
+                        </div>
+
+                        <div class="iphone-changes" data-i18n="remote.phone.chipDiff">3 files changed</div>
+                      </div>
+                    </div>
+
+                    <div class="iphone-pane" data-phone-pane="approvals" hidden>
+                      <header class="iphone-nav">
+                        <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
+                        <span class="iphone-nav-agent">
+                          <img src=${openaiLight} alt="" />
+                          <span class="iphone-nav-name">
+                            <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
+                            <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
+                          </span>
+                        </span>
+                        <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
+                      </header>
+
+                      <div class="iphone-thread">
+                        <div class="iphone-bubble is-user">
+                          <p data-i18n="remote.phone.user2">The suite is green — push the release to main.</p>
+                        </div>
+
+                        <div class="iphone-bubble is-agent">
+                          <p data-i18n="remote.phone.agentText2">Release build passed. I need your approval before pushing to main.</p>
+                        </div>
+
+                        <div class="iphone-changes" data-i18n="remote.phone.chipDiff">3 files changed</div>
+
+                        <div class="iphone-approval" data-phone-approval>
+                          <div class="iphone-approval-head">
+                            <i data-lucide="file-diff"></i>
+                            <strong data-i18n="remote.phone.approveTitle">Approve push to main?</strong>
+                          </div>
+                          <div class="iphone-approval-actions">
+                            <button class="iphone-approval-btn is-deny" type="button" data-approval-deny><i data-lucide="x"></i><span data-i18n="remote.phone.deny">Not now</span></button>
+                            <button class="iphone-approval-btn is-approve" type="button" data-approval-approve><i data-lucide="check"></i><span data-i18n="remote.phone.approve">Approve</span></button>
+                          </div>
+                          <div class="iphone-approval-done" hidden data-approval-done>
+                            <i class="is-ok" data-lucide="circle-check"></i>
+                            <i class="is-snooze" data-lucide="clock"></i>
+                            <span class="is-ok-text" data-i18n="remote.phone.approved">Push approved from mobile</span>
+                            <span class="is-snooze-text" data-i18n="remote.phone.snoozed">Not now — ask me again later</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="iphone-pane" data-phone-pane="pairing" hidden>
+                      <header class="iphone-nav">
+                        <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
+                        <span class="iphone-nav-agent">
+                          <img src=${openaiLight} alt="" />
+                          <span class="iphone-nav-name">
+                            <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
+                            <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
+                          </span>
+                        </span>
+                        <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
+                      </header>
+
+                      <div class="iphone-pair">
+                        <div class="iphone-pair-qr" aria-hidden="true">
+                          <svg viewBox="0 0 21 21" shape-rendering="crispEdges"><rect width="21" height="21" fill="#ffffff"/><g fill="#171a14"><rect x="0" y="0" width="7" height="1"/><rect x="9" y="0" width="3" height="1"/><rect x="14" y="0" width="7" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="10" y="1" width="1" height="1"/><rect x="12" y="1" width="1" height="1"/><rect x="14" y="1" width="1" height="1"/><rect x="20" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="3" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="10" y="2" width="2" height="1"/><rect x="14" y="2" width="1" height="1"/><rect x="16" y="2" width="3" height="1"/><rect x="20" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="2" y="3" width="3" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="12" y="3" width="1" height="1"/><rect x="14" y="3" width="1" height="1"/><rect x="16" y="3" width="3" height="1"/><rect x="20" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="3" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="10" y="4" width="2" height="1"/><rect x="14" y="4" width="1" height="1"/><rect x="16" y="4" width="3" height="1"/><rect x="20" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="8" y="5" width="3" height="1"/><rect x="14" y="5" width="1" height="1"/><rect x="20" y="5" width="1" height="1"/><rect x="0" y="6" width="7" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="14" y="6" width="7" height="1"/><rect x="1" y="8" width="7" height="1"/><rect x="9" y="8" width="4" height="1"/><rect x="16" y="8" width="1" height="1"/><rect x="18" y="8" width="2" height="1"/><rect x="5" y="9" width="5" height="1"/><rect x="12" y="9" width="1" height="1"/><rect x="14" y="9" width="1" height="1"/><rect x="17" y="9" width="2" height="1"/><rect x="20" y="9" width="1" height="1"/><rect x="2" y="10" width="2" height="1"/><rect x="6" y="10" width="3" height="1"/><rect x="12" y="10" width="2" height="1"/><rect x="18" y="10" width="1" height="1"/><rect x="1" y="11" width="1" height="1"/><rect x="3" y="11" width="1" height="1"/><rect x="8" y="11" width="1" height="1"/><rect x="10" y="11" width="1" height="1"/><rect x="13" y="11" width="1" height="1"/><rect x="16" y="11" width="1" height="1"/><rect x="0" y="12" width="3" height="1"/><rect x="6" y="12" width="2" height="1"/><rect x="10" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="15" y="12" width="1" height="1"/><rect x="18" y="12" width="1" height="1"/><rect x="8" y="13" width="1" height="1"/><rect x="11" y="13" width="2" height="1"/><rect x="17" y="13" width="3" height="1"/><rect x="0" y="14" width="7" height="1"/><rect x="8" y="14" width="3" height="1"/><rect x="12" y="14" width="1" height="1"/><rect x="15" y="14" width="2" height="1"/><rect x="18" y="14" width="2" height="1"/><rect x="0" y="15" width="1" height="1"/><rect x="6" y="15" width="1" height="1"/><rect x="12" y="15" width="2" height="1"/><rect x="20" y="15" width="1" height="1"/><rect x="0" y="16" width="1" height="1"/><rect x="2" y="16" width="3" height="1"/><rect x="6" y="16" width="1" height="1"/><rect x="8" y="16" width="2" height="1"/><rect x="11" y="16" width="2" height="1"/><rect x="15" y="16" width="2" height="1"/><rect x="0" y="17" width="1" height="1"/><rect x="2" y="17" width="3" height="1"/><rect x="6" y="17" width="1" height="1"/><rect x="8" y="17" width="1" height="1"/><rect x="14" y="17" width="1" height="1"/><rect x="16" y="17" width="4" height="1"/><rect x="0" y="18" width="1" height="1"/><rect x="2" y="18" width="3" height="1"/><rect x="6" y="18" width="1" height="1"/><rect x="8" y="18" width="1" height="1"/><rect x="16" y="18" width="2" height="1"/><rect x="0" y="19" width="1" height="1"/><rect x="6" y="19" width="1" height="1"/><rect x="9" y="19" width="1" height="1"/><rect x="13" y="19" width="1" height="1"/><rect x="15" y="19" width="2" height="1"/><rect x="19" y="19" width="2" height="1"/><rect x="0" y="20" width="7" height="1"/><rect x="9" y="20" width="1" height="1"/><rect x="12" y="20" width="1" height="1"/><rect x="16" y="20" width="1" height="1"/><rect x="18" y="20" width="2" height="1"/></g></svg>
+                        </div>
+                        <div class="iphone-pair-title" data-i18n="remote.pair.title">Pair your phone</div>
+                        <p class="iphone-pair-copy" data-i18n="remote.pair.copy">Scan with the Vibex mobile app — the offer is one-time and scoped to this device.</p>
+                        <div class="iphone-pair-code"><span data-i18n="remote.pair.codeLabel">Pair code</span><code>XK4-9TQ</code></div>
+                        <div class="iphone-pair-foot"><i data-lucide="lock-keyhole"></i><span data-i18n="remote.pair.foot">End-to-end encrypted</span></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="iphone-composer" aria-hidden="true">
+                    <span data-i18n="remote.phone.composer">Reply…</span>
+                    <i data-lucide="arrow-up"></i>
+                  </div>
+                </div>
+                <div class="iphone-home-indicator" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1376,8 +1453,6 @@ function renderIcons() {
     RefreshCw,
     Radio,
     RotateCcw,
-    ScanLine,
-    ScanSearch,
     Search,
     Settings,
     ShieldCheck,
@@ -1448,12 +1523,6 @@ const textBindings = [
   [".agents-foot-mono", "agents.foot"],
   [".mobile-head .section-kicker", "remote.kicker"],
   [".mobile-head p", "remote.copy"],
-  [".mobile-points > div:nth-child(1) strong", "remote.pair.title"],
-  [".mobile-points > div:nth-child(1) em", "remote.pair.copy"],
-  [".mobile-points > div:nth-child(2) strong", "remote.route.title"],
-  [".mobile-points > div:nth-child(2) em", "remote.route.copy"],
-  [".mobile-points > div:nth-child(3) strong", "remote.private.title"],
-  [".mobile-points > div:nth-child(3) em", "remote.private.copy"],
   ["[data-remote-docs]", "remote.docs"],
   [".faq-doc-link", "faq.docs"],
   [".faq-heading .section-kicker", "faq.kicker"],
@@ -2830,6 +2899,34 @@ phoneApproval?.querySelectorAll("[data-approval-approve], [data-approval-deny]")
     approvalResetTimer = window.setTimeout(resetPhoneApproval, 9000);
   });
 });
+
+// The mobile showcase is a superset-style scene switcher: hovering a scene on
+// the left swaps the phone preview on the right (fine pointers only, so touch
+// devices don't jump on tap), while click/tap and keyboard always work too.
+const mobileSceneButtons = [...document.querySelectorAll("[data-mobile-scene]")];
+const phonePanes = [...document.querySelectorAll("[data-phone-pane]")];
+
+function setMobileScene(scene) {
+  if (!phonePanes.some((pane) => pane.dataset.phonePane === scene)) return;
+  mobileSceneButtons.forEach((button) => {
+    const active = button.dataset.mobileScene === scene;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  phonePanes.forEach((pane) => {
+    pane.hidden = pane.dataset.phonePane !== scene;
+  });
+}
+
+if (mobileSceneButtons.length && phonePanes.length) {
+  const canHover = window.matchMedia?.("(hover: hover) and (pointer: fine)")?.matches ?? false;
+  mobileSceneButtons.forEach((button) => {
+    button.addEventListener("click", () => setMobileScene(button.dataset.mobileScene));
+    if (canHover) {
+      button.addEventListener("mouseenter", () => setMobileScene(button.dataset.mobileScene));
+    }
+  });
+}
 
 const languageSwitchers = [...document.querySelectorAll("[data-language-switcher]")];
 const closeLanguageMenus = () => {

@@ -5493,17 +5493,10 @@ h3 {
 }
 
 .mobile-head {
-  max-width: 760px;
-  margin-inline: auto;
-  text-align: center;
-}
-
-.mobile-head .section-kicker {
-  justify-content: center;
+  max-width: 680px;
 }
 
 .mobile-head h2 {
-  max-width: 780px;
   margin-top: 27px;
 }
 
@@ -5513,8 +5506,7 @@ h3 {
 }
 
 .mobile-head > p {
-  max-width: 650px;
-  margin-inline: auto;
+  max-width: 620px;
   margin-top: 25px;
   color: var(--muted);
   font-size: 18px;
@@ -5525,10 +5517,100 @@ h3 {
   position: relative;
 }
 
+/* Left/right showcase: scene rail (superset-style) + phone preview (x.ai-style) */
+
+.mobile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 88px;
+  align-items: center;
+  margin-top: 84px;
+}
+
+.mobile-scenes {
+  max-width: 480px;
+}
+
+.mobile-scene {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 17px 0 17px 26px;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.mobile-scene-indicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 2px;
+  height: 0;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: rgba(123, 241, 168, 0.8);
+  opacity: 0;
+  transition: height 200ms ease-out, opacity 200ms ease-out;
+}
+
+.mobile-scene.is-active .mobile-scene-indicator {
+  height: 44%;
+  opacity: 1;
+}
+
+.mobile-scene-title {
+  display: block;
+  color: var(--muted);
+  font-size: 21px;
+  font-weight: 500;
+  transition: color 200ms ease;
+}
+
+.mobile-scene:hover .mobile-scene-title {
+  color: var(--muted-strong);
+}
+
+.mobile-scene.is-active .mobile-scene-title {
+  color: var(--text);
+}
+
+.mobile-scene-desc {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 220ms ease-out, opacity 220ms ease-out;
+}
+
+.mobile-scene.is-active .mobile-scene-desc {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.mobile-scene-desc > span {
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 9px;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.mobile-doc {
+  margin-top: 24px;
+  padding-left: 26px;
+}
+
+.mobile-doc .inline-doc-link {
+  margin-top: 0;
+}
+
 .phone-stage {
   display: flex;
   justify-content: center;
-  margin-top: 72px;
 }
 
 .phone-device {
@@ -6006,52 +6088,121 @@ h3 {
   background: rgba(22, 24, 17, 0.32);
 }
 
-/* Three trust points under the phone */
+/* Phone panes swap per scene; the composer stays shared below */
 
-.mobile-points {
-  display: grid;
-  max-width: 760px;
-  margin: 72px auto 0;
-  border-top: 1px solid var(--line);
+.iphone-panes {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.mobile-points > div {
-  display: grid;
-  grid-template-columns: 45px 1fr;
-  gap: 10px;
-  align-items: start;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--line);
+.iphone-pane {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.mobile-points > div > svg {
-  margin-top: 2px;
-  color: var(--green);
-  font-size: 22px;
+.iphone-pane[hidden] {
+  display: none;
 }
 
-.mobile-points em {
-  display: block;
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 14px;
-  font-style: normal;
+.iphone-toolcard.is-running .iphone-toolcard-head svg {
+  color: #55574d;
 }
 
-.mobile-points strong {
-  display: block;
-  color: var(--text);
-  font-size: 16px;
+.iphone-toolcard-body .is-run {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: #0e7837;
   font-weight: 600;
 }
 
-.mobile-cta {
-  margin-top: 34px;
+.iphone-toolcard-body .is-run svg {
+  width: 10px;
+  height: 10px;
+  animation: vx-spin 1.4s linear infinite;
+}
+
+/* Pairing scene */
+
+.iphone-pair {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 26px 20px;
   text-align: center;
 }
 
-.mobile-cta .inline-doc-link {
-  margin-top: 0;
+.iphone-pair-qr {
+  width: 148px;
+  padding: 10px;
+  border: 1px solid rgba(20, 22, 15, 0.12);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(22, 24, 17, 0.1);
+}
+
+.iphone-pair-qr svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.iphone-pair-title {
+  margin-top: 6px;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.iphone-pair-copy {
+  max-width: 240px;
+  color: #55574d;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.iphone-pair-code {
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 6px 12px;
+  border: 1px solid rgba(20, 22, 15, 0.1);
+  border-radius: 999px;
+  background: #e9e8e0;
+  font-size: 11px;
+}
+
+.iphone-pair-code span {
+  color: #55574d;
+  font-weight: 550;
+}
+
+.iphone-pair-code code {
+  font-family: "Lilex", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.iphone-pair-foot {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: #0e7837;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.iphone-pair-foot svg {
+  width: 12px;
+  height: 12px;
 }
 
 .faq-section {
@@ -6296,6 +6447,10 @@ h3 {
   .workbench-heading {
     gap: 55px;
   }
+
+  .mobile-layout {
+    gap: 56px;
+  }
 }
 
 @media (max-width: 920px) {
@@ -6489,14 +6644,14 @@ h3 {
     gap: 14px;
   }
 
-  .phone-stage {
-    margin-top: 56px;
+  .mobile-layout {
+    grid-template-columns: 1fr;
+    gap: 46px;
+    margin-top: 60px;
   }
 
-  .mobile-head h2,
-  .mobile-head > p,
-  .mobile-points {
-    max-width: 720px;
+  .mobile-scenes {
+    max-width: 640px;
   }
 
   .faq-section {
@@ -6675,8 +6830,21 @@ h3 {
     padding-block: 88px;
   }
 
-  .phone-stage {
+  .mobile-layout {
+    gap: 36px;
     margin-top: 44px;
+  }
+
+  .mobile-scene {
+    padding-block: 13px;
+  }
+
+  .mobile-scene-title {
+    font-size: 18px;
+  }
+
+  .mobile-doc {
+    margin-top: 14px;
   }
 
   .phone-device {
@@ -6735,8 +6903,12 @@ h3 {
     width: 94px;
   }
 
-  .mobile-points {
-    margin-top: 52px;
+  .iphone-pair {
+    padding-inline: 18px;
+  }
+
+  .iphone-pair-qr {
+    width: 126px;
   }
 
   .faq-section {

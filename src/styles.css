@@ -5479,17 +5479,6 @@ h3 {
   background: var(--page);
 }
 
-.mobile-glow {
-  position: absolute;
-  top: -220px;
-  left: 50%;
-  width: 900px;
-  height: 620px;
-  transform: translateX(-50%);
-  background: radial-gradient(50% 50% at 50% 40%, rgba(123, 241, 168, 0.09), transparent 70%);
-  pointer-events: none;
-}
-
 .mobile-head {
   max-width: 680px;
 }

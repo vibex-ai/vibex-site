@@ -989,7 +989,6 @@ document.querySelector("#app").innerHTML = `
     </section>
 
     <section class="mobile-section" id="mobile">
-      <div class="mobile-glow" aria-hidden="true"></div>
       <div class="section-shell mobile-shell">
         <div class="mobile-head reveal">
           <div class="section-kicker"><span>02</span> Native mobile</div>

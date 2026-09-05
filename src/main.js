@@ -93,6 +93,7 @@ import {
   Inbox,
   Import as ImportIcon,
   Info,
+  ListTree,
   RotateCw,
   createIcons,
 } from "lucide";
@@ -429,7 +430,7 @@ document.querySelector("#app").innerHTML = `
                         </div>
                         <div class="vx-composer">
                           <div class="vx-composer-input">
-                            <span class="vx-composer-placeholder"><span class="vx-composer-hint" data-i18n="showcase.desktop.home.placeholder">Describe a task, or type / for commands, @ for files, $ for skills</span><span data-typed-text></span><span class="vx-caret-blink"></span></span>
+                            <span class="vx-composer-placeholder"><span class="vx-hint-overlay"><span class="vx-composer-hint" data-i18n="showcase.desktop.home.placeholder">Describe a task, or type / for commands, @ for files, $ for skills</span></span><span data-typed-text></span><span class="vx-caret-blink"></span></span>
                             <span class="vx-composer-side">
                               <button class="vx-icon-btn is-sm" type="button" data-desktop-action="expand" aria-label="Expand input"><i data-lucide="maximize-2"></i></button>
                               <button class="vx-icon-btn is-md" type="button" data-desktop-action="terminal" aria-label="Create Composer terminal"><i data-lucide="square-terminal"></i></button>
@@ -471,7 +472,7 @@ document.querySelector("#app").innerHTML = `
                           <button class="vx-icon-btn is-sm" type="button" aria-label="Sort agents"><i data-lucide="arrow-down-wide-narrow"></i></button>
                         </div>
                         <div class="vx-home-composer">
-                          <div class="vx-home-input"><span class="vx-composer-placeholder"><span class="vx-composer-hint" data-i18n="showcase.desktop.home.placeholder">Describe a task, or type / for commands, @ for files, $ for skills</span><span data-typed-text></span><span class="vx-caret-blink"></span></span></div>
+                          <div class="vx-home-input"><span class="vx-composer-placeholder"><span class="vx-hint-overlay"><span class="vx-composer-hint" data-i18n="showcase.desktop.home.placeholder">Describe a task, or type / for commands, @ for files, $ for skills</span></span><span data-typed-text></span><span class="vx-caret-blink"></span></span></div>
                           <div class="vx-home-foot">
                             <div class="vx-composer-left">
                               <button class="vx-icon-btn is-md" type="button" aria-label="Add attachments"><i data-lucide="plus"></i></button>
@@ -729,32 +730,6 @@ document.querySelector("#app").innerHTML = `
                                 <button class="vx-mgmt-btn" type="button"><img class="vx-img-icon" src=${importIcon} alt="" /><span data-i18n="showcase.desktop.mgmt.importConfig">Import existing config</span></button>
                                 <button class="vx-mgmt-btn is-primary" type="button" data-mgmt-add-config><i data-lucide="plus"></i><span data-i18n="showcase.desktop.mgmt.addConfig">Add config</span></button>
                               </div>
-                              <div class="vx-mgmt-editor" data-provider-editor hidden>
-                                <div class="vx-mgmt-editor-row">
-                                  <label data-i18n="showcase.desktop.mgmt.providerName">Provider name</label>
-                                  <div class="vx-mgmt-editor-input" data-editor="name"><span class="vx-composer-hint" data-i18n="showcase.desktop.mgmt.profileNamePlaceholder">Profile name</span><span data-editor-text="name"></span><span class="vx-caret-blink"></span></div>
-                                </div>
-                                <div class="vx-mgmt-editor-row">
-                                  <label data-i18n="showcase.desktop.mgmt.apiKey">API Key</label>
-                                  <div class="vx-mgmt-editor-input" data-editor="key"><span class="vx-composer-hint">sk-…</span><span data-editor-text="key"></span><span class="vx-caret-blink"></span></div>
-                                </div>
-                                <div class="vx-mgmt-editor-row">
-                                  <label data-i18n="showcase.desktop.mgmt.requestUrl">Default API request URL</label>
-                                  <div class="vx-mgmt-editor-input" data-editor="url"><span class="vx-composer-hint">https://provider.example/v1</span><span data-editor-text="url"></span><span class="vx-caret-blink"></span></div>
-                                </div>
-                                <div class="vx-mgmt-editor-row">
-                                  <label data-i18n="showcase.desktop.mgmt.models">Models</label>
-                                  <div class="vx-mgmt-model-add">
-                                    <div class="vx-mgmt-editor-input" data-editor="model"><span class="vx-composer-hint" data-i18n="showcase.desktop.mgmt.modelId">Model id</span><span data-editor-text="model"></span><span class="vx-caret-blink"></span></div>
-                                    <button class="vx-mgmt-btn" type="button" data-editor-add><i data-lucide="plus"></i><span data-i18n="showcase.desktop.mgmt.add">Add</span></button>
-                                  </div>
-                                  <div class="vx-mgmt-model-list" data-editor-models></div>
-                                </div>
-                                <div class="vx-mgmt-editor-foot">
-                                  <button class="vx-mgmt-btn" type="button" data-editor-close><i data-lucide="x"></i><span data-i18n="showcase.desktop.mgmt.closeEditor">Close editor</span></button>
-                                  <button class="vx-mgmt-btn is-primary" type="button" data-editor-create><i data-lucide="check"></i><span data-i18n="showcase.desktop.mgmt.create">Create</span></button>
-                                </div>
-                              </div>
                             </div>
                             <div class="vx-mgmt-upgrading" data-mgmt-upgrading hidden>
                               <span class="vx-mgmt-upglyph"><i data-lucide="loader-circle"></i></span>
@@ -769,6 +744,41 @@ document.querySelector("#app").innerHTML = `
                           <div class="vx-mgmt-pane" data-mgmt-pane="skills" hidden>
                             <div class="vx-mgmt-empty">
                               <div class="vx-mgmt-emptybox"><strong data-i18n="showcase.desktop.mgmt.noSkillSelection">No Skill selected</strong><small data-i18n="showcase.desktop.mgmt.noSkillSelectionDesc">Select or import a Skill to manage Agent enablement.</small></div>
+                            </div>
+                          </div>
+                          <div class="vx-mgmt-modal" data-provider-editor hidden>
+                            <div class="vx-mgmt-modal-card">
+                              <button class="vx-icon-btn is-sm vx-mgmt-modal-close" type="button" data-editor-close aria-label="Close dialog"><i data-lucide="x"></i></button>
+                              <div class="vx-mgmt-modal-head">
+                                <strong data-i18n="showcase.desktop.mgmt.addConfig">Add config</strong>
+                                <small>Configure credentials and models for external model services.</small>
+                              </div>
+                              <div class="vx-mgmt-modal-body">
+                                <div class="vx-mgmt-editor-row">
+                                  <label data-i18n="showcase.desktop.mgmt.providerName">Provider name</label>
+                                  <div class="vx-mgmt-editor-input" data-editor="name"><span class="vx-caret-blink"></span><span class="vx-composer-hint" data-i18n="showcase.desktop.mgmt.profileNamePlaceholder">Profile name</span><span data-editor-text="name"></span></div>
+                                </div>
+                                <div class="vx-mgmt-editor-row">
+                                  <label data-i18n="showcase.desktop.mgmt.apiKey">API Key</label>
+                                  <div class="vx-mgmt-editor-input" data-editor="key"><span class="vx-caret-blink"></span><span class="vx-composer-hint">sk-…</span><span data-editor-text="key"></span></div>
+                                </div>
+                                <div class="vx-mgmt-editor-row">
+                                  <label data-i18n="showcase.desktop.mgmt.requestUrl">Default API request URL</label>
+                                  <div class="vx-mgmt-editor-input" data-editor="url"><span class="vx-caret-blink"></span><span class="vx-composer-hint">https://provider.example/v1</span><span data-editor-text="url"></span></div>
+                                </div>
+                                <div class="vx-mgmt-editor-row">
+                                  <label data-i18n="showcase.desktop.mgmt.models">Models</label>
+                                  <div class="vx-mgmt-model-add">
+                                    <div class="vx-mgmt-editor-input" data-editor="model"><span class="vx-caret-blink"></span><span class="vx-composer-hint" data-i18n="showcase.desktop.mgmt.modelId">Model id</span><span data-editor-text="model"></span></div>
+                                    <button class="vx-mgmt-btn" type="button" data-editor-add><i data-lucide="plus"></i><span data-i18n="showcase.desktop.mgmt.add">Add</span></button>
+                                  </div>
+                                  <div class="vx-mgmt-model-list" data-editor-models></div>
+                                </div>
+                              </div>
+                              <div class="vx-mgmt-editor-foot">
+                                <button class="vx-mgmt-btn" type="button" data-editor-close><span data-i18n="showcase.desktop.mgmt.cancel">Cancel</span></button>
+                                <button class="vx-mgmt-btn is-primary" type="button" data-editor-create><i data-lucide="check"></i><span data-i18n="showcase.desktop.mgmt.create">Create</span></button>
+                              </div>
                             </div>
                           </div>
                           <div class="vx-mgmt-toast" data-mgmt-toast hidden><i data-lucide="circle-check"></i><span></span></div>
@@ -809,11 +819,11 @@ document.querySelector("#app").innerHTML = `
                         </div>
                         <div class="vx-usage-scroll">
                           <div class="vx-usage-summary" data-usage-summary>
-                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="cpu"></i><span data-i18n="showcase.desktop.usage.totalTokens">Total tokens</span></span><strong data-usage-metric="tokens">18.42M</strong></div>
-                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="inbox"></i><span data-i18n="showcase.desktop.usage.turns">Turns</span></span><strong data-usage-metric="turns">1,284</strong></div>
-                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="arrow-down"></i><span data-i18n="showcase.desktop.usage.input">Input</span></span><strong data-usage-metric="input">12.96M</strong></div>
-                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="arrow-up"></i><span data-i18n="showcase.desktop.usage.output">Output</span></span><strong data-usage-metric="output">2.31M</strong></div>
-                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="hard-drive"></i><span data-i18n="showcase.desktop.usage.cachedRead">Cached read</span></span><strong data-usage-metric="cached">3.15M</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="cpu"></i><span data-i18n="showcase.desktop.usage.totalTokens">Total tokens</span></span><strong data-usage-metric="tokens">55.26B</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="inbox"></i><span data-i18n="showcase.desktop.usage.turns">Turns</span></span><strong data-usage-metric="turns">38,520</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="arrow-down"></i><span data-i18n="showcase.desktop.usage.input">Input</span></span><strong data-usage-metric="input">38.88B</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="arrow-up"></i><span data-i18n="showcase.desktop.usage.output">Output</span></span><strong data-usage-metric="output">6.93B</strong></div>
+                            <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="hard-drive"></i><span data-i18n="showcase.desktop.usage.cachedRead">Cached read</span></span><strong data-usage-metric="cached">9.45B</strong></div>
                             <div class="vx-usage-metric"><span class="vx-usage-mlabel"><i data-lucide="chart-pie"></i><span data-i18n="showcase.desktop.usage.cacheHitRate">Cache hit rate</span></span><strong data-usage-metric="hitRate">62%</strong></div>
                           </div>
                           <div class="vx-usage-trend">
@@ -849,10 +859,10 @@ document.querySelector("#app").innerHTML = `
                                   <g data-usage-bar="14"><rect x="594" y="52" width="16" height="92" fill="#00c950" /><rect x="594" y="28" width="16" height="24" fill="#00a63e" /><rect x="594" y="16" width="16" height="12" fill="#008236" /></g>
                                 </g>
                                 <g class="vx-chart-axis">
-                                  <text x="42" y="16" text-anchor="end">40k</text>
-                                  <text x="42" y="60" text-anchor="end">30k</text>
-                                  <text x="42" y="104" text-anchor="end">20k</text>
-                                  <text x="42" y="148" text-anchor="end">10k</text>
+                                  <text x="42" y="16" text-anchor="end">4.0B</text>
+                                  <text x="42" y="60" text-anchor="end">3.0B</text>
+                                  <text x="42" y="104" text-anchor="end">2.0B</text>
+                                  <text x="42" y="148" text-anchor="end">1.0B</text>
                                 </g>
                               </svg>
                               <div class="vx-usage-legend">
@@ -873,15 +883,15 @@ document.querySelector("#app").innerHTML = `
                             </div>
                             <div class="vx-usage-models" data-usage-page="models" hidden>
                               <div data-usage-models="all">
-                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-6-astra</span><div class="vx-usage-modelbar"><span style="width:82%"></span></div><b>10,482</b></div>
-                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">claude-sonnet-4.5</span><div class="vx-usage-modelbar"><span style="width:58%"></span></div><b>7,415</b></div>
-                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gemini-2.5-pro</span><div class="vx-usage-modelbar"><span style="width:34%"></span></div><b>4,330</b></div>
-                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5.1</span><div class="vx-usage-modelbar"><span style="width:18%"></span></div><b>2,296</b></div>
+                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-6-astra</span><div class="vx-usage-modelbar"><span style="width:82%"></span></div><b>24.18B</b></div>
+                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">claude-sonnet-4.5</span><div class="vx-usage-modelbar"><span style="width:58%"></span></div><b>16.64B</b></div>
+                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gemini-2.5-pro</span><div class="vx-usage-modelbar"><span style="width:34%"></span></div><b>9.72B</b></div>
+                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5.1</span><div class="vx-usage-modelbar"><span style="width:18%"></span></div><b>4.72B</b></div>
                               </div>
                               <div data-usage-models="codex" hidden>
-                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-6-astra</span><div class="vx-usage-modelbar"><span style="width:88%"></span></div><b>8,672</b></div>
-                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5.1</span><div class="vx-usage-modelbar"><span style="width:24%"></span></div><b>2,384</b></div>
-                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5-mini</span><div class="vx-usage-modelbar"><span style="width:11%"></span></div><b>1,096</b></div>
+                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-6-astra</span><div class="vx-usage-modelbar"><span style="width:88%"></span></div><b>7.92B</b></div>
+                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5.1</span><div class="vx-usage-modelbar"><span style="width:24%"></span></div><b>2.86B</b></div>
+                                <div class="vx-usage-modelrow"><span class="vx-usage-modelname">gpt-5-mini</span><div class="vx-usage-modelbar"><span style="width:11%"></span></div><b>1.70B</b></div>
                               </div>
                             </div>
                           </div>
@@ -906,20 +916,20 @@ document.querySelector("#app").innerHTML = `
                                 <span class="is-num" data-i18n="showcase.desktop.usage.coverage">Coverage</span>
                               </div>
                               <div data-usage-rows="all">
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 5</span><span class="is-num">128</span><span class="is-num">1.24M</span><span class="is-num">0.88M</span><span class="is-num">0.16M</span><span class="is-num">0.20M</span><span class="is-num">61%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 6</span><span class="is-num">96</span><span class="is-num">0.98M</span><span class="is-num">0.71M</span><span class="is-num">0.12M</span><span class="is-num">0.15M</span><span class="is-num">58%</span><span class="is-num">5h ago</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 7</span><span class="is-num">154</span><span class="is-num">1.62M</span><span class="is-num">1.12M</span><span class="is-num">0.21M</span><span class="is-num">0.29M</span><span class="is-num">64%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 8</span><span class="is-num">72</span><span class="is-num">0.74M</span><span class="is-num">0.52M</span><span class="is-num">0.09M</span><span class="is-num">0.13M</span><span class="is-num">63%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 9</span><span class="is-num">183</span><span class="is-num">1.85M</span><span class="is-num">1.31M</span><span class="is-num">0.24M</span><span class="is-num">0.30M</span><span class="is-num">66%</span><span class="is-num">8h ago</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 10</span><span class="is-num">141</span><span class="is-num">1.41M</span><span class="is-num">0.97M</span><span class="is-num">0.19M</span><span class="is-num">0.25M</span><span class="is-num">62%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 5</span><span class="is-num">3,840</span><span class="is-num">3.72B</span><span class="is-num">2.64B</span><span class="is-num">0.48B</span><span class="is-num">0.60B</span><span class="is-num">61%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 6</span><span class="is-num">2,880</span><span class="is-num">2.94B</span><span class="is-num">2.13B</span><span class="is-num">0.36B</span><span class="is-num">0.45B</span><span class="is-num">58%</span><span class="is-num">5h ago</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 7</span><span class="is-num">4,620</span><span class="is-num">4.86B</span><span class="is-num">3.36B</span><span class="is-num">0.63B</span><span class="is-num">0.87B</span><span class="is-num">64%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 8</span><span class="is-num">2,160</span><span class="is-num">2.22B</span><span class="is-num">1.56B</span><span class="is-num">0.27B</span><span class="is-num">0.39B</span><span class="is-num">63%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 9</span><span class="is-num">5,490</span><span class="is-num">5.55B</span><span class="is-num">3.93B</span><span class="is-num">0.72B</span><span class="is-num">0.90B</span><span class="is-num">66%</span><span class="is-num">8h ago</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 10</span><span class="is-num">4,230</span><span class="is-num">4.23B</span><span class="is-num">2.91B</span><span class="is-num">0.57B</span><span class="is-num">0.75B</span><span class="is-num">62%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
                               </div>
                               <div data-usage-rows="codex" hidden>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 5</span><span class="is-num">64</span><span class="is-num">0.66M</span><span class="is-num">0.47M</span><span class="is-num">0.08M</span><span class="is-num">0.11M</span><span class="is-num">68%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 6</span><span class="is-num">51</span><span class="is-num">0.52M</span><span class="is-num">0.38M</span><span class="is-num">0.06M</span><span class="is-num">0.08M</span><span class="is-num">66%</span><span class="is-num">5h ago</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 7</span><span class="is-num">83</span><span class="is-num">0.87M</span><span class="is-num">0.61M</span><span class="is-num">0.11M</span><span class="is-num">0.15M</span><span class="is-num">69%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 8</span><span class="is-num">38</span><span class="is-num">0.39M</span><span class="is-num">0.28M</span><span class="is-num">0.05M</span><span class="is-num">0.06M</span><span class="is-num">67%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 9</span><span class="is-num">97</span><span class="is-num">0.98M</span><span class="is-num">0.70M</span><span class="is-num">0.13M</span><span class="is-num">0.16M</span><span class="is-num">70%</span><span class="is-num">8h ago</span><span class="is-num">Reported</span></div>
-                                <div class="vx-usage-tr"><span class="is-dim">Aug 10</span><span class="is-num">76</span><span class="is-num">0.74M</span><span class="is-num">0.52M</span><span class="is-num">0.10M</span><span class="is-num">0.13M</span><span class="is-num">68%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 5</span><span class="is-num">1,920</span><span class="is-num">1.98B</span><span class="is-num">1.41B</span><span class="is-num">0.24B</span><span class="is-num">0.33B</span><span class="is-num">68%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 6</span><span class="is-num">1,530</span><span class="is-num">1.56B</span><span class="is-num">1.14B</span><span class="is-num">0.18B</span><span class="is-num">0.24B</span><span class="is-num">66%</span><span class="is-num">5h ago</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 7</span><span class="is-num">2,490</span><span class="is-num">2.61B</span><span class="is-num">1.83B</span><span class="is-num">0.33B</span><span class="is-num">0.45B</span><span class="is-num">69%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 8</span><span class="is-num">1,140</span><span class="is-num">1.17B</span><span class="is-num">0.84B</span><span class="is-num">0.15B</span><span class="is-num">0.18B</span><span class="is-num">67%</span><span class="is-num">Yesterday</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 9</span><span class="is-num">2,910</span><span class="is-num">2.94B</span><span class="is-num">2.10B</span><span class="is-num">0.39B</span><span class="is-num">0.48B</span><span class="is-num">70%</span><span class="is-num">8h ago</span><span class="is-num">Reported</span></div>
+                                <div class="vx-usage-tr"><span class="is-dim">Aug 10</span><span class="is-num">2,280</span><span class="is-num">2.22B</span><span class="is-num">1.56B</span><span class="is-num">0.30B</span><span class="is-num">0.39B</span><span class="is-num">68%</span><span class="is-num">2h ago</span><span class="is-num">Reported</span></div>
                               </div>
                             </div>
                           </div>
@@ -946,7 +956,12 @@ document.querySelector("#app").innerHTML = `
                       </span>
                       <span class="vx-preview-tab" data-preview-tab="commit" hidden>
                         <i data-lucide="git-commit-horizontal"></i>
-                        <span data-preview-commit-subject>feat: rework worktree merge backfill</span>
+                        <span data-preview-commit-subject>rework worktree merge backfill</span>
+                        <button class="vx-tab-close" type="button" aria-label="Close tab"><i data-lucide="x"></i></button>
+                      </span>
+                      <span class="vx-preview-tab" data-preview-tab="file" hidden>
+                        <i data-lucide="file-code"></i>
+                        <span data-preview-file-name>timeline.rs</span>
                         <button class="vx-tab-close" type="button" aria-label="Close tab"><i data-lucide="x"></i></button>
                       </span>
                       <button class="vx-preview-add" type="button" aria-label="New preview tab"><i data-lucide="plus"></i></button>
@@ -959,6 +974,9 @@ document.querySelector("#app").innerHTML = `
                       <div class="vx-term-line is-dim">Test Files 2 passed (2)</div>
                       <div class="vx-term-line is-dim">Tests 35 passed (35)</div>
                       <div class="vx-term-line"><span class="vx-term-prompt">❯</span><span class="vx-term-cursor"></span></div>
+                    </div>
+                    <div class="vx-preview-body is-file" data-preview-body="file" hidden>
+                      <code class="vx-file-code" data-preview-file-code></code>
                     </div>
                     <div class="vx-preview-body is-commit" data-preview-body="commit" hidden>
                       <div class="vx-diff-head">
@@ -1015,14 +1033,14 @@ document.querySelector("#app").innerHTML = `
                       <div class="vx-rail-search"><i data-lucide="search"></i><span>Search workspace files</span><span class="vx-search-mode">Name</span></div>
                       <div class="vx-filetree">
                         <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>apps</span></div>
-                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-code"></i><span>app.rs</span></div>
-                        <div class="vx-file-row is-selected" style="--depth:1"><i data-lucide="file-code"></i><span>code_workbench.rs</span></div>
+                        <div class="vx-file-row" style="--depth:1" data-demo-file="apps/src/app.rs"><i data-lucide="file-code"></i><span>app.rs</span></div>
+                        <div class="vx-file-row is-selected" style="--depth:1" data-demo-file="crates/workbench/src/code_workbench.rs"><i data-lucide="file-code"></i><span>code_workbench.rs</span></div>
                         <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>src</span></div>
-                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-code"></i><span>timeline.rs</span></div>
-                        <div class="vx-file-row" style="--depth:1"><i data-lucide="book-open"></i><span>README.md</span></div>
+                        <div class="vx-file-row" style="--depth:1" data-demo-file="src/timeline.rs"><i data-lucide="file-code"></i><span>timeline.rs</span></div>
+                        <div class="vx-file-row" style="--depth:1" data-demo-file="README.md"><i data-lucide="book-open"></i><span>README.md</span></div>
                         <div class="vx-file-row is-dir" style="--depth:0"><i data-lucide="chevron-down"></i><i data-lucide="folder"></i><span>crates</span></div>
-                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-json"></i><span>tokens.json</span></div>
-                        <div class="vx-file-row" style="--depth:1"><i data-lucide="file-cog"></i><span>Cargo.toml</span></div>
+                        <div class="vx-file-row" style="--depth:1" data-demo-file="crates/core/tokens.json"><i data-lucide="file-json"></i><span>tokens.json</span></div>
+                        <div class="vx-file-row" style="--depth:1" data-demo-file="Cargo.toml"><i data-lucide="file-cog"></i><span>Cargo.toml</span></div>
                       </div>
                     </div>
                     <div class="vx-rail-mode is-git" data-rail-mode="git">
@@ -1060,9 +1078,9 @@ document.querySelector("#app").innerHTML = `
                             <span class="vx-amend"><span class="vx-checkbox"></span>amend</span>
                           </div>
                           <div class="vx-commit-input" data-commit-input>
-                            <span class="vx-composer-hint" data-i18n="showcase.desktop.rail.commitPlaceholder">feat: commit message</span>
-                            <span data-commit-typed></span>
                             <span class="vx-caret-blink"></span>
+                            <span class="vx-composer-hint" data-hint-for="commit-typed" data-i18n="showcase.desktop.rail.commitPlaceholder">Commit message</span>
+                            <span data-commit-typed></span>
                           </div>
                         <div class="vx-commit-actions">
                           <button class="vx-commit-btn" type="button"><i data-lucide="rotate-ccw"></i>Rollback</button>
@@ -1092,21 +1110,38 @@ document.querySelector("#app").innerHTML = `
                           <div class="vx-history-row"><span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span></span><div class="vx-history-card"><div class="vx-history-subj">fix: clamp right rail width on narrow viewports</div><div class="vx-history-meta"><span>Yesterday</span><span>peatboy</span><span class="vx-history-hash">f4a0d19</span></div></div></div>
                           <div class="vx-history-row"><span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span></span><div class="vx-history-card"><div class="vx-history-subj">chore: refresh theme tokens</div><div class="vx-history-meta"><span>2 days ago</span><span>peatboy</span><span class="vx-history-hash">88bc3a6</span></div></div></div>
                         </div>
-                        <div class="vx-commit-drawer" data-commit-drawer hidden>
-                          <div class="vx-commit-drawer-head">
-                            <i data-lucide="git-commit-horizontal"></i>
-                            <strong data-i18n="showcase.desktop.rail.changedFiles">Changed files</strong>
-                            <span class="vx-history-hash" data-drawer-hash>b7e42d1</span>
-                            <span class="vx-diff-nums"><b class="vx-diff-add">+128</b><b class="vx-diff-del">−47</b></span>
+                        <aside class="vx-commit-details" data-commit-drawer hidden>
+                          <button class="vx-icon-btn is-sm vx-commit-details-close" type="button" data-commit-drawer-close aria-label="Close commit details"><i data-lucide="x"></i></button>
+                          <div class="vx-commit-details-scroll">
+                            <div class="vx-commit-author">
+                              <span class="vx-commit-avatar">P</span>
+                              <strong>peatboy</strong>
+                              <span class="vx-commit-when" data-drawer-when>now</span>
+                            </div>
+                            <div class="vx-commit-refs">
+                              <span class="vx-history-ref is-main">main</span>
+                              <span class="vx-history-ref">origin/main</span>
+                            </div>
+                            <div class="vx-commit-byline"><span>peatboy@vibex.dev</span><span class="vx-history-hash" data-drawer-hash>b7e42d1</span></div>
+                            <div class="vx-commit-sep" role="separator"></div>
+                            <p class="vx-commit-message">rework worktree merge backfill</p>
+                            <div class="vx-commit-sep" role="separator"></div>
+                            <div class="vx-commit-files-head">
+                              <span><b data-drawer-count>3</b> <span data-i18n="showcase.desktop.rail.changedFiles">Changed files</span></span>
+                              <span class="vx-commit-files-meta">
+                                <i data-lucide="list-tree"></i>
+                                <span class="vx-diff-nums"><b class="vx-diff-add">+128</b><b class="vx-diff-del">−47</b></span>
+                              </span>
+                            </div>
+                            <div class="vx-commit-drawer-list">
+                              <div class="vx-commit-drawer-row" style="--depth:0"><i data-lucide="folder"></i><span>src/workbench</span></div>
+                              <div class="vx-commit-drawer-row" style="--depth:1"><i data-lucide="file-code"></i><span>timeline.rs</span><span class="vx-diff-nums"><b class="vx-diff-add">+86</b><b class="vx-diff-del">−31</b></span></div>
+                              <div class="vx-commit-drawer-row" style="--depth:1"><i data-lucide="file-code"></i><span>worktree.rs</span><span class="vx-diff-nums"><b class="vx-diff-add">+31</b><b class="vx-diff-del">−9</b></span></div>
+                              <div class="vx-commit-drawer-row" style="--depth:0"><i data-lucide="folder"></i><span>crates/core</span></div>
+                              <div class="vx-commit-drawer-row" style="--depth:1"><i data-lucide="file-code"></i><span>session.rs</span><span class="vx-diff-nums"><b class="vx-diff-add">+11</b><b class="vx-diff-del">−7</b></span></div>
+                            </div>
                           </div>
-                          <div class="vx-commit-drawer-list">
-                            <div class="vx-commit-drawer-row" style="--depth:0"><i data-lucide="folder"></i><span>src/workbench</span></div>
-                            <div class="vx-commit-drawer-row" style="--depth:1"><i data-lucide="file-code"></i><span>timeline.rs</span><span class="vx-diff-nums"><b class="vx-diff-add">+86</b><b class="vx-diff-del">−31</b></span></div>
-                            <div class="vx-commit-drawer-row" style="--depth:1"><i data-lucide="file-code"></i><span>worktree.rs</span><span class="vx-diff-nums"><b class="vx-diff-add">+31</b><b class="vx-diff-del">−9</b></span></div>
-                            <div class="vx-commit-drawer-row" style="--depth:0"><i data-lucide="folder"></i><span>crates/core</span></div>
-                            <div class="vx-commit-drawer-row" style="--depth:1"><i data-lucide="file-code"></i><span>session.rs</span><span class="vx-diff-nums"><b class="vx-diff-add">+11</b><b class="vx-diff-del">−7</b></span></div>
-                          </div>
-                        </div>
+                        </aside>
                       </div>
                     </div>
                   </aside>
@@ -1611,6 +1646,7 @@ function renderIcons() {
     Inbox,
     "Import": ImportIcon,
     Info,
+    ListTree,
     RotateCw,
   },
   });
@@ -2019,6 +2055,9 @@ desktopShowcase?.querySelectorAll("button[data-desktop-rail]").forEach((tab) => 
       shell?.classList.remove("is-rail-collapsed");
       setDesktopRail(tab.dataset.desktopRail);
     }
+    // Fullpage agent/usage screens have no rail; an explicit click reopens
+    // the workspace frame.
+    shell?.classList.remove("is-fullpage");
   });
 });
 
@@ -2068,10 +2107,35 @@ desktopShowcase?.querySelector("[data-git-list]")?.addEventListener("click", (ev
   const box = row.querySelector(".vx-checkbox");
   const checked = row.classList.toggle("is-checked");
   box?.classList.toggle("is-checked", checked);
+  syncDirCheckbox(row);
   desktopShowcase.querySelectorAll("[data-git-list] [data-demo-commit-row]").forEach((other) => {
     other.classList.toggle("is-selected", other === row);
   });
   syncGitSelection();
+});
+
+// Workspace tree: clicking a file opens its content as a preview tab.
+desktopShowcase?.querySelector(".vx-filetree")?.addEventListener("click", (event) => {
+  const row = event.target.closest("[data-demo-file]");
+  if (!row || row.classList.contains("is-dir")) return;
+  desktopShowcase.querySelectorAll(".vx-filetree .vx-file-row").forEach((other) => {
+    other.classList.toggle("is-selected", other === row);
+  });
+  openFilePreview(row.getAttribute("data-demo-file"));
+});
+
+// The commit-details panel closes from its own dismiss button.
+desktopShowcase?.querySelector("[data-commit-drawer-close]")?.addEventListener("click", () => {
+  const drawer = desktopShowcase.querySelector("[data-commit-drawer]");
+  if (drawer) drawer.hidden = true;
+});
+
+// The provider modal closes from Cancel or the header dismiss button.
+desktopShowcase?.querySelectorAll("[data-provider-editor] [data-editor-close]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const editor = desktopShowcase.querySelector("[data-provider-editor]");
+    if (editor) { editor.hidden = true; editor.classList.remove("is-open"); }
+  });
 });
 
 // Commit history: selecting a card shows its changed-files drawer, and the
@@ -2258,7 +2322,10 @@ function tickTyping() {
   }
   if (homeTypedNodes.length === 0) return;
   const phrase = typingPhrases[typingIndex];
-  const apply = (text) => homeTypedNodes.forEach((node) => { node.textContent = text; });
+  const apply = (text) => homeTypedNodes.forEach((node) => {
+    node.textContent = text;
+    syncComposerHint(node);
+  });
   if (!deleting) {
     charIndex += 1;
     apply(phrase.slice(0, charIndex));
@@ -2528,12 +2595,22 @@ function typeInto(node, text, duration, alive = () => true) {
       const progress = Math.min(1, (performance.now() - start) / duration);
       const value = text.slice(0, Math.round(text.length * progress));
       if (typeof node.value === "string") node.value = value;
-      else node.textContent = value;
+      else {
+        node.textContent = value;
+        syncComposerHint(node);
+      }
       if (progress < 1) window.requestAnimationFrame(step);
       else resolve();
     };
     window.requestAnimationFrame(step);
   });
+}
+
+// The mock inputs keep a ghost hint beside a blinking caret; the hint only
+// survives while the field is empty (like the app's real editors).
+function syncComposerHint(node) {
+  const hint = node?.parentElement?.querySelector(".vx-composer-hint");
+  if (hint) hint.classList.toggle("is-hidden", (node.textContent ?? "").length > 0);
 }
 
 function blockHtml(kind, args = []) {
@@ -2980,7 +3057,10 @@ function resetProjectCount() {
 function resetHomeComposer() {
   const home = desktopShowcase?.querySelector('[data-desktop-panel="home"]');
   home?.querySelector(".vx-home-composer")?.classList.remove("is-typing");
-  home?.querySelectorAll("[data-typed-text]").forEach((node) => { node.textContent = ""; });
+  home?.querySelectorAll("[data-typed-text]").forEach((node) => {
+    node.textContent = "";
+    syncComposerHint(node);
+  });
 }
 
 function resetReplaySurface() {
@@ -3004,7 +3084,10 @@ function resetReplaySurface() {
   changesSlot.hidden = true;
   changesSlot.classList.remove("vx-reveal");
   changesSlot.querySelectorAll(".vx-changes-row").forEach((row) => { row.hidden = true; });
-  if (agentTypedNode) agentTypedNode.textContent = "";
+  if (agentTypedNode) {
+    agentTypedNode.textContent = "";
+    syncComposerHint(agentTypedNode);
+  }
   agentComposer?.classList.remove("is-sent", "is-expanded", "is-focused", "is-typing");
   statusStrip.classList.remove("is-idle");
 
@@ -3063,7 +3146,6 @@ function startAgentDemo() {
     renderIcons();
     const count = desktopShowcase.querySelector("[data-project-count]");
     if (count) count.textContent = "9";
-    shell?.classList.remove("is-fullpage");
     setActivePanel("agent");
     syncSessionTitle(true);
     resetReplaySurface();
@@ -3081,7 +3163,6 @@ async function runSessionDemo(gen) {
   const homeComposer = home?.querySelector(".vx-home-composer");
   const homeTyped = home?.querySelector("[data-typed-text]");
   const homeSend = home?.querySelector(".vx-home-foot .vx-send-btn");
-  const shell = desktopShowcase?.querySelector("[data-desktop-shell]");
 
   // Phase 1 — new-session home: the user types the task into the composer.
   homeDemoActive = true;
@@ -3101,12 +3182,12 @@ async function runSessionDemo(gen) {
   const projectCount = desktopShowcase?.querySelector("[data-project-count]");
   if (projectCount) projectCount.textContent = "9";
   if (homeTyped) homeTyped.textContent = "";
+  syncComposerHint(homeTyped);
   homeComposer?.classList.remove("is-typing");
-  await scriptSleep(950); if (!alive()) return;
 
-  // Phase 2 — the main screen opens the session and the turn starts running.
+  // Phase 2 — the main screen opens the session right away; the rail and
+  // preview docks stay closed until a demo (or the user) needs them.
   homeDemoActive = false;
-  shell?.classList.remove("is-fullpage");
   setActivePanel("agent");
   syncSessionTitle(true);
   resetReplaySurface();
@@ -3187,6 +3268,7 @@ function resetGitRailState() {
   if (aheadBadge) aheadBadge.textContent = "1";
   const typed = desktopShowcase.querySelector("[data-commit-typed]");
   if (typed) typed.textContent = "";
+  syncComposerHint(typed);
   desktopShowcase.querySelector("[data-commit-input]")?.classList.remove("is-typing");
   const commitBtn = desktopShowcase.querySelector("[data-commit-btn]");
   commitBtn?.classList.remove("is-running");
@@ -3200,6 +3282,30 @@ function resetGitRailState() {
 
 // The commit chip mirrors the app: staged file count inside the Commit
 // button, disabled until at least one file is checked.
+// Zed's tree checkbox behaviour: a directory checks itself once every file
+// below it is checked, and unchecks as soon as one file drops out.
+function syncDirCheckbox(row) {
+  if (!desktopShowcase || !row) return;
+  const list = row.closest("[data-git-list]");
+  if (!list) return;
+  const rows = [...list.querySelectorAll("[data-demo-commit-row]")];
+  const index = rows.indexOf(row);
+  if (index < 0) return;
+  const depth = (node) => Number(node.style.getPropertyValue("--depth") || 0);
+  let dir = null;
+  for (let i = index - 1; i >= 0; i -= 1) {
+    if (depth(rows[i]) < depth(row)) { dir = rows[i]; break; }
+  }
+  if (!dir || !dir.classList.contains("is-dir")) return;
+  const siblings = [];
+  for (let i = index; i < rows.length; i += 1) {
+    if (i !== index && depth(rows[i]) <= depth(dir)) break;
+    if (!rows[i].classList.contains("is-dir")) siblings.push(rows[i]);
+  }
+  const allChecked = siblings.every((node) => node.querySelector(".vx-checkbox")?.classList.contains("is-checked"));
+  dir.querySelector(".vx-checkbox")?.classList.toggle("is-checked", allChecked);
+}
+
 function syncGitSelection() {
   if (!desktopShowcase) return;
   const fileRows = [...desktopShowcase.querySelectorAll("[data-git-list] [data-demo-commit-row]")]
@@ -3228,8 +3334,10 @@ function insertHistoryCommit() {
   row.className = "vx-history-row is-new";
   row.setAttribute("data-demo-history", "");
   row.innerHTML = `<span class="vx-history-graph"><svg viewBox="0 0 28 64"><path d="M14 0 V64" stroke="#e4e4e7" stroke-width="1.8" fill="none" /></svg><span class="vx-history-node is-main"></span></span>
-    <div class="vx-history-card is-selected"><div class="vx-history-subj">feat: rework worktree merge backfill</div><div class="vx-history-meta"><span>now</span><span>peatboy</span><span class="vx-history-hash">b7e42d1</span></div></div>`;
+    <div class="vx-history-card is-selected"><div class="vx-history-subj">rework worktree merge backfill</div><div class="vx-history-meta"><span>now</span><span>peatboy</span><span class="vx-history-hash">b7e42d1</span></div></div>`;
   history.prepend(row);
+  const when = desktopShowcase.querySelector("[data-drawer-when]");
+  if (when) when.textContent = "now";
   renderIcons();
 }
 
@@ -3242,6 +3350,31 @@ function openCommitDrawer() {
   void drawer.offsetWidth;
   drawer.classList.add("is-open");
   renderIcons();
+}
+
+// Static file contents served to the mock preview tabs.
+const DEMO_FILE_CONTENT = {
+  "apps/src/app.rs": "mod app_state;\nmod workbench;\n\nfn main() {\n    vibex::run(vibex::Config::load().expect(\"valid config\"));\n}",
+  "crates/workbench/src/code_workbench.rs": "impl CodeWorkbench {\n    pub fn open_session(&mut self, id: SessionId) {\n        self.session = self.store.load(id);\n        self.timeline.reset(&self.session);\n        self.notify();\n    }\n}",
+  "src/timeline.rs": "pub struct Timeline {\n    rows: Vec<TypedRow>,\n    clock: Clock,\n}\n\nimpl Timeline {\n    pub fn push(&mut self, event: TurnEvent) {\n        self.rows.push(TypedRow::from(event));\n        self.notify();\n    }\n}",
+  "README.md": "# Vibex\n\nA local-first agent workbench.\n\n- Task sessions with a live timeline\n- Integrated tools, git and usage panels",
+  "crates/core/tokens.json": "{\n  \"color\": { \"accent\": \"#51a2ff\", \"success\": \"#4cc38a\" },\n  \"radius\": { \"card\": \"10px\", \"chip\": \"6px\" }\n}",
+  "Cargo.toml": "[package]\nname = \"vibex\"\nversion = \"0.4.3\"\nedition = \"2024\"\n\n[workspace]\nmembers = [\"crates/core\", \"crates/workbench\"]",
+};
+
+function openFilePreview(path) {
+  if (!desktopShowcase) return;
+  const content = DEMO_FILE_CONTENT[path];
+  if (content == null) return;
+  const name = path.split("/").pop();
+  const tab = desktopShowcase.querySelector('[data-preview-tab="file"]');
+  const tabName = desktopShowcase.querySelector("[data-preview-file-name]");
+  const code = desktopShowcase.querySelector("[data-preview-file-code]");
+  if (tabName) tabName.textContent = name;
+  if (code) code.textContent = content;
+  tab?.removeAttribute("hidden");
+  setPreviewOpen(true);
+  showPreviewTab("file");
 }
 
 function showPreviewTab(name) {
@@ -3257,6 +3390,7 @@ function showPreviewTab(name) {
 function resetPreviewTabs() {
   if (!desktopShowcase) return;
   desktopShowcase.querySelector('[data-preview-tab="commit"]')?.setAttribute("hidden", "");
+  desktopShowcase.querySelector('[data-preview-tab="file"]')?.setAttribute("hidden", "");
   showPreviewTab("terminal");
   // Drop any demo command/output from the terminal buffer.
   const body = desktopShowcase.querySelector('[data-preview-body="terminal"]');
@@ -3272,10 +3406,20 @@ async function runToolsDemo(gen) {
   const alive = () => gen === scriptGeneration;
   await scriptSleep(900); if (!alive()) return;
 
-  // Files panel first, just the workspace tree.
+  // Files panel first: the workspace tree, then a file opens as a tab in
+  // the preview dock.
   pulseNode(desktopShowcase.querySelector('button[data-desktop-rail="files"]'));
   setDesktopRail("files");
-  await scriptSleep(2600); if (!alive()) return;
+  await scriptSleep(1400); if (!alive()) return;
+  const fileRow = desktopShowcase.querySelector('[data-demo-file="src/timeline.rs"]');
+  if (fileRow) {
+    desktopShowcase.querySelectorAll(".vx-filetree .vx-file-row").forEach((other) => {
+      other.classList.toggle("is-selected", other === fileRow);
+    });
+    pulseNode(fileRow);
+    openFilePreview("src/timeline.rs");
+  }
+  await scriptSleep(2400); if (!alive()) return;
 
   // Git panel opens on the Changes tab.
   pulseNode(desktopShowcase.querySelector('button[data-desktop-rail="git"]'));
@@ -3288,6 +3432,7 @@ async function runToolsDemo(gen) {
   for (const row of fileRows) {
     row.querySelector(".vx-checkbox")?.classList.add("is-checked");
     row.classList.add("is-selected");
+    syncDirCheckbox(row);
     syncGitSelection();
     await scriptSleep(650); if (!alive()) return;
   }
@@ -3297,7 +3442,7 @@ async function runToolsDemo(gen) {
   const commitInput = desktopShowcase.querySelector("[data-commit-input]");
   const typed = desktopShowcase.querySelector("[data-commit-typed]");
   commitInput?.classList.add("is-typing");
-  if (typed) await typeInto(typed, "feat: rework worktree merge backfill", 1500, alive);
+  if (typed) await typeInto(typed, "rework worktree merge backfill", 1500, alive);
   if (!alive()) return;
   commitInput?.classList.remove("is-typing");
   await scriptSleep(700); if (!alive()) return;
@@ -3315,6 +3460,7 @@ async function runToolsDemo(gen) {
     row.querySelector(".vx-checkbox")?.classList.remove("is-checked");
   });
   if (typed) typed.textContent = "";
+  syncComposerHint(typed);
   const wsFiles = desktopShowcase.querySelector("[data-ws-files]");
   if (wsFiles) wsFiles.textContent = "(1 file)";
   const wsAdd = desktopShowcase.querySelector("[data-ws-add]");
@@ -3371,7 +3517,7 @@ async function runTerminalCommand(gen, alive) {
   // Enter: the command line stays, the output streams in below it.
   promptLine.querySelector(".vx-term-cursor")?.remove();
   const output = [
-    "b7e42d1 (HEAD -> main) feat: rework worktree merge backfill",
+    "b7e42d1 (HEAD -> main) rework worktree merge backfill",
     "a3f9c12 feat: stream timeline rows from typed events",
     "7b21e04 fix: guard timeline replay against partial turns",
     "c91d7f3 chore: bump gpui-component pin",
@@ -3467,7 +3613,10 @@ function resetManagementState() {
   desktopShowcase.querySelector("[data-mgmt-upgrading]")?.setAttribute("hidden", "");
   const toast = desktopShowcase.querySelector("[data-mgmt-toast]");
   if (toast) { toast.hidden = true; toast.classList.remove("is-visible"); }
-  desktopShowcase.querySelectorAll("[data-editor-text]").forEach((node) => { node.textContent = ""; });
+  desktopShowcase.querySelectorAll("[data-editor-text]").forEach((node) => {
+    node.textContent = "";
+    syncComposerHint(node);
+  });
   desktopShowcase.querySelectorAll("[data-provider-editor] [data-editor]").forEach((input) => {
     input.classList.remove("is-typing");
   });
@@ -3557,7 +3706,8 @@ async function runManagementDemo(gen) {
   await scriptSleep(2400); if (!alive()) return;
   if (toast) { toast.hidden = true; toast.classList.remove("is-visible"); }
 
-  // 3. Add a model provider profile: name, key, URL, then a model.
+  // 3. Add a model provider profile: the header button opens the dialog.
+  pulseNode(desktopShowcase.querySelector("[data-mgmt-add-config]"));
   const editor = desktopShowcase.querySelector("[data-provider-editor]");
   if (editor) { editor.hidden = false; editor.classList.add("is-open"); }
   await scriptSleep(700); if (!alive()) return;
@@ -3573,6 +3723,7 @@ async function runManagementDemo(gen) {
   }
   const modelText = desktopShowcase.querySelector('[data-editor-text="model"]');
   if (modelText) modelText.textContent = "";
+  syncComposerHint(modelText);
   await scriptSleep(1100); if (!alive()) return;
 
   // 4. Create: the profile lands in the provider list, counts tick to 4.
@@ -3612,11 +3763,11 @@ async function runManagementDemo(gen) {
 // below (summary, trend bars, models, daily table) swaps to Codex data.
 // ---------------------------------------------------------------------------
 const USAGE_DATA = {
-  all: { tokens: "18.42M", turns: "1,284", input: "12.96M", output: "2.31M", cached: "3.15M", hitRate: "62%" },
-  codex: { tokens: "4.16M", turns: "409", input: "2.96M", output: "0.53M", cached: "0.69M", hitRate: "68%" },
-  claude: { tokens: "9.83M", turns: "612", input: "7.02M", output: "1.24M", cached: "1.57M", hitRate: "64%" },
-  gemini: { tokens: "3.61M", turns: "187", input: "2.61M", output: "0.42M", cached: "0.58M", hitRate: "59%" },
-  copilot: { tokens: "1.94M", turns: "96", input: "1.43M", output: "0.21M", cached: "0.30M", hitRate: "57%" },
+  all: { tokens: "55.26B", turns: "38,520", input: "38.88B", output: "6.93B", cached: "9.45B", hitRate: "62%" },
+  codex: { tokens: "12.48B", turns: "12,270", input: "8.88B", output: "1.59B", cached: "2.07B", hitRate: "68%" },
+  claude: { tokens: "29.49B", turns: "18,360", input: "21.06B", output: "3.72B", cached: "4.71B", hitRate: "64%" },
+  gemini: { tokens: "10.83B", turns: "5,610", input: "7.83B", output: "1.26B", cached: "1.74B", hitRate: "59%" },
+  copilot: { tokens: "5.82B", turns: "2,880", input: "4.29B", output: "0.63B", cached: "0.90B", hitRate: "57%" },
 };
 
 // Daily total-token profiles per agent; stacked segments derive from each

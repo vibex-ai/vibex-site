@@ -3133,10 +3133,10 @@ function startAgentDemo() {
   resetGitRailState();
   resetPreviewTabs();
   const shell = desktopShowcase.querySelector("[data-desktop-shell]");
-  // Session screens keep the far-right activity bar visible like the app;
-  // only the dock panels stay closed until something needs them.
-  shell?.classList.remove("is-fullpage");
-  shell?.classList.add("is-rail-collapsed");
+  // The new-session home is a fullpage surface — no activity bar, like the
+  // app's onboarding view. Opening a session brings it back.
+  shell?.classList.add("is-fullpage");
+  shell?.classList.remove("is-rail-collapsed");
   setPreviewOpen(false);
   setDesktopRail("files");
   setActivePanel("home");
@@ -3148,6 +3148,8 @@ function startAgentDemo() {
     renderIcons();
     const count = desktopShowcase.querySelector("[data-project-count]");
     if (count) count.textContent = "9";
+    shell?.classList.remove("is-fullpage");
+    shell?.classList.add("is-rail-collapsed");
     setActivePanel("agent");
     syncSessionTitle(true);
     resetReplaySurface();
@@ -3165,6 +3167,7 @@ async function runSessionDemo(gen) {
   const homeComposer = home?.querySelector(".vx-home-composer");
   const homeTyped = home?.querySelector("[data-typed-text]");
   const homeSend = home?.querySelector(".vx-home-foot .vx-send-btn");
+  const shell = desktopShowcase?.querySelector("[data-desktop-shell]");
 
   // Phase 1 — new-session home: the user types the task into the composer.
   homeDemoActive = true;
@@ -3187,9 +3190,11 @@ async function runSessionDemo(gen) {
   syncComposerHint(homeTyped);
   homeComposer?.classList.remove("is-typing");
 
-  // Phase 2 — the main screen opens the session right away; the rail and
-  // preview docks stay closed until a demo (or the user) needs them.
+  // Phase 2 — the main screen opens the session right away. The dock rail
+  // stays closed but the activity bar returns, like the app's session view.
   homeDemoActive = false;
+  shell?.classList.remove("is-fullpage");
+  shell?.classList.add("is-rail-collapsed");
   setActivePanel("agent");
   syncSessionTitle(true);
   resetReplaySurface();

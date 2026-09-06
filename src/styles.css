@@ -7356,7 +7356,9 @@ h3 {
   flex: 1;
   flex-direction: column;
   min-height: 0;
-  padding-top: 46px;
+  /* Panes own the status-bar clearance so their surface color runs behind
+     the status bar (the drawer's #18181b reaches the top, like the app). */
+  --iphone-status-h: 46px;
 }
 
 /* App chrome — mirrors the real GPUI mobile app: zinc surfaces (#09090b /
@@ -7368,6 +7370,7 @@ h3 {
   align-items: center;
   gap: 2px;
   height: 40px;
+  margin-top: var(--iphone-status-h);
   padding: 0 6px;
   border-bottom: 1px solid #18181b;
   background: #09090b;
@@ -7953,6 +7956,7 @@ h3 {
   flex: 1;
   flex-direction: column;
   min-height: 0;
+  padding-top: var(--iphone-status-h);
   background: #18181b;
 }
 
@@ -9129,7 +9133,7 @@ h3 {
   }
 
   .iphone-app {
-    padding-top: 40px;
+    --iphone-status-h: 40px;
   }
 
   .iphone-msg {

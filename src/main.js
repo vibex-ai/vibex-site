@@ -1542,7 +1542,7 @@ document.querySelector("#app").innerHTML = `
       <div class="final-glow" aria-hidden="true"></div>
       <div class="section-shell final-inner reveal">
         <img src=${vibexMark} alt="" />
-        <h2>Build at the speed of thought<br /><span>Keep your hands on the wheel</span></h2>
+        <h2>Your agents. Your workspace. Your control&mdash;from prompt to commit, desktop to mobile.</h2>
         <div class="final-actions">
           <a class="button button-primary" href="${githubUrl}/releases" target="_blank" rel="noreferrer">Get Vibex <i data-lucide="arrow-right"></i></a>
           <a class="text-link" href="${githubUrl}" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Star on GitHub <i data-lucide="arrow-up-right"></i></a>

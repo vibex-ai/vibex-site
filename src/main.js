@@ -1189,7 +1189,7 @@ document.querySelector("#app").innerHTML = `
     <section class="mobile-section" id="mobile">
       <div class="section-shell mobile-shell">
         <div class="mobile-head reveal">
-          <h2 data-i18n-html="remote.title">Your agent is still working.<br /><em>You don't have to be.</em></h2>
+          <h2 data-i18n-html="remote.title">Your agent is still working<br /><em>You don't have to be</em></h2>
           <p data-i18n="remote.copy">Pair your phone once, then review progress, answer permission requests, and continue the conversation away from your desk. The desktop still owns the work.</p>
         </div>
 
@@ -1363,7 +1363,7 @@ document.querySelector("#app").innerHTML = `
 
     <section class="workbench-section section-shell" id="product">
       <div class="workbench-heading reveal">
-        <h2>Direct the work.<br /><em>Keep the context.</em></h2>
+        <h2>Direct the work<br /><em>Keep the context</em></h2>
         <p>
           Vibex brings the whole coding loop into one native workspace, so agents can work with real context and you can inspect every change without switching tools.
         </p>
@@ -1467,7 +1467,7 @@ document.querySelector("#app").innerHTML = `
     <section class="agents-section" id="agents">
       <div class="section-shell">
         <div class="agents-head reveal">
-          <h2>Bring your own agents.</h2>
+          <h2>Bring your own agents</h2>
           <p>
             Vibex speaks the Agent Client Protocol (ACP) — a neutral contract between workbench and agent. Built-in presets are ready to go, and any ACP-compatible agent runs in the same workbench.
           </p>
@@ -1511,7 +1511,7 @@ document.querySelector("#app").innerHTML = `
 
     <section class="faq-section section-shell" id="faq">
       <div class="faq-heading reveal">
-        <h2>The important details.</h2>
+        <h2>The important details</h2>
       </div>
       <div class="faq-list reveal">
         <details>
@@ -1542,7 +1542,7 @@ document.querySelector("#app").innerHTML = `
       <div class="final-glow" aria-hidden="true"></div>
       <div class="section-shell final-inner reveal">
         <img src=${vibexMark} alt="" />
-        <h2>Build at the speed of thought.<br /><span>Keep your hands on the wheel.</span></h2>
+        <h2>Build at the speed of thought<br /><span>Keep your hands on the wheel</span></h2>
         <div class="final-actions">
           <a class="button button-primary" href="${githubUrl}/releases" target="_blank" rel="noreferrer">Get Vibex <i data-lucide="arrow-right"></i></a>
           <a class="text-link" href="${githubUrl}" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Star on GitHub <i data-lucide="arrow-up-right"></i></a>

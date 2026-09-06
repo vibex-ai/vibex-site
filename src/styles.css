@@ -7181,6 +7181,28 @@ h3 {
      freeze and resume with the carousel's pause conditions. */
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .mobile-scenes-thumb {
+    transition: opacity 200ms ease;
+  }
+
+  .mobile-scenes-progress {
+    transform: none;
+  }
+
+  /* Freeze the shimmer into a solid label; the global reduced-motion rules
+     already stop the animation itself. */
+  .iphone-think span {
+    background: none;
+    -webkit-text-fill-color: currentcolor;
+    color: #9f9fa9;
+  }
+
+  .iphone-think.is-pending span {
+    color: #efb000;
+  }
+}
+
 .mobile-scene {
   display: block;
   width: 100%;
@@ -7337,373 +7359,542 @@ h3 {
   padding-top: 46px;
 }
 
-/* App nav — chat header */
+/* App chrome — mirrors the real GPUI mobile app: zinc surfaces (#09090b /
+   #18181b), 40px header, 44px touch rows, 8px card radii. */
 
 .iphone-nav {
   display: flex;
   flex: none;
   align-items: center;
-  gap: 8px;
-  padding: 8px 14px 12px;
-  border-bottom: 1px solid rgba(20, 22, 15, 0.08);
-  background: rgba(243, 242, 236, 0.92);
-  backdrop-filter: blur(6px);
-}
-
-.iphone-nav-back {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 30px;
-  height: 30px;
-  margin-left: -4px;
-  color: #16170f;
-}
-
-.iphone-nav-back svg {
-  width: 20px;
-  height: 20px;
-}
-
-.iphone-nav-agent {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-}
-
-.iphone-nav-agent img {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #101210;
-}
-
-.iphone-nav-name {
-  display: grid;
-  min-width: 0;
   gap: 2px;
+  height: 40px;
+  padding: 0 6px;
+  border-bottom: 1px solid #18181b;
+  background: #09090b;
 }
 
-.iphone-nav-name strong {
-  overflow: hidden;
-  font-size: 13.5px;
-  font-weight: 650;
-  letter-spacing: 0.01em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.iphone-nav-name small {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  overflow: hidden;
-  color: #6f7168;
-  font-size: 11px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.iphone-nav-name small svg {
-  flex: none;
-  width: 11px;
-  height: 11px;
-  color: #0e7837;
-  animation: vx-spin 1.4s linear infinite;
-}
-
-.iphone-nav-more {
+.iphone-nav-icon {
   display: grid;
   place-items: center;
   flex: none;
-  width: 30px;
-  height: 30px;
-  margin-right: -4px;
-  color: #6f7168;
+  width: 40px;
+  height: 40px;
+  color: #d4d4d8;
 }
 
-.iphone-nav-more svg {
+.iphone-nav-icon svg {
   width: 18px;
   height: 18px;
 }
 
+.iphone-nav-icon.is-dim {
+  color: #9f9fa9;
+}
+
+.iphone-nav-icon.is-dim svg {
+  width: 16px;
+  height: 16px;
+}
+
+.iphone-nav-brand {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.iphone-nav-brand img {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+/* Turn-status dot beside the logo: gray idle, green while the turn runs. */
+.iphone-nav-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #9f9fa9;
+  transition: background-color 200ms ease;
+}
+
+.iphone-nav-dot.is-running {
+  background: #00c950;
+}
+
+/* The approvals scene parks on a pending gate — its dot reads yellow. */
+.iphone-pane[data-phone-pane="approvals"] .iphone-nav-dot {
+  background: #efb000;
+}
+
+.iphone-nav-brand strong {
+  overflow: hidden;
+  color: #d4d4d8;
+  font-size: 12px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Timeline — the transcript scrolls like the app's session view */
 .iphone-thread {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
   min-height: 0;
-  padding: 14px 14px 12px;
-  overflow: hidden;
+  padding: 14px 12px 10px;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
-.iphone-runpill {
-  display: inline-flex;
-  align-items: center;
-  align-self: center;
-  gap: 7px;
-  padding: 6px 13px;
-  border: 1px solid rgba(20, 22, 15, 0.1);
-  border-radius: 999px;
-  background: #e9e8e0;
-  color: #55574d;
-  font-size: 11px;
-  font-weight: 550;
+.iphone-thread::-webkit-scrollbar {
+  display: none;
 }
 
-.iphone-runpill svg {
-  width: 12px;
-  height: 12px;
-  color: #0e7837;
-  animation: vx-spin 1.4s linear infinite;
-}
-
-.iphone-bubble {
-  max-width: 88%;
-  padding: 10px 13px 8px;
-  border-radius: 18px;
+/* User rows are right-aligned zinc cards; agent replies are plain markdown
+   text on the background, exactly like the app's timeline rows. */
+.iphone-msg {
+  max-width: 78%;
+  padding: 8px 12px;
+  border: 1px solid #232326;
+  border-radius: 8px;
+  background: #18181b;
+  color: #fafafa;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 19px;
 }
 
-.iphone-bubble p {
+.iphone-msg p {
   margin: 0;
 }
 
-.iphone-bubble.is-user {
+.iphone-msg.is-user {
   align-self: flex-end;
-  border-bottom-right-radius: 6px;
-  background: linear-gradient(170deg, #21a35a, #157f47);
-  color: #f4fbf5;
-  box-shadow: 0 6px 16px rgba(18, 103, 51, 0.22);
 }
 
-.iphone-bubble.is-agent {
-  align-self: flex-start;
-  border: 1px solid rgba(20, 22, 15, 0.09);
-  border-bottom-left-radius: 6px;
-  background: #ffffff;
-  color: #24261f;
+.iphone-msg.is-agent {
+  max-width: none;
+  align-self: stretch;
+  padding: 0 2px;
+  border: 0;
+  background: none;
 }
 
-.iphone-toolcard {
+/* Shimmering "Thinking…" label — the app's streaming placeholder. */
+.iphone-think span {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    rgba(159, 159, 169, 0.78) 0%,
+    rgba(159, 159, 169, 0.78) 38%,
+    #fafafa 50%,
+    rgba(159, 159, 169, 0.78) 62%,
+    rgba(159, 159, 169, 0.78) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 11px;
+  animation: iphone-shimmer 2.2s linear infinite;
+}
+
+.iphone-think.is-pending span {
+  background-image: linear-gradient(
+    90deg,
+    rgba(239, 176, 0, 0.75) 0%,
+    rgba(239, 176, 0, 0.75) 38%,
+    #ffd977 50%,
+    rgba(239, 176, 0, 0.75) 62%,
+    rgba(239, 176, 0, 0.75) 100%
+  );
+  background-size: 220% 100%;
+}
+
+@keyframes iphone-shimmer {
+  from {
+    background-position: 110% 0;
+  }
+
+  to {
+    background-position: -110% 0;
+  }
+}
+
+.iphone-reason p {
+  margin: 0;
+  color: #d4d4d8;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.iphone-activity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #9f9fa9;
+  font-size: 11px;
+}
+
+.iphone-activity svg {
+  flex: none;
+  width: 13px;
+  height: 13px;
+}
+
+.iphone-activity span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Command card — Lilex mono, status badge, test output beneath the head */
+.iphone-cmd {
   align-self: stretch;
   overflow: hidden;
-  border: 1px solid rgba(20, 22, 15, 0.09);
-  border-radius: 13px;
-  background: #101210;
-  color: #d8dcd2;
+  border: 1px solid #232326;
+  border-radius: 8px;
+  background: #18181b;
   font-family: "Lilex", monospace;
 }
 
-.iphone-toolcard-head {
+.iphone-cmd-head {
   display: flex;
-  gap: 7px;
+  gap: 8px;
   align-items: center;
-  padding: 9px 12px;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-  font-size: 11px;
-  color: #b4b8ac;
+  padding: 9px 11px;
 }
 
-.iphone-toolcard-head svg {
+.iphone-cmd-head svg {
   flex: none;
-  width: 12px;
-  height: 12px;
-  color: var(--lime);
+  width: 13px;
+  height: 13px;
+  color: #9f9fa9;
 }
 
-.iphone-toolcard-head code {
+.iphone-cmd-head code {
+  flex: 1;
   overflow: hidden;
+  color: #d4d4d8;
+  font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.iphone-toolcard-body {
+.iphone-cmd-badge {
+  flex: none;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(239, 176, 0, 0.12);
+  color: #efb000;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.iphone-cmd.is-open .iphone-cmd-badge {
+  background: rgba(0, 201, 80, 0.12);
+  color: #00c950;
+}
+
+.iphone-cmd-body {
   display: grid;
-  gap: 4px;
-  padding: 9px 12px 10px;
+  gap: 3px;
+  padding: 8px 11px 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
   font-size: 10.5px;
 }
 
-.iphone-toolcard-body span {
+.iphone-cmd-body[hidden] {
+  display: none;
+}
+
+.iphone-cmd-body span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.iphone-toolcard-body .is-dim {
-  color: #7c8073;
+.iphone-cmd-body .is-dim {
+  color: #71717a;
 }
 
-.iphone-toolcard-body .is-pass {
-  color: #8ff0ae;
+.iphone-cmd-body .is-pass {
+  color: #00c950;
 }
 
+/* Diff chip — settled turn summary */
 .iphone-changes {
+  display: inline-flex;
   align-self: flex-start;
-  padding: 5px 11px;
+  gap: 7px;
+  align-items: center;
+  padding: 6px 11px;
+  border: 1px solid rgba(0, 201, 80, 0.25);
   border-radius: 999px;
-  background: rgba(14, 120, 55, 0.1);
-  color: #0e7837;
+  background: rgba(0, 201, 80, 0.08);
+  color: #00c950;
   font-family: "Lilex", monospace;
   font-size: 10.5px;
   font-weight: 600;
 }
 
+.iphone-changes svg {
+  flex: none;
+  width: 12px;
+  height: 12px;
+}
+
+/* Permission card — the app's yellow gate with detail rows and the three
+   real actions (Deny / Always allow / Approve). */
 .iphone-approval {
   align-self: stretch;
   overflow: hidden;
-  border: 1px solid rgba(20, 22, 15, 0.12);
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 12px 26px rgba(22, 24, 17, 0.1);
+  border: 1px solid #efb000;
+  border-radius: 8px;
+  background: #18181b;
+  transition: border-color 200ms ease, opacity 200ms ease;
 }
 
-.iphone-approval-head {
+.iphone-approval.is-resolving {
+  opacity: 0.72;
+}
+
+.iphone-approval.is-done {
+  border-color: #232326;
+}
+
+.iphone-approval-top {
   display: flex;
   gap: 8px;
   align-items: center;
-  padding: 11px 13px;
-  border-bottom: 1px solid rgba(20, 22, 15, 0.07);
-  font-size: 12.5px;
-  font-weight: 650;
+  justify-content: space-between;
+  padding: 10px 12px 8px;
 }
 
-.iphone-approval-head svg {
+.iphone-approval-title {
+  color: #fafafa;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.iphone-approval-risk {
   flex: none;
-  width: 14px;
-  height: 14px;
-  color: #b3542e;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(239, 176, 0, 0.12);
+  color: #efb000;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.iphone-approval-row {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 11px;
+}
+
+.iphone-approval-row + .iphone-approval-row {
+  margin-top: 3px;
+}
+
+.iphone-approval-row span {
+  flex: none;
+  color: #9f9fa9;
+}
+
+.iphone-approval-row code {
+  overflow: hidden;
+  color: #d4d4d8;
+  font-family: "Lilex", monospace;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iphone-approval-note {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  margin-top: 9px;
+  padding: 0 12px;
+  color: #00c950;
+  font-size: 11px;
+  font-weight: 550;
+}
+
+.iphone-approval-note svg {
+  flex: none;
+  width: 13px;
+  height: 13px;
+}
+
+.iphone-approval.is-denied .iphone-approval-note {
+  color: #9f9fa9;
+}
+
+.iphone-approval-resolving {
+  margin-top: 9px;
+  padding: 0 12px;
+  color: #9f9fa9;
+  font-size: 11px;
 }
 
 .iphone-approval-actions {
   display: flex;
   gap: 8px;
-  padding: 10px 11px 11px;
+  margin-top: 11px;
+  padding: 0 12px 12px;
 }
 
-.iphone-approval-btn {
+.iphone-approval-actions[hidden] {
+  display: none;
+}
+
+.iphone-approval-actions button {
   display: inline-flex;
   flex: 1;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid transparent;
-  border-radius: 9px;
+  min-height: 44px;
+  padding: 0 8px;
+  border: 1px solid #232326;
+  border-radius: 6px;
+  background: none;
+  color: #d4d4d8;
   font-family: inherit;
-  font-size: 12.5px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 550;
   cursor: pointer;
   transition: background-color 150ms ease, border-color 150ms ease;
 }
 
-.iphone-approval-btn svg {
-  width: 13px;
-  height: 13px;
+.iphone-approval-actions button:hover {
+  border-color: #39393d;
+  background: #1c1c1e;
 }
 
-.iphone-approval-btn.is-deny {
-  border-color: rgba(20, 22, 15, 0.14);
-  background: #f2f1ea;
-  color: #45473f;
+.iphone-approval-actions button.is-primary {
+  border-color: #fafafa;
+  background: #fafafa;
+  color: #09090b;
 }
 
-.iphone-approval-btn.is-deny:hover {
-  background: #e8e7de;
+.iphone-approval-actions button.is-primary:hover {
+  background: #e4e4e7;
 }
 
-.iphone-approval-btn.is-approve {
-  background: #0e7837;
-  color: #f4fbf5;
-}
-
-.iphone-approval-btn.is-approve:hover {
-  background: #0c6a30;
-}
-
-.iphone-approval.is-approved {
-  border-color: rgba(14, 120, 55, 0.4);
-  background: #f0faf2;
-}
-
-.iphone-approval-done {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  padding: 11px 13px;
-  color: #0e7837;
-  font-size: 12.5px;
-  font-weight: 650;
-}
-
-.iphone-approval-actions[hidden],
-.iphone-approval-done[hidden] {
-  display: none;
-}
-
-.iphone-approval-done svg {
-  width: 15px;
-  height: 15px;
-}
-
-.iphone-approval-done .is-snooze {
-  display: none;
-  color: #8a8c82;
-}
-
-.iphone-approval-done .is-snooze-text {
-  display: none;
-}
-
-/* Deny ("Not now") settles into a muted snooze row instead */
-.iphone-approval.is-denied {
-  border-color: rgba(20, 22, 15, 0.12);
-  background: #f6f5ef;
-}
-
-.iphone-approval.is-denied .iphone-approval-done {
-  color: #6f7168;
-  font-weight: 600;
-}
-
-.iphone-approval.is-denied .iphone-approval-done .is-ok,
-.iphone-approval.is-denied .iphone-approval-done .is-ok-text {
-  display: none;
-}
-
-.iphone-approval.is-denied .iphone-approval-done .is-snooze,
-.iphone-approval.is-denied .iphone-approval-done .is-snooze-text {
-  display: inline;
-}
-
-.iphone-composer {
+/* Composer dock — input row plus the runtime strip beneath it */
+.iphone-dock {
   display: flex;
   flex: none;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #18181b;
+  background: #09090b;
+}
+
+.iphone-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 6px 0 12px;
+  border: 1px solid #232326;
+  border-radius: 6px;
+  background: #18181b;
+}
+
+.iphone-input-hint {
+  flex: 1;
+  overflow: hidden;
+  color: #9f9fa9;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iphone-send {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  color: #d4d4d8;
+}
+
+.iphone-send svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* While the turn runs the send button becomes the app's red stop control. */
+.iphone-send .is-stop {
+  display: none;
+  color: #ff6467;
+}
+
+.iphone-send.is-running .is-send {
+  display: none;
+}
+
+.iphone-send.is-running .is-stop {
+  display: block;
+}
+
+.iphone-runtime {
+  display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 14px 20px;
-  padding: 11px 14px;
-  border: 1px solid rgba(20, 22, 15, 0.12);
-  border-radius: 999px;
-  background: #ffffff;
-  color: #8a8c82;
-  font-size: 13px;
-  box-shadow: 0 10px 24px rgba(22, 24, 17, 0.08);
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #18181b;
+  border-radius: 6px;
 }
 
-.iphone-composer span {
+.iphone-runtime-name {
+  flex: none;
+  color: #9f9fa9;
+  font-size: 10px;
+}
+
+.iphone-runtime-meta {
+  display: flex;
   flex: 1;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
 }
 
-.iphone-composer svg {
-  width: 16px;
-  height: 16px;
-  color: #0e7837;
+.iphone-runtime-meta strong {
+  color: #fafafa;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.iphone-runtime-meta small {
+  overflow: hidden;
+  color: #9f9fa9;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iphone-runtime-more {
+  flex: none;
+  color: #9f9fa9;
+  font-size: 12px;
 }
 
 .iphone-home-indicator {
@@ -7715,10 +7906,10 @@ h3 {
   height: 4px;
   transform: translateX(-50%);
   border-radius: 999px;
-  background: rgba(22, 24, 17, 0.32);
+  background: rgba(255, 255, 255, 0.32);
 }
 
-/* Phone panes swap per scene; the composer stays shared below */
+/* Phone panes swap per scene with a soft cross-fade */
 
 .iphone-panes {
   position: relative;
@@ -7739,100 +7930,564 @@ h3 {
   display: none;
 }
 
-.iphone-toolcard.is-running .iphone-toolcard-head svg {
-  color: #55574d;
+.iphone-pane:not([hidden]) {
+  animation: iphone-pane-in 260ms ease both;
 }
 
-.iphone-toolcard-body .is-run {
-  display: inline-flex;
-  gap: 6px;
+@keyframes iphone-pane-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Drawer scene — the app's session sidebar on #18181b */
+
+.iphone-drawer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  background: #18181b;
+}
+
+.iphone-drawer-head {
+  display: flex;
+  flex: none;
   align-items: center;
-  color: #0e7837;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 8px 0 12px;
+  border-bottom: 1px solid #232326;
+}
+
+.iphone-drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.iphone-drawer-brand img {
+  width: 18px;
+  height: 18px;
+}
+
+.iphone-drawer-brand span {
+  color: #fafafa;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.iphone-drawer-tools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.iphone-drawer-tool {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: #d4d4d8;
+}
+
+.iphone-drawer-tool svg {
+  width: 17px;
+  height: 17px;
+}
+
+.iphone-drawer-bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 12px;
+}
+
+.iphone-drawer-bar-label {
+  color: #9f9fa9;
+  font-size: 11px;
   font-weight: 600;
 }
 
-.iphone-toolcard-body .is-run svg {
-  width: 10px;
-  height: 10px;
+.iphone-drawer-bar-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #9f9fa9;
+}
+
+.iphone-drawer-bar-tools svg {
+  width: 15px;
+  height: 15px;
+}
+
+.iphone-drawer-bar-tools .is-toggle {
+  color: #d4d4d8;
+}
+
+/* Search field — slides in when the drawer's search toggle is used */
+.iphone-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  height: 44px;
+  margin: 2px 12px 6px;
+  padding: 0 12px;
+  border: 1px solid #232326;
+  border-radius: 6px;
+  background: #1c1c1e;
+}
+
+.iphone-search[hidden] {
+  display: none;
+}
+
+.iphone-search > svg {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  color: #9f9fa9;
+}
+
+.iphone-search-text {
+  flex: 1;
+  overflow: hidden;
+  color: #fafafa;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.iphone-search-caret {
+  flex: none;
+  width: 1.5px;
+  height: 16px;
+  background: #51a2ff;
+  animation: iphone-caret 1.1s steps(1) infinite;
+}
+
+@keyframes iphone-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.iphone-search.is-open {
+  animation: iphone-search-in 220ms ease both;
+}
+
+@keyframes iphone-search-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.iphone-search-close {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: #9f9fa9;
+}
+
+.iphone-search.is-active {
+  border-color: #39393d;
+}
+
+.iphone-drawer-list {
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 8px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.iphone-drawer-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Rows: 44px touch targets, 14px session logos, status on the right exactly
+   like the app (spinner / yellow triangle / blue unread dot / time label). */
+.iphone-row {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 9px;
+  height: 44px;
+  padding: 0 12px;
+}
+
+.iphone-row.is-indent {
+  padding-left: 37px;
+}
+
+.iphone-row.is-selected {
+  background: #303034;
+}
+
+.iphone-row.is-filtered {
+  display: none;
+}
+
+.iphone-row-logo {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.iphone-row-logo img {
+  width: 14px;
+  height: 14px;
+}
+
+.iphone-row.is-project .iphone-row-logo img {
+  width: 16px;
+  height: 16px;
+}
+
+.iphone-row-main {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.iphone-row-title {
+  overflow: hidden;
+  color: rgba(250, 250, 250, 0.56);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iphone-row.is-selected .iphone-row-title {
+  color: #fafafa;
+  font-weight: 600;
+}
+
+.iphone-row-title.is-project {
+  color: #fafafa;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.iphone-row-meta {
+  flex: none;
+  margin-left: auto;
+  color: rgba(250, 250, 250, 0.48);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Status indicator replaces the time label, like the app's sidebar rows. */
+.iphone-row.has-running .iphone-row-meta,
+.iphone-row.has-needs-input .iphone-row-meta,
+.iphone-row.has-unread .iphone-row-meta {
+  display: none;
+}
+
+.iphone-row-meta-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 16px;
+}
+
+.iphone-row.has-running .iphone-row-meta-slot svg {
+  width: 12px;
+  height: 12px;
+  color: #00c950;
   animation: vx-spin 1.4s linear infinite;
 }
 
-/* Pairing scene */
+.iphone-row.has-needs-input .iphone-row-meta-slot svg {
+  width: 14px;
+  height: 14px;
+  color: #efb000;
+}
 
-.iphone-pair {
+.iphone-unread {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #51a2ff;
+}
+
+.iphone-row-count {
+  display: grid;
+  place-items: center;
+  flex: none;
+  min-width: 20px;
+  height: 20px;
+  margin-left: auto;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #1c1c1e;
+  color: #d4d4d8;
+  font-size: 11px;
+}
+
+.iphone-drawer-foot {
+  display: flex;
+  flex: none;
+  align-items: center;
+  border-top: 1px solid #232326;
+}
+
+.iphone-host {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  min-width: 0;
+}
+
+.iphone-host-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #00c950;
+}
+
+.iphone-host span:last-child {
+  overflow: hidden;
+  color: #d4d4d8;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iphone-drawer-gear {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  color: #9f9fa9;
+}
+
+.iphone-drawer-gear svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Pairing scene — logo, wordmark, state card, QR fallback */
+
+.iphone-pairing {
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 16px 26px 20px;
+  gap: 14px;
+  padding: 20px;
   text-align: center;
 }
 
-.iphone-pair-qr {
-  width: 148px;
-  padding: 10px;
-  border: 1px solid rgba(20, 22, 15, 0.12);
-  border-radius: 18px;
-  background: #ffffff;
-  box-shadow: 0 12px 26px rgba(22, 24, 17, 0.1);
+.iphone-pairing-mark {
+  width: 44px;
+  height: 44px;
 }
 
-.iphone-pair-qr svg {
-  display: block;
-  width: 100%;
-  height: auto;
+.iphone-pairing-title {
+  color: #fafafa;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
 
-.iphone-pair-title {
-  margin-top: 6px;
-  font-size: 16px;
-  font-weight: 650;
-}
-
-.iphone-pair-copy {
-  max-width: 240px;
-  color: #55574d;
-  font-size: 12.5px;
-  line-height: 1.55;
-}
-
-.iphone-pair-code {
-  display: inline-flex;
+.iphone-pairing-card {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  align-items: baseline;
-  padding: 6px 12px;
-  border: 1px solid rgba(20, 22, 15, 0.1);
-  border-radius: 999px;
-  background: #e9e8e0;
-  font-size: 11px;
+  width: 300px;
+  max-width: 100%;
 }
 
-.iphone-pair-code span {
-  color: #55574d;
-  font-weight: 550;
-}
-
-.iphone-pair-code code {
-  font-family: "Lilex", monospace;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.iphone-pair-foot {
-  display: inline-flex;
-  gap: 6px;
+.iphone-pairing-state {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  color: #0e7837;
-  font-size: 11px;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 150px;
+}
+
+.iphone-pairing-label {
+  color: #9f9fa9;
+  font-size: 12px;
   font-weight: 600;
 }
 
-.iphone-pair-foot svg {
-  width: 12px;
-  height: 12px;
+.iphone-pairing-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #09090b;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.iphone-pairing-cta svg {
+  width: 15px;
+  height: 15px;
+}
+
+.iphone-pairing-cta.is-pulse {
+  animation: iphone-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes iphone-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(250, 250, 250, 0.28);
+  }
+
+  55% {
+    box-shadow: 0 0 0 9px rgba(250, 250, 250, 0);
+  }
+}
+
+.iphone-pairing-nearby-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 2px;
+  color: #fafafa;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.iphone-pairing-nearby-head svg {
+  width: 14px;
+  height: 14px;
+  color: #9f9fa9;
+}
+
+.iphone-pairing-candidate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 58px;
+  padding: 0 2px;
+  border-bottom: 1px solid #18181b;
+}
+
+.iphone-pairing-candidate-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  min-width: 0;
+}
+
+.iphone-pairing-candidate-main strong {
+  color: #fafafa;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.iphone-pairing-candidate-main small {
+  color: #9f9fa9;
+  font-size: 10px;
+}
+
+.iphone-pairing-pair {
+  flex: none;
+  border: 0;
+  background: none;
+  color: #51a2ff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.iphone-pairing-waiting {
+  color: #fafafa;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.iphone-pairing-confirm {
+  color: #9f9fa9;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.iphone-pairing-code {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 58px;
+  color: #fafafa;
+  font-family: "Lilex", monospace;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.iphone-pairing-expiry {
+  color: #9f9fa9;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.iphone-pairing-qr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  border: 1px solid #232326;
+  border-radius: 6px;
+  background: none;
+  color: #fafafa;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.iphone-pairing-qr svg {
+  width: 16px;
+  height: 16px;
+  color: #d4d4d8;
 }
 
 .faq-section {
@@ -8477,34 +9132,33 @@ h3 {
     padding-top: 40px;
   }
 
-  .iphone-nav {
-    padding: 6px 12px 10px;
-  }
-
-  .iphone-bubble {
+  .iphone-msg {
     font-size: 12px;
+    line-height: 17px;
   }
 
-  .iphone-toolcard-body {
+  .iphone-cmd-body {
     font-size: 9.5px;
   }
 
-  .iphone-composer {
-    margin: 0 12px 8px;
-    padding: 9px 12px;
-    font-size: 12px;
+  .iphone-dock {
+    padding: 10px;
+  }
+
+  .iphone-input {
+    min-height: 46px;
   }
 
   .iphone-home-indicator {
     width: 94px;
   }
 
-  .iphone-pair {
-    padding-inline: 18px;
+  .iphone-pairing-card {
+    width: 258px;
   }
 
-  .iphone-pair-qr {
-    width: 126px;
+  .iphone-pairing-code {
+    font-size: 26px;
   }
 
   .faq-section {

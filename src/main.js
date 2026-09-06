@@ -1512,7 +1512,7 @@ document.querySelector("#app").innerHTML = `
                       <div class="iphone-dock">
                         <div class="iphone-input">
                           <span class="iphone-input-hint" data-i18n="remote.phone.composer">Message Vibex…</span>
-                          <span class="iphone-send" aria-hidden="true"><i class="is-send" data-lucide="arrow-up"></i><i class="is-stop" data-lucide="square"></i></span>
+                          <span class="iphone-send" data-phone-send aria-hidden="true"><i class="is-send" data-lucide="arrow-up"></i><i class="is-stop" data-lucide="square"></i></span>
                         </div>
                         <div class="iphone-runtime">
                           <span class="iphone-runtime-name" data-i18n="remote.phone.runtime">Runtime</span>
@@ -4762,7 +4762,7 @@ const MOBILE_COPY = {
       pair: "配对",
       waiting: "正在等待 MacBook Pro",
       confirm: "请确认桌面端显示了相同的验证码。",
-      expires: "将在",
+      expires: "有效期",
     },
   },
 };
@@ -4777,8 +4777,8 @@ const phoneDrawerList = document.querySelector("[data-phone-drawer-list]");
 const phoneSearch = document.querySelector("[data-phone-search]");
 const phoneSearchText = document.querySelector("[data-phone-search-text]");
 const phonePairState = document.querySelector("[data-phone-pair-state]");
-const phoneDot = document.querySelector("[data-phone-dot]");
-const phoneSend = document.querySelector("[data-phone-send]");
+const phoneDots = [...document.querySelectorAll("[data-phone-dot]")];
+const phoneSends = [...document.querySelectorAll("[data-phone-send]")];
 
 let mobileGeneration = 0;
 const mobileScript = { timers: [], running: false };
@@ -4816,8 +4816,8 @@ const mobileAlive = () => {
 
 function mobileSetRunning(running) {
   mobileScript.running = running;
-  if (phoneDot) phoneDot.classList.toggle("is-running", running);
-  if (phoneSend) phoneSend.classList.toggle("is-running", running);
+  phoneDots.forEach((dot) => dot.classList.toggle("is-running", running));
+  phoneSends.forEach((send) => send.classList.toggle("is-running", running));
   const runtime = document.querySelector('[data-phone-pane="agent"] .iphone-runtime');
   runtime?.classList.toggle("is-busy", running);
   const runtimeStrong = runtime?.querySelector("strong");
@@ -4913,7 +4913,7 @@ function bindMobileApprovalActions() {
       // rotation loop resumes instead of waiting out the full duration.
       mobileScript.timers.forEach((id) => window.clearTimeout(id));
       mobileScript.timers = [];
-      mobileScript.running = false;
+      mobileSetRunning(false);
       rotateMobileElapsed = 0;
     });
   });
@@ -5160,7 +5160,7 @@ function mobilePairWaiting() {
     <strong class="iphone-pairing-waiting">${p.waiting}</strong>
     <small class="iphone-pairing-confirm">${p.confirm}</small>
     <code class="iphone-pairing-code">482 913</code>
-    <small class="iphone-pairing-expiry"><span data-phone-pair-expiry>60</span>s</small>`;
+    <small class="iphone-pairing-expiry">${p.expires} <span data-phone-pair-expiry>60</span>s</small>`;
   const expiry = phonePairState.querySelector("[data-phone-pair-expiry]");
   if (expiry) {
     let remaining = 60;

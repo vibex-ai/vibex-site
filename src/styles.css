@@ -6625,6 +6625,1082 @@ h3 {
 
 
 
+
+/* --- Light appearance sweep ----------------------------------------------
+   The sweep handle splits the showcase: the right side keeps the dark
+   surface, everything left of the line is a live clone repainted with the
+   desktop app's real light tokens (crates/vibex-ui LIGHT_TOKENS, the same
+   palette the Runtime "light" appearance applies). Dragging fully to the
+   right turns the whole showcase light. */
+
+.desktop-app.is-light {
+  position: absolute;
+  inset: 0;
+  /* Above the pairing dialog (z-40) so a dragged-over modal repaints too. */
+  z-index: 50;
+  /* --scan-x is the dark inset from the right edge; 100% hides the clone
+     entirely (the resting, dark-only state). */
+  clip-path: inset(0 var(--scan-x, 100%) 0 0);
+  --vx-bg: #ffffff;
+  --vx-fg: #09090b;
+  --vx-sidebar: #fafafa;
+  --vx-card: #ffffff;
+  --vx-composer: #ffffff;
+  --vx-muted: #f4f4f5;
+  --vx-muted-fg: #71717b;
+  --vx-faint: #a1a1ab;
+  --vx-border: rgba(9, 9, 11, 0.1);
+  --vx-border-soft: rgba(9, 9, 11, 0.07);
+  --vx-input: rgba(9, 9, 11, 0.15);
+  --vx-primary: #18181b;
+  --vx-primary-fg: #fafafa;
+  --vx-success: #16a34a;
+  --vx-danger: #e7000b;
+  --vx-warning: #e59000;
+  --vx-selected: rgba(9, 9, 11, 0.12);
+  --vx-rail-bg: #f4f4f5;
+}
+
+/* The clone is a paint-only mirror: interactions and hover states always
+   land on the real dark app underneath. */
+.desktop-app.is-light,
+.desktop-app.is-light * {
+  pointer-events: none !important;
+}
+
+.desktop-app.is-light .vx-icon-btn {
+  color: rgba(9, 9, 11, 0.62);
+}
+
+.desktop-app.is-light .vx-icon-btn:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-icon-btn.is-disabled:hover {
+  color: rgba(9, 9, 11, 0.62);
+}
+
+.desktop-app.is-light .vx-session-title {
+  color: rgba(9, 9, 11, 0.92);
+}
+
+.desktop-app.is-light .vx-win-btn {
+  color: rgba(9, 9, 11, 0.66);
+}
+
+.desktop-app.is-light .vx-win-btn:hover {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-side-btn {
+  color: rgba(9, 9, 11, 0.82);
+}
+
+.desktop-app.is-light .vx-side-btn svg {
+  color: rgba(9, 9, 11, 0.58);
+}
+
+.desktop-app.is-light .vx-sidebar-divider {
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-projects-head > span {
+  color: rgba(9, 9, 11, 0.52);
+}
+
+.desktop-app.is-light .vx-count-badge {
+  background: rgba(9, 9, 11, 0.08);
+  color: rgba(9, 9, 11, 0.66);
+}
+
+.desktop-app.is-light .vx-session-row {
+  color: rgba(9, 9, 11, 0.7);
+}
+
+.desktop-app.is-light .vx-session-row:hover {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-session-time {
+  color: rgba(9, 9, 11, 0.42);
+}
+
+.desktop-app.is-light .vx-user-bubble {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
+}
+
+.desktop-app.is-light .vx-user-editor textarea:focus {
+  border-color: rgba(9, 9, 11, 0.35);
+}
+
+.desktop-app.is-light .vx-permission-card {
+  border: 1px solid rgba(229, 144, 0, 0.45);
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-permission-head {
+  background: rgba(229, 144, 0, 0.08);
+}
+
+.desktop-app.is-light .vx-permission-card.is-approved .vx-permission-head {
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-permission-body {
+  border-top: 1px solid rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-permission-body code {
+  background: rgba(9, 9, 11, 0.055);
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-form-card {
+  border: 1px solid rgba(229, 144, 0, 0.45);
+  background: rgba(229, 144, 0, 0.05);
+}
+
+.desktop-app.is-light .vx-form-input {
+  background: rgba(9, 9, 11, 0.04);
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-form-choice {
+  border: 1px solid rgba(9, 9, 11, 0.18);
+}
+
+.desktop-app.is-light .vx-turn-runtime {
+  color: rgba(113, 113, 122, 0.8);
+}
+
+.desktop-app.is-light .vx-command-card {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-command-head {
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-command-head:hover {
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-command-head code {
+  color: #18181b;
+}
+
+.desktop-app.is-light .vx-badge {
+  border: 1px solid rgba(9, 9, 11, 0.16);
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-command-output {
+  border-top: 1px solid rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-detail-row code {
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-detail-box {
+  background: rgba(9, 9, 11, 0.055);
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-detail-box.is-log div {
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-fileop-card {
+  background: rgba(9, 9, 11, 0.05);
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-fileop-open:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-answer {
+  color: rgba(9, 9, 11, 0.86);
+}
+
+.desktop-app.is-light .vx-answer code {
+  border: 1px solid rgba(9, 9, 11, 0.08);
+  background: rgba(9, 9, 11, 0.07);
+  color: #18181b;
+}
+
+.desktop-app.is-light .vx-answer ul li {
+  color: rgba(9, 9, 11, 0.86);
+}
+
+.desktop-app.is-light .vx-answer-table td {
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-bar-track {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-bar-val {
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-answer-actions span:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-changes-card {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-changes-row {
+  border-top: 1px solid rgba(9, 9, 11, 0.07);
+  color: #71717b;
+}
+
+.desktop-app.is-light .vx-changes-row:hover {
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-changes-row code {
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-changes-foot {
+  border-top: 1px solid rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-btn.is-outline {
+  border-color: rgba(9, 9, 11, 0.18);
+}
+
+.desktop-app.is-light .vx-btn.is-outline:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-btn.is-danger {
+  border-color: rgba(231, 0, 11, 0.35);
+  background: rgba(231, 0, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-btn.is-danger:hover {
+  background: rgba(231, 0, 11, 0.12);
+}
+
+.desktop-app.is-light .vx-badge.is-running {
+  background: rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-strip-dot {
+  color: rgba(113, 113, 122, 0.72);
+}
+
+.desktop-app.is-light .vx-composer {
+  box-shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.25);
+}
+
+.desktop-app.is-light .vx-composer.is-sent {
+  border-color: rgba(9, 9, 11, 0.28);
+}
+
+.desktop-app.is-light .vx-composer-placeholder {
+  color: #18181b;
+}
+
+.desktop-app.is-light .vx-chip {
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-chip:hover {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-chip.is-active {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-chip svg.is-mode {
+  color: #016630;
+}
+
+.desktop-app.is-light .vx-chip svg.is-effort {
+  color: #008236;
+}
+
+.desktop-app.is-light .vx-picker-menu {
+  border: 1px solid rgba(9, 9, 11, 0.12);
+  background: #ffffff;
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.28);
+}
+
+.desktop-app.is-light .vx-picker-search {
+  border: 1px solid rgba(9, 9, 11, 0.09);
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-picker-model:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-token-btn:hover .vx-token-ring {
+  background: conic-gradient(var(--vx-primary) 0 62%, rgba(9, 9, 11, 0.12) 62% 100%);
+}
+
+.desktop-app.is-light .vx-send-btn:hover {
+  background: #27272a;
+}
+
+.desktop-app.is-light .vx-home-capsule {
+  border: 1px solid rgba(9, 9, 11, 0.15);
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-agent-tab.is-active {
+  border-color: rgba(9, 9, 11, 0.15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.desktop-app.is-light .vx-home-composer {
+  border: 1px solid rgba(9, 9, 11, 0.18);
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.24);
+}
+
+.desktop-app.is-light .vx-ws-btn:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-mgmt-nav {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-mgmt-search {
+  border: 1px solid rgba(9, 9, 11, 0.1);
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-mgmt-agent {
+  border: 1px solid rgba(9, 9, 11, 0.13);
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-mgmt-agent:hover {
+  border-color: rgba(9, 9, 11, 0.2);
+}
+
+.desktop-app.is-light .vx-mgmt-agent.is-selected {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-mgmt-glyph {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-mgmt-switch {
+  border: 1px solid rgba(9, 9, 11, 0.18);
+}
+
+.desktop-app.is-light .vx-mgmt-plus {
+  border: 1px solid rgba(9, 9, 11, 0.18);
+}
+
+.desktop-app.is-light .vx-mgmt-agent:hover .vx-mgmt-plus {
+  border-color: rgba(9, 9, 11, 0.3);
+}
+
+.desktop-app.is-light .vx-mgmt-add {
+  border: 1px dashed rgba(9, 9, 11, 0.16);
+}
+
+.desktop-app.is-light .vx-mgmt-add:hover {
+  border-color: rgba(9, 9, 11, 0.28);
+}
+
+.desktop-app.is-light .vx-mgmt-add-plus {
+  border: 1px solid rgba(9, 9, 11, 0.16);
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-mgmt-handle span {
+  background: rgba(9, 9, 11, 0.16);
+}
+
+.desktop-app.is-light .vx-mgmt-pill {
+  background: rgba(22, 163, 74, 0.09);
+}
+
+.desktop-app.is-light .vx-mgmt-pill.is-default {
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-mgmt-card {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-mgmt-iconbox {
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-mgmt-dot {
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.45);
+}
+
+.desktop-app.is-light .vx-mgmt-btn {
+  border: 1px solid rgba(9, 9, 11, 0.14);
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-mgmt-btn:hover {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-mgmt-btn.is-primary:hover {
+  background: #27272a;
+}
+
+.desktop-app.is-light .vx-mgmt-modal {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.desktop-app.is-light .vx-mgmt-modal-card {
+  border: 1px solid rgba(9, 9, 11, 0.12);
+  background: #ffffff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+}
+
+.desktop-app.is-light .vx-mgmt-editor-input {
+  border: 1px solid rgba(9, 9, 11, 0.1);
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-mgmt-editor-input .vx-composer-hint {
+  color: rgba(9, 9, 11, 0.32);
+}
+
+.desktop-app.is-light .vx-mgmt-model-chip {
+  border: 1px solid rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-mgmt-model-chip.is-new {
+  border-color: rgba(22, 163, 74, 0.4);
+  background: rgba(22, 163, 74, 0.07);
+}
+
+.desktop-app.is-light .vx-mgmt-upgrading {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-mgmt-upglyph {
+  border: 1px solid rgba(9, 9, 11, 0.14);
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-mgmt-toast {
+  border: 1px solid rgba(22, 163, 74, 0.35);
+  background: rgba(240, 253, 244, 0.95);
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.28);
+}
+
+.desktop-app.is-light .vx-mgmt-provider {
+  border: 1px solid rgba(9, 9, 11, 0.13);
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-mgmt-provider.is-selected {
+  border-color: rgba(9, 9, 11, 0.24);
+}
+
+.desktop-app.is-light .vx-mgmt-profile-glyph {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-mgmt-profile-actions svg:hover {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-mgmt-import {
+  border: 1px solid rgba(9, 9, 11, 0.12);
+  background: rgba(9, 9, 11, 0.04);
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-mgmt-import:hover {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-mgmt-rescount {
+  border: 1px solid rgba(9, 9, 11, 0.12);
+  background: rgba(9, 9, 11, 0.09);
+}
+
+.desktop-app.is-light .vx-mgmt-emptycard {
+  border: 1px solid rgba(9, 9, 11, 0.1);
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-usage-range {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-usage-filter {
+  border: 1px solid rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-usage-menu {
+  border: 1px solid rgba(9, 9, 11, 0.12);
+  background: #ffffff;
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.28);
+}
+
+.desktop-app.is-light .vx-usage-option:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-usage-metric {
+  border: 1px solid rgba(9, 9, 11, 0.11);
+}
+
+.desktop-app.is-light .vx-usage-mlabel svg {
+  color: rgba(9, 9, 11, 0.72);
+}
+
+.desktop-app.is-light .vx-usage-seg {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-chart-grid {
+  stroke: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-usage-legend button.is-active {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-usage-heatgrid span {
+  background: color-mix(in oklab, #00a63e calc(var(--h) * 100%), rgba(9, 9, 11, 0.04));
+}
+
+.desktop-app.is-light .vx-usage-modelname {
+  color: rgba(9, 9, 11, 0.8);
+}
+
+.desktop-app.is-light .vx-usage-modelbar {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-usage-modelbar span {
+  background: #00a63e;
+}
+
+.desktop-app.is-light .vx-usage-dimtabs button.is-active {
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-usage-tr.is-head {
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-usage-tr:not(.is-head):nth-child(odd) {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-usage-tr > span.is-num {
+  color: rgba(9, 9, 11, 0.86);
+}
+
+.desktop-app.is-light .vx-file-actions {
+  border: 1px solid rgba(9, 9, 11, 0.12);
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-file-action:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-file-action.is-caret {
+  border-left: 1px solid rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-rail-search {
+  border: 1px solid rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-search-mode {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-file-row {
+  color: rgba(9, 9, 11, 0.75);
+}
+
+.desktop-app.is-light .vx-file-row:hover {
+  background: rgba(9, 9, 11, 0.045);
+}
+
+.desktop-app.is-light .vx-file-row.is-selected {
+  background: rgba(9, 9, 11, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(9, 9, 11, 0.15);
+}
+
+.desktop-app.is-light .vx-file-row[style*="--depth:3"]::before {
+  background: rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-file-row .lucide-file-code {
+  color: #026fd7;
+}
+
+.desktop-app.is-light .vx-file-row .lucide-folder {
+  color: #647289;
+}
+
+.desktop-app.is-light .vx-file-row .lucide-file-json {
+  color: #7c58c3;
+}
+
+.desktop-app.is-light .vx-file-row .lucide-book-open {
+  color: #296cd8;
+}
+
+.desktop-app.is-light .vx-file-row .lucide-file-cog {
+  color: #cc3622;
+}
+
+.desktop-app.is-light .vx-file-row .lucide-file {
+  color: #70707c;
+}
+
+.desktop-app.is-light .vx-file-row.is-dir {
+  color: rgba(9, 9, 11, 0.88);
+}
+
+.desktop-app.is-light .vx-file-row.is-dir svg:nth-child(2) {
+  color: #647289;
+}
+
+.desktop-app.is-light .vx-git-tabs {
+  border-bottom: 1px solid rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-git-tabs button {
+  color: rgba(9, 9, 11, 0.55);
+}
+
+.desktop-app.is-light .vx-git-sync {
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-git-sync.is-pull {
+  color: #296cd8;
+}
+
+.desktop-app.is-light .vx-git-tabs button.is-active::after {
+  background: rgba(9, 9, 11, 0.55);
+}
+
+.desktop-app.is-light .vx-git-toolbar {
+  color: rgba(9, 9, 11, 0.48);
+}
+
+.desktop-app.is-light .vx-toolbar-divider {
+  background: rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-git-wsname span {
+  color: rgba(9, 9, 11, 0.45);
+}
+
+.desktop-app.is-light .vx-checkbox {
+  border: 1px solid rgba(9, 9, 11, 0.3);
+}
+
+.desktop-app.is-light .vx-git-row {
+  color: #71717b;
+}
+
+.desktop-app.is-light .vx-git-row:hover {
+  background: rgba(9, 9, 11, 0.045);
+}
+
+.desktop-app.is-light .vx-git-row.is-dir {
+  color: rgba(9, 9, 11, 0.85);
+}
+
+.desktop-app.is-light .vx-git-nums .vx-diff-del.is-zero {
+  color: rgba(9, 9, 11, 0.35);
+}
+
+.desktop-app.is-light .vx-git-badge {
+  border: 1px solid rgba(9, 9, 11, 0.16);
+  color: rgba(9, 9, 11, 0.55);
+}
+
+.desktop-app.is-light .vx-git-row.is-selected {
+  border-color: rgba(9, 9, 11, 0.22);
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-commit-box {
+  border-top: 1px solid rgba(9, 9, 11, 0.08);
+  background: #fafafa;
+}
+
+.desktop-app.is-light .vx-commit-type {
+  border: 1px solid rgba(9, 9, 11, 0.12);
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-amend {
+  color: rgba(9, 9, 11, 0.7);
+}
+
+.desktop-app.is-light .vx-commit-input {
+  border: 1px solid rgba(9, 9, 11, 0.14);
+  background: rgba(9, 9, 11, 0.05);
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-commit-input .vx-composer-hint {
+  color: rgba(9, 9, 11, 0.32);
+}
+
+.desktop-app.is-light .vx-commit-btn {
+  border: 1px solid rgba(9, 9, 11, 0.14);
+}
+
+.desktop-app.is-light .vx-commit-btn:hover {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-commit-count {
+  background: rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-git-filters {
+  border-bottom: 1px solid rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-git-filter {
+  border: 1px solid rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-git-filter:hover {
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-history-node.is-lane {
+  background: #296cd8;
+}
+
+.desktop-app.is-light .vx-history-card {
+  border: 1px solid rgba(9, 9, 11, 0.08);
+  background: rgba(9, 9, 11, 0.03);
+}
+
+.desktop-app.is-light .vx-history-card:hover {
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-history-card.is-selected {
+  border-color: rgba(9, 9, 11, 0.36);
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-history-ref {
+  background: rgba(9, 9, 11, 0.12);
+}
+
+.desktop-app.is-light .vx-commit-avatar {
+  background: linear-gradient(135deg, #52525b, #a1a1aa);
+  color: #ffffff;
+}
+
+.desktop-app.is-light .vx-preview-divider {
+  background: rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-preview-tabs {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-preview-tab.is-active {
+  box-shadow: inset 0 -1px 0 rgba(9, 9, 11, 0.72);
+}
+
+.desktop-app.is-light .vx-tab-close:hover {
+  background: rgba(9, 9, 11, 0.1);
+}
+
+.desktop-app.is-light .vx-preview-add:hover {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-preview-term {
+  background: #f8f8f8;
+  color: #27272a;
+}
+
+.desktop-app.is-light .vx-term-cursor {
+  /* The light terminal keeps a dark caret (light-theme editor caret). */
+  background: #18181b;
+}
+
+.desktop-app.is-light .vx-preview-body {
+  background: #f8f8f8;
+  color: #27272a;
+}
+
+.desktop-app.is-light .vx-file-code {
+  color: #3f3f46;
+}
+
+.desktop-app.is-light .vx-diff-head {
+  border-bottom: 1px solid rgba(9, 9, 11, 0.08);
+  background: rgba(9, 9, 11, 0.03);
+}
+
+.desktop-app.is-light .vx-diff-file {
+  border: 1px solid rgba(9, 9, 11, 0.08);
+  background: #fafafa;
+}
+
+.desktop-app.is-light .vx-diff-filehead {
+  border-bottom: 1px solid rgba(9, 9, 11, 0.07);
+  background: rgba(9, 9, 11, 0.03);
+}
+
+.desktop-app.is-light .vx-diff-line code {
+  color: #27272a;
+}
+
+.desktop-app.is-light .vx-diff-no {
+  color: rgba(9, 9, 11, 0.26);
+}
+
+.desktop-app.is-light .vx-diff-line.is-ctx {
+  color: rgba(9, 9, 11, 0.55);
+}
+
+.desktop-app.is-light .vx-diff-line.is-del {
+  background: rgba(231, 0, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-diff-line.is-del code {
+  color: #e7000b;
+}
+
+.desktop-app.is-light .vx-diff-line.is-add {
+  background: rgba(22, 163, 74, 0.09);
+}
+
+.desktop-app.is-light .vx-diff-line.is-add code {
+  color: #008236;
+}
+
+.desktop-app.is-light .vx-activity button {
+  color: rgba(9, 9, 11, 0.55);
+}
+
+.desktop-app.is-light .vx-activity button:hover {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-activity button.is-active {
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-activity-badge {
+  background: rgba(22, 163, 74, 0.09);
+}
+
+.desktop-app.is-light .vx-pairing {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.desktop-app.is-light .vx-pairing-card {
+  border: 1px solid rgba(9, 9, 11, 0.1);
+  background: #ffffff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+}
+
+.desktop-app.is-light .vx-pairing-hero-tile {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-pairing-tile {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-pairing-pill.is-success {
+  background: rgba(22, 163, 74, 0.09);
+}
+
+.desktop-app.is-light .vx-pairing-pill.is-warning {
+  background: rgba(229, 144, 0, 0.12);
+}
+
+.desktop-app.is-light .vx-pairing-pill.is-danger {
+  background: rgba(231, 0, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-pairing-pill.is-primary {
+  background: rgba(9, 9, 11, 0.09);
+}
+
+.desktop-app.is-light .vx-pairing-pill.is-muted {
+  background: rgba(9, 9, 11, 0.06);
+}
+
+.desktop-app.is-light .vx-pairing-row {
+  border: 1px solid rgba(9, 9, 11, 0.072);
+  background: rgba(9, 9, 11, 0.03);
+}
+
+.desktop-app.is-light .vx-pairing-row:hover {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-pairing-row.is-selected {
+  border-color: rgba(9, 9, 11, 0.38);
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-pairing-radio {
+  border: 1px solid rgba(9, 9, 11, 0.25);
+}
+
+.desktop-app.is-light .vx-pairing-detail {
+  border: 1px solid rgba(9, 9, 11, 0.18);
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.desktop-app.is-light .vx-pairing-origin-input {
+  background: rgba(9, 9, 11, 0.03);
+}
+
+.desktop-app.is-light .vx-pairing-seg {
+  background: rgba(9, 9, 11, 0.07);
+}
+
+.desktop-app.is-light .vx-pairing-btn {
+  border: 1px solid rgba(9, 9, 11, 0.14);
+  background: rgba(9, 9, 11, 0.04);
+}
+
+.desktop-app.is-light .vx-pairing-btn:hover {
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.desktop-app.is-light .vx-pairing-btn.is-primary:hover {
+  background: #27272a;
+}
+
+.desktop-app.is-light .vx-pairing-banner.is-success {
+  background: rgba(22, 163, 74, 0.07);
+}
+
+/* The QR canvas stays theme-independent: white box, near-black modules
+   (#101010) in both appearances, matching the real pairing dialog. */
+
+.desktop-app.is-light .vx-pairing-lanwin {
+  border: 1px solid rgba(22, 163, 74, 0.45);
+  background: rgba(22, 163, 74, 0.05);
+}
+
+.desktop-app.is-light .vx-pairing-empty {
+  background: rgba(9, 9, 11, 0.03);
+}
+
+.desktop-app.is-light .vx-pairing-request {
+  background: rgba(9, 9, 11, 0.04);
+}
+
+/* The request code chip keeps its dark-on-white look in both appearances. */
+
+/* Sweep handle ------------------------------------------------------------ */
+
+.desktop-sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Tracks the same --scan-x inset the light clone is clipped with. */
+  left: calc(100% - var(--scan-x, 100%));
+  width: 30px;
+  transform: translateX(-50%);
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: ew-resize;
+  touch-action: none;
+  /* Inert while hidden so the resting handle never swallows clicks on the
+     app's left edge; hover/drag/focus re-enables it. */
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.desktop-showcase-canvas:hover .desktop-sweep,
+.desktop-sweep.is-dragging,
+.desktop-sweep:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.desktop-sweep::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 1px);
+  width: 2px;
+  background: rgba(128, 128, 140, 0.9);
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.5), 0 0 14px rgba(0, 0, 0, 0.35);
+}
+
+.desktop-sweep::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: rgba(250, 250, 250, 0.94);
+  border: 1px solid rgba(9, 9, 11, 0.32);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+/* Grip bars drawn inside the pill. */
+.desktop-sweep-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  background:
+    linear-gradient(rgba(9, 9, 11, 0.55), rgba(9, 9, 11, 0.55)) left / 1.5px 100% no-repeat,
+    linear-gradient(rgba(9, 9, 11, 0.55), rgba(9, 9, 11, 0.55)) right / 1.5px 100% no-repeat;
+  pointer-events: none;
+}
+
+.desktop-sweep:focus-visible::after {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(59, 130, 246, 0.55);
+}
+
+.desktop-showcase-canvas.is-sweeping {
+  cursor: ew-resize;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-sweep {
+    transition: none;
+  }
+}
+
 /* Workbench bento — capability grid under the hero */
 
 .workbench-section {

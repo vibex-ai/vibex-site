@@ -2056,6 +2056,7 @@ function applyLanguage(language, { persist = true } = {}) {
   // setDesktopView re-runs the active view's demo so its typed copy rebuilds
   // in the new language (the titlebar/rail states are re-derived there too).
   if (activeDesktopView) setDesktopView(activeDesktopView, { restore: true });
+  desktopShowcase?.querySelector(".desktop-sweep")?.setAttribute("aria-label", translate(currentLanguage, "showcase.desktop.sweep"));
 
   const copyright = document.querySelector(".footer-bottom > span:first-child");
   if (copyright) copyright.innerHTML = `© <span data-year>${new Date().getFullYear()}</span> ${translate(currentLanguage, "footer.copyright")}`;
@@ -3247,8 +3248,10 @@ function typeInto(node, text, duration, alive = () => true) {
       }
       const progress = Math.min(1, (performance.now() - start) / duration);
       const value = text.slice(0, Math.round(text.length * progress));
-      if (typeof node.value === "string") node.value = value;
-      else {
+      if (typeof node.value === "string") {
+        node.value = value;
+        mirrorInputValue(node, value);
+      } else {
         node.textContent = value;
         syncComposerHint(node);
       }
@@ -4633,6 +4636,176 @@ function startShowcaseRotation() {
   if (!desktopShowcase || prefersReducedMotion || rotateFrame) return;
   rotateLastTick = performance.now();
   rotateFrame = window.requestAnimationFrame(stepShowcaseRotation);
+}
+
+// ---------------------------------------------------------------------------
+// Light sweep: a draggable scanline splits the showcase into the light side
+// (left of the line) and the dark side (right). The light side is a paint-only
+// mirror of the dark app repainted with the real LIGHT_TOKENS palette — the
+// same swap the desktop app performs for ThemeMode::Light in
+// apps/desktop/src/theme.rs, so views and dialogs all turn light together.
+// The mirror replays every DOM change the demos make; interactions always
+// land on the real (dark) app underneath.
+// ---------------------------------------------------------------------------
+const desktopApp = desktopCanvas?.querySelector(".desktop-app");
+let sweepCloneRefs = new WeakMap();
+
+// Mock inputs keep typed text in .value, which is invisible to
+// MutationObserver; typeInto calls this alongside its own write.
+function mirrorInputValue(node, value) {
+  const clone = sweepCloneRefs.get(node);
+  if (clone && clone.value !== value) clone.value = value;
+}
+
+if (desktopApp && desktopCanvas) {
+  let desktopLightApp = null;
+
+  // Parallel index of the mirror tree: original node → cloned node.
+  const indexClone = (orig, clone) => {
+    sweepCloneRefs.set(orig, clone);
+    const from = orig.childNodes;
+    const to = clone.childNodes;
+    if (from.length !== to.length) return;
+    for (let i = 0; i < from.length; i += 1) indexClone(from[i], to[i]);
+  };
+
+  // The mirror only comes into existence when the pointer first enters the
+  // showcase (or the handle gets keyboard focus) — until then it would just
+  // be dead markup that the prerender snapshot and every demo frame carry.
+  const buildSweepMirror = () => {
+    if (desktopLightApp) return;
+    desktopLightApp = document.createElement("div");
+    desktopLightApp.className = "desktop-app is-light";
+    desktopLightApp.setAttribute("aria-hidden", "true");
+    desktopLightApp.innerHTML = desktopApp.innerHTML;
+    sweepCloneRefs = new WeakMap();
+    desktopCanvas.appendChild(desktopLightApp);
+    indexClone(desktopApp, desktopLightApp);
+    // An innerHTML snapshot doesn't carry live form values; the demo types
+    // into them via .value, so copy the current text once on build.
+    desktopApp.querySelectorAll("textarea, input").forEach((el) => {
+      const clone = sweepCloneRefs.get(el);
+      if (clone && typeof clone.value === "string" && clone.value !== el.value) clone.value = el.value;
+    });
+
+    // Replay every demo mutation onto the mirror so the light side stays
+    // beat-for-beat with the dark side.
+    new MutationObserver((records) => {
+      for (const record of records) {
+        if (record.type === "attributes") {
+          const clone = sweepCloneRefs.get(record.target);
+          if (!clone) continue;
+          if (record.target.hasAttribute(record.attributeName)) {
+            clone.setAttribute(record.attributeName, record.target.getAttribute(record.attributeName));
+          } else {
+            clone.removeAttribute(record.attributeName);
+          }
+        } else if (record.type === "characterData") {
+          const clone = sweepCloneRefs.get(record.target);
+          if (clone) clone.textContent = record.target.textContent;
+        } else if (record.type === "childList") {
+          const parent = sweepCloneRefs.get(record.target);
+          if (!parent) continue;
+          record.removedNodes.forEach((node) => sweepCloneRefs.get(node)?.remove());
+          for (const node of record.addedNodes) {
+            // A moved node may still hold a stale mirror; drop it first.
+            sweepCloneRefs.get(node)?.remove();
+            const clone = node.cloneNode(true);
+            const anchor = record.nextSibling ? sweepCloneRefs.get(record.nextSibling) : null;
+            // The anchor can go stale within one record batch (removed by an
+            // earlier record); fall back to appending so replay never throws.
+            parent.insertBefore(clone, anchor?.parentNode === parent ? anchor : null);
+            indexClone(node, clone);
+          }
+        }
+      }
+    }).observe(desktopApp, { attributes: true, childList: true, characterData: true, subtree: true });
+
+    // Scrolls never surface as DOM mutations; mirror them wholesale. The
+    // scroll event doesn't bubble, but capture on the app root still sees
+    // every scrollable pane (timeline, preview bodies, ...).
+    desktopApp.addEventListener(
+      "scroll",
+      (event) => {
+        const clone = sweepCloneRefs.get(event.target);
+        if (!clone) return;
+        if (clone.scrollTop !== event.target.scrollTop) clone.scrollTop = event.target.scrollTop;
+        if (clone.scrollLeft !== event.target.scrollLeft) clone.scrollLeft = event.target.scrollLeft;
+      },
+      { capture: true, passive: true },
+    );
+  };
+  desktopCanvas.addEventListener("pointerenter", buildSweepMirror, { once: true });
+
+  // The scanline handle: role=slider, 0 = all dark, 100 = all light.
+  const desktopSweep = document.createElement("button");
+  desktopSweep.type = "button";
+  desktopSweep.className = "desktop-sweep";
+  desktopSweep.setAttribute("role", "slider");
+  desktopSweep.setAttribute("aria-label", translate(currentLanguage, "showcase.desktop.sweep"));
+  desktopSweep.setAttribute("aria-valuemin", "0");
+  desktopSweep.setAttribute("aria-valuemax", "100");
+  desktopSweep.setAttribute("aria-valuenow", "0");
+  desktopSweep.innerHTML = '<span class="desktop-sweep-grip"></span>';
+  desktopCanvas.appendChild(desktopSweep);
+  desktopSweep.addEventListener("focus", buildSweepMirror, { once: true });
+
+  let sweepRatio = 0;
+  const applySweep = () => {
+    desktopCanvas.style.setProperty("--scan-x", `${((1 - sweepRatio) * 100).toFixed(2)}%`);
+    desktopSweep.setAttribute("aria-valuenow", String(Math.round(sweepRatio * 100)));
+  };
+  applySweep();
+
+  const sweepRatioFrom = (event) => {
+    const rect = desktopCanvas.getBoundingClientRect();
+    return Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+  };
+  let sweepPointerId = null;
+  desktopSweep.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    sweepPointerId = event.pointerId;
+    desktopSweep.setPointerCapture(event.pointerId);
+    desktopSweep.classList.add("is-dragging");
+    desktopCanvas.classList.add("is-sweeping");
+  });
+  desktopSweep.addEventListener("pointermove", (event) => {
+    if (sweepPointerId !== event.pointerId) return;
+    sweepRatio = sweepRatioFrom(event);
+    applySweep();
+  });
+  const endSweep = (event) => {
+    if (sweepPointerId !== event.pointerId) return;
+    sweepPointerId = null;
+    desktopSweep.classList.remove("is-dragging");
+    desktopCanvas.classList.remove("is-sweeping");
+  };
+  desktopSweep.addEventListener("pointerup", endSweep);
+  desktopSweep.addEventListener("pointercancel", endSweep);
+
+  desktopSweep.addEventListener("keydown", (event) => {
+    const SWEEP_STEP = 0.05;
+    let next;
+    switch (event.key) {
+      case "ArrowLeft":
+        next = sweepRatio - SWEEP_STEP;
+        break;
+      case "ArrowRight":
+        next = sweepRatio + SWEEP_STEP;
+        break;
+      case "Home":
+        next = 0;
+        break;
+      case "End":
+        next = 1;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    sweepRatio = Math.min(1, Math.max(0, next));
+    applySweep();
+  });
 }
 
 startShowcaseRotation();

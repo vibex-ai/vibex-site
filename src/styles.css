@@ -2389,6 +2389,30 @@ h3 {
   flex-direction: column;
   gap: 8px;
   padding: 6px 16px 14px;
+  container-type: inline-size;
+}
+
+/* The wrap measures the real center-column width, so this fires whenever
+   the preview dock and rail squeeze the workbench (the canvas is scaled
+   with a transform, so viewport media queries never apply here). Chips
+   degrade to their logos and the strip drops secondary segments. */
+@container (max-width: 559px) {
+  .vx-composer-foot .vx-chip > span,
+  .vx-composer-foot .vx-chip > .vx-chip-caret {
+    display: none;
+  }
+
+  .vx-composer-foot .vx-chip {
+    gap: 0;
+    padding: 0 7px;
+  }
+
+  .vx-status-strip [data-seg="input"],
+  .vx-status-strip [data-seg="output"],
+  .vx-status-strip [data-seg="cache"],
+  .vx-status-strip [data-seg="rate"] {
+    display: none;
+  }
 }
 
 .vx-status-strip {
@@ -2408,14 +2432,7 @@ h3 {
   flex: none;
 }
 
-@media (max-width: 1100px) {
-  .vx-status-strip [data-seg="rate"],
-  .vx-status-strip [data-seg="cache"],
-  .vx-status-strip [data-seg="input"],
-  .vx-status-strip [data-seg="output"] {
-    display: none;
-  }
-}
+
 
 /* Real app: the status strip exists only while the turn is incomplete. */
 .vx-status-strip.is-idle {
@@ -2538,9 +2555,11 @@ h3 {
 
 .vx-hint-overlay {
   position: absolute;
-  inset: 0;
+  inset: 0 72px 0 0;
+  overflow: hidden;
   pointer-events: none;
-  white-space: pre;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .vx-composer.is-typing .vx-composer-hint,
@@ -2607,23 +2626,7 @@ h3 {
   flex: none;
 }
 
-.vx-chip.is-compact {
-  gap: 0;
-  padding: 0 7px;
-}
 
-.vx-chip.is-compact > span,
-.vx-chip.is-compact > .vx-chip-caret,
-.vx-chip.is-compact > img + span {
-  display: none;
-}
-
-/* Left chips lose their labels; the runtime chip keeps its caret visible
-   so the dropdown affordance survives. */
-.vx-chip.is-compact > .vx-chip-caret {
-  display: inline-block;
-  margin-left: 2px;
-}
 
 .vx-chip:hover {
   background: rgba(255, 255, 255, 0.05);

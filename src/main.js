@@ -2326,7 +2326,7 @@ desktopShowcase?.querySelector("[data-git-list]")?.addEventListener("click", (ev
   const checked = row.classList.toggle("is-checked");
   box?.classList.toggle("is-checked", checked);
   syncDirCheckbox(row);
-  desktopShowcase.querySelectorAll("[data-git-list] [data-demo-commit-row]").forEach((other) => {
+  (desktopApp ?? desktopShowcase).querySelectorAll("[data-git-list] [data-demo-commit-row]").forEach((other) => {
     other.classList.toggle("is-selected", other === row);
   });
   syncGitSelection();
@@ -2336,7 +2336,7 @@ desktopShowcase?.querySelector("[data-git-list]")?.addEventListener("click", (ev
 desktopShowcase?.querySelector(".vx-filetree")?.addEventListener("click", (event) => {
   const row = event.target.closest("[data-demo-file]");
   if (!row || row.classList.contains("is-dir")) return;
-  desktopShowcase.querySelectorAll(".vx-filetree .vx-file-row").forEach((other) => {
+  (desktopApp ?? desktopShowcase).querySelectorAll(".vx-filetree .vx-file-row").forEach((other) => {
     other.classList.toggle("is-selected", other === row);
   });
   openFilePreview(row.getAttribute("data-demo-file"));
@@ -2362,7 +2362,7 @@ desktopShowcase?.querySelector("[data-git-history]")?.addEventListener("click", 
   const card = event.target.closest(".vx-history-card");
   if (!card) return;
   const row = card.closest(".vx-history-row");
-  desktopShowcase.querySelectorAll("[data-git-history] .vx-history-card").forEach((other) => {
+  (desktopApp ?? desktopShowcase).querySelectorAll("[data-git-history] .vx-history-card").forEach((other) => {
     other.classList.toggle("is-selected", other === card);
   });
   const fresh = Boolean(row?.hasAttribute("data-demo-history"));
@@ -3907,8 +3907,11 @@ function startToolsDemo() {
 // Git Changes entry state: nothing staged, workspace totals, ahead 1.
 function resetGitRailState() {
   if (!desktopShowcase) return;
-  desktopShowcase.querySelector("[data-demo-history]")?.remove();
-  desktopShowcase.querySelectorAll("[data-git-list] [data-demo-commit-row]").forEach((row, index) => {
+  // Scope queries to the real app (desktopApp) once the mirror exists: the
+  // mirror replays these writes and must not be mutated a second time here.
+  const scope = desktopApp ?? desktopShowcase;
+  scope.querySelector("[data-demo-history]")?.remove();
+  scope.querySelectorAll("[data-git-list] [data-demo-commit-row]").forEach((row, index) => {
     row.hidden = false;
     row.classList.remove("is-committed", "is-selected");
     // The template preselects timeline.rs (index 1) like the app's default.
@@ -3916,14 +3919,14 @@ function resetGitRailState() {
     row.classList.toggle("is-selected", checked);
     row.querySelector(".vx-checkbox")?.classList.toggle("is-checked", checked);
   });
-  desktopShowcase.querySelectorAll("[data-git-list] .vx-git-row:not([data-demo-commit-row]) .vx-checkbox").forEach((box) => {
+  scope.querySelectorAll("[data-git-list] .vx-git-row:not([data-demo-commit-row]) .vx-checkbox").forEach((box) => {
     box.classList.remove("is-checked");
   });
-  const wsFiles = desktopShowcase.querySelector("[data-ws-files]");
+  const wsFiles = scope.querySelector("[data-ws-files]");
   if (wsFiles) wsFiles.textContent = "(4 files)";
-  const wsAdd = desktopShowcase.querySelector("[data-ws-add]");
+  const wsAdd = scope.querySelector("[data-ws-add]");
   if (wsAdd) wsAdd.textContent = "+132";
-  const wsDel = desktopShowcase.querySelector("[data-ws-del]");
+  const wsDel = scope.querySelector("[data-ws-del]");
   if (wsDel) wsDel.textContent = "−49";
   const ahead = desktopShowcase.querySelector("[data-git-ahead]");
   if (ahead) ahead.textContent = "↗ 1";
@@ -3949,6 +3952,9 @@ function resetGitRailState() {
 // below it is checked, and unchecks as soon as one file drops out.
 function syncDirCheckbox(row) {
   if (!desktopShowcase || !row) return;
+  // Mirror rows replay the real app's checkboxes; syncing them here would
+  // write stale state behind the observer's back.
+  if (desktopApp && row.closest(".desktop-app") !== desktopApp) return;
   const list = row.closest("[data-git-list]");
   if (!list) return;
   const rows = [...list.querySelectorAll("[data-demo-commit-row]")];
@@ -3971,20 +3977,23 @@ function syncDirCheckbox(row) {
 
 function syncGitSelection() {
   if (!desktopShowcase) return;
-  const fileRows = [...desktopShowcase.querySelectorAll("[data-git-list] [data-demo-commit-row]")]
+  // Count only the real app's rows: the light sweep mirror lives inside the
+  // showcase too and would double every number if it were iterated.
+  const fileRows = [...(desktopApp ?? desktopShowcase).querySelectorAll("[data-git-list] [data-demo-commit-row]")]
     .filter((row) => !row.classList.contains("is-dir") && !row.hidden);
   const checked = fileRows.filter((row) => row.querySelector(".vx-checkbox")?.classList.contains("is-checked"));
   const adds = checked.reduce((total, row) => total + Number((row.querySelector(".vx-diff-add")?.textContent ?? "0").replace(/[^0-9]/g, "") || 0), 0);
   const dels = checked.reduce((total, row) => total + Number((row.querySelector(".vx-diff-del")?.textContent ?? "0").replace(/[^0-9]/g, "") || 0), 0);
-  const count = desktopShowcase.querySelector("[data-commit-count]");
+  const scope = desktopApp ?? desktopShowcase;
+  const count = scope.querySelector("[data-commit-count]");
   if (count) count.textContent = String(checked.length);
-  const btn = desktopShowcase.querySelector("[data-commit-btn]");
+  const btn = scope.querySelector("[data-commit-btn]");
   btn?.classList.toggle("is-disabled", checked.length === 0);
-  const wsFiles = desktopShowcase.querySelector("[data-ws-files]");
+  const wsFiles = scope.querySelector("[data-ws-files]");
   if (wsFiles) wsFiles.textContent = `(${checked.length} files)`;
-  const wsAdd = desktopShowcase.querySelector("[data-ws-add]");
+  const wsAdd = scope.querySelector("[data-ws-add]");
   if (wsAdd) wsAdd.textContent = `+${adds}`;
-  const wsDel = desktopShowcase.querySelector("[data-ws-del]");
+  const wsDel = scope.querySelector("[data-ws-del]");
   if (wsDel) wsDel.textContent = `−${dels}`;
 }
 
@@ -4090,7 +4099,9 @@ async function runToolsDemo(gen) {
   await scriptSleep(1700); if (!alive()) return;
 
   // Stage the task's changed files one by one; the commit chip follows.
-  const fileRows = [...desktopShowcase.querySelectorAll("[data-git-list] [data-demo-commit-row]")]
+  // Scope to the real app: the sweep mirror replays every write and must not
+  // be touched a second time here.
+  const fileRows = [...(desktopApp ?? desktopShowcase).querySelectorAll("[data-git-list] [data-demo-commit-row]")]
     .filter((row) => !row.classList.contains("is-dir"));
   for (const row of fileRows) {
     row.querySelector(".vx-checkbox")?.classList.add("is-checked");
@@ -4111,26 +4122,27 @@ async function runToolsDemo(gen) {
   await scriptSleep(700); if (!alive()) return;
 
   // Commit: spinner on the button, staged rows clear out, ahead 1 → 2.
-  const commitBtn = desktopShowcase.querySelector("[data-commit-btn]");
+  const commitScope = desktopApp ?? desktopShowcase;
+  const commitBtn = commitScope.querySelector("[data-commit-btn]");
   commitBtn?.classList.add("is-running");
   const spinner = commitBtn?.querySelector(".vx-commit-spinner");
   if (spinner) spinner.hidden = false;
   await scriptSleep(1700); if (!alive()) return;
   if (spinner) spinner.hidden = true;
   commitBtn?.classList.remove("is-running");
-  desktopShowcase.querySelectorAll("[data-git-list] [data-demo-commit-row]").forEach((row) => {
+  commitScope.querySelectorAll("[data-git-list] [data-demo-commit-row]").forEach((row) => {
     row.classList.add("is-committed");
     row.querySelector(".vx-checkbox")?.classList.remove("is-checked");
   });
   if (typed) typed.textContent = "";
   syncComposerHint(typed);
-  const wsFiles = desktopShowcase.querySelector("[data-ws-files]");
+  const wsFiles = commitScope.querySelector("[data-ws-files]");
   if (wsFiles) wsFiles.textContent = "(1 file)";
-  const wsAdd = desktopShowcase.querySelector("[data-ws-add]");
+  const wsAdd = commitScope.querySelector("[data-ws-add]");
   if (wsAdd) wsAdd.textContent = "+4";
-  const wsDel = desktopShowcase.querySelector("[data-ws-del]");
+  const wsDel = commitScope.querySelector("[data-ws-del]");
   if (wsDel) wsDel.textContent = "−2";
-  const count = desktopShowcase.querySelector("[data-commit-count]");
+  const count = commitScope.querySelector("[data-commit-count]");
   if (count) count.textContent = "0";
   commitBtn?.classList.add("is-disabled");
   const ahead = desktopShowcase.querySelector("[data-git-ahead]");
@@ -4225,9 +4237,11 @@ function selectPickerModel(key) {
 
 function syncRuntimeLabels() {
   if (!desktopShowcase) return;
-  const astra = Boolean(desktopShowcase.querySelector('[data-picker-model="astra"].is-selected'));
+  // Write the real app only; the light sweep mirror replays the label change.
+  const scope = desktopApp ?? desktopShowcase;
+  const astra = Boolean(scope.querySelector('[data-picker-model="astra"].is-selected'));
   const label = RUNTIME_LABELS[astra ? "astra" : "agent"];
-  desktopShowcase.querySelectorAll("[data-runtime-label]").forEach((node) => {
+  scope.querySelectorAll("[data-runtime-label]").forEach((node) => {
     node.textContent = label;
   });
 }
@@ -4669,6 +4683,52 @@ if (desktopApp && desktopCanvas) {
     for (let i = 0; i < from.length; i += 1) indexClone(from[i], to[i]);
   };
 
+  // Lucide's document-wide createIcons pass renders every [data-lucide]
+  // element — including the mirror's. Without this strip the mirror icons get
+  // rendered once by lucide directly and a second time by the replay of the
+  // real app's icon replacement, stacking duplicates on every renderIcons().
+  // With the markers gone, lucide never touches the mirror and icon
+  // replacement is replayed from the real app like any other mutation.
+  const stripIconMarkers = (root) => {
+    if (root.nodeType !== 1) return;
+    if (root.hasAttribute("data-lucide")) root.removeAttribute("data-lucide");
+    root.querySelectorAll("[data-lucide]").forEach((el) => el.removeAttribute("data-lucide"));
+  };
+
+  // Several demo helpers iterate the whole showcase (mirror included) and
+  // write text/HTML straight onto mirror nodes. Those writes race the replay
+  // and can leave duplicated children behind (e.g. a label set once by
+  // syncRuntimeLabels and once by the replay). Compare every replayed parent
+  // against the real app and rebuild the pane on any drift.
+  const reconcile = (orig, clone) => {
+    const from = orig.childNodes;
+    const to = clone.childNodes;
+    if (from.length === to.length) {
+      let same = true;
+      for (let i = 0; i < from.length; i += 1) {
+        if (from[i].nodeName !== to[i].nodeName) {
+          same = false;
+          break;
+        }
+      }
+      if (same) return;
+    }
+    const copies = Array.from(from).map((child) => {
+      const copy = child.cloneNode(true);
+      stripIconMarkers(copy);
+      return copy;
+    });
+    clone.replaceChildren(...copies);
+    indexClone(orig, clone);
+    // Rebuilt subtrees lose live form values and scroll offsets; re-sync them.
+    orig.querySelectorAll("*").forEach((el) => {
+      const copy = sweepCloneRefs.get(el);
+      if (!copy) return;
+      if (typeof copy.value === "string" && copy.value !== el.value) copy.value = el.value;
+      if (el.scrollTop) copy.scrollTop = el.scrollTop;
+    });
+  };
+
   // The mirror only comes into existence when the pointer first enters the
   // showcase (or the handle gets keyboard focus) — until then it would just
   // be dead markup that the prerender snapshot and every demo frame carry.
@@ -4678,6 +4738,7 @@ if (desktopApp && desktopCanvas) {
     desktopLightApp.className = "desktop-app is-light";
     desktopLightApp.setAttribute("aria-hidden", "true");
     desktopLightApp.innerHTML = desktopApp.innerHTML;
+    stripIconMarkers(desktopLightApp);
     sweepCloneRefs = new WeakMap();
     desktopCanvas.appendChild(desktopLightApp);
     indexClone(desktopApp, desktopLightApp);
@@ -4690,16 +4751,19 @@ if (desktopApp && desktopCanvas) {
 
     // Replay every demo mutation onto the mirror so the light side stays
     // beat-for-beat with the dark side.
+    const applyAttribute = (orig, clone, name) => {
+      // The mirror root carries the is-light marker on top of the app
+      // classes; never copy the real app root's class attribute over it.
+      if (orig === desktopApp && name === "class") return;
+      if (orig.hasAttribute(name)) clone.setAttribute(name, orig.getAttribute(name));
+      else clone.removeAttribute(name);
+    };
     new MutationObserver((records) => {
       for (const record of records) {
         if (record.type === "attributes") {
           const clone = sweepCloneRefs.get(record.target);
           if (!clone) continue;
-          if (record.target.hasAttribute(record.attributeName)) {
-            clone.setAttribute(record.attributeName, record.target.getAttribute(record.attributeName));
-          } else {
-            clone.removeAttribute(record.attributeName);
-          }
+          applyAttribute(record.target, clone, record.attributeName);
         } else if (record.type === "characterData") {
           const clone = sweepCloneRefs.get(record.target);
           if (clone) clone.textContent = record.target.textContent;
@@ -4711,14 +4775,55 @@ if (desktopApp && desktopCanvas) {
             // A moved node may still hold a stale mirror; drop it first.
             sweepCloneRefs.get(node)?.remove();
             const clone = node.cloneNode(true);
+            stripIconMarkers(clone);
             const anchor = record.nextSibling ? sweepCloneRefs.get(record.nextSibling) : null;
             // The anchor can go stale within one record batch (removed by an
             // earlier record); fall back to appending so replay never throws.
             parent.insertBefore(clone, anchor?.parentNode === parent ? anchor : null);
             indexClone(node, clone);
           }
+          reconcile(record.target, parent);
         }
       }
+      // Broad demo writes (labels, git selection, i18n rebinds) also touch
+      // mirror nodes directly, racing the replay above onto stale mappings.
+      // Once the batch has settled, re-apply every record against the current
+      // mapping so the mirror always ends up matching the real app.
+      for (const record of records) {
+        const clone = sweepCloneRefs.get(record.target);
+        if (!clone) continue;
+        if (record.type === "attributes") {
+          applyAttribute(record.target, clone, record.attributeName);
+        } else if (record.type === "characterData") {
+          clone.textContent = record.target.textContent;
+        } else if (record.type === "childList") {
+          reconcile(record.target, clone);
+        }
+      }
+      // The per-record replay only fires when the real app's attribute value
+      // actually flips. Demo helpers sweep the whole showcase (mirror
+      // included) with classList toggles: when the real node is already in
+      // the target state that write is a no-op — no record — while the
+      // mirror node, still holding the previous run's state, does flip and
+      // is never corrected (e.g. a pairing segment stuck inactive in light
+      // mode). Audit the whole mirrored attribute state after every batch
+      // (root excluded: it carries the is-light marker) so the mirror
+      // re-converges regardless of which write path drifted.
+      desktopApp.querySelectorAll("*").forEach((el) => {
+        const copy = sweepCloneRefs.get(el);
+        if (!copy || copy.nodeType !== 1) return;
+        for (const attr of el.attributes) {
+          if (attr.name !== "data-lucide" && copy.getAttribute(attr.name) !== attr.value) {
+            copy.setAttribute(attr.name, attr.value);
+          }
+        }
+        for (const attr of Array.from(copy.attributes)) {
+          if (!el.hasAttribute(attr.name) && attr.name !== "data-lucide") copy.removeAttribute(attr.name);
+        }
+        if (typeof copy.value === "string" && copy.value !== el.value) copy.value = el.value;
+        if (copy.scrollTop !== el.scrollTop) copy.scrollTop = el.scrollTop;
+        if (copy.scrollLeft !== el.scrollLeft) copy.scrollLeft = el.scrollLeft;
+      });
     }).observe(desktopApp, { attributes: true, childList: true, characterData: true, subtree: true });
 
     // Scrolls never surface as DOM mutations; mirror them wholesale. The

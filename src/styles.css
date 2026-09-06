@@ -6026,14 +6026,14 @@ h3 {
 .vx-pairing-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .vx-pairing-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  gap: 10px;
+  padding: 5px 10px;
   border: 1px solid rgba(255, 255, 255, 0.072);
   border-radius: 10px;
   background: rgba(9, 9, 11, 0.4);
@@ -6054,8 +6054,8 @@ h3 {
 .vx-pairing-radio {
   flex: none;
   position: relative;
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50%;
 }
@@ -6067,7 +6067,7 @@ h3 {
 .vx-pairing-row.is-selected .vx-pairing-radio::after {
   content: "";
   position: absolute;
-  inset: 3px;
+  inset: 2.5px;
   border-radius: 50%;
   background: var(--vx-primary);
 }
@@ -6085,18 +6085,23 @@ h3 {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  font-size: 12.5px;
+  gap: 6px;
+  font-size: 11.5px;
   font-weight: 600;
 }
 
 .vx-pairing-row-desc {
   min-width: 0;
   color: var(--vx-muted-fg);
-  font-size: 11px;
+  font-size: 10.5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.vx-pairing-row .vx-pairing-pill {
+  padding: 1px 7px;
+  font-size: 10px;
 }
 
 /* Detail panels ------------------------------------------------------------ */
@@ -6357,9 +6362,9 @@ h3 {
 
 .vx-pairing-qrbox {
   flex: none;
-  width: 200px;
-  height: 200px;
-  padding: 10px;
+  width: 224px;
+  height: 224px;
+  padding: 26px;
   border: 1px solid var(--vx-border-soft);
   border-radius: 12px;
   background: #ffffff;
@@ -6367,7 +6372,7 @@ h3 {
 
 .vx-pairing-qr {
   display: grid;
-  grid-template-columns: repeat(21, 1fr);
+  grid-template-columns: repeat(var(--qr-size, 29), 1fr);
   grid-auto-rows: 1fr;
   width: 100%;
   height: 100%;

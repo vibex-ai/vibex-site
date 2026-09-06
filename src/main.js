@@ -333,6 +333,7 @@ document.querySelector("#app").innerHTML = `
                   <aside class="vx-sidebar">
                     <div class="vx-sidebar-actions">
                       <button class="vx-side-btn" type="button" data-desktop-action="new-session"><i data-lucide="plus"></i><span data-i18n="showcase.desktop.newChat">New chat</span></button>
+                      <button class="vx-side-btn" type="button" data-desktop-action="pair"><i data-lucide="smartphone"></i><span data-i18n="showcase.desktop.pairMobile">Pair mobile</span></button>
                       <button class="vx-side-btn" type="button" data-desktop-action="management" data-desktop-side="management"><i data-lucide="settings"></i><span data-i18n="showcase.desktop.management">Config Center</span></button>
                       <button class="vx-side-btn" type="button" data-desktop-action="usage" data-desktop-side="usage"><i data-lucide="activity"></i><span data-i18n="showcase.desktop.usage">Usage Statistics</span></button>
                     </div>
@@ -2525,6 +2526,41 @@ desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
 // strings and states mirror remote_access_pairing.rs in the desktop app.
 // ---------------------------------------------------------------------------
 
+// Real QR matrix (29x29, error correction L) for the pair URL the app
+// encodes: vibex://open/tailnet#9f2c41d8a7b35e60c4d1 — rendered with the
+// same 4-module quiet zone as the desktop offer sheet.
+const PAIRING_QR_MATRIX = [
+"11111110001100011011001111111",
+"10000010000100011010101000001",
+"10111010010010010110001011101",
+"10111010001000111000101011101",
+"10111010000111110000101011101",
+"10000010110000111101001000001",
+"11111110101010101010101111111",
+"00000000011100110101000000000",
+"10010110101111001000010100000",
+"10111001001101101100011100011",
+"11111011001001001111111000110",
+"01000000000111111011001110111",
+"00110110011011000110011001001",
+"11101001000110001111100000110",
+"01010011100010100100111010011",
+"11010101000001000101110001000",
+"01010010100110101111110000001",
+"00110000111101000010011101011",
+"10011010010110101010101010011",
+"00001100000000101111101100010",
+"10111110100100001001111110111",
+"00000000110111001101100010101",
+"11111110011011101000101010010",
+"10000010111001101000100011100",
+"10111010011100100110111110000",
+"10111010111001001010001011110",
+"10111010011001100111100011101",
+"10000010010111110101111010010",
+"11111110101001100100110101010",
+];
+
 const PAIRING_COUNTDOWN_SECONDS = 90;
 let pairingOfferSeconds = PAIRING_COUNTDOWN_SECONDS;
 let pairingLanSeconds = 60;
@@ -2549,28 +2585,19 @@ function pairingSelectPerm(group, permission) {
   }
 }
 
-// The fake QR is deterministic so every rebuild looks like the real offer.
+// Render the real offer QR: dark modules only, 4-module quiet zone around
+// the matrix (the white card supplies the quiet zone background).
 function pairingQrCells(node) {
   if (!node) return;
-  const seedText = "vibex://pair/9f2c41d8a7b35e60c4d1";
-  let hash = 0x811c9dc5;
-  for (const ch of seedText) {
-    hash ^= ch.codePointAt(0);
-    hash = Math.imul(hash, 0x01000193) >>> 0;
-  }
+  const size = PAIRING_QR_MATRIX.length;
   let cells = "";
-  for (let i = 0; i < 441; i += 1) {
-    const r = Math.floor(i / 21);
-    const c = i % 21;
-    // the three finder patterns of a real QR code
-    const finder =
-      (r < 7 && c < 7) || (r < 7 && c > 13) || (r > 13 && c < 7);
-    const dark = finder
-      ? (r % 6 === 0 || c % 6 === 0) && !(r === 1 && c >= 1 && c <= 5) &&
-        !(r >= 1 && r <= 5 && c === 1)
-      : ((hash = (Math.imul(hash ^ (i + 1), 0x27220a95) >>> 0)) & 1) === 0;
-    cells += dark ? '<b class="d"></b>' : "<b></b>";
+  for (let r = 0; r < size; r += 1) {
+    const row = PAIRING_QR_MATRIX[r];
+    for (let c = 0; c < size; c += 1) {
+      cells += row[c] === "1" ? '<b class="d"></b>' : "<b></b>";
+    }
   }
+  node.style.setProperty("--qr-size", size);
   node.innerHTML = cells;
 }
 

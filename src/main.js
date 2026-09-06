@@ -3895,6 +3895,21 @@ async function runUsageDemo(gen) {
   menu?.setAttribute("hidden", "");
   filter?.setAttribute("aria-expanded", "false");
   await scriptSleep(2800); if (!alive()) return;
+
+  // Trend tabs: the Heatmap view swaps the chart for the activity grid.
+  pulseNode(desktopShowcase.querySelector('[data-usage-view="heatmap"]'));
+  setUsageView("heatmap");
+  await scriptSleep(2600); if (!alive()) return;
+
+  // The Models view ranks token spend per model for the picked agent.
+  pulseNode(desktopShowcase.querySelector('[data-usage-view="models"]'));
+  setUsageView("models");
+  await scriptSleep(2600); if (!alive()) return;
+
+  // Back to the trend chart before the demo hands over.
+  pulseNode(desktopShowcase.querySelector('[data-usage-view="bars"]'));
+  setUsageView("bars");
+  await scriptSleep(1800); if (!alive()) return;
   script.running = false;
 }
 

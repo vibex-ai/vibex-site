@@ -13,6 +13,7 @@ import {
   Bot,
   Brain,
   Braces,
+  Building2,
   Check,
   ChevronDown,
   ChevronLeft,
@@ -22,6 +23,7 @@ import {
   ChevronsRightLeft,
   CircleDot,
   CircleCheck,
+  CircleUser,
   Clock3,
   Clipboard,
   Code2,
@@ -38,25 +40,30 @@ import {
   FileCog,
   FileDiff,
   FileJson,
+  FilePlus,
   FileText,
   Folder,
   FolderOpen,
   GitBranch,
   GitCommitHorizontal,
   Github,
+  Globe,
   Ellipsis,
   GripVertical,
   KeyRound,
   Globe2,
   Layers3,
+  ListChecks,
   LoaderCircle,
   Laptop,
   LockKeyhole,
   Maximize2,
   Menu,
   Minus,
+  Map,
   MessageSquare,
   Network,
+  Pause,
   PanelLeft,
   PanelLeftClose,
   PanelRightClose,
@@ -65,10 +72,12 @@ import {
   Play,
   Plug,
   Plus,
+  Redo2,
   RefreshCw,
   Radio,
   RotateCcw,
   Search,
+  ScanLine,
   Settings,
   ShieldCheck,
   ShieldAlert,
@@ -1179,6 +1188,209 @@ document.querySelector("#app").innerHTML = `
                     <button type="button" aria-label="Workspace settings"><i data-lucide="settings-2"></i></button>
                   </nav>
                 </div>
+
+                <div class="vx-pairing" data-pairing hidden>
+                  <div class="vx-pairing-card" role="dialog" aria-modal="true">
+                    <button class="vx-icon-btn is-sm vx-pairing-close" type="button" data-pairing-close aria-label="Close dialog"><i data-lucide="x"></i></button>
+
+                    <div class="vx-pairing-page" data-pairing-page="setup">
+                      <div class="vx-pairing-hero">
+                        <span class="vx-pairing-hero-tile"><i data-lucide="square-terminal"></i></span>
+                        <span class="vx-pairing-hero-text">
+                          <strong data-i18n="showcase.desktop.pairing.title">Connect a mobile device</strong>
+                          <small data-i18n="showcase.desktop.pairing.subtitle">Pair this computer with the Vibex mobile app</small>
+                        </span>
+                        <span class="vx-pairing-pill is-warning" data-pairing-hero-status data-i18n="showcase.desktop.pairing.heroChecking">Checking…</span>
+                      </div>
+
+                      <div class="vx-pairing-list">
+                        <div class="vx-pairing-row is-selected" data-pairing-row="tailscale" role="button" tabindex="0">
+                          <span class="vx-pairing-radio" aria-hidden="true"></span>
+                          <span class="vx-pairing-row-text">
+                            <span class="vx-pairing-row-name">Tailscale Serve<span class="vx-pairing-pill is-primary" data-i18n="showcase.desktop.pairing.recommended">Recommended</span></span>
+                            <span class="vx-pairing-row-desc" data-i18n="showcase.desktop.pairing.tailscaleDesc">Private remote access through your Tailnet</span>
+                          </span>
+                          <span class="vx-pairing-pill is-warning" data-pairing-status="tailscale" data-i18n="showcase.desktop.pairing.checking">Checking</span>
+                        </div>
+                        <div class="vx-pairing-row" data-pairing-row="direct" role="button" tabindex="0">
+                          <span class="vx-pairing-radio" aria-hidden="true"></span>
+                          <span class="vx-pairing-row-text">
+                            <span class="vx-pairing-row-name" data-i18n="showcase.desktop.pairing.directName">Direct HTTPS</span>
+                            <span class="vx-pairing-row-desc" data-i18n="showcase.desktop.pairing.directDesc">Connect through an operator-managed HTTPS endpoint</span>
+                          </span>
+                          <span class="vx-pairing-pill is-muted" data-pairing-status="direct" data-i18n="showcase.desktop.pairing.off">Off</span>
+                        </div>
+                        <div class="vx-pairing-row" data-pairing-row="relay" role="button" tabindex="0">
+                          <span class="vx-pairing-radio" aria-hidden="true"></span>
+                          <span class="vx-pairing-row-text">
+                            <span class="vx-pairing-row-name" data-i18n="showcase.desktop.pairing.relayName">Self-hosted Relay</span>
+                            <span class="vx-pairing-row-desc" data-i18n="showcase.desktop.pairing.relayDesc">Connect through a self-hosted encrypted relay</span>
+                          </span>
+                          <span class="vx-pairing-pill is-muted" data-pairing-status="relay" data-i18n="showcase.desktop.pairing.off">Off</span>
+                        </div>
+                        <div class="vx-pairing-row" data-pairing-row="lan" role="button" tabindex="0">
+                          <span class="vx-pairing-radio" aria-hidden="true"></span>
+                          <span class="vx-pairing-row-text">
+                            <span class="vx-pairing-row-name" data-i18n="showcase.desktop.pairing.lanName">Local network pairing</span>
+                            <span class="vx-pairing-row-desc" data-i18n="showcase.desktop.pairing.lanDesc">Discover this computer on the same network</span>
+                          </span>
+                          <span class="vx-pairing-pill is-muted" data-pairing-status="lan" data-i18n="showcase.desktop.pairing.onDemand">On demand</span>
+                        </div>
+                      </div>
+
+                      <div class="vx-pairing-detail" data-pairing-detail="tailscale">
+                        <div class="vx-pairing-detail-head">
+                          <span class="vx-pairing-tile"><i data-lucide="network"></i></span>
+                          <strong>Tailscale Serve</strong>
+                          <span class="vx-pairing-pill is-warning" data-pairing-detail-status="tailscale" data-i18n="showcase.desktop.pairing.checking">Checking</span>
+                          <span class="vx-pairing-detail-desc" data-i18n="showcase.desktop.pairing.tailscaleDesc">Private remote access through your Tailnet</span>
+                        </div>
+                        <span class="vx-pairing-origin" data-pairing-origin hidden>https://vibex.tail123456.ts.net:8444</span>
+                      </div>
+                      <div class="vx-pairing-detail" data-pairing-detail="direct" hidden>
+                        <div class="vx-pairing-detail-head">
+                          <span class="vx-pairing-tile"><i data-lucide="globe"></i></span>
+                          <strong data-i18n="showcase.desktop.pairing.directName">Direct HTTPS</strong>
+                          <span class="vx-pairing-pill is-muted" data-pairing-detail-status="direct" data-i18n="showcase.desktop.pairing.off">Off</span>
+                          <span class="vx-pairing-detail-desc" data-i18n="showcase.desktop.pairing.directDesc">Connect through an operator-managed HTTPS endpoint</span>
+                        </div>
+                        <div class="vx-pairing-origin-editor">
+                          <label data-i18n="showcase.desktop.pairing.directOrigin">Operator-managed HTTPS origin</label>
+                          <span class="vx-pairing-origin-input">https://desktop.example.com:8443</span>
+                        </div>
+                        <button class="vx-pairing-btn is-sm" type="button" data-pairing-enable="direct"><i data-lucide="play"></i><span data-i18n="showcase.desktop.pairing.enable">Enable</span></button>
+                      </div>
+                      <div class="vx-pairing-detail" data-pairing-detail="relay" hidden>
+                        <div class="vx-pairing-detail-head">
+                          <span class="vx-pairing-tile"><i data-lucide="building-2"></i></span>
+                          <strong data-i18n="showcase.desktop.pairing.relayName">Self-hosted Relay</strong>
+                          <span class="vx-pairing-pill is-muted" data-pairing-detail-status="relay" data-i18n="showcase.desktop.pairing.off">Off</span>
+                          <span class="vx-pairing-detail-desc" data-i18n="showcase.desktop.pairing.relayDesc">Connect through a self-hosted encrypted relay</span>
+                        </div>
+                        <div class="vx-pairing-origin-editor">
+                          <label data-i18n="showcase.desktop.pairing.relayOrigin">Self-hosted Relay origin</label>
+                          <span class="vx-pairing-origin-input">https://relay.example.com:443</span>
+                        </div>
+                        <button class="vx-pairing-btn is-sm" type="button" data-pairing-enable="relay"><i data-lucide="play"></i><span data-i18n="showcase.desktop.pairing.enable">Enable</span></button>
+                      </div>
+                      <div class="vx-pairing-detail" data-pairing-detail="lan" hidden>
+                        <div class="vx-pairing-detail-head">
+                          <span class="vx-pairing-tile"><i data-lucide="map"></i></span>
+                          <strong data-i18n="showcase.desktop.pairing.lanName">Local network pairing</strong>
+                          <span class="vx-pairing-pill is-muted" data-pairing-detail-status="lan" data-i18n="showcase.desktop.pairing.onDemand">On demand</span>
+                          <span class="vx-pairing-detail-desc" data-i18n="showcase.desktop.pairing.lanDesc">Discover this computer on the same network</span>
+                        </div>
+                        <div class="vx-pairing-perm">
+                          <div class="vx-pairing-perm-head"><span data-i18n="showcase.desktop.pairing.permLabel">Device permission</span><small data-pairing-perm-desc>View only</small></div>
+                          <div class="vx-pairing-seg" data-pairing-perm-seg>
+                            <button class="is-active" type="button" data-pairing-perm-opt="readOnly"><span data-i18n="showcase.desktop.pairing.permReadOnly">Read only</span></button>
+                            <button type="button" data-pairing-perm-opt="approveOnly"><span data-i18n="showcase.desktop.pairing.permApproveOnly">Approve only</span></button>
+                            <button type="button" data-pairing-perm-opt="fullControl"><span data-i18n="showcase.desktop.pairing.permFullControl">Full control</span></button>
+                          </div>
+                        </div>
+                        <button class="vx-pairing-btn is-primary is-block" type="button" data-pairing-lan-start><i data-lucide="play"></i><span data-i18n="showcase.desktop.pairing.startLocal">Start local pairing</span></button>
+                      </div>
+
+                      <div class="vx-pairing-footer">
+                        <div class="vx-pairing-perm">
+                          <div class="vx-pairing-perm-head"><span data-i18n="showcase.desktop.pairing.permLabel">Device permission</span><small data-pairing-perm-desc>View only</small></div>
+                          <div class="vx-pairing-seg" data-pairing-perm-seg>
+                            <button class="is-active" type="button" data-pairing-perm-opt="readOnly"><span data-i18n="showcase.desktop.pairing.permReadOnly">Read only</span></button>
+                            <button type="button" data-pairing-perm-opt="approveOnly"><span data-i18n="showcase.desktop.pairing.permApproveOnly">Approve only</span></button>
+                            <button type="button" data-pairing-perm-opt="fullControl"><span data-i18n="showcase.desktop.pairing.permFullControl">Full control</span></button>
+                          </div>
+                        </div>
+                        <button class="vx-pairing-btn is-primary is-block" type="button" data-pairing-generate disabled><i data-lucide="square-terminal"></i><span data-i18n="showcase.desktop.pairing.generateQr">Generate pairing QR code</span></button>
+                        <div class="vx-pairing-foot-hint" data-pairing-route-hint><i data-lucide="info"></i><span data-i18n="showcase.desktop.pairing.noRoute">No validated remote entry is online</span></div>
+                      </div>
+                    </div>
+
+                    <div class="vx-pairing-page" data-pairing-page="pairing" hidden>
+                      <div class="vx-pairing-pairhead">
+                        <button class="vx-icon-btn is-sm" type="button" data-pairing-back aria-label="Back"><i data-lucide="arrow-left"></i></button>
+                        <strong data-i18n="showcase.desktop.pairing.pairTitle">Pair your mobile device</strong>
+                      </div>
+                      <div class="vx-pairing-banner is-success" data-pairing-banner hidden><i data-lucide="circle-check"></i><span data-pairing-banner-text></span></div>
+
+                      <div class="vx-pairing-sheet" data-pairing-sheet="qr" hidden>
+                        <div class="vx-pairing-qrbox"><div class="vx-pairing-qr" data-pairing-qr aria-hidden="true"></div></div>
+                        <div class="vx-pairing-qrctl">
+                          <div class="vx-pairing-qrstatus">
+                            <div class="vx-pairing-qrstatus-row">
+                              <strong class="is-primary" data-pairing-qr-status data-i18n="showcase.desktop.pairing.scanToPair">Scan to pair</strong>
+                              <span class="vx-pairing-pill is-warning is-mono" data-pairing-countdown>90s</span>
+                            </div>
+                            <small data-i18n="showcase.desktop.pairing.openAppScan">Open the Vibex mobile app and scan this code</small>
+                          </div>
+                          <div class="vx-pairing-perm">
+                            <div class="vx-pairing-perm-head"><span data-i18n="showcase.desktop.pairing.permLabel">Device permission</span><small data-pairing-perm-desc>View only</small></div>
+                            <div class="vx-pairing-seg" data-pairing-perm-seg>
+                              <button class="is-active" type="button" data-pairing-perm-opt="readOnly"><span data-i18n="showcase.desktop.pairing.permReadOnly">Read only</span></button>
+                              <button type="button" data-pairing-perm-opt="approveOnly"><span data-i18n="showcase.desktop.pairing.permApproveOnly">Approve only</span></button>
+                              <button type="button" data-pairing-perm-opt="fullControl"><span data-i18n="showcase.desktop.pairing.permFullControl">Full control</span></button>
+                            </div>
+                          </div>
+                          <div class="vx-pairing-entry">
+                            <span class="vx-pairing-perm-label" data-i18n="showcase.desktop.pairing.qrEntry">QR code entry</span>
+                            <div class="vx-pairing-seg" data-pairing-entry-seg>
+                              <button class="is-active" type="button">Tailnet</button>
+                              <button type="button">Direct</button>
+                              <button type="button">Relay</button>
+                            </div>
+                          </div>
+                          <div class="vx-pairing-actions">
+                            <button class="vx-pairing-btn is-primary" type="button" data-pairing-copy><i data-lucide="copy"></i><span data-i18n="showcase.desktop.pairing.copyLink">Copy link</span></button>
+                            <button class="vx-pairing-btn" type="button" data-pairing-regen><i data-lucide="redo2"></i><span data-i18n="showcase.desktop.pairing.regenerate">Regenerate</span></button>
+                            <button class="vx-pairing-btn" type="button" data-pairing-cancel><i data-lucide="x"></i><span data-i18n="showcase.desktop.pairing.cancel">Cancel</span></button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="vx-pairing-sheet" data-pairing-sheet="lan" hidden>
+                        <div class="vx-pairing-lanwin">
+                          <div class="vx-pairing-lanwin-head">
+                            <span class="vx-pairing-tile"><i data-lucide="map"></i></span>
+                            <span class="vx-pairing-lanwin-title">
+                              <strong data-i18n="showcase.desktop.pairing.lanActive">Local network pairing is active</strong>
+                              <small>vibex.tail123456.ts.net</small>
+                            </span>
+                            <span class="vx-pairing-pill is-warning is-mono" data-pairing-lan-countdown>60s</span>
+                            <button class="vx-pairing-btn is-sm" type="button" data-pairing-lan-stop><i data-lucide="pause"></i><span data-i18n="showcase.desktop.pairing.stop">Stop</span></button>
+                          </div>
+                          <div class="vx-pairing-perm">
+                            <div class="vx-pairing-perm-head"><span data-i18n="showcase.desktop.pairing.permLabel">Device permission</span><small data-pairing-perm-desc>View only</small></div>
+                            <div class="vx-pairing-seg" data-pairing-perm-seg>
+                              <button class="is-active" type="button" data-pairing-perm-opt="readOnly"><span data-i18n="showcase.desktop.pairing.permReadOnly">Read only</span></button>
+                              <button type="button" data-pairing-perm-opt="approveOnly"><span data-i18n="showcase.desktop.pairing.permApproveOnly">Approve only</span></button>
+                              <button type="button" data-pairing-perm-opt="fullControl"><span data-i18n="showcase.desktop.pairing.permFullControl">Full control</span></button>
+                            </div>
+                          </div>
+                          <div class="vx-pairing-empty" data-pairing-empty>
+                            <i data-lucide="eye"></i>
+                            <span data-i18n="showcase.desktop.pairing.waiting">Waiting for a nearby device</span>
+                          </div>
+                          <div class="vx-pairing-request" data-pairing-request hidden>
+                            <div class="vx-pairing-request-head">
+                              <span class="vx-pairing-tile is-lg"><i data-lucide="circle-user"></i></span>
+                              <span class="vx-pairing-request-id">
+                                <span class="vx-pairing-request-name"><strong>Vibex Mobile</strong><span class="vx-pairing-pill is-warning" data-pairing-request-state data-i18n="showcase.desktop.pairing.awaiting">Awaiting confirmation</span></span>
+                                <small>9F:2C:41:8A:D3:07:5B:66</small>
+                              </span>
+                              <span class="vx-pairing-request-code">
+                                <b>493 072</b>
+                                <small data-i18n="showcase.desktop.pairing.verifyCode">Verification code</small>
+                              </span>
+                            </div>
+                            <div class="vx-pairing-request-actions">
+                              <button class="vx-pairing-btn is-primary is-sm" type="button" data-pairing-approve><i data-lucide="check"></i><span data-i18n="showcase.desktop.pairing.allow">Code matches, allow</span></button>
+                              <button class="vx-pairing-btn is-sm" type="button" data-pairing-reject><i data-lucide="x"></i><span data-i18n="showcase.desktop.pairing.reject">Reject</span></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1590,6 +1802,7 @@ function renderIcons() {
     Brain,
     Bot,
     Braces,
+    Building2,
     Check,
     ChevronDown,
     ChevronLeft,
@@ -1599,6 +1812,7 @@ function renderIcons() {
     ChevronsRightLeft,
     CircleDot,
     CircleCheck,
+    CircleUser,
     Clock3,
     Clock,
     Clipboard,
@@ -1615,6 +1829,7 @@ function renderIcons() {
     FileCog,
     FileDiff,
     FileJson,
+    FilePlus,
     FileText,
     Folder,
     FolderOpen,
@@ -1622,12 +1837,15 @@ function renderIcons() {
     GitCommitHorizontal,
     Github,
     Ellipsis,
+    Globe,
+    Globe2,
     GripVertical,
     KeyRound,
-    Globe2,
     Layers3,
+    ListChecks,
     LoaderCircle,
     Laptop,
+    Map,
     LockKeyhole,
     Maximize2,
     Menu,
@@ -1638,14 +1856,17 @@ function renderIcons() {
     PanelLeftClose,
     PanelRightClose,
     Paperclip,
+    Pause,
     Pencil,
     Play,
     Plug,
     Plus,
     RefreshCw,
     Radio,
+    Redo2,
     RotateCcw,
     Search,
+    ScanLine,
     Settings,
     ShieldCheck,
     ShieldAlert,
@@ -1998,6 +2219,7 @@ function setDesktopView(viewKey, { restore = false } = {}) {
   // flow into a running turn, the Files & Git view drives the integrated
   // tools, and Config Center / Usage Statistics swap the whole center surface
   // (no preview dock, no right rail, no activity bar — like the real app).
+  hidePairingDialog();
   switch (view) {
     case "agent":
       // The demo restarts every time (also after a language switch, so the
@@ -2285,15 +2507,418 @@ desktopShowcase?.querySelectorAll("[data-desktop-action]").forEach((action) => {
       return;
     }
     if (kind === "pair") {
+      // The real app opens the remote-access dialog from this title-bar
+      // button; the showcase plays the two pairing flows inside it.
       action.classList.add("is-pairing");
       window.setTimeout(() => action.classList.remove("is-pairing"), 1200);
+      startPairingDemo();
       return;
     }
   });
 });
 
-// Toggles are delegated because the replay rebuilds the timeline DOM.
+// ---------------------------------------------------------------------------
+// Mobile pairing demo: the remote-access dialog opens on the setup page
+// (connection entries, detail panel, footer), then walks the Tailscale
+// flow through the QR offer sheet and the local-network flow through the
+// LAN pairing window with its verification-code request card. Layout,
+// strings and states mirror remote_access_pairing.rs in the desktop app.
+// ---------------------------------------------------------------------------
+
+const PAIRING_COUNTDOWN_SECONDS = 90;
+let pairingOfferSeconds = PAIRING_COUNTDOWN_SECONDS;
+let pairingLanSeconds = 60;
+
+function pairingCountdown(seconds) {
+  const value = Math.max(0, seconds);
+  return currentLanguage === "zh" ? `${value} 秒` : `${value}s`;
+}
+
+function pairingSelectPerm(group, permission) {
+  group.querySelectorAll("[data-pairing-perm-opt]").forEach((opt) => {
+    opt.classList.toggle("is-active", opt.dataset.pairingPermOpt === permission);
+  });
+  const label = group.querySelector("[data-pairing-perm-desc]");
+  if (label) {
+    const key = {
+      readOnly: "permReadOnlyDesc",
+      approveOnly: "permApproveOnlyDesc",
+      fullControl: "permFullControlDesc",
+    }[permission] ?? "permReadOnlyDesc";
+    label.textContent = translate(currentLanguage, `showcase.desktop.pairing.${key}`);
+  }
+}
+
+// The fake QR is deterministic so every rebuild looks like the real offer.
+function pairingQrCells(node) {
+  if (!node) return;
+  const seedText = "vibex://pair/9f2c41d8a7b35e60c4d1";
+  let hash = 0x811c9dc5;
+  for (const ch of seedText) {
+    hash ^= ch.codePointAt(0);
+    hash = Math.imul(hash, 0x01000193) >>> 0;
+  }
+  let cells = "";
+  for (let i = 0; i < 441; i += 1) {
+    const r = Math.floor(i / 21);
+    const c = i % 21;
+    // the three finder patterns of a real QR code
+    const finder =
+      (r < 7 && c < 7) || (r < 7 && c > 13) || (r > 13 && c < 7);
+    const dark = finder
+      ? (r % 6 === 0 || c % 6 === 0) && !(r === 1 && c >= 1 && c <= 5) &&
+        !(r >= 1 && r <= 5 && c === 1)
+      : ((hash = (Math.imul(hash ^ (i + 1), 0x27220a95) >>> 0)) & 1) === 0;
+    cells += dark ? '<b class="d"></b>' : "<b></b>";
+  }
+  node.innerHTML = cells;
+}
+
+function resetPairingState() {
+  if (!desktopShowcase) return;
+  const dialog = desktopShowcase.querySelector("[data-pairing]");
+  if (!dialog) return;
+  dialog.hidden = true;
+  dialog.classList.remove("is-closing");
+  const pages = {
+    setup: desktopShowcase.querySelector('[data-pairing-page="setup"]'),
+    pairing: desktopShowcase.querySelector('[data-pairing-page="pairing"]'),
+  };
+  if (pages.setup) pages.setup.hidden = false;
+  if (pages.pairing) pages.pairing.hidden = true;
+
+  // hero status back to "checking…"
+  const heroStatus = desktopShowcase.querySelector("[data-pairing-hero-status]");
+  if (heroStatus) {
+    heroStatus.textContent = translate(currentLanguage, "showcase.desktop.pairing.heroChecking");
+    heroStatus.className = "vx-pairing-pill is-warning";
+  }
+
+  // rows: tailscale selected / checking, others idle
+  desktopShowcase.querySelectorAll("[data-pairing-row]").forEach((row) => {
+    const key = row.dataset.pairingRow;
+    row.classList.toggle("is-selected", key === "tailscale");
+  });
+  const statusFor = (key, cls, label) => {
+    const pill = desktopShowcase.querySelector(`[data-pairing-status="${key}"]`);
+    if (pill) {
+      pill.className = `vx-pairing-pill ${cls}`;
+      pill.textContent = label;
+    }
+  };
+  const keys = {
+    tailscale: ["is-warning", "checking"],
+    direct: ["is-muted", "off"],
+    relay: ["is-muted", "off"],
+    lan: ["is-muted", "onDemand"],
+  };
+  for (const [key, [cls, label]] of Object.entries(keys)) {
+    statusFor(key, cls, translate(currentLanguage, `showcase.desktop.pairing.${label}`));
+  }
+
+  // detail panels: tailscale visible, origin hidden until online
+  desktopShowcase.querySelectorAll("[data-pairing-detail]").forEach((panel) => {
+    panel.hidden = panel.dataset.pairingDetail !== "tailscale";
+  });
+  desktopShowcase
+    .querySelectorAll('[data-pairing-detail="tailscale"] [data-pairing-detail-status]')
+    .forEach((pill) => {
+      pill.className = "vx-pairing-pill is-warning";
+      pill.textContent = translate(currentLanguage, "showcase.desktop.pairing.checking");
+    });
+  const origin = desktopShowcase.querySelector("[data-pairing-origin]");
+  if (origin) origin.hidden = true;
+
+  // footer: generate disabled until a route is online, hint visible
+  const generate = desktopShowcase.querySelector("[data-pairing-generate]");
+  if (generate) generate.disabled = true;
+  const hint = desktopShowcase.querySelector("[data-pairing-route-hint]");
+  if (hint) hint.hidden = false;
+
+  // permission selectors back to read-only
+  desktopShowcase.querySelectorAll(".vx-pairing-perm").forEach((group) => {
+    pairingSelectPerm(group, "readOnly");
+  });
+
+  // pairing page: QR sheet hidden, LAN sheet hidden
+  const qrSheet = desktopShowcase.querySelector('[data-pairing-sheet="qr"]');
+  const lanSheet = desktopShowcase.querySelector('[data-pairing-sheet="lan"]');
+  if (qrSheet) qrSheet.hidden = true;
+  if (lanSheet) lanSheet.hidden = true;
+  const banner = desktopShowcase.querySelector("[data-pairing-banner]");
+  if (banner) banner.hidden = true;
+  const qrStatus = desktopShowcase.querySelector("[data-pairing-qr-status]");
+  if (qrStatus) {
+    qrStatus.textContent = translate(currentLanguage, "showcase.desktop.pairing.scanToPair");
+    qrStatus.className = "is-primary";
+  }
+  const countdown = desktopShowcase.querySelector("[data-pairing-countdown]");
+  if (countdown) countdown.textContent = pairingCountdown(PAIRING_COUNTDOWN_SECONDS);
+  desktopShowcase
+    .querySelectorAll('[data-pairing-sheet="qr"] [data-pairing-entry-seg] button')
+    .forEach((btn, index) => {
+      btn.classList.toggle("is-active", index === 0);
+    });
+  const request = desktopShowcase.querySelector("[data-pairing-request]");
+  if (request) request.hidden = true;
+  const empty = desktopShowcase.querySelector("[data-pairing-empty]");
+  if (empty) empty.hidden = false;
+  const requestState = desktopShowcase.querySelector("[data-pairing-request-state]");
+  if (requestState) {
+    requestState.textContent = translate(currentLanguage, "showcase.desktop.pairing.awaiting");
+    requestState.className = "vx-pairing-pill is-warning";
+  }
+  pairingOfferSeconds = PAIRING_COUNTDOWN_SECONDS;
+  pairingLanSeconds = 60;
+}
+
+function hidePairingDialog() {
+  if (!desktopShowcase) return;
+  const dialog = desktopShowcase.querySelector("[data-pairing]");
+  if (!dialog || dialog.hidden) return;
+  // The pairing demo owns the script runner while the dialog is open; a
+  // manual close hands it back so view demos can run again.
+  scriptStop();
+  dialog.classList.add("is-closing");
+  window.setTimeout(() => {
+    if (!dialog.classList.contains("is-closing")) return;
+    dialog.hidden = true;
+    dialog.classList.remove("is-closing");
+  }, 180);
+}
+
+function startPairingDemo() {
+  if (!desktopShowcase) return;
+  scriptStop();
+  replayStop();
+  replayGeneration += 1;
+  replay.running = false;
+  homeDemoActive = false;
+  clearDemoSessionRow();
+  resetProjectCount();
+  resetHomeComposer();
+  resetPairingState();
+  const gen = scriptGeneration;
+  if (prefersReducedMotion) {
+    // Settled state: Tailscale online, QR sheet open with a device claimed.
+    const dialog = desktopShowcase.querySelector("[data-pairing]");
+    if (dialog) dialog.hidden = false;
+    setPairingHeroOnline();
+    setPairingRowStatus("tailscale", "is-success", "online");
+    showPairingSetupDetail("tailscale", "is-success", "online", true);
+    const generate = desktopShowcase.querySelector("[data-pairing-generate]");
+    if (generate) generate.disabled = false;
+    desktopShowcase.querySelector("[data-pairing-route-hint]")?.setAttribute("hidden", "");
+    const setupPageEl = desktopShowcase.querySelector('[data-pairing-page="setup"]');
+    const pairingPageEl = desktopShowcase.querySelector('[data-pairing-page="pairing"]');
+    if (setupPageEl) setupPageEl.hidden = true;
+    if (pairingPageEl) pairingPageEl.hidden = false;
+    const qrSheet = desktopShowcase.querySelector('[data-pairing-sheet="qr"]');
+    if (qrSheet) qrSheet.hidden = false;
+    pairingQrCells(desktopShowcase.querySelector("[data-pairing-qr]"));
+    setPairingQrClaimed();
+    return;
+  }
+  script.running = true;
+  runPairingDemo(gen);
+}
+
+function setPairingHeroOnline() {
+  const heroStatus = desktopShowcase.querySelector("[data-pairing-hero-status]");
+  if (!heroStatus) return;
+  heroStatus.className = "vx-pairing-pill is-success";
+  heroStatus.textContent = translate(currentLanguage, "showcase.desktop.pairing.heroOnline");
+}
+
+function setPairingRowStatus(key, cls, labelKey) {
+  const pill = desktopShowcase.querySelector(`[data-pairing-status="${key}"]`);
+  if (!pill) return;
+  pill.className = `vx-pairing-pill ${cls}`;
+  pill.textContent = translate(currentLanguage, `showcase.desktop.pairing.${labelKey}`);
+}
+
+function showPairingSetupDetail(key, cls, labelKey, withOrigin) {
+  desktopShowcase.querySelectorAll("[data-pairing-detail]").forEach((panel) => {
+    panel.hidden = panel.dataset.pairingDetail !== key;
+  });
+  const pill = desktopShowcase.querySelector(`[data-pairing-detail-status="${key}"]`);
+  if (pill) {
+    pill.className = `vx-pairing-pill ${cls}`;
+    pill.textContent = translate(currentLanguage, `showcase.desktop.pairing.${labelKey}`);
+  }
+  const origin = desktopShowcase.querySelector("[data-pairing-origin]");
+  if (origin) origin.hidden = !withOrigin;
+}
+
+function setPairingQrClaimed() {
+  const status = desktopShowcase.querySelector("[data-pairing-qr-status]");
+  if (status) {
+    status.className = "is-success";
+    status.textContent = translate(currentLanguage, "showcase.desktop.pairing.devicePaired");
+  }
+  const countdown = desktopShowcase.querySelector("[data-pairing-countdown]");
+  if (countdown) countdown.textContent = pairingCountdown(pairingOfferSeconds);
+  const desc = desktopShowcase.querySelector('[data-pairing-sheet="qr"] .vx-pairing-qrstatus small');
+  if (desc) desc.textContent = translate(currentLanguage, "showcase.desktop.pairing.connected");
+}
+
+function pairingTickOffer() {
+  if (pairingOfferSeconds <= 0) return;
+  pairingOfferSeconds -= 1;
+  const countdown = desktopShowcase.querySelector("[data-pairing-countdown]");
+  if (countdown) countdown.textContent = pairingCountdown(pairingOfferSeconds);
+  if (pairingOfferSeconds > 0) {
+    script.timers.push(window.setTimeout(pairingTickOffer, 1000));
+  }
+}
+
+function pairingTickLan() {
+  if (pairingLanSeconds <= 0) return;
+  pairingLanSeconds -= 1;
+  const countdown = desktopShowcase.querySelector("[data-pairing-lan-countdown]");
+  if (countdown) countdown.textContent = pairingCountdown(pairingLanSeconds);
+  if (pairingLanSeconds > 0) {
+    script.timers.push(window.setTimeout(pairingTickLan, 1000));
+  }
+}
+
+async function runPairingDemo(gen) {
+  const alive = () => gen === scriptGeneration;
+  const dialog = desktopShowcase.querySelector("[data-pairing]");
+  if (dialog) dialog.hidden = false;
+  await scriptSleep(700); if (!alive()) return;
+
+  // 1. Connectivity check lands: Tailscale Serve comes online, its
+  //    validated origin shows up and the footer button unlocks (the real
+  //    page keeps "Generate pairing QR code" disabled without a route).
+  setPairingHeroOnline();
+  setPairingRowStatus("tailscale", "is-success", "online");
+  showPairingSetupDetail("tailscale", "is-success", "online", true);
+  desktopShowcase.querySelector("[data-pairing-route-hint]")?.setAttribute("hidden", "");
+  const generate = desktopShowcase.querySelector("[data-pairing-generate]");
+  if (generate) generate.disabled = false;
+  await scriptSleep(1200); if (!alive()) return;
+
+  // 2. Generate pairing QR code: the primary footer button opens the QR
+  //    offer sheet with its live countdown.
+  pulseNode(generate);
+  await scriptSleep(600); if (!alive()) return;
+  const setupPage = desktopShowcase.querySelector('[data-pairing-page="setup"]');
+  const pairingPage = desktopShowcase.querySelector('[data-pairing-page="pairing"]');
+  if (setupPage) setupPage.hidden = true;
+  if (pairingPage) pairingPage.hidden = false;
+  const qrSheet = desktopShowcase.querySelector('[data-pairing-sheet="qr"]');
+  if (qrSheet) qrSheet.hidden = false;
+  pairingQrCells(desktopShowcase.querySelector("[data-pairing-qr]"));
+  pairingOfferSeconds = PAIRING_COUNTDOWN_SECONDS;
+  script.timers.push(window.setTimeout(pairingTickOffer, 1000));
+  await scriptSleep(3400); if (!alive()) return;
+
+  // 3. A claimed offer still sits on the QR sheet: the phone paired.
+  setPairingQrClaimed();
+  await scriptSleep(1800); if (!alive()) return;
+
+  // 4. Back to setup, then pick the local-network entry.
+  if (qrSheet) qrSheet.hidden = true;
+  if (setupPage) setupPage.hidden = false;
+  if (pairingPage) pairingPage.hidden = true;
+  desktopShowcase.querySelectorAll("[data-pairing-row]").forEach((row) => {
+    row.classList.toggle("is-selected", row.dataset.pairingRow === "lan");
+  });
+  showPairingSetupDetail("lan", "is-muted", "onDemand", false);
+  const lanDetail = desktopShowcase.querySelector('[data-pairing-detail="lan"]');
+  pulseNode(lanDetail);
+  await scriptSleep(1000); if (!alive()) return;
+
+  // 5. Start local pairing: the green LAN window opens with an empty
+  //    discovery state and its own countdown.
+  const lanStart = desktopShowcase.querySelector("[data-pairing-lan-start]");
+  pulseNode(lanStart);
+  await scriptSleep(600); if (!alive()) return;
+  if (setupPage) setupPage.hidden = true;
+  if (pairingPage) pairingPage.hidden = false;
+  const lanSheet = desktopShowcase.querySelector('[data-pairing-sheet="lan"]');
+  if (lanSheet) lanSheet.hidden = false;
+  setPairingRowStatus("lan", "is-success", "discovering");
+  pairingLanSeconds = 60;
+  script.timers.push(window.setTimeout(pairingTickLan, 1000));
+  await scriptSleep(2200); if (!alive()) return;
+
+  // 6. A nearby device asks to pair: request card with verification code.
+  const empty = desktopShowcase.querySelector("[data-pairing-empty]");
+  if (empty) empty.hidden = true;
+  const request = desktopShowcase.querySelector("[data-pairing-request]");
+  if (request) request.hidden = false;
+  await scriptSleep(2600); if (!alive()) return;
+
+  // 7. Code matches, allow: the request flips to approved / paired.
+  pulseNode(desktopShowcase.querySelector("[data-pairing-approve]"));
+  await scriptSleep(700); if (!alive()) return;
+  const requestState = desktopShowcase.querySelector("[data-pairing-request-state]");
+  if (requestState) {
+    requestState.textContent = translate(currentLanguage, "showcase.desktop.pairing.paired");
+    requestState.className = "vx-pairing-pill is-success";
+  }
+  const banner = desktopShowcase.querySelector("[data-pairing-banner]");
+  const bannerText = banner?.querySelector("[data-pairing-banner-text]");
+  if (bannerText) {
+    bannerText.textContent = translate(currentLanguage, "showcase.desktop.pairing.connected");
+  }
+  if (banner) banner.hidden = false;
+  await scriptSleep(2600); if (!alive()) return;
+  script.running = false;
+}
+
+// The pairing dialog is interactive outside the scripted beats: close
+// buttons, the overlay, back navigation, row selection and the segmented
+// permission / QR-entry tabs all behave like the real dialog.
 desktopShowcase?.addEventListener("click", (event) => {
+  const closePair = event.target.closest("[data-pairing-close]");
+  if (closePair) {
+    hidePairingDialog();
+    return;
+  }
+  if (event.target === desktopShowcase.querySelector("[data-pairing]")) {
+    const overlay = event.target;
+    if (!overlay.hidden) hidePairingDialog();
+    return;
+  }
+  const backPair = event.target.closest("[data-pairing-back]");
+  if (backPair) {
+    const setupPage = desktopShowcase.querySelector('[data-pairing-page="setup"]');
+    const pairingPage = desktopShowcase.querySelector('[data-pairing-page="pairing"]');
+    if (pairingPage) pairingPage.hidden = true;
+    if (setupPage) setupPage.hidden = false;
+    return;
+  }
+  const pairRow = event.target.closest("[data-pairing-row]");
+  if (pairRow && !desktopShowcase.querySelector('[data-pairing-page="setup"]')?.hidden) {
+    desktopShowcase.querySelectorAll("[data-pairing-row]").forEach((row) => {
+      row.classList.toggle("is-selected", row === pairRow);
+    });
+    const key = pairRow.dataset.pairingRow;
+    if (key === "tailscale") {
+      showPairingSetupDetail("tailscale", "is-success", "online", true);
+    } else if (key === "lan") {
+      showPairingSetupDetail("lan", "is-muted", "onDemand", false);
+    } else {
+      showPairingSetupDetail(key, "is-muted", "off", false);
+    }
+    return;
+  }
+  const permOpt = event.target.closest("[data-pairing-perm-opt]");
+  if (permOpt) {
+    const group = permOpt.closest(".vx-pairing-perm");
+    if (group) pairingSelectPerm(group, permOpt.dataset.pairingPermOpt);
+    return;
+  }
+  const entrySeg = event.target.closest('[data-pairing-entry-seg] button');
+  if (entrySeg) {
+    desktopShowcase
+      .querySelectorAll('[data-pairing-entry-seg] button')
+      .forEach((btn) => btn.classList.toggle("is-active", btn === entrySeg));
+    return;
+  }
   const toggle = event.target.closest("[data-desktop-toggle]");
   if (!toggle) return;
   const expanded = toggle.getAttribute("aria-expanded") !== "false";
@@ -2306,6 +2931,13 @@ desktopShowcase?.addEventListener("click", (event) => {
   if (target === "tool") {
     toggle.closest(".vx-command-card")?.querySelector("[data-command-output]")?.classList.toggle("is-collapsed", expanded);
   }
+});
+
+// The real dialog is keyboard-cancellable; Escape closes the pairing dialog.
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !desktopShowcase) return;
+  const dialog = desktopShowcase.querySelector("[data-pairing]");
+  if (dialog && !dialog.hidden) hidePairingDialog();
 });
 
 // ---------------------------------------------------------------------------

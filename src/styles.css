@@ -5865,6 +5865,730 @@ h3 {
   }
 }
 
+/* --- Desktop showcase: mobile pairing dialog ------------------------------ */
+
+.vx-pairing {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  animation: vx-menu-in 0.2s ease;
+}
+
+.vx-pairing.is-closing {
+  animation: vx-fade-out 0.18s ease forwards;
+}
+
+.vx-pairing-card {
+  position: relative;
+  width: min(760px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid rgba(250, 250, 250, 0.1);
+  border-radius: 14px;
+  background: #131316;
+  color: var(--vx-fg);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+  animation: vx-editor-in 0.24s ease;
+  overflow: hidden auto;
+}
+
+.vx-pairing-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.vx-pairing-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vx-pairing-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-right: 28px;
+}
+
+.vx-pairing-hero-tile {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--vx-border-soft);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--vx-fg);
+}
+
+.vx-pairing-hero-tile svg {
+  width: 20px;
+  height: 20px;
+}
+
+.vx-pairing-hero-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vx-pairing-hero-text strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.vx-pairing-hero-text small {
+  color: var(--vx-muted-fg);
+  font-size: 11.5px;
+}
+
+.vx-pairing-tile {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--vx-border-soft);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--vx-fg);
+}
+
+.vx-pairing-tile svg {
+  width: 15px;
+  height: 15px;
+}
+
+.vx-pairing-tile.is-lg {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+}
+
+.vx-pairing-tile.is-lg svg {
+  width: 18px;
+  height: 18px;
+}
+
+.vx-pairing-pill {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.vx-pairing-pill.is-success {
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--vx-success);
+}
+
+.vx-pairing-pill.is-warning {
+  background: rgba(239, 176, 0, 0.14);
+  color: var(--vx-warning);
+}
+
+.vx-pairing-pill.is-danger {
+  background: rgba(255, 100, 103, 0.12);
+  color: var(--vx-danger);
+}
+
+.vx-pairing-pill.is-primary {
+  background: rgba(228, 228, 231, 0.14);
+  color: var(--vx-fg);
+}
+
+.vx-pairing-pill.is-muted {
+  background: rgba(159, 159, 169, 0.14);
+  color: var(--vx-muted-fg);
+}
+
+.vx-pairing-pill.is-mono {
+  font-family: var(--vx-mono);
+}
+
+/* Connection list ---------------------------------------------------------- */
+
+.vx-pairing-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vx-pairing-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.072);
+  border-radius: 10px;
+  background: rgba(9, 9, 11, 0.4);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.vx-pairing-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vx-pairing-row.is-selected {
+  border-color: rgba(228, 228, 231, 0.55);
+  background: rgba(228, 228, 231, 0.07);
+}
+
+.vx-pairing-radio {
+  flex: none;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+}
+
+.vx-pairing-row.is-selected .vx-pairing-radio {
+  border-color: var(--vx-primary);
+}
+
+.vx-pairing-row.is-selected .vx-pairing-radio::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--vx-primary);
+}
+
+.vx-pairing-row-text {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vx-pairing-row-name {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.vx-pairing-row-desc {
+  min-width: 0;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Detail panels ------------------------------------------------------------ */
+
+.vx-pairing-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(228, 228, 231, 0.3);
+  border-radius: 10px;
+  background: rgba(39, 39, 42, 0.14);
+}
+
+.vx-pairing-detail-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.vx-pairing-detail-head strong {
+  align-self: center;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.vx-pairing-detail-head .vx-pairing-pill {
+  align-self: center;
+}
+
+.vx-pairing-detail-desc {
+  margin-left: auto;
+  flex: none;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  text-align: right;
+}
+
+.vx-pairing-origin {
+  font-family: var(--vx-mono);
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-pairing-origin-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vx-pairing-origin-editor label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.vx-pairing-origin-input {
+  padding: 7px 10px;
+  border: 1px solid var(--vx-border-soft);
+  border-radius: 8px;
+  background: rgba(9, 9, 11, 0.5);
+  color: var(--vx-muted-fg);
+  font-family: var(--vx-mono);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Permission selector + segmented tabs ------------------------------------- */
+
+.vx-pairing-perm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vx-pairing-perm-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.vx-pairing-perm-head span,
+.vx-pairing-perm-label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.vx-pairing-perm-head small {
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+}
+
+.vx-pairing-seg {
+  display: flex;
+  height: 26px;
+  align-items: center;
+  gap: 2px;
+  padding: 0 3px;
+  border: 1px solid var(--vx-border-soft);
+  border-radius: 7px;
+  background: rgba(39, 39, 42, 0.2);
+}
+
+.vx-pairing-seg button {
+  flex: 1;
+  display: flex;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--vx-muted-fg);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.vx-pairing-seg button:hover {
+  color: var(--vx-fg);
+}
+
+.vx-pairing-seg button.is-active {
+  background: var(--vx-selected);
+  color: var(--vx-fg);
+}
+
+/* Buttons ------------------------------------------------------------------ */
+
+.vx-pairing-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--vx-fg);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.vx-pairing-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.vx-pairing-btn svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
+.vx-pairing-btn.is-primary {
+  border-color: var(--vx-primary);
+  background: var(--vx-primary);
+  color: var(--vx-primary-fg);
+}
+
+.vx-pairing-btn.is-primary:hover {
+  background: #ffffff;
+}
+
+.vx-pairing-btn.is-sm {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 11.5px;
+}
+
+.vx-pairing-btn.is-block {
+  width: 100%;
+}
+
+.vx-pairing-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Setup footer -------------------------------------------------------------- */
+
+.vx-pairing-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--vx-border-soft);
+}
+
+.vx-pairing-foot-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+}
+
+.vx-pairing-foot-hint svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
+/* Pairing page: header + status banner -------------------------------------- */
+
+.vx-pairing-pairhead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vx-pairing-pairhead strong {
+  min-width: 0;
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-pairing-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.vx-pairing-banner.is-success {
+  background: rgba(34, 197, 94, 0.08);
+  color: var(--vx-success);
+}
+
+.vx-pairing-banner svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
+/* Pairing page: QR offer sheet ----------------------------------------------- */
+
+.vx-pairing-sheet {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.vx-pairing-qrbox {
+  flex: none;
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  border: 1px solid var(--vx-border-soft);
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.vx-pairing-qr {
+  display: grid;
+  grid-template-columns: repeat(21, 1fr);
+  grid-auto-rows: 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+.vx-pairing-qr b.d {
+  background: #101010;
+}
+
+.vx-pairing-qrctl {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vx-pairing-qrstatus {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vx-pairing-qrstatus-row {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vx-pairing-qrstatus-row strong {
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--vx-primary);
+}
+
+.vx-pairing-qrstatus-row strong.is-success {
+  color: var(--vx-success);
+}
+
+.vx-pairing-qrstatus-row strong.is-muted {
+  color: var(--vx-muted-fg);
+}
+
+.vx-pairing-qrstatus small {
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+}
+
+.vx-pairing-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vx-pairing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Pairing page: LAN window + request card ------------------------------------ */
+
+.vx-pairing-lanwin {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.vx-pairing-lanwin-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.vx-pairing-lanwin-title {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vx-pairing-lanwin-title strong {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.vx-pairing-lanwin-title small {
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-pairing-lanwin-head .vx-pairing-pill {
+  align-self: center;
+}
+
+.vx-pairing-lanwin-head .vx-pairing-btn {
+  flex: none;
+}
+
+.vx-pairing-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 12px;
+  border-radius: 8px;
+  background: rgba(9, 9, 11, 0.5);
+  color: var(--vx-muted-fg);
+}
+
+.vx-pairing-empty svg {
+  width: 20px;
+  height: 20px;
+}
+
+.vx-pairing-empty span {
+  font-size: 11px;
+}
+
+.vx-pairing-request {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--vx-border);
+  border-radius: 8px;
+  background: rgba(9, 9, 11, 0.6);
+  animation: vx-editor-in 0.24s ease;
+}
+
+.vx-pairing-request-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.vx-pairing-request-id {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vx-pairing-request-name {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12.5px;
+}
+
+.vx-pairing-request-name strong {
+  font-weight: 600;
+}
+
+.vx-pairing-request-id > small {
+  font-family: var(--vx-mono);
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vx-pairing-request-code {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.vx-pairing-request-code b {
+  padding: 4px 12px;
+  border: 1px solid var(--vx-border);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #09090b;
+  font-family: var(--vx-mono);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.vx-pairing-request-code small {
+  color: var(--vx-muted-fg);
+  font-size: 11px;
+}
+
+.vx-pairing-request-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@keyframes vx-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .vx-caret-blink,
   .vx-term-cursor {
@@ -5881,7 +6605,10 @@ h3 {
   .vx-usage-menu,
   .vx-mgmt-modal,
   .vx-mgmt-modal-card,
-  .vx-mgmt-model-chip.is-new {
+  .vx-mgmt-model-chip.is-new,
+  .vx-pairing,
+  .vx-pairing-card,
+  .vx-pairing-request {
     animation: none;
   }
 

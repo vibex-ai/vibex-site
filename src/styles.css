@@ -5909,10 +5909,14 @@ h3 {
 .workbench-heading h2,
 .agents-head h2,
 .mobile-head h2,
-.faq-heading h2,
-.final-inner h2 {
+.faq-heading h2 {
   font-size: 62px;
   line-height: 1.02;
+}
+
+.final-inner h2 {
+  font-size: 44px;
+  line-height: 1.1;
 }
 
 .workbench-heading h2 em {
@@ -7178,10 +7182,6 @@ h3 {
   max-width: 980px;
 }
 
-.final-inner h2 span {
-  color: var(--green);
-}
-
 .final-actions {
   display: flex;
   align-items: center;
@@ -7473,9 +7473,12 @@ h3 {
   .workbench-heading h2,
   .agents-head h2,
   .mobile-head h2,
-  .faq-heading h2,
-  .final-inner h2 {
+  .faq-heading h2 {
     font-size: 50px;
+  }
+
+  .final-inner h2 {
+    font-size: 34px;
   }
 
   .agents-head p,
@@ -7625,10 +7628,14 @@ h3 {
   .workbench-heading h2,
   .agents-head h2,
   .mobile-head h2,
-  .faq-heading h2,
-  .final-inner h2 {
+  .faq-heading h2 {
     font-size: 38px;
     line-height: 1.06;
+  }
+
+  .final-inner h2 {
+    font-size: 26px;
+    line-height: 1.12;
   }
 
   .workbench-heading p,

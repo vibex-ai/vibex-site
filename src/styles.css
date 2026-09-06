@@ -7970,22 +7970,24 @@ h3 {
   border-bottom: 1px solid #232326;
 }
 
+/* Same lockup as the site wordmark: tight-cropped V mark seated on the text
+   baseline with a 2px join, so "V" + "ibex" reads as one word. */
 .iphone-drawer-brand {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  line-height: 1;
 }
 
 .iphone-drawer-brand img {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
 }
 
 .iphone-drawer-brand span {
   color: #fafafa;
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: -0.01em;
 }
 
 .iphone-drawer-tools {

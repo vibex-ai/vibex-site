@@ -1469,7 +1469,7 @@ document.querySelector("#app").innerHTML = `
                     <div class="iphone-pane" data-phone-pane="sessions" hidden>
                       <div class="iphone-drawer">
                         <header class="iphone-drawer-head">
-                          <span class="iphone-drawer-brand"><img src=${vibexMark} alt="" /><span>ibex</span></span>
+                          <span class="iphone-drawer-brand"><img src=${vibexStartupMark} alt="" /><span>ibex</span></span>
                           <span class="iphone-drawer-tools" aria-hidden="true">
                             <span class="iphone-drawer-tool"><i data-lucide="plus"></i></span>
                             <span class="iphone-drawer-tool"><i data-lucide="activity"></i></span>

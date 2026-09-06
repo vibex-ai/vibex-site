@@ -1182,7 +1182,6 @@ document.querySelector("#app").innerHTML = `
               </div>
             </div>
           </div>
-          <div class="desktop-showcase-foot"><span data-desktop-caption>Agent workbench</span><span data-desktop-source>Source-mapped preview · no screenshots</span><i data-lucide="arrow-right"></i></div>
         </div>
       </div>
     </section>
@@ -1692,7 +1691,6 @@ const textBindings = [
   ["[data-desktop-tab=\"files\"]", "showcase.desktop.files"],
   ["[data-desktop-tab=\"management\"]", "showcase.desktop.management"],
   ["[data-desktop-tab=\"usage\"]", "showcase.desktop.usage"],
-  ["[data-desktop-source]", "showcase.desktop.source"],
   [".hero-lede", "hero.lede"],
   ["[data-hero-docs]", "hero.docs"],
   [".workbench-heading p", "workbench.copy"],
@@ -1908,12 +1906,6 @@ const RAIL_LABEL_KEYS = {
   files: "showcase.desktop.railFiles",
   git: "showcase.desktop.railGit",
 };
-const VIEW_LABEL_KEYS = {
-  agent: "showcase.desktop.agent",
-  files: "showcase.desktop.files",
-  management: "showcase.desktop.management",
-  usage: "showcase.desktop.usage",
-};
 // Catalog snapshot mirrors the desktop app's user-visible Agent list
 // (vibex_core::is_user_visible_agent), grouped enabled-first like the real
 // Config Center, with subtitles showing config counts or check status.
@@ -2026,8 +2018,6 @@ function setDesktopView(viewKey, { restore = false } = {}) {
   desktopShowcase.querySelectorAll("[data-desktop-side]").forEach((button) => {
     button.classList.toggle("is-selected", button.dataset.desktopSide === view);
   });
-  const caption = desktopShowcase.querySelector("[data-desktop-caption]");
-  if (caption) caption.textContent = translate(currentLanguage, VIEW_LABEL_KEYS[view]);
   syncShowcaseThumb();
   resetShowcaseProgress();
 }

@@ -7054,12 +7054,20 @@ h3 {
   background: rgba(9, 9, 11, 0.05);
 }
 
+.desktop-app.is-light .vx-mgmt-btn.is-primary {
+  border-color: transparent;
+  background: var(--vx-primary);
+  color: var(--vx-primary-fg);
+}
+
 .desktop-app.is-light .vx-mgmt-btn.is-primary:hover {
   background: #27272a;
 }
 
+/* Modals dim with the app's real overlay: black at 0.80 in both appearances
+   (theme.rs applies gpui::black().opacity(0.80) regardless of mode). */
 .desktop-app.is-light .vx-mgmt-modal {
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .desktop-app.is-light .vx-mgmt-modal-card {
@@ -7435,14 +7443,19 @@ h3 {
   background: rgba(9, 9, 11, 0.05);
 }
 
-.desktop-app.is-light .vx-preview-term {
-  background: #f8f8f8;
-  color: #27272a;
+/* terminal_surface.rs derives the whole surface from the theme
+   (default_background = theme.background, default_foreground =
+   theme.foreground), so the light terminal is the light canvas with
+   theme-foreground text — not the shared preview panel tone. */
+.desktop-app.is-light .vx-preview-body[data-preview-body="terminal"] {
+  background: var(--vx-bg);
+  color: var(--vx-fg);
 }
 
 .desktop-app.is-light .vx-term-cursor {
-  /* The light terminal keeps a dark caret (light-theme editor caret). */
-  background: #18181b;
+  /* Block cursor paints background/foreground swapped
+     (terminal_surface.rs): a dark caret on the light canvas. */
+  background: var(--vx-fg);
 }
 
 .desktop-app.is-light .vx-preview-body {
@@ -7514,7 +7527,7 @@ h3 {
 }
 
 .desktop-app.is-light .vx-pairing {
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .desktop-app.is-light .vx-pairing-card {
@@ -7589,6 +7602,16 @@ h3 {
 
 .desktop-app.is-light .vx-pairing-btn:hover {
   background: rgba(9, 9, 11, 0.08);
+}
+
+/* The primary button keeps the app's primary treatment: in light mode that is
+   a dark surface with light foreground (LIGHT_TOKENS primary/primary-fg). The
+   base override above would otherwise paint it near-white while the dark
+   is-primary rule still supplies the white foreground, hiding the icon. */
+.desktop-app.is-light .vx-pairing-btn.is-primary {
+  border-color: var(--vx-primary);
+  background: var(--vx-primary);
+  color: var(--vx-primary-fg);
 }
 
 .desktop-app.is-light .vx-pairing-btn.is-primary:hover {

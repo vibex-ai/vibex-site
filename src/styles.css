@@ -35,7 +35,7 @@
   --text: #f2f1eb;
   --muted: #a4a69f;
   --muted-strong: #c8c9c2;
-  --green: #7bf1a8;
+  --green: #58c987;
   --lime: #b8f375;
   --coral: #ff7655;
   --blue: #6cb7ff;
@@ -389,8 +389,8 @@ h3 {
 }
 
 .button-primary:hover {
-  border-color: #a3f5c2;
-  background: #a3f5c2;
+  border-color: #79dfa8;
+  background: #79dfa8;
 }
 
 .button-dark {
@@ -493,7 +493,7 @@ h3 {
   height: 7px;
   border-radius: 50%;
   background: var(--green);
-  box-shadow: 0 0 0 4px rgba(123, 241, 168, 0.12);
+  box-shadow: 0 0 0 4px rgba(88, 201, 135, 0.12);
 }
 
 .hero h1 {
@@ -622,7 +622,7 @@ h3 {
 .agent-logo:hover {
   opacity: 1;
   transform: translateY(-2px) scale(1.18);
-  filter: drop-shadow(0 0 6px rgba(123, 241, 168, 0.55));
+  filter: drop-shadow(0 0 6px rgba(88, 201, 135, 0.55));
 }
 
 .agent-logo img {
@@ -6030,7 +6030,7 @@ h3 {
 
 .bv-line-add {
   color: #b8ecc9;
-  background: rgba(123, 241, 168, 0.1);
+  background: rgba(88, 201, 135, 0.1);
 }
 
 .bv-line-del {
@@ -6294,7 +6294,7 @@ h3 {
 
 .agent-chip-acp {
   border-color: #2c6b46;
-  background: rgba(123, 241, 168, 0.08);
+  background: rgba(88, 201, 135, 0.08);
   color: var(--green);
 }
 
@@ -6394,7 +6394,7 @@ h3 {
   height: 0;
   transform: translateY(-50%);
   border-radius: 999px;
-  background: rgba(123, 241, 168, 0.8);
+  background: rgba(88, 201, 135, 0.8);
   opacity: 0;
   transition: height 200ms ease-out, opacity 200ms ease-out;
 }

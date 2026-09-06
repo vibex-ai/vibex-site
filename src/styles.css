@@ -7143,37 +7143,53 @@ h3 {
 }
 
 .mobile-scenes {
+  position: relative;
   max-width: 480px;
+  padding-left: 26px;
+  border-left: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* Vertical sibling of the desktop showcase thumb: a 2px hairline that slides
+   to the active scene and carries a per-frame progress fill. */
+.mobile-scenes-thumb {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 2px;
+  height: 0;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.22);
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    transform 260ms cubic-bezier(0.33, 1, 0.68, 1),
+    height 260ms cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 200ms ease;
+}
+
+/* Fill inside the thumb: grows with the current scene's remaining display
+   time, like a progress bar baked into the indicator. */
+.mobile-scenes-progress {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--text);
+  transform: scaleY(0);
+  transform-origin: top;
+  /* No CSS transition: the fill is driven per-frame from JS so it can
+     freeze and resume with the carousel's pause conditions. */
 }
 
 .mobile-scene {
-  position: relative;
   display: block;
   width: 100%;
-  padding: 17px 0 17px 26px;
+  padding: 17px 0;
   border: 0;
   background: none;
   text-align: left;
   font-family: inherit;
   cursor: pointer;
-}
-
-.mobile-scene-indicator {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 2px;
-  height: 0;
-  transform: translateY(-50%);
-  border-radius: 999px;
-  background: rgba(88, 201, 135, 0.8);
-  opacity: 0;
-  transition: height 200ms ease-out, opacity 200ms ease-out;
-}
-
-.mobile-scene.is-active .mobile-scene-indicator {
-  height: 44%;
-  opacity: 1;
 }
 
 .mobile-scene-title {
@@ -7216,7 +7232,6 @@ h3 {
 
 .mobile-doc {
   margin-top: 24px;
-  padding-left: 26px;
 }
 
 .mobile-doc .inline-doc-link {
@@ -7275,11 +7290,11 @@ h3 {
   height: 100%;
   overflow: hidden;
   border-radius: 47px;
-  background: #f3f2ec;
-  color: #16170f;
+  background: #09090b;
+  color: #fafafa;
 }
 
-/* iOS status bar (light) */
+/* iOS status bar (dark surface) */
 
 .iphone-status {
   position: absolute;
@@ -7292,7 +7307,7 @@ h3 {
   justify-content: space-between;
   height: 46px;
   padding: 14px 30px 0;
-  color: #16170f;
+  color: #fafafa;
 }
 
 .iphone-status-time {

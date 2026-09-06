@@ -305,6 +305,7 @@ document.querySelector("#app").innerHTML = `
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="files"><i data-lucide="git-branch"></i><span data-desktop-tab="files">Integrated tools</span></button>
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="management"><i data-lucide="settings"></i><span data-desktop-tab="management">Config Center</span></button>
             <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="usage"><i data-lucide="activity"></i><span data-desktop-tab="usage">Usage Statistics</span></button>
+            <button class="desktop-showcase-tab" type="button" role="tab" aria-selected="false" data-desktop-view="pair"><i data-lucide="smartphone"></i><span data-desktop-tab="pair">Connect phone</span></button>
           </div>
           <div class="desktop-showcase-viewport" data-desktop-viewport>
             <div class="desktop-showcase-canvas" data-desktop-canvas>
@@ -333,7 +334,6 @@ document.querySelector("#app").innerHTML = `
                   <aside class="vx-sidebar">
                     <div class="vx-sidebar-actions">
                       <button class="vx-side-btn" type="button" data-desktop-action="new-session"><i data-lucide="plus"></i><span data-i18n="showcase.desktop.newChat">New chat</span></button>
-                      <button class="vx-side-btn" type="button" data-desktop-action="pair"><i data-lucide="smartphone"></i><span data-i18n="showcase.desktop.pairMobile">Pair mobile</span></button>
                       <button class="vx-side-btn" type="button" data-desktop-action="management" data-desktop-side="management"><i data-lucide="settings"></i><span data-i18n="showcase.desktop.management">Config Center</span></button>
                       <button class="vx-side-btn" type="button" data-desktop-action="usage" data-desktop-side="usage"><i data-lucide="activity"></i><span data-i18n="showcase.desktop.usage">Usage Statistics</span></button>
                     </div>
@@ -1407,21 +1407,23 @@ document.querySelector("#app").innerHTML = `
         </div>
 
         <div class="mobile-layout reveal">
-          <div class="mobile-scenes">
-            <button class="mobile-scene is-active" type="button" data-mobile-scene="progress" aria-pressed="true">
-              <span class="mobile-scene-indicator" aria-hidden="true"></span>
-              <span class="mobile-scene-title" data-i18n="remote.scene.progress.title">Live progress, from anywhere</span>
-              <span class="mobile-scene-desc"><span data-i18n="remote.scene.progress.desc">Tool runs, diffs and replies stream to your phone while the desktop does the heavy lifting.</span></span>
+          <div class="mobile-scenes" data-mobile-tablist>
+            <span class="mobile-scenes-thumb" data-mobile-thumb aria-hidden="true"><span class="mobile-scenes-progress" data-mobile-progress></span></span>
+            <button class="mobile-scene is-active" type="button" data-mobile-view="agent" aria-pressed="true">
+              <span class="mobile-scene-title" data-i18n="remote.scene.agent.title">Watch the turn stream in</span>
+              <span class="mobile-scene-desc"><span data-i18n="remote.scene.agent.desc">The live session mirrors itself on your phone — tool runs, diffs and the agent's reply, while the desktop does the heavy lifting.</span></span>
             </button>
-            <button class="mobile-scene" type="button" data-mobile-scene="approvals" aria-pressed="false">
-              <span class="mobile-scene-indicator" aria-hidden="true"></span>
+            <button class="mobile-scene" type="button" data-mobile-view="sessions" aria-pressed="false">
+              <span class="mobile-scene-title" data-i18n="remote.scene.sessions.title">Every session in your pocket</span>
+              <span class="mobile-scene-desc"><span data-i18n="remote.scene.sessions.desc">Search the same project tree as the desktop, spot what's running or blocked, and start new sessions on the go.</span></span>
+            </button>
+            <button class="mobile-scene" type="button" data-mobile-view="approvals" aria-pressed="false">
               <span class="mobile-scene-title" data-i18n="remote.scene.approvals.title">Answer in one tap</span>
-              <span class="mobile-scene-desc"><span data-i18n="remote.scene.approvals.desc">The agent pauses at permission gates. Approve — or defer — without walking back to your desk.</span></span>
+              <span class="mobile-scene-desc"><span data-i18n="remote.scene.approvals.desc">Permission gates land on your phone with full context. Approve, always-allow, or defer — without walking back to your desk.</span></span>
             </button>
-            <button class="mobile-scene" type="button" data-mobile-scene="pairing" aria-pressed="false">
-              <span class="mobile-scene-indicator" aria-hidden="true"></span>
-              <span class="mobile-scene-title" data-i18n="remote.scene.pairing.title">Pair once, stay private</span>
-              <span class="mobile-scene-desc"><span data-i18n="remote.scene.pairing.desc">Link your phone with a one-time QR. Traffic runs direct or through your relay, end-to-end encrypted.</span></span>
+            <button class="mobile-scene" type="button" data-mobile-view="pairing" aria-pressed="false">
+              <span class="mobile-scene-title" data-i18n="remote.scene.pairing.title">Pair over your local network</span>
+              <span class="mobile-scene-desc"><span data-i18n="remote.scene.pairing.desc">Find desktops on the same network, confirm the shared verification code, and everything stays end-to-end encrypted.</span></span>
             </button>
             <div class="mobile-doc">
               <a class="inline-doc-link" href="${docsUrl("remote-mobile")}" data-docs-page="remote-mobile" target="_blank" rel="noreferrer" data-remote-docs>Remote access &amp; mobile guide <i data-lucide="arrow-up-right"></i></a>
@@ -1438,132 +1440,101 @@ document.querySelector("#app").innerHTML = `
 
                 <div class="iphone-app">
                   <div class="iphone-panes">
-                    <div class="iphone-pane is-active" data-phone-pane="progress">
+                    <div class="iphone-pane is-active" data-phone-pane="agent">
                       <header class="iphone-nav">
-                        <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
-                        <span class="iphone-nav-agent">
-                          <img src=${openaiLight} alt="" />
-                          <span class="iphone-nav-name">
-                            <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
-                            <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
-                          </span>
+                        <span class="iphone-nav-icon" aria-hidden="true"><i data-lucide="menu"></i></span>
+                        <span class="iphone-nav-brand">
+                          <img src=${vibexMark} alt="" />
+                          <span class="iphone-nav-dot" data-phone-dot></span>
+                          <strong data-i18n="showcase.desktop.sessionTitle">Refactor agent session timeline</strong>
                         </span>
-                        <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
+                        <span class="iphone-nav-icon is-dim" aria-hidden="true"><i data-lucide="rotate-cw"></i></span>
                       </header>
 
-                      <div class="iphone-thread">
-                        <div class="iphone-runpill" data-phone-runpill>
-                          <i data-lucide="loader-circle"></i>
-                          <span data-i18n="remote.phone.working">Working on it…</span>
-                        </div>
+                      <div class="iphone-thread" data-phone-thread></div>
 
-                        <div class="iphone-bubble is-user">
-                          <p data-i18n="remote.phone.user">Bump the test coverage for the session store before the release build.</p>
+                      <div class="iphone-dock">
+                        <div class="iphone-input">
+                          <span class="iphone-input-hint" data-i18n="remote.phone.composer">Message Vibex…</span>
+                          <span class="iphone-send" data-phone-send aria-hidden="true"><i class="is-send" data-lucide="arrow-up"></i><i class="is-stop" data-lucide="square"></i></span>
                         </div>
-
-                        <div class="iphone-toolcard">
-                          <div class="iphone-toolcard-head">
-                            <i data-lucide="square-terminal"></i>
-                            <code>cargo test -p vibex store</code>
-                          </div>
-                          <div class="iphone-toolcard-body">
-                            <span class="is-dim">running 12 tests</span>
-                            <span class="is-pass">test session_store::persists_timeline ... ok</span>
-                            <span class="is-dim">12 passed · 2.14s</span>
-                          </div>
+                        <div class="iphone-runtime">
+                          <span class="iphone-runtime-name" data-i18n="remote.phone.runtime">Runtime</span>
+                          <span class="iphone-runtime-meta"><strong>gpt-6-astra</strong><small data-i18n="remote.phone.runtimeSub">Agent account</small></span>
+                          <span class="iphone-runtime-more" aria-hidden="true">&gt;</span>
                         </div>
+                      </div>
+                    </div>
 
-                        <div class="iphone-toolcard is-running">
-                          <div class="iphone-toolcard-head">
-                            <i data-lucide="square-terminal"></i>
-                            <code>cargo build --release</code>
-                          </div>
-                          <div class="iphone-toolcard-body">
-                            <span class="is-dim">Compiling vibex-core v0.4.2</span>
-                            <span class="is-dim">Compiling vibex-store v0.4.2</span>
-                            <span class="is-run"><i data-lucide="loader-circle"></i>linking vibex-cli…</span>
-                          </div>
+                    <div class="iphone-pane" data-phone-pane="sessions" hidden>
+                      <div class="iphone-drawer">
+                        <header class="iphone-drawer-head">
+                          <span class="iphone-drawer-brand"><img src=${vibexMark} alt="" /><span>ibex</span></span>
+                          <span class="iphone-drawer-tools" aria-hidden="true">
+                            <span class="iphone-drawer-tool"><i data-lucide="plus"></i></span>
+                            <span class="iphone-drawer-tool"><i data-lucide="activity"></i></span>
+                            <span class="iphone-drawer-tool"><i data-lucide="chevron-right"></i></span>
+                          </span>
+                        </header>
+                        <div class="iphone-drawer-bar">
+                          <span class="iphone-drawer-bar-label" data-i18n="showcase.desktop.projects">Projects</span>
+                          <span class="iphone-drawer-bar-tools" aria-hidden="true">
+                            <i data-lucide="message-square"></i><i data-lucide="list-checks"></i><i data-lucide="chevrons-right-left"></i><i data-lucide="crosshair"></i><i data-lucide="plus"></i><i class="is-toggle" data-lucide="search"></i>
+                          </span>
                         </div>
-
-                        <div class="iphone-bubble is-agent">
-                          <p data-i18n="remote.phone.agentText">Done — added 4 tests around timeline persistence. Coverage for the session store is now 91%.</p>
+                        <div class="iphone-search" data-phone-search hidden>
+                          <i data-lucide="search"></i>
+                          <span class="iphone-search-text" data-phone-search-text></span>
+                          <span class="iphone-search-caret" aria-hidden="true"></span>
+                          <i class="iphone-search-close" data-lucide="x"></i>
                         </div>
-
-                        <div class="iphone-changes" data-i18n="remote.phone.chipDiff">3 files changed</div>
+                        <div class="iphone-drawer-list" data-phone-drawer-list></div>
+                        <footer class="iphone-drawer-foot">
+                          <span class="iphone-host"><span class="iphone-host-dot"></span><span data-i18n="remote.phone.host">MacBook Pro</span></span>
+                          <span class="iphone-drawer-gear" aria-hidden="true"><i data-lucide="settings"></i></span>
+                        </footer>
                       </div>
                     </div>
 
                     <div class="iphone-pane" data-phone-pane="approvals" hidden>
                       <header class="iphone-nav">
-                        <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
-                        <span class="iphone-nav-agent">
-                          <img src=${openaiLight} alt="" />
-                          <span class="iphone-nav-name">
-                            <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
-                            <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
-                          </span>
+                        <span class="iphone-nav-icon" aria-hidden="true"><i data-lucide="menu"></i></span>
+                        <span class="iphone-nav-brand">
+                          <img src=${vibexMark} alt="" />
+                          <span class="iphone-nav-dot"></span>
+                          <strong data-i18n="showcase.desktop.sessionTitle">Refactor agent session timeline</strong>
                         </span>
-                        <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
+                        <span class="iphone-nav-icon is-dim" aria-hidden="true"><i data-lucide="rotate-cw"></i></span>
                       </header>
 
-                      <div class="iphone-thread">
-                        <div class="iphone-bubble is-user">
-                          <p data-i18n="remote.phone.user2">The suite is green — push the release to main.</p>
+                      <div class="iphone-thread" data-phone-thread-approval></div>
+
+                      <div class="iphone-dock">
+                        <div class="iphone-input">
+                          <span class="iphone-input-hint" data-i18n="remote.phone.composer">Message Vibex…</span>
+                          <span class="iphone-send" aria-hidden="true"><i class="is-send" data-lucide="arrow-up"></i><i class="is-stop" data-lucide="square"></i></span>
                         </div>
-
-                        <div class="iphone-bubble is-agent">
-                          <p data-i18n="remote.phone.agentText2">Release build passed. I need your approval before pushing to main.</p>
-                        </div>
-
-                        <div class="iphone-changes" data-i18n="remote.phone.chipDiff">3 files changed</div>
-
-                        <div class="iphone-approval" data-phone-approval>
-                          <div class="iphone-approval-head">
-                            <i data-lucide="file-diff"></i>
-                            <strong data-i18n="remote.phone.approveTitle">Approve push to main?</strong>
-                          </div>
-                          <div class="iphone-approval-actions">
-                            <button class="iphone-approval-btn is-deny" type="button" data-approval-deny><i data-lucide="x"></i><span data-i18n="remote.phone.deny">Not now</span></button>
-                            <button class="iphone-approval-btn is-approve" type="button" data-approval-approve><i data-lucide="check"></i><span data-i18n="remote.phone.approve">Approve</span></button>
-                          </div>
-                          <div class="iphone-approval-done" hidden data-approval-done>
-                            <i class="is-ok" data-lucide="circle-check"></i>
-                            <i class="is-snooze" data-lucide="clock"></i>
-                            <span class="is-ok-text" data-i18n="remote.phone.approved">Push approved from mobile</span>
-                            <span class="is-snooze-text" data-i18n="remote.phone.snoozed">Not now — ask me again later</span>
-                          </div>
+                        <div class="iphone-runtime">
+                          <span class="iphone-runtime-name" data-i18n="remote.phone.runtime">Runtime</span>
+                          <span class="iphone-runtime-meta"><strong>gpt-6-astra</strong><small data-i18n="remote.phone.runtimeSub">Agent account</small></span>
+                          <span class="iphone-runtime-more" aria-hidden="true">&gt;</span>
                         </div>
                       </div>
                     </div>
 
                     <div class="iphone-pane" data-phone-pane="pairing" hidden>
-                      <header class="iphone-nav">
-                        <span class="iphone-nav-back" aria-hidden="true"><i data-lucide="chevron-left"></i></span>
-                        <span class="iphone-nav-agent">
-                          <img src=${openaiLight} alt="" />
-                          <span class="iphone-nav-name">
-                            <strong data-i18n="remote.phone.agent">Vibex · Codex</strong>
-                            <small><i data-lucide="loader-circle"></i><span data-i18n="remote.phone.presence">Refactoring workbench.rs</span></small>
-                          </span>
-                        </span>
-                        <span class="iphone-nav-more" aria-hidden="true"><i data-lucide="ellipsis"></i></span>
-                      </header>
-
-                      <div class="iphone-pair">
-                        <div class="iphone-pair-qr" aria-hidden="true">
-                          <svg viewBox="0 0 21 21" shape-rendering="crispEdges"><rect width="21" height="21" fill="#ffffff"/><g fill="#171a14"><rect x="0" y="0" width="7" height="1"/><rect x="9" y="0" width="3" height="1"/><rect x="14" y="0" width="7" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="10" y="1" width="1" height="1"/><rect x="12" y="1" width="1" height="1"/><rect x="14" y="1" width="1" height="1"/><rect x="20" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="3" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="10" y="2" width="2" height="1"/><rect x="14" y="2" width="1" height="1"/><rect x="16" y="2" width="3" height="1"/><rect x="20" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="2" y="3" width="3" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="12" y="3" width="1" height="1"/><rect x="14" y="3" width="1" height="1"/><rect x="16" y="3" width="3" height="1"/><rect x="20" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="3" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="10" y="4" width="2" height="1"/><rect x="14" y="4" width="1" height="1"/><rect x="16" y="4" width="3" height="1"/><rect x="20" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="8" y="5" width="3" height="1"/><rect x="14" y="5" width="1" height="1"/><rect x="20" y="5" width="1" height="1"/><rect x="0" y="6" width="7" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="14" y="6" width="7" height="1"/><rect x="1" y="8" width="7" height="1"/><rect x="9" y="8" width="4" height="1"/><rect x="16" y="8" width="1" height="1"/><rect x="18" y="8" width="2" height="1"/><rect x="5" y="9" width="5" height="1"/><rect x="12" y="9" width="1" height="1"/><rect x="14" y="9" width="1" height="1"/><rect x="17" y="9" width="2" height="1"/><rect x="20" y="9" width="1" height="1"/><rect x="2" y="10" width="2" height="1"/><rect x="6" y="10" width="3" height="1"/><rect x="12" y="10" width="2" height="1"/><rect x="18" y="10" width="1" height="1"/><rect x="1" y="11" width="1" height="1"/><rect x="3" y="11" width="1" height="1"/><rect x="8" y="11" width="1" height="1"/><rect x="10" y="11" width="1" height="1"/><rect x="13" y="11" width="1" height="1"/><rect x="16" y="11" width="1" height="1"/><rect x="0" y="12" width="3" height="1"/><rect x="6" y="12" width="2" height="1"/><rect x="10" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="15" y="12" width="1" height="1"/><rect x="18" y="12" width="1" height="1"/><rect x="8" y="13" width="1" height="1"/><rect x="11" y="13" width="2" height="1"/><rect x="17" y="13" width="3" height="1"/><rect x="0" y="14" width="7" height="1"/><rect x="8" y="14" width="3" height="1"/><rect x="12" y="14" width="1" height="1"/><rect x="15" y="14" width="2" height="1"/><rect x="18" y="14" width="2" height="1"/><rect x="0" y="15" width="1" height="1"/><rect x="6" y="15" width="1" height="1"/><rect x="12" y="15" width="2" height="1"/><rect x="20" y="15" width="1" height="1"/><rect x="0" y="16" width="1" height="1"/><rect x="2" y="16" width="3" height="1"/><rect x="6" y="16" width="1" height="1"/><rect x="8" y="16" width="2" height="1"/><rect x="11" y="16" width="2" height="1"/><rect x="15" y="16" width="2" height="1"/><rect x="0" y="17" width="1" height="1"/><rect x="2" y="17" width="3" height="1"/><rect x="6" y="17" width="1" height="1"/><rect x="8" y="17" width="1" height="1"/><rect x="14" y="17" width="1" height="1"/><rect x="16" y="17" width="4" height="1"/><rect x="0" y="18" width="1" height="1"/><rect x="2" y="18" width="3" height="1"/><rect x="6" y="18" width="1" height="1"/><rect x="8" y="18" width="1" height="1"/><rect x="16" y="18" width="2" height="1"/><rect x="0" y="19" width="1" height="1"/><rect x="6" y="19" width="1" height="1"/><rect x="9" y="19" width="1" height="1"/><rect x="13" y="19" width="1" height="1"/><rect x="15" y="19" width="2" height="1"/><rect x="19" y="19" width="2" height="1"/><rect x="0" y="20" width="7" height="1"/><rect x="9" y="20" width="1" height="1"/><rect x="12" y="20" width="1" height="1"/><rect x="16" y="20" width="1" height="1"/><rect x="18" y="20" width="2" height="1"/></g></svg>
+                      <div class="iphone-pairing">
+                        <img class="iphone-pairing-mark" src=${vibexMarkTightLight} alt="" />
+                        <strong class="iphone-pairing-title">Vibex</strong>
+                        <div class="iphone-pairing-card">
+                          <div class="iphone-pairing-state" data-phone-pair-state></div>
+                          <button class="iphone-pairing-qr" type="button" data-phone-pair-qr>
+                            <i data-lucide="scan-line"></i>
+                            <span data-i18n="remote.phone.pairQr">Use QR Code</span>
+                          </button>
                         </div>
-                        <div class="iphone-pair-title" data-i18n="remote.pair.title">Pair your phone</div>
-                        <p class="iphone-pair-copy" data-i18n="remote.pair.copy">Scan with the Vibex mobile app — the offer is one-time and scoped to this device.</p>
-                        <div class="iphone-pair-code"><span data-i18n="remote.pair.codeLabel">Pair code</span><code>XK4-9TQ</code></div>
-                        <div class="iphone-pair-foot"><i data-lucide="lock-keyhole"></i><span data-i18n="remote.pair.foot">End-to-end encrypted</span></div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="iphone-composer" aria-hidden="true">
-                    <span data-i18n="remote.phone.composer">Reply…</span>
-                    <i data-lucide="arrow-up"></i>
                   </div>
                 </div>
                 <div class="iphone-home-indicator" aria-hidden="true"></div>
@@ -1913,6 +1884,7 @@ const textBindings = [
   ["[data-desktop-tab=\"files\"]", "showcase.desktop.files"],
   ["[data-desktop-tab=\"management\"]", "showcase.desktop.management"],
   ["[data-desktop-tab=\"usage\"]", "showcase.desktop.usage"],
+  ["[data-desktop-tab=\"pair\"]", "showcase.desktop.pairMobile"],
   [".hero-lede", "hero.lede"],
   ["[data-hero-docs]", "hero.docs"],
   [".workbench-heading p", "workbench.copy"],
@@ -2036,9 +2008,11 @@ function applyLanguage(language, { persist = true } = {}) {
     element.innerHTML = translate(currentLanguage, element.dataset.i18nHtml);
   });
 
-  // The phone approval card is a tiny state machine; reset it on language
-  // switch so nothing renders a stale mix of the two locales.
-  resetPhoneApproval();
+  const activeMobileView = document.querySelector("[data-mobile-view].is-active")?.dataset.mobileView;
+  // setMobileView re-runs the active scene's demo so its dynamic copy
+  // rebuilds in the new language (static chrome is re-derived by the passes
+  // above).
+  if (activeMobileView) setMobileView(activeMobileView);
 
   const menuOpen = menuButton?.getAttribute("aria-expanded") === "true";
   menuButton?.setAttribute("aria-label", translate(currentLanguage, menuOpen ? "nav.close" : "nav.open"));
@@ -2123,7 +2097,7 @@ if (desktopViewport && desktopCanvas) {
   new ResizeObserver(resizeDesktopShowcase).observe(desktopViewport);
 }
 
-const DESKTOP_VIEWS = ["agent", "files", "management", "usage"];
+const DESKTOP_VIEWS = ["agent", "files", "management", "usage", "pair"];
 const RAIL_LABEL_KEYS = {
   files: "showcase.desktop.railFiles",
   git: "showcase.desktop.railGit",
@@ -2235,6 +2209,11 @@ function setDesktopView(viewKey, { restore = false } = {}) {
       break;
     case "usage":
       startUsageDemo();
+      break;
+    case "pair":
+      // The pairing demo opens the remote-access dialog on top of the app;
+      // the tab stays highlighted until the dialog closes.
+      startPairingDemo();
       break;
   }
   syncSessionTitle(view === "agent" || view === "files");
@@ -4615,6 +4594,7 @@ const VIEW_DURATIONS = {
   files: 26000,
   management: 26000,
   usage: 14000,
+  pair: 18000,
 };
 const ROTATE_MAX_TICK = 250; // clamp stalls (background tab) so returning never skips views
 let rotateElapsed = 0;
@@ -4677,61 +4657,647 @@ function updatePhoneClock() {
 updatePhoneClock();
 window.setInterval(updatePhoneClock, 30_000);
 
-// The mobile section's approval card is a mock of the real permission flow:
-// tapping Approve settles the card into a confirmed state, Deny dismisses it,
-// and either state (or a language switch) returns to the pending invitation.
-const phoneApproval = document.querySelector("[data-phone-approval]");
-const approvalActions = phoneApproval?.querySelector(".iphone-approval-actions");
-const approvalDone = phoneApproval?.querySelector("[data-approval-done]");
-let approvalResetTimer = null;
+// ---------------------------------------------------------------------------
+// Mobile showcase: four scripted scenes, each a beat-for-beat mock of the
+// real GPUI mobile app (zinc palette, 44px rows, header/drawer/composer
+// chrome). Scene switching mirrors the desktop showcase: hover/click swaps
+// the pane, and the rail's thumb carries a per-frame progress fill that
+// auto-advances when a scene's demo completes.
+// ---------------------------------------------------------------------------
+const MOBILE_VIEWS = ["agent", "sessions", "approvals", "pairing"];
+const MOBILE_VIEW_DURATIONS = {
+  agent: 23000,
+  sessions: 12000,
+  approvals: 12000,
+  pairing: 13000,
+};
 
-function resetPhoneApproval() {
-  if (!phoneApproval) return;
-  window.clearTimeout(approvalResetTimer);
-  approvalResetTimer = null;
-  phoneApproval.classList.remove("is-approved", "is-denied");
-  if (approvalActions) approvalActions.hidden = false;
-  if (approvalDone) approvalDone.hidden = true;
+const MOBILE_COPY = {
+  en: {
+    user: "Trace the runtime handoff for worktree merges and tighten the timeline rendering.",
+    thinking: "Tracing the worktree merge handoff…",
+    reasoning: "Checking where merge requests queue on the runtime side and how the timeline consumes the typed event log.",
+    activitySearch: "Searching workspace files…",
+    activityRead: "Reading src/workbench/worktree.rs",
+    command: "cargo test -p vibex worktree",
+    badgeRunning: "Running",
+    badgeDone: "Completed",
+    activityEdit: "Editing src/workbench/timeline.rs",
+    permission: { title: "Command execution", risk: "Elevated", command: "Command", cwd: "Working directory", cwdValue: "/workspace/vibex", deny: "Deny", always: "Always allow", approve: "Approve", resolving: "Resolving..." },
+    approvedNote: "Approved — resuming the turn",
+    deniedNote: "Deferred — the agent will ask again",
+    answer: "The merge handoff now runs through a single WorktreeBridge path, so backfills can't interleave with live turns.",
+    changes: "3 files changed",
+    runtimeWhileRunning: "Running · gpt-6-astra",
+    drawerSessions: {
+      timeline: "Refactor agent session timeline",
+      worktreeTest: "Fix flaky worktree merge test",
+      composerState: "Polish composer empty state",
+      onboarding: "Scaffold onboarding walkthrough",
+      releaseNotes: "Draft release notes for v0.4",
+      tomlStore: "Migrate settings store to TOML",
+      paletteAudit: "Audit command palette shortcuts",
+      replayCost: "Profile timeline replay cost",
+      timeNow: "Now",
+      yesterday: "Yesterday",
+      days3: "3 days ago",
+      tuesday: "Tuesday",
+      monday: "Monday",
+      lastWeek: "Last week",
+      detail: "worktree · /workspace/vibex",
+      search: "worktree",
+    },
+    pairing: {
+      label: "Local Network Pairing",
+      cta: "Find Desktops",
+      nearby: "Nearby desktops",
+      candidate: "MacBook Pro",
+      candidateMeta: "Vibex Remote v2",
+      pair: "Pair",
+      waiting: "Waiting for MacBook Pro",
+      confirm: "Confirm the same code is shown on the desktop.",
+      expires: "Expires in",
+    },
+  },
+  zh: {
+    user: "梳理 worktree 合并的运行时交接，并收紧时间线的渲染路径。",
+    thinking: "正在追踪 worktree 合并交接…",
+    reasoning: "检查合并请求在运行时侧的排队方式，以及时间线如何消费类型化事件日志。",
+    activitySearch: "正在搜索工作区文件…",
+    activityRead: "正在读取 src/workbench/worktree.rs",
+    command: "cargo test -p vibex worktree",
+    badgeRunning: "运行中",
+    badgeDone: "已完成",
+    activityEdit: "正在编辑 src/workbench/timeline.rs",
+    permission: { title: "命令执行", risk: "提升权限", command: "命令", cwd: "工作目录", cwdValue: "/workspace/vibex", deny: "拒绝", always: "始终允许", approve: "允许", resolving: "处理中..." },
+    approvedNote: "已批准 —— 回合继续进行",
+    deniedNote: "已稍后处理 —— 智能体会再次询问",
+    answer: "合并交接现在收敛到单一的 WorktreeBridge 路径，回填不会再与进行中的回合交错。",
+    changes: "3 个文件有改动",
+    runtimeWhileRunning: "运行中 · gpt-6-astra",
+    drawerSessions: {
+      timeline: "重构智能体会话时间线",
+      worktreeTest: "修复 worktree 合并测试的偶发失败",
+      composerState: "打磨输入框空状态",
+      onboarding: "搭建新手引导流程",
+      releaseNotes: "起草 v0.4 发布说明",
+      tomlStore: "将设置存储迁移到 TOML",
+      paletteAudit: "审查命令面板快捷键",
+      replayCost: "分析时间线回放开销",
+      timeNow: "刚刚",
+      yesterday: "昨天",
+      days3: "3 天前",
+      tuesday: "周二",
+      monday: "周一",
+      lastWeek: "上周",
+      detail: "worktree · /workspace/vibex",
+      search: "worktree",
+    },
+    pairing: {
+      label: "本地网络配对",
+      cta: "查找桌面端",
+      nearby: "附近的桌面端",
+      candidate: "MacBook Pro",
+      candidateMeta: "Vibex Remote v2",
+      pair: "配对",
+      waiting: "正在等待 MacBook Pro",
+      confirm: "请确认桌面端显示了相同的验证码。",
+      expires: "将在",
+    },
+  },
+};
+const mobileCopy = () => MOBILE_COPY[currentLanguage] ?? MOBILE_COPY.en;
+
+const mobileTablist = document.querySelector("[data-mobile-tablist]");
+const mobileViewButtons = [...document.querySelectorAll("[data-mobile-view]")];
+const phonePanes = [...document.querySelectorAll("[data-phone-pane]")];
+const mobileThread = document.querySelector("[data-phone-thread]");
+const approvalThread = document.querySelector("[data-phone-thread-approval]");
+const phoneDrawerList = document.querySelector("[data-phone-drawer-list]");
+const phoneSearch = document.querySelector("[data-phone-search]");
+const phoneSearchText = document.querySelector("[data-phone-search-text]");
+const phonePairState = document.querySelector("[data-phone-pair-state]");
+const phoneDot = document.querySelector("[data-phone-dot]");
+const phoneSend = document.querySelector("[data-phone-send]");
+
+let mobileGeneration = 0;
+const mobileScript = { timers: [], running: false };
+let mobilePairCountdown = null;
+
+// Rotation state for the mobile rail (mirrors the desktop engine).
+let rotateMobileElapsed = 0;
+let rotateMobileLastTick = 0;
+let rotateMobileDuration = 8000;
+
+function mobileStop() {
+  mobileGeneration += 1;
+  mobileScript.timers.forEach((id) => {
+    window.clearTimeout(id);
+    window.clearInterval(id);
+  });
+  mobileScript.timers = [];
+  mobileScript.running = false;
+  if (mobilePairCountdown) {
+    window.clearInterval(mobilePairCountdown);
+    mobilePairCountdown = null;
+  }
 }
 
-phoneApproval?.querySelectorAll("[data-approval-approve], [data-approval-deny]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const isApproved = button.matches("[data-approval-approve]");
-    phoneApproval.classList.toggle("is-approved", isApproved);
-    phoneApproval.classList.toggle("is-denied", !isApproved);
-    if (approvalActions) approvalActions.hidden = true;
-    if (approvalDone) approvalDone.hidden = false;
-    window.clearTimeout(approvalResetTimer);
-    approvalResetTimer = window.setTimeout(resetPhoneApproval, 9000);
+function mobileSleep(ms) {
+  return new Promise((resolve) => {
+    mobileScript.timers.push(window.setTimeout(resolve, ms));
   });
-});
+}
 
-// The mobile showcase is a superset-style scene switcher: hovering a scene on
-// the left swaps the phone preview on the right (fine pointers only, so touch
-// devices don't jump on tap), while click/tap and keyboard always work too.
-const mobileSceneButtons = [...document.querySelectorAll("[data-mobile-scene]")];
-const phonePanes = [...document.querySelectorAll("[data-phone-pane]")];
+const mobileAlive = () => {
+  const gen = mobileGeneration;
+  return () => mobileGeneration === gen;
+};
 
-function setMobileScene(scene) {
-  if (!phonePanes.some((pane) => pane.dataset.phonePane === scene)) return;
-  mobileSceneButtons.forEach((button) => {
-    const active = button.dataset.mobileScene === scene;
+function mobileSetRunning(running) {
+  mobileScript.running = running;
+  if (phoneDot) phoneDot.classList.toggle("is-running", running);
+  if (phoneSend) phoneSend.classList.toggle("is-running", running);
+  const runtime = document.querySelector('[data-phone-pane="agent"] .iphone-runtime');
+  runtime?.classList.toggle("is-busy", running);
+  const runtimeStrong = runtime?.querySelector("strong");
+  if (runtimeStrong) {
+    runtimeStrong.textContent = running
+      ? mobileCopy().runtimeWhileRunning
+      : "gpt-6-astra";
+  }
+}
+
+// Bubble chrome copied from the app's zinc palette: user rows are
+// right-aligned cards (#18181b on #232326 border), agent answers are plain
+// markdown text on the background.
+function mobileUserBubble(text) {
+  return `<div class="iphone-msg is-user"><p>${text}</p></div>`;
+}
+
+function mobileThinking(text, pending) {
+  return `<div class="iphone-think${pending ? " is-pending" : ""}"><span>${text}</span></div>`;
+}
+
+function mobileActivity(icon, text) {
+  return `<div class="iphone-activity"><i data-lucide="${icon}"></i><span>${text}</span></div>`;
+}
+
+function mobileCommandCard(badge, expanded) {
+  return `
+    <div class="iphone-cmd${expanded ? " is-open" : ""}" data-phone-cmd>
+      <div class="iphone-cmd-head">
+        <i data-lucide="square-terminal"></i>
+        <code>${mobileCopy().command}</code>
+        <span class="iphone-cmd-badge">${badge}</span>
+      </div>
+      <div class="iphone-cmd-body" ${expanded ? "" : "hidden"}>
+        <span class="is-dim">running 35 tests</span>
+        <span class="is-pass">test worktree::merge_backfill ... ok</span>
+        <span class="is-pass">test worktree::runtime_handoff ... ok</span>
+        <span class="is-dim">test result: ok. 35 passed; 0 failed; 8.42s</span>
+      </div>
+    </div>`;
+}
+
+function mobileApprovalCard({ resolving = false, done = "", denied = false } = {}) {
+  const p = mobileCopy().permission;
+  return `
+    <div class="iphone-approval${resolving ? " is-resolving" : ""}${denied ? " is-denied" : ""}${done ? " is-done" : ""}" data-mapproval>
+      <div class="iphone-approval-top">
+        <span class="iphone-approval-title">${p.title}</span>
+        <span class="iphone-approval-risk">${p.risk}</span>
+      </div>
+      <div class="iphone-approval-row"><span>${p.cwd}</span><code>${p.cwdValue}</code></div>
+      <div class="iphone-approval-row"><span>${p.command}</span><code>${mobileCopy().command}</code></div>
+      ${done ? `<div class="iphone-approval-note"><i data-lucide="${denied ? "clock" : "circle-check"}"></i><span>${done}</span></div>` : ""}
+      ${resolving ? `<div class="iphone-approval-resolving">${p.resolving}</div>` : ""}
+      <div class="iphone-approval-actions" ${done || resolving ? "hidden" : ""}>
+        <button type="button" data-mapproval-deny>${p.deny}</button>
+        <button type="button" data-mapproval-always>${p.always}</button>
+        <button type="button" class="is-primary" data-mapproval-approve>${p.approve}</button>
+      </div>
+    </div>`;
+}
+
+function mobileChangesChip(text) {
+  return `<div class="iphone-changes"><i data-lucide="file-diff"></i><span>${text}</span></div>`;
+}
+
+function renderPhoneTimeline(node, pieces) {
+  if (!node) return;
+  node.innerHTML = pieces.join("");
+  renderIcons();
+  node.scrollTop = node.scrollHeight;
+}
+
+function bindMobileApprovalActions() {
+  approvalThread?.querySelectorAll("[data-mapproval-approve], [data-mapproval-deny], [data-mapproval-always]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!mobileScript.running) return;
+      const card = approvalThread.querySelector("[data-mapproval]");
+      if (!card || card.classList.contains("is-done") || card.classList.contains("is-resolving")) return;
+      const approved = button.matches("[data-mapproval-approve]");
+      const note = approved
+        ? mobileCopy().approvedNote
+        : mobileCopy().deniedNote;
+      card.classList.add("is-done");
+      card.classList.toggle("is-denied", !approved);
+      const actions = card.querySelector(".iphone-approval-actions");
+      if (actions) actions.hidden = true;
+      const resolving = card.querySelector(".iphone-approval-resolving");
+      if (resolving) resolving.hidden = true;
+      card.insertAdjacentHTML("beforeend", `<div class="iphone-approval-note"><i data-lucide="${approved ? "circle-check" : "clock"}"></i><span>${note}</span></div>`);
+      renderIcons();
+      // The user interaction advanced the story; end the scene early so the
+      // rotation loop resumes instead of waiting out the full duration.
+      mobileScript.timers.forEach((id) => window.clearTimeout(id));
+      mobileScript.timers = [];
+      mobileScript.running = false;
+      rotateMobileElapsed = 0;
+    });
+  });
+}
+
+// --- Scene: agent -----------------------------------------------------------
+// A running turn streams into the phone: user brief, shimmering thinking
+// label, reasoning, activity lines, a command card that auto-approves, the
+// agent's answer and the diff chip — matching the app's timeline anatomy.
+async function runMobileAgentDemo(alive) {
+  const c = mobileCopy();
+  mobileSetRunning(true);
+  renderPhoneTimeline(mobileThread, [mobileUserBubble(c.user), mobileThinking(c.thinking, false)]);
+  await mobileSleep(2000); if (!alive()) return;
+  renderPhoneTimeline(mobileThread, [
+    mobileUserBubble(c.user),
+    mobileThinking(c.thinking, false),
+    `<div class="iphone-reason"><p>${c.reasoning}</p></div>`,
+  ]);
+  await mobileSleep(2400); if (!alive()) return;
+  renderPhoneTimeline(mobileThread, [
+    mobileUserBubble(c.user),
+    mobileThinking(c.thinking, false),
+    `<div class="iphone-reason"><p>${c.reasoning}</p></div>`,
+    mobileActivity("search", c.activitySearch),
+    mobileActivity("file-code", c.activityRead),
+  ]);
+  await mobileSleep(2300); if (!alive()) return;
+  renderPhoneTimeline(mobileThread, [
+    mobileUserBubble(c.user),
+    mobileThinking(c.thinking, false),
+    `<div class="iphone-reason"><p>${c.reasoning}</p></div>`,
+    mobileActivity("search", c.activitySearch),
+    mobileActivity("file-code", c.activityRead),
+    mobileCommandCard(c.badgeRunning, false),
+  ]);
+  await mobileSleep(1600); if (!alive()) return;
+  // Auto-approval moment: the pending card resolves itself, the badge flips
+  // to "Completed" and the output streams in beneath the command head.
+  renderPhoneTimeline(mobileThread, [
+    mobileUserBubble(c.user),
+    mobileThinking(c.thinking, false),
+    `<div class="iphone-reason"><p>${c.reasoning}</p></div>`,
+    mobileActivity("search", c.activitySearch),
+    mobileActivity("file-code", c.activityRead),
+    mobileCommandCard(c.badgeDone, true),
+  ]);
+  await mobileSleep(2800); if (!alive()) return;
+  renderPhoneTimeline(mobileThread, [
+    mobileUserBubble(c.user),
+    `<div class="iphone-reason"><p>${c.reasoning}</p></div>`,
+    mobileActivity("search", c.activitySearch),
+    mobileActivity("file-code", c.activityRead),
+    mobileCommandCard(c.badgeDone, true),
+    mobileActivity("pencil", c.activityEdit),
+  ]);
+  await mobileSleep(2600); if (!alive()) return;
+  renderPhoneTimeline(mobileThread, [
+    mobileUserBubble(c.user),
+    `<div class="iphone-reason"><p>${c.reasoning}</p></div>`,
+    mobileActivity("search", c.activitySearch),
+    mobileActivity("file-code", c.activityRead),
+    mobileCommandCard(c.badgeDone, true),
+    mobileActivity("pencil", c.activityEdit),
+    `<div class="iphone-msg is-agent"><p>${c.answer}</p></div>`,
+    mobileChangesChip(c.changes),
+  ]);
+  mobileSetRunning(false);
+  await mobileSleep(2200); if (!alive()) return;
+  // Hold the settled state; the rotation loop advances once running=false.
+}
+
+// The settled end state, used when the visitor prefers reduced motion.
+function renderMobileAgentSettled() {
+  const c = mobileCopy();
+  mobileSetRunning(false);
+  renderPhoneTimeline(mobileThread, [
+    mobileUserBubble(c.user),
+    `<div class="iphone-reason"><p>${c.reasoning}</p></div>`,
+    mobileActivity("search", c.activitySearch),
+    mobileActivity("file-code", c.activityRead),
+    mobileCommandCard(c.badgeDone, true),
+    mobileActivity("pencil", c.activityEdit),
+    `<div class="iphone-msg is-agent"><p>${c.answer}</p></div>`,
+    mobileChangesChip(c.changes),
+  ]);
+}
+
+// --- Scene: sessions --------------------------------------------------------
+// The drawer home: search opens, filters the project tree to "worktree"
+// matches, clears, then a fresh "running" session row lands under the vibex
+// project while statuses read exactly like the app (spinner / yellow
+// needs-input triangle / blue unread dot / time labels).
+function mobileDrawerRowHtml({ logo, title, meta, state = "", selected = false, indent = false }) {
+  const filter = `${title} ${meta ?? ""}`.toLowerCase();
+  return `
+    <div class="iphone-row${indent ? " is-indent" : ""}${selected ? " is-selected" : ""}${state ? ` has-${state}` : ""}" data-filter="${filter}">
+      <span class="iphone-row-logo"><img src=${logo} alt="" /></span>
+      <span class="iphone-row-main">
+        <span class="iphone-row-title">${title}</span>
+        ${meta ? `<span class="iphone-row-meta">${meta}</span>` : ""}
+      </span>
+      <span class="iphone-row-meta-slot">${state === "running" ? '<i data-lucide="loader-circle"></i>' : state === "needs-input" ? '<i data-lucide="triangle-alert"></i>' : state === "unread" ? '<span class="iphone-unread"></span>' : ""}</span>
+    </div>`;
+}
+
+function renderMobileDrawerIdle({ withNew = false } = {}) {
+  const s = mobileCopy().drawerSessions;
+  const rows = [];
+  rows.push(`
+    <div class="iphone-row is-project">
+      <span class="iphone-row-logo"><img src=${vibexStartupMark} alt="" /></span>
+      <span class="iphone-row-main"><span class="iphone-row-title is-project">vibex</span></span>
+      <span class="iphone-row-count" data-phone-count>8</span>
+    </div>`);
+  rows.push(mobileDrawerRowHtml({ logo: openaiLight, title: s.timeline, meta: s.timeNow, selected: true }));
+  rows.push(mobileDrawerRowHtml({ logo: claude, title: s.worktreeTest, meta: s.yesterday, state: "running", indent: true }));
+  rows.push(mobileDrawerRowHtml({ logo: gemini, title: s.composerState, meta: s.days3, state: "needs-input", indent: true }));
+  rows.push(mobileDrawerRowHtml({ logo: copilotLight, title: s.onboarding, meta: s.tuesday, state: "unread", indent: true }));
+  rows.push(mobileDrawerRowHtml({ logo: zcodeLight, title: s.releaseNotes, meta: s.monday, indent: true }));
+  rows.push(mobileDrawerRowHtml({ logo: piLight, title: s.tomlStore, meta: s.lastWeek, indent: true }));
+  rows.push(mobileDrawerRowHtml({ logo: opencode, title: s.paletteAudit, meta: s.days3, indent: true }));
+  rows.push(mobileDrawerRowHtml({ logo: openaiLight, title: s.replayCost, meta: s.lastWeek, indent: true }));
+  if (withNew) rows.push(mobileDrawerRowHtml({ logo: openaiLight, title: mobileCopy().user, meta: s.timeNow, state: "running", selected: true }));
+  if (phoneDrawerList) phoneDrawerList.innerHTML = rows.join("");
+  const count = document.querySelector("[data-phone-count]");
+  if (count) count.textContent = withNew ? "9" : "8";
+  renderIcons();
+}
+
+function renderMobileSessionsSettled() {
+  if (phoneSearch) phoneSearch.hidden = true;
+  renderMobileDrawerIdle();
+}
+
+async function runMobileSessionsDemo(alive) {
+  const s = mobileCopy().drawerSessions;
+  // Phase 1: search opens and types the "worktree" query, narrowing to the
+  // matching sessions.
+  if (phoneSearch) {
+    phoneSearch.hidden = false;
+    phoneSearch.classList.add("is-open");
+  }
+  if (phoneSearchText) phoneSearchText.textContent = "";
+  renderMobileDrawerIdle();
+  await mobileSleep(700); if (!alive()) return;
+  const query = s.search;
+  for (let i = 1; i <= query.length; i += 1) {
+    if (phoneSearchText) phoneSearchText.textContent = query.slice(0, i);
+    await mobileSleep(110); if (!alive()) return;
+  }
+  if (phoneSearch) phoneSearch.classList.add("is-active");
+  phoneDrawerList?.querySelectorAll(".iphone-row").forEach((row) => {
+    const match = row.dataset.filter?.includes("worktree") ?? true;
+    row.classList.toggle("is-filtered", !match);
+  });
+  await mobileSleep(1900); if (!alive()) return;
+  // Clear: the full tree returns.
+  if (phoneSearch) phoneSearch.classList.remove("is-active");
+  if (phoneSearchText) phoneSearchText.textContent = "";
+  renderMobileDrawerIdle();
+  await mobileSleep(1300); if (!alive()) return;
+  // A new running session lands under the project and the count ticks up.
+  phoneDrawerList?.insertAdjacentHTML("afterbegin", mobileDrawerRowHtml({ logo: openaiLight, title: mobileCopy().user, meta: s.timeNow, state: "running", selected: true }));
+  renderIcons();
+  const count = document.querySelector("[data-phone-count]");
+  if (count) count.textContent = "9";
+  await mobileSleep(2600); if (!alive()) return;
+  // Close the search field again; the new row keeps spinning.
+  if (phoneSearch) {
+    phoneSearch.classList.remove("is-open");
+    phoneSearch.hidden = true;
+  }
+  renderMobileDrawerIdle({ withNew: true });
+}
+
+// --- Scene: approvals -------------------------------------------------------
+// The app's permission card: yellow border, risk tag, detail rows, and the
+// three real actions. Approve/Deny settle the card; untouched, it
+// auto-resolves ("Resolving...") so the rotation can move on.
+function renderMobileApprovalsIdle() {
+  renderPhoneTimeline(approvalThread, [
+    mobileUserBubble(mobileCopy().user),
+    `<div class="iphone-reason"><p>${mobileCopy().reasoning}</p></div>`,
+    mobileCommandCard(mobileCopy().badgeRunning, false),
+    mobileApprovalCard(),
+  ]);
+  bindMobileApprovalActions();
+}
+
+async function runMobileApprovalsDemo(alive) {
+  renderMobileApprovalsIdle();
+  mobileSetRunning(true);
+  await mobileSleep(6000); if (!alive()) return;
+  // Untouched: the app's auto-resolve — actions collapse to "Resolving..."
+  const card = approvalThread?.querySelector("[data-mapproval]");
+  if (card) card.classList.add("is-resolving");
+  await mobileSleep(1400); if (!alive()) return;
+  const card2 = approvalThread?.querySelector("[data-mapproval]");
+  if (card2) {
+    card2.classList.remove("is-resolving");
+    card2.classList.add("is-done");
+    const actions = card2.querySelector(".iphone-approval-actions");
+    if (actions) actions.hidden = true;
+    const resolving = card2.querySelector(".iphone-approval-resolving");
+    if (resolving) resolving.hidden = true;
+    card2.insertAdjacentHTML("beforeend", `<div class="iphone-approval-note"><i data-lucide="circle-check"></i><span>${mobileCopy().approvedNote}</span></div>`);
+    renderIcons();
+  }
+  mobileSetRunning(false);
+  await mobileSleep(3000); if (!alive()) return;
+}
+
+// --- Scene: pairing ---------------------------------------------------------
+// Idle → Find Desktops CTA pulse → nearby list → verification code with a
+// live expiry countdown — the exact NearbyPairingState progression.
+function mobilePairIdle() {
+  const p = mobileCopy().pairing;
+  if (phonePairState) {
+    phonePairState.innerHTML = `
+      <span class="iphone-pairing-label">${p.label}</span>
+      <button class="iphone-pairing-cta" type="button" data-phone-pair-cta><i data-lucide="rotate-cw"></i><span>${p.cta}</span></button>`;
+    renderIcons();
+  }
+}
+
+function mobilePairNearby() {
+  const p = mobileCopy().pairing;
+  if (phonePairState) {
+    phonePairState.innerHTML = `
+      <div class="iphone-pairing-nearby-head"><strong>${p.nearby}</strong><i data-lucide="x"></i></div>
+      <div class="iphone-pairing-candidate">
+        <span class="iphone-pairing-candidate-main"><strong>${p.candidate}</strong><small>${p.candidateMeta}</small></span>
+        <button class="iphone-pairing-pair" type="button">${p.pair}</button>
+      </div>`;
+    renderIcons();
+  }
+}
+
+function mobilePairWaiting() {
+  const p = mobileCopy().pairing;
+  if (!phonePairState) return;
+  phonePairState.innerHTML = `
+    <strong class="iphone-pairing-waiting">${p.waiting}</strong>
+    <small class="iphone-pairing-confirm">${p.confirm}</small>
+    <code class="iphone-pairing-code">482 913</code>
+    <small class="iphone-pairing-expiry"><span data-phone-pair-expiry>60</span>s</small>`;
+  const expiry = phonePairState.querySelector("[data-phone-pair-expiry]");
+  if (expiry) {
+    let remaining = 60;
+    mobilePairCountdown = window.setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        window.clearInterval(mobilePairCountdown);
+        mobilePairCountdown = null;
+        expiry.textContent = "0";
+        return;
+      }
+      expiry.textContent = String(remaining);
+    }, 1000);
+  }
+}
+
+function renderMobilePairingSettled() {
+  mobilePairWaiting();
+}
+
+async function runMobilePairingDemo(alive) {
+  mobilePairIdle();
+  const cta = phonePairState?.querySelector("[data-phone-pair-cta]");
+  cta?.classList.add("is-pulse");
+  await mobileSleep(1600); if (!alive()) return;
+  mobilePairNearby();
+  await mobileSleep(2400); if (!alive()) return;
+  mobilePairWaiting();
+  // The countdown runs on its own interval; hold the scene long enough to
+  // read the code and watch a few ticks.
+  await mobileSleep(6500); if (!alive()) return;
+}
+
+function startMobileDemo(viewKey) {
+  mobileStop();
+  const alive = mobileAlive();
+  mobileScript.running = true;
+  if (prefersReducedMotion) {
+    // Settled end states, no timers.
+    mobileScript.running = false;
+    if (viewKey === "agent") renderMobileAgentSettled();
+    else if (viewKey === "sessions") renderMobileSessionsSettled();
+    else if (viewKey === "approvals") renderMobileApprovalsIdle();
+    else if (viewKey === "pairing") renderMobilePairingSettled();
+    return;
+  }
+  (async () => {
+    if (viewKey === "agent") await runMobileAgentDemo(alive);
+    else if (viewKey === "sessions") await runMobileSessionsDemo(alive);
+    else if (viewKey === "approvals") await runMobileApprovalsDemo(alive);
+    else if (viewKey === "pairing") await runMobilePairingDemo(alive);
+    if (alive()) mobileScript.running = false;
+  })();
+}
+
+function resetMobileProgress() {
+  rotateMobileDuration = MOBILE_VIEW_DURATIONS[activeMobileView()] ?? 8000;
+  rotateMobileElapsed = 0;
+  rotateMobileLastTick = performance.now();
+}
+
+function syncMobileThumb() {
+  const thumb = mobileTablist?.querySelector("[data-mobile-thumb]");
+  const active = mobileTablist?.querySelector("[data-mobile-view].is-active");
+  if (!thumb || !active) return;
+  thumb.style.height = `${active.offsetHeight}px`;
+  // offsetTop is measured from the tablist's inner border edge, which is
+  // exactly the thumb's absolute-positioning origin (top: 0).
+  thumb.style.transform = `translateY(${active.offsetTop}px)`;
+  thumb.style.opacity = "1";
+}
+
+function activeMobileView() {
+  return mobileTablist?.querySelector("[data-mobile-view].is-active")?.dataset.mobileView ?? "agent";
+}
+
+function setMobileView(viewKey) {
+  if (!mobileTablist) return;
+  const view = MOBILE_VIEWS.includes(viewKey) ? viewKey : "agent";
+  mobileViewButtons.forEach((button) => {
+    const active = button.dataset.mobileView === view;
     button.classList.toggle("is-active", active);
     button.setAttribute("aria-pressed", String(active));
   });
   phonePanes.forEach((pane) => {
-    pane.hidden = pane.dataset.phonePane !== scene;
+    const active = pane.dataset.phonePane === view;
+    pane.hidden = !active;
   });
+  startMobileDemo(view);
+  // Re-measure the thumb after the desc expand animation settles.
+  syncMobileThumb();
+  window.setTimeout(() => syncMobileThumb(), 260);
+  resetMobileProgress();
 }
 
-if (mobileSceneButtons.length && phonePanes.length) {
+if (mobileTablist && mobileViewButtons.length && phonePanes.length) {
   const canHover = window.matchMedia?.("(hover: hover) and (pointer: fine)")?.matches ?? false;
-  mobileSceneButtons.forEach((button) => {
-    button.addEventListener("click", () => setMobileScene(button.dataset.mobileScene));
+  mobileViewButtons.forEach((button) => {
+    button.addEventListener("click", () => setMobileView(button.dataset.mobileView));
     if (canHover) {
-      button.addEventListener("mouseenter", () => setMobileScene(button.dataset.mobileScene));
+      button.addEventListener("mouseenter", () => setMobileView(button.dataset.mobileView));
     }
   });
+
+  // Mirror the desktop showcase's rotation: the rail's progress fill runs per
+  // frame and auto-advances when the scene's display time is up — unless the
+  // scene's demo is still mid-run, in which case it holds at 100%.
+  const MOBILE_ROTATE_MAX_TICK = 250;
+  const stepMobileRotation = (now) => {
+    rotateMobileElapsed += Math.min(now - rotateMobileLastTick, MOBILE_ROTATE_MAX_TICK);
+    rotateMobileLastTick = now;
+    if (rotateMobileElapsed >= rotateMobileDuration) {
+      if (mobileScript.running) {
+        rotateMobileElapsed = rotateMobileDuration;
+      } else {
+        const active = activeMobileView();
+        const next = MOBILE_VIEWS[(MOBILE_VIEWS.indexOf(active) + 1) % MOBILE_VIEWS.length];
+        setMobileView(next);
+      }
+    }
+    const fill = mobileTablist.querySelector("[data-mobile-progress]");
+    if (fill) fill.style.transform = `scaleY(${Math.min(rotateMobileElapsed / rotateMobileDuration, 1)})`;
+    window.requestAnimationFrame(stepMobileRotation);
+  };
+  if (!prefersReducedMotion) {
+    rotateMobileLastTick = performance.now();
+    window.requestAnimationFrame(stepMobileRotation);
+  }
+
+  // Thumb geometry depends on rendered fonts and wrapped label heights;
+  // re-measure once the page settles and whenever the viewport changes.
+  syncMobileThumb();
+  if (document.fonts?.ready) document.fonts.ready.then(() => syncMobileThumb());
+  window.addEventListener("resize", () => syncMobileThumb());
+
+  // Kick off the agent scene like the desktop showcase does.
+  setMobileView("agent");
 }
 
 const languageSwitchers = [...document.querySelectorAll("[data-language-switcher]")];

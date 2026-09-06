@@ -3133,8 +3133,10 @@ function startAgentDemo() {
   resetGitRailState();
   resetPreviewTabs();
   const shell = desktopShowcase.querySelector("[data-desktop-shell]");
-  shell?.classList.add("is-fullpage");
-  shell?.classList.remove("is-rail-collapsed");
+  // Session screens keep the far-right activity bar visible like the app;
+  // only the dock panels stay closed until something needs them.
+  shell?.classList.remove("is-fullpage");
+  shell?.classList.add("is-rail-collapsed");
   setPreviewOpen(false);
   setDesktopRail("files");
   setActivePanel("home");

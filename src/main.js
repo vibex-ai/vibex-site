@@ -256,9 +256,6 @@ document.querySelector("#app").innerHTML = `
           </div>
 
           <div class="hero-side reveal">
-            <p class="hero-download-lede" data-hero-download-lede>
-              Download Vibex and bring your agents into one local-first workbench.
-            </p>
             <div class="hero-actions">
               <div class="hero-buttons">
                 <a class="button button-primary" href="${githubUrl}/releases/latest" target="_blank" rel="noreferrer">
@@ -2033,7 +2030,6 @@ function applyLanguage(language, { persist = true } = {}) {
     });
   });
   setBindingText(".mobile-language > span", "language.label");
-  setBindingText("[data-hero-download-lede]", "hero.downloadLead");
   setBindingText(
     "[data-hero-download]",
     downloadPlatform ? "hero.download" : "hero.download.generic",

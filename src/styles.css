@@ -479,7 +479,7 @@ h3 {
   width: min(100%, 430px);
   padding: 44px 0 22px;
   position: relative;
-  top: 20px; /* 按钮组垂直居中于左侧标题（实测校准值） */
+  top: -6px; /* 按钮组对齐于左侧标题（实测校准值） */
 }
 
 .live-dot {
